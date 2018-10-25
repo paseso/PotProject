@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody2D rig;
     private bool _bring = false;
     private bool _hit = false;
+    private bool _isJump = false;
     [SerializeField, Header("Canvas")]
     private Transform canvasTransform;
     [SerializeField,Header("弟")]
@@ -19,11 +20,12 @@ public class PlayerController : MonoBehaviour {
         rig = gameObject.GetComponent<Rigidbody2D>();
         _bring = false;
         _hit = false;
+        _isJump = false;
 	}
 
     private void FixedUpdate()
     {
-        rig.AddForce(Vector2.down * 200, ForceMode2D.Force);
+        rig.AddForce(Vector2.down * 150, ForceMode2D.Force);
     }
 
     // Update is called once per frame
@@ -36,26 +38,20 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     private void Move()
     {
-        if (Input.GetButton("Jump"))
+        if (Input.GetButton("Jump") && !_isJump)
         {//×ボタン or キーボードの「W」
             Debug.Log("JUMP");
-            rig.velocity = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 20f);
-            //gameObject.transform.up = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 0.2f); gameObject.transform.position.x
-            //gameObject.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 0.2f);
+            rig.AddForce(Vector2.up * 500);
         }
         else if (Input.GetAxis("Vertical_ps4") >= 0.15f || Input.GetKey(KeyCode.A))
         {//左ジョイスティックを左にたおす or キーボードの「A」
             Debug.Log("LEFT");
             rig.velocity = new Vector2(-8f, 0);
-            //gameObject.transform.forward = new Vector2(gameObject.transform.position.x - 0.1f, gameObject.transform.position.y);
-            //gameObject.transform.position = new Vector2(gameObject.transform.position.x - 0.15f, gameObject.transform.position.y);
         }
         else if (Input.GetAxis("Vertical_ps4") <= -0.15f || Input.GetKey(KeyCode.D))
         {//左ジョイスティックを右にたおす or キーボードの「D」
             Debug.Log("RIGHT");
             rig.velocity = new Vector2(8f, 0);
-            //gameObject.transform.forward = new Vector2(gameObject.transform.position.x + 0.1f, gameObject.transform.position.y);
-            //gameObject.transform.position = new Vector2(gameObject.transform.position.x + 0.15f, gameObject.transform.position.y);
         }
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
         {
@@ -65,17 +61,19 @@ public class PlayerController : MonoBehaviour {
         {//□ボタン　or キーボードの「Q」
             if (!_bring)
             {
+                Debug.Log("持つ");
+                Ototo.gameObject.transform.parent = gameObject.transform;
+                Ototo.transform.position = new Vector3(gameObject.transform.position.x, 5f, 0);
                 _bring = true;
-                Ototo.transform.position = canvasTransform.position;
-                Debug.Log("_bring = true");
             }
             else
             {
+                Debug.Log("離す");
+                Ototo.gameObject.transform.parent = canvasTransform.transform;
+                Ototo.gameObject.transform.position = new Vector2(10f, 0);
                 _hit = false;
                 _bring = false;
-
             }
-            
         }
         else if (Input.GetButton("Circle") || Input.GetKey(KeyCode.E))
         {//〇ボタン　or キーボードの「E」
@@ -85,16 +83,18 @@ public class PlayerController : MonoBehaviour {
 
     private void OnCollisionStay2D(Collision2D col)
     {
-        if(col.gameObject.tag == "Ototo")
+        if(col.gameObject.tag == "Ototo" && !_hit)
         {
             Debug.Log("Ototoに当たってるよ");
-            if (Input.GetButton("Squere") && !_hit)
-            {
-                Debug.Log("GET");
-                col.gameObject.transform.parent = gameObject.transform;
-                col.transform.position = new Vector3(gameObject.transform.position.x, 5f, 0);
-                _hit = true;
-            }
+            _hit = true;
+        }
+        if (col.gameObject.tag == "floor")
+        {
+            _isJump = false;
+        }
+        else
+        {
+            _isJump = true;
         }
     }
 }
