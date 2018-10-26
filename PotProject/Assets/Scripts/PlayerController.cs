@@ -1,33 +1,42 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour {
 
+    [SerializeField]
+    private float speed = 0f;
+
     private Rigidbody2D rig;
     private bool _bring = false;
-    private bool _hit = false;
     private bool _isJump = false;
     private bool _wait = false;
     [SerializeField, Header("Canvas")]
     private Transform canvasTransform;
     [SerializeField,Header("弟")]
     private GameObject Ototo;
+    private BringController Col;
 
+    private float fallspeed = 0.0f;
+    private Vector2 charaMove;
+    private RectTransform rectgameObject;
 
     // Use this for initialization
     void Start()
     {
         rig = gameObject.GetComponent<Rigidbody2D>();
+        Col = gameObject.transform.GetChild(0).GetComponent<BringController>();
+        charaMove = Vector2.zero;
+        rectgameObject = gameObject.GetComponent<RectTransform>();
         _bring = false;
-        _hit = false;
         _isJump = false;
         _wait = false;
 	}
 
     private void FixedUpdate()
     {
-        rig.AddForce(Vector2.down * 300, ForceMode2D.Force);
+        rig.AddForce(Vector2.down * 1000, ForceMode2D.Force);
     }
 
     // Update is called once per frame
@@ -55,28 +64,36 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     private void Move()
     {
-        if (Input.GetButton("Jump") && !_isJump)    // && !_wait
+        if (Input.GetButton("Jump") && !_isJump)
         {//×ボタン or キーボードの「W」
             Debug.Log("JUMP");
-            rig.AddForce(Vector2.up * 2000);
+            //rig.AddForce(Vector2.up * 800, ForceMode2D.Force);
+            //rig.velocity += new Vector2(0, gameObject.transform.position.y + 1f * speed);
+            rectgameObject.DOJump(new Vector2(gameObject.transform.position.x, 2f), 5f, 1, 2f);
+
+            //gameObject.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 10f);
+            //charaMove.y +=  2f;
             _wait = true;
         }
         else if (Input.GetAxis("Vertical_ps4") >= 0.15f || Input.GetKey(KeyCode.A))
         {//左ジョイスティックを左にたおす or キーボードの「A」
             Debug.Log("LEFT");
-            rig.velocity = new Vector2(-8.5f, 0);
+            rig.velocity = new Vector2(-12f, gameObject.transform.position.y);
+            //charaMove.x -= 8.5f;
         }
         else if (Input.GetAxis("Vertical_ps4") <= -0.15f || Input.GetKey(KeyCode.D))
         {//左ジョイスティックを右にたおす or キーボードの「D」
             Debug.Log("RIGHT");
-            rig.velocity = new Vector2(8.5f, 0);
+            rig.velocity = new Vector2(12f, gameObject.transform.position.y);
+            //charaMove.x += 8.5f;
         }
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
         {
             rig.velocity = new Vector2(0, 0);
         }
-        else if (Input.GetButton("Squere") && _hit)
+        else if (Input.GetButton("Squere") || Input.GetKey(KeyCode.Q))
         {//□ボタン　or キーボードの「Q」
+            Debug.Log("Squere");
             if (!_bring)
             {
                 Debug.Log("持つ");
@@ -89,7 +106,7 @@ public class PlayerController : MonoBehaviour {
                 Debug.Log("離す");
                 Ototo.gameObject.transform.parent = canvasTransform.transform;
                 Ototo.gameObject.transform.position = new Vector2(10f, 0);
-                _hit = false;
+                //_hit = false;
                 _bring = false;
             }
         }
@@ -101,11 +118,6 @@ public class PlayerController : MonoBehaviour {
 
     private void OnCollisionStay2D(Collision2D col)
     {
-        if(col.gameObject.tag == "Ototo" && !_hit)
-        {
-            Debug.Log("Ototoに当たってるよ");
-            _hit = true;
-        }
         if (col.gameObject.tag == "floor")
         {
             Debug.Log("floorに当たってるよ");
