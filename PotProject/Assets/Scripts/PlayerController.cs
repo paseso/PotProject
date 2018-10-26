@@ -67,9 +67,10 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetButton("Jump") && !_isJump)
         {//×ボタン or キーボードの「W」
             Debug.Log("JUMP");
-            //rig.AddForce(Vector2.up * 800, ForceMode2D.Force);
+            rig.AddForce(Vector2.up * 1000, ForceMode2D.Force);
             //rig.velocity += new Vector2(0, gameObject.transform.position.y + 1f * speed);
-            rectgameObject.DOJump(new Vector2(gameObject.transform.position.x, 2f), 5f, 1, 2f);
+            //rectgameObject.DOJump(new Vector2(gameObject.transform.position.x + 2f, gameObject.transform.position.y + 2f), 5f, 1, 2f).SetEase(Ease.Linear);
+
 
             //gameObject.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 10f);
             //charaMove.y +=  2f;
@@ -78,13 +79,13 @@ public class PlayerController : MonoBehaviour {
         else if (Input.GetAxis("Vertical_ps4") >= 0.15f || Input.GetKey(KeyCode.A))
         {//左ジョイスティックを左にたおす or キーボードの「A」
             Debug.Log("LEFT");
-            rig.velocity = new Vector2(-12f, gameObject.transform.position.y);
+            rig.velocity = new Vector2(-20f, gameObject.transform.position.y);
             //charaMove.x -= 8.5f;
         }
         else if (Input.GetAxis("Vertical_ps4") <= -0.15f || Input.GetKey(KeyCode.D))
         {//左ジョイスティックを右にたおす or キーボードの「D」
             Debug.Log("RIGHT");
-            rig.velocity = new Vector2(12f, gameObject.transform.position.y);
+            rig.velocity = new Vector2(20f, gameObject.transform.position.y);
             //charaMove.x += 8.5f;
         }
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
