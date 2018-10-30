@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BringController : MonoBehaviour {
+public class BringCollider : MonoBehaviour {
 
     [HideInInspector]
     public bool _Brotherhit = false;
