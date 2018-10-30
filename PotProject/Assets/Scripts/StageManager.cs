@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour {
     
-    public enum direction
+    /// <summary>
+    /// スライドの方向
+    /// </summary>
+    public enum Direction
     {
         up,
         down,
@@ -26,8 +29,8 @@ public class StageManager : MonoBehaviour {
     private float sizeX;
     private float sizeY;
 
-    // Use this for initialization
     void Start () {
+        // Spriteサイズ取得
         sizeX = mapPrefab.GetComponent<SpriteRenderer>().size.x;
         sizeY = mapPrefab.GetComponent<SpriteRenderer>().size.y;
 
@@ -35,30 +38,30 @@ public class StageManager : MonoBehaviour {
         Debug.Log(Maps.Count);
 	}
 	
-	// Update is called once per frame
 	void Update () {
         if(Input.GetKeyDown(KeyCode.UpArrow)){
             Debug.Log("上");
-            StageMove(0, direction.up);
+            SrideStage(0, Direction.up);
         }
 
         if(Input.GetKeyDown(KeyCode.DownArrow)){
             Debug.Log("下");
-            StageMove(0, direction.down);
+            SrideStage(0, Direction.down);
         }
 
         if(Input.GetKeyDown(KeyCode.RightArrow)){
             Debug.Log("右");
-            StageMove(1, direction.right);
+            SrideStage(1, Direction.right);
         }
 
         if(Input.GetKeyDown(KeyCode.LeftArrow)){
             Debug.Log("左");
-            StageMove(1, direction.left);
+            SrideStage(1, Direction.left);
         }
 
     }
 
+    // ステージ生成(仮)
     public void CreateStage()
     {
         int count = 0;
@@ -81,28 +84,34 @@ public class StageManager : MonoBehaviour {
         }
     }
 
-    public void StageMove(int num,direction dir)
+    /// <summary>
+    /// ステージスライド処理
+    /// </summary>
+    /// <param name="num"></param>
+    /// <param name="dir"></param>
+    public void SrideStage(int num,Direction dir)
     {
         GameObject temp;
         Vector2 tempPos = new Vector2();
         switch (dir)
         {
-            case direction.up: // 上
+            case Direction.up: // 上
                 for (int i = 0; i < stageLength; i++)
                 {
-                    if (i == 0) tempPos = Maps[stageLength - 1][num].transform.localPosition;
-                    else if (i == stageLength - 1)
-                    {
-                        Debug.Log(Maps[i][num].name);
+                    if (i == 0){
+                        // 折り返し座標を保持
+                        tempPos = Maps[stageLength - 1][num].transform.localPosition;
                         Maps[i][num].transform.localPosition = tempPos;
-                        return;
+                        continue;
                     }
 
+                    // スライド
                     Vector2 pos = Maps[i][num].transform.localPosition;
                     pos = new Vector2(pos.x,pos.y + sizeY / 2);
                     Maps[i][num].transform.localPosition = pos;
                 }
 
+                // スライド終了時の配列内入れ替え
                 temp = Maps[0][num];
                 for (int i = 0; i < stageLength - 1; i++)
                 {
@@ -111,21 +120,25 @@ public class StageManager : MonoBehaviour {
                 Maps[stageLength - 1][num] = temp;
                 break;
 
-            case direction.down: // 下
+            case Direction.down: // 下
+
                 for (int i = 0; i < stageLength; i++)
                 {
+                    // 折り返し座標を保持
                     if (i == 0) tempPos = Maps[i][num].transform.localPosition;
                     else if (i == stageLength - 1)
                     {
                         Maps[i][num].transform.localPosition = tempPos;
-                        return;
+                        continue;
                     };
 
+                    // スライド
                     Vector2 pos = Maps[i][num].transform.localPosition;
                     pos = new Vector2(pos.x, (pos.y + (sizeY * -1) / 2));
                     Maps[i][num].transform.localPosition = pos;
                 }
 
+                // スライド終了時の配列内入れ替え
                 temp = Maps[stageLength - 1][num];
                 for (int i = 0; i < stageLength - 1; i++)
                 {
@@ -134,14 +147,24 @@ public class StageManager : MonoBehaviour {
                 Maps[0][num] = temp;
                 break;
 
-            case direction.right:// 右
+            case Direction.right:// 右
                 for (int i = 0; i < stageLength; i++)
-                {       
+                {
+                    // 折り返し座標を保持
+                    if (i == 0) tempPos = Maps[num][i].transform.localPosition;
+                    else if(i == stageLength - 1)
+                    {
+                        Maps[num][i].transform.localPosition = tempPos;
+                        continue;
+                    }
+
+                    // スライド
                     Vector2 pos = Maps[num][i].transform.localPosition;
                     pos = new Vector2((pos.x + sizeX / 2), pos.y);
                     Maps[num][i].transform.localPosition = pos;
                 }
 
+                // スライド終了時の配列内入れ替え
                 temp = Maps[num][stageLength - 1];
                 for (int i = 0; i < stageLength - 1; i++)
                 {
@@ -150,14 +173,24 @@ public class StageManager : MonoBehaviour {
                 Maps[num][0] = temp;
                 break;
 
-            case direction.left: // 左
+            case Direction.left: // 左
                 for (int i = 0; i < stageLength; i++)
                 {
+                    if (i == 0)
+                    {
+                        // 折り返し座標を保持
+                        tempPos = Maps[num][stageLength - 1].transform.localPosition;
+                        Maps[num][0].transform.localPosition = tempPos;
+                        continue;
+                    }
+
+                    // スライド
                     Vector2 pos = Maps[num][i].transform.localPosition;
                     pos = new Vector2((pos.x + (sizeX * -1) / 2), pos.y);
                     Maps[num][i].transform.localPosition = pos;
                 }
 
+                // スライド終了時の配列内入れ替え
                 temp = Maps[num][0];
                 for (int i = 0; i < stageLength - 1; i++)
                 {
