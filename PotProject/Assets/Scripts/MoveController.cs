@@ -11,13 +11,10 @@ public class MoveController : MonoBehaviour {
     private bool _bring = false;
     private bool _isJump = false;
     private bool _wait = false;
+    private bool _hitOtoto = false;
     [SerializeField,Header("弟")]
     private GameObject Ototo;
-    private BringCollider Col;
 
-    private float fallspeed = 0.0f;
-    private Vector2 charaMove;
-    private RectTransform rectgameObject;
     [SerializeField]
     private GameObject managerGameObject;
     private PlayerManager manager;
@@ -48,9 +45,6 @@ public class MoveController : MonoBehaviour {
     void Start()
     {
         rig = gameObject.GetComponent<Rigidbody2D>();
-        Col = gameObject.transform.GetChild(0).GetComponent<BringCollider>();
-        charaMove = Vector2.zero;
-        rectgameObject = gameObject.GetComponent<RectTransform>();
         manager = managerGameObject.GetComponent<PlayerManager>();
         bringctr = gameObject.transform.GetChild(0).GetComponent<BringCollider>();
         _bring = false;
@@ -58,18 +52,18 @@ public class MoveController : MonoBehaviour {
         _wait = false;
 	}
 
-    private void FixedUpdate()
-    {
-        rig.AddForce(Vector2.down * 1000, ForceMode2D.Force);
-    }
+    //private void FixedUpdate()
+    //{
+    //    rig.AddForce(Vector2.down * 10, ForceMode2D.Force);
+    //}
 
     // Update is called once per frame
     void Update () {
 
-        if (_wait)
-        {
-            CoolTime(1.0f);
-        }
+        //if (_wait)
+        //{
+        //    CoolTime(1.0f);
+        //}
         BtnCheck();
 	}
 
@@ -92,27 +86,34 @@ public class MoveController : MonoBehaviour {
         {
             case ButtonType.JUMP:
                 Debug.Log("×");
-                rig.AddForce(Vector2.up * 1f * speed, ForceMode2D.Force);
-                //rig.velocity += new Vector2(0, gameObject.transform.position.y + 1f * speed);
-
+                rig.velocity = new Vector2(rig.velocity.x, 1f * speed);
                 _wait = true;
                 break;
 
             case ButtonType.LEFT:
                 Debug.Log("LEFT");
-                rig.velocity = new Vector2(-20f, gameObject.transform.position.y);
-                if (gameObject.transform.localRotation.y == -180)
+                //rig.velocity = new Vector2(-5f, rig.velocity.y);
+                if (!_hitOtoto)
                 {
-                    gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+                    rig.velocity = new Vector2(-5f, rig.velocity.y);
+                }
+                else
+                {
+                    rig.AddForce(Vector2.right * 8f, ForceMode2D.Impulse);
                 }
                 break;
 
             case ButtonType.RIGTH:
                 Debug.Log("RIGHT");
-                rig.velocity = new Vector2(20f, gameObject.transform.position.y);
-                if (gameObject.transform.localRotation.y == 0f)
+                //rig.velocity = new Vector2(5f, rig.velocity.y);
+                if (!_hitOtoto)
                 {
-                    gameObject.transform.rotation = Quaternion.Euler(0, -180, 0);
+                    rig.velocity = new Vector2(5f, rig.velocity.y);
+                }
+                else
+                {
+                    rig.AddForce(Vector2.left * 8f, ForceMode2D.Impulse);
                 }
                 break;
 
@@ -206,7 +207,8 @@ public class MoveController : MonoBehaviour {
         }
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
         {
-            rig.velocity = new Vector2(0, 0);
+            rig.velocity = new Vector2(0, rig.velocity.y);    //gameObject.transform.position.y
+            Debug.Log("移動してない");
         }
         if (Input.GetButton("Squere") || Input.GetKeyDown(KeyCode.Q))
         {//□ボタン　or キーボードの「Q」
@@ -271,6 +273,8 @@ public class MoveController : MonoBehaviour {
         if (col.gameObject.tag == "Ototo")
         {
             Debug.Log("弟にあたった");
+            rig.velocity = new Vector2(0, rig.velocity.y);
+            _hitOtoto = true;
             manager.HpMinus();
         }
     }
@@ -290,6 +294,10 @@ public class MoveController : MonoBehaviour {
         {
             Debug.Log("floorに当たってないよ");
             _isJump = true;
+        }
+        if(col.gameObject.tag == "Ototo")
+        {
+            _hitOtoto = false;
         }
     }
 }

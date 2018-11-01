@@ -63,7 +63,6 @@ public class PlayerManager : MonoBehaviour {
     /// <param name="s_type">FIRE=火、WATER=水、EARTH=土</param>
     public void SwordTypeChange(Status.SWORDTYPE s_type)
     {
-        
         switch (s_type)
         {
             case Status.SWORDTYPE.FIRE:
