@@ -12,6 +12,12 @@ public class MoveController : MonoBehaviour {
     private bool _isJump = false;
     private bool _wait = false;
     private bool _hitOtoto = false;
+    //-------左右ボタンを押してるかどうか----------
+    [HideInInspector]
+    public bool _onRight = false;
+    [HideInInspector]
+    public bool _onLeft = false;
+    //---------------------------------------------
     [SerializeField,Header("弟")]
     private GameObject Ototo;
 
@@ -50,6 +56,8 @@ public class MoveController : MonoBehaviour {
         _bring = false;
         _isJump = false;
         _wait = false;
+        _onRight = false;
+        _onLeft = false;
 	}
 
     //private void FixedUpdate()
@@ -102,6 +110,7 @@ public class MoveController : MonoBehaviour {
                 {
                     rig.AddForce(Vector2.right * 8f, ForceMode2D.Impulse);
                 }
+                _onLeft = true;
                 break;
 
             case ButtonType.RIGTH:
@@ -115,6 +124,7 @@ public class MoveController : MonoBehaviour {
                 {
                     rig.AddForce(Vector2.left * 8f, ForceMode2D.Impulse);
                 }
+                _onRight = true;
                 break;
 
             case ButtonType.CIRCLE:
@@ -266,6 +276,8 @@ public class MoveController : MonoBehaviour {
         {
             Move(ButtonType.CROSSY_UP);
         }
+        _onRight = false;
+        _onLeft = false;
     }
 
     private void OnCollisionEnter2D(Collision2D col)
