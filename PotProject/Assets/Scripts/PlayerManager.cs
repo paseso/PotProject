@@ -15,7 +15,8 @@ public struct Status
     }
     //アイテム
     public SWORDTYPE swordtype;
-    public List<string> ItemList;
+    //持ち物に入ってるアイテム
+    public List<ItemStatus.ITEM> ItemList;
 }
 
 public class PlayerManager : MonoBehaviour {
@@ -24,7 +25,7 @@ public class PlayerManager : MonoBehaviour {
     private SpriteRenderer sword;
 
     [SerializeField]
-    private List<Sprite> swordSpriteList; 
+    private List<Sprite> swordSpriteList;
 
     public Status status;
 
@@ -43,7 +44,7 @@ public class PlayerManager : MonoBehaviour {
     /// 持ち物リストの情報
     /// </summary>
     /// <returns></returns>
-    public List<string> getItemList()
+    public List<ItemStatus.ITEM> getItemList()
     {
         return status.ItemList;
     }
@@ -52,9 +53,9 @@ public class PlayerManager : MonoBehaviour {
     /// 持ち物リストにアイテムを追加
     /// </summary>
     /// <param name="name"></param>
-    public void setItemList(string name)
+    public void setItemList(ItemStatus.ITEM Item_Id)
     {
-        status.ItemList.Add(name);
+        status.ItemList.Add(Item_Id);
     }
 
     /// <summary>
@@ -78,6 +79,15 @@ public class PlayerManager : MonoBehaviour {
                 sword.sprite = swordSpriteList[(int)Status.SWORDTYPE.EARTH];
                 break;
         }
+    }
+
+    /// <summary>
+    /// アイテムを錬金する処理
+    /// </summary>
+    /// <param name="item"></param>
+    private void ItemAlchemy(string item)
+    {
+
     }
 
     /// <summary>
