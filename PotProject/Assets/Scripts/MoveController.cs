@@ -12,6 +12,9 @@ public class MoveController : MonoBehaviour {
     private bool _isJump = false;
     private bool _wait = false;
     private bool _hitOtoto = false;
+    //□ボタンを押しているかどうか
+    [HideInInspector]
+    public bool _onSquere = false;
     //-------左右ボタンを押してるかどうか----------
     [HideInInspector]
     public bool _onRight = false;
@@ -58,6 +61,7 @@ public class MoveController : MonoBehaviour {
         _wait = false;
         _onRight = false;
         _onLeft = false;
+        _onSquere = false;
 	}
 
     //private void FixedUpdate()
@@ -133,22 +137,23 @@ public class MoveController : MonoBehaviour {
 
             case ButtonType.SQUERE:
                 Debug.Log("□");
-                if (!bringctr._Brotherhit)
-                    return;
+                //if (!bringctr._Brotherhit)
+                //    return;
 
-                if (!_bring)
-                {
-                    Debug.Log("持つ");
-                    Ototo.gameObject.transform.parent = gameObject.transform;
-                    Ototo.transform.position = new Vector3(gameObject.transform.position.x, 4f, 0);
-                    _bring = true;
-                }
-                else
-                {
-                    Debug.Log("離す");
-                    Ototo.gameObject.transform.position = new Vector2(10f, 0);
-                    _bring = false;
-                }
+                //if (!_bring)
+                //{
+                //    Debug.Log("持つ");
+                //    Ototo.gameObject.transform.parent = gameObject.transform;
+                //    Ototo.transform.position = new Vector3(gameObject.transform.position.x, 4f, 0);
+                //    _bring = true;
+                //}
+                //else
+                //{
+                //    Debug.Log("離す");
+                //    Ototo.gameObject.transform.position = new Vector2(10f, 0);
+                //    _bring = false;
+                //}
+                _onSquere = true;
                 break;
 
             case ButtonType.TRIANGLE:
@@ -221,63 +226,64 @@ public class MoveController : MonoBehaviour {
             Debug.Log("移動してない");
         }
         if (Input.GetButton("Squere") || Input.GetKeyDown(KeyCode.Q))
-        {//□ボタン　or キーボードの「Q」
+        {//□ボタン or キーボードの「Q」
             Move(ButtonType.SQUERE);
         }
         if (Input.GetButton("Circle") || Input.GetKey(KeyCode.E))
-        {//〇ボタン　or キーボードの「E」
+        {//〇ボタン or キーボードの「E」
             Move(ButtonType.CIRCLE);
         }
         if (Input.GetButton("Triangle") || Input.GetKeyDown(KeyCode.F))
-        {
+        {//△ボタン or キーボードの「F」
             Move(ButtonType.TRIANGLE);
         }
         if (Input.GetButton("L1") || Input.GetKeyDown(KeyCode.L))
-        {
+        {// L1ボタン or キーボードの「L」
             Move(ButtonType.L1);
         }
         if (Input.GetButton("R1") || Input.GetKeyDown(KeyCode.K))
-        {
+        {// R1ボタン or キーボードの「K」
             Move(ButtonType.R1);
         }
         if (Input.GetButton("L2") || Input.GetKeyDown(KeyCode.P))
-        {
+        {// L2ボタン or キーボードの「P」
             Move(ButtonType.L2);
         }
         if (Input.GetButton("R2") || Input.GetKeyDown(KeyCode.O))
-        {
+        {// R2ボタン or キーボードの「O」英語のオーです「o」
             Move(ButtonType.R2);
         }
         if (Input.GetButton("Option") || Input.GetKeyDown(KeyCode.U))
-        {
+        {// Optionボタン or キーボードの「U」
             Move(ButtonType.OPTION);
         }
         if (Input.GetButton("PSbtn") || Input.GetKeyDown(KeyCode.H))
-        {
+        {// 真ん中のPSボタン or キーボードの「H」
             Move(ButtonType.PSBTN);
         }
         if (Input.GetButton("PSpad") || Input.GetKeyDown(KeyCode.Y))
-        {
+        {//PSパッドボタン or キーボードの「Y」
             Move(ButtonType.PSPAD);
         }
         if (Input.GetAxis("CrossX") >= 0.15f || Input.GetKey(KeyCode.C))
-        {
+        {// 十字左ボタン or キーボードの「C」
             Move(ButtonType.CROSSX_LEFT);
         }
         if (Input.GetAxis("CrossX") <= -0.15f || Input.GetKey(KeyCode.X))
-        {
+        {//十字右ボタン or キーボードの「X」
             Move(ButtonType.CROSSX_RIGTH);
         }
         if (Input.GetAxis("CrossY") >= 0.15f || Input.GetKey(KeyCode.Z))
-        {
+        {//十字下ボタン or キーボードの「Z」
             Move(ButtonType.CROSSY_DOWN);
         }
         if (Input.GetAxis("CrossY") <= -0.15f || Input.GetKey(KeyCode.V))
-        {
+        {//十字上ボタン or キーボードの「V」
             Move(ButtonType.CROSSY_UP);
         }
         _onRight = false;
         _onLeft = false;
+        _onSquere = false;
     }
 
     private void OnCollisionEnter2D(Collision2D col)
