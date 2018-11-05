@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class CameraController : MonoBehaviour {
 
@@ -25,10 +26,35 @@ public class CameraController : MonoBehaviour {
     /// </summary>
     private void CameraMove()
     {
-        if(AniObject.transform.position.x >= (vec.x - 5f) || AniObject.transform.position.x >= (vec.x - 10f))
+        gameObject.transform.position = new Vector3(0, 0, -10);
+        //-------------一段目----------------------------------------------------------------------
+        if(AniObject.transform.position.x >= 6.5f)
         {
-            Debug.Log("Move");
-            gameObject.transform.position = new Vector3(AniObject.transform.position.x, AniObject.transform.position.y, -10);
+            gameObject.transform.DOLocalMove(new Vector3(12.9f,0,-10), 0.3f);
+            //transform.position = new Vector3(12.9f, 0, -10);
+        }
+        else
+        {
+            gameObject.transform.DOLocalMove(new Vector3(0, 0, -10), 0.3f);
+            //gameObject.transform.position = new Vector3(0, 0, -10);
+        }
+        //--------------二段目-----------------------------------------------------------------------
+        if(AniObject.transform.position.y >= 3.5f && AniObject.transform.position.x >= 6.5f)
+        {
+            gameObject.transform.DOLocalMove(new Vector3(12.9f, 15, -10), 0.3f);
+        }
+        else if(AniObject.transform.position.y >= 3.5f && AniObject.transform.position.x < 6.5f)
+        {
+            gameObject.transform.DOLocalMove(new Vector3(0, 15, -10), 0.3f);
+        }
+        //---------------三段目------------------------------------------------------------------------
+        if(AniObject.transform.position.y >= 13.5f && AniObject.transform.position.x >= 6.5f)
+        {
+            gameObject.transform.DOLocalMove(new Vector3(12.9f, 30, -10), 0.3f);
+        }
+        else if(AniObject.transform.position.y >= 13.5f && AniObject.transform.position.x < 6.5f)
+        {
+            gameObject.transform.DOLocalMove(new Vector3(0, 30, -10), 0.3f);
         }
     }
     
