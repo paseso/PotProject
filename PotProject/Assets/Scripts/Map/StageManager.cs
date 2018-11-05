@@ -91,6 +91,9 @@ public class StageManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// ListにMapを入れる
+    /// </summary>
     public void SetList()
     {
         int count = 0;
@@ -116,23 +119,22 @@ public class StageManager : MonoBehaviour {
     {
         GameObject temp;
         Vector2 tempPos = new Vector2();
+        Vector2 turnPos = new Vector2();
         switch (dir)
         {
             case Direction.up: // 上
-                for (int i = 0; i < stageLength; i++)
-                {
-                    if (i == 0){
-                        // 折り返し座標を保持
-                        tempPos = Maps[stageLength - 1][num].transform.localPosition;
-                        Maps[i][num].transform.localPosition = tempPos;
-                        continue;
-                    }
 
-                    // スライド
-                    Vector2 pos = Maps[i][num].transform.localPosition;
-                    pos = new Vector2(pos.x,pos.y + sizeY / 2);
-                    Maps[i][num].transform.localPosition = pos;
+                // 折り返し座標を保持
+                turnPos = Maps[stageLength - 1][num].transform.localPosition;
+
+                // 折り返しMap以外をスライド
+                for (int i = stageLength - 1; i > 0; i--)
+                {                    
+                    tempPos = Maps[i - 1][num].transform.localPosition;
+                    Maps[i][num].transform.localPosition = tempPos;
                 }
+                // 折り返し
+                Maps[0][num].transform.localPosition = turnPos;
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[0][num];
@@ -145,21 +147,17 @@ public class StageManager : MonoBehaviour {
 
             case Direction.down: // 下
 
-                for (int i = 0; i < stageLength; i++)
-                {
-                    // 折り返し座標を保持
-                    if (i == 0) tempPos = Maps[i][num].transform.localPosition;
-                    else if (i == stageLength - 1)
-                    {
-                        Maps[i][num].transform.localPosition = tempPos;
-                        continue;
-                    };
+                // 折り返し座標を保持
+                turnPos = Maps[0][num].transform.localPosition;
 
-                    // スライド
-                    Vector2 pos = Maps[i][num].transform.localPosition;
-                    pos = new Vector2(pos.x, (pos.y + (sizeY * -1) / 2));
-                    Maps[i][num].transform.localPosition = pos;
+                // 折り返しMap以外をスライド
+                for (int i = 0; i < stageLength - 1; i++)
+                {
+                    tempPos = Maps[i + 1][num].transform.localPosition;
+                    Maps[i][num].transform.localPosition = tempPos;
                 }
+                // 折り返し
+                Maps[stageLength - 1][num].transform.localPosition = turnPos;
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[stageLength - 1][num];
@@ -171,47 +169,60 @@ public class StageManager : MonoBehaviour {
                 break;
 
             case Direction.right:// 右
-                for (int i = 0; i < stageLength; i++)
+
+                // 折り返し座標を保持
+                turnPos = Maps[num][0].transform.localPosition;
+
+                for (int i = 0; i < stageLength - 1; i++)
                 {
+                    tempPos = Maps[num][i + 1].transform.localPosition;
+                    Maps[num][i].transform.localPosition = tempPos;
                     // 折り返し座標を保持
-                    if (i == 0) tempPos = Maps[num][i].transform.localPosition;
-                    else if(i == stageLength - 1)
-                    {
-                        Maps[num][i].transform.localPosition = tempPos;
-                        continue;
-                    }
+                    //if (i == 0) tempPos = Maps[num][i].transform.localPosition;
+                    //else if(i == stageLength - 1)
+                    //{
+                    //    Maps[num][i].transform.localPosition = tempPos;
+                    //    continue;
+                    //}
 
                     // スライド
-                    Vector2 pos = Maps[num][i].transform.localPosition;
-                    pos = new Vector2((pos.x + sizeX / 2), pos.y);
-                    Maps[num][i].transform.localPosition = pos;
+                    //Vector2 pos = Maps[num][i].transform.localPosition;
+                    //pos = new Vector2((pos.x + sizeX / 2), pos.y);
+                    //Maps[num][i].transform.localPosition = pos;
                 }
+                Maps[num][stageLength - 1].transform.localPosition = turnPos;
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[num][stageLength - 1];
-                for (int i = 0; i < stageLength - 1; i++)
+                for (int i = 0; i < stageLength - 1; i--)
                 {
                     Maps[num][stageLength - 1 - i] = Maps[num][stageLength - 2 - i];
+                    Debug.Log(Maps[num][stageLength - 1 - i].name);
                 }
                 Maps[num][0] = temp;
                 break;
 
             case Direction.left: // 左
-                for (int i = 0; i < stageLength; i++)
+                turnPos = Maps[num][stageLength - 1].transform.localPosition;
+                for (int i = stageLength - 1; i > 0; i++)
                 {
-                    if (i == 0)
-                    {
-                        // 折り返し座標を保持
-                        tempPos = Maps[num][stageLength - 1].transform.localPosition;
-                        Maps[num][0].transform.localPosition = tempPos;
-                        continue;
-                    }
+                    tempPos = Maps[num][i - 1].transform.localPosition;
+                    Maps[num][i].transform.localPosition = tempPos;
 
-                    // スライド
-                    Vector2 pos = Maps[num][i].transform.localPosition;
-                    pos = new Vector2((pos.x + (sizeX * -1) / 2), pos.y);
-                    Maps[num][i].transform.localPosition = pos;
+                    //if (i == 0)
+                    //{
+                    //    // 折り返し座標を保持
+                    //    tempPos = Maps[num][stageLength - 1].transform.localPosition;
+                    //    Maps[num][0].transform.localPosition = tempPos;
+                    //    continue;
+                    //}
+
+                    //// スライド
+                    //Vector2 pos = Maps[num][i].transform.localPosition;
+                    //pos = new Vector2((pos.x + (sizeX * -1) / 2), pos.y);
+                    //Maps[num][i].transform.localPosition = pos;
                 }
+                Maps[num][0].transform.localPosition = turnPos;
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[num][0];
