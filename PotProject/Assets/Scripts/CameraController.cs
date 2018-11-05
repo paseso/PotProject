@@ -22,40 +22,54 @@ public class CameraController : MonoBehaviour {
 	}
 
     /// <summary>
-    /// カメラが移動する処理
+    /// カメラ移動処理（追従）
     /// </summary>
     private void CameraMove()
     {
-        gameObject.transform.position = new Vector3(0, 0, -10);
-        //-------------一段目----------------------------------------------------------------------
-        if(AniObject.transform.position.x >= 6.5f)
+        gameObject.transform.position = new Vector3(AniObject.transform.position.x, AniObject.transform.position.y + 2.13f, -10);
+        if (gameObject.transform.position.x < 0)
         {
-            gameObject.transform.DOLocalMove(new Vector3(12.9f,0,-10), 0.3f);
-            //transform.position = new Vector3(12.9f, 0, -10);
+            gameObject.transform.position = new Vector3(0, AniObject.transform.position.y + 2.13f, -10);
         }
-        else
+        if(gameObject.transform.position.x >= 12.9f)
         {
-            gameObject.transform.DOLocalMove(new Vector3(0, 0, -10), 0.3f);
-            //gameObject.transform.position = new Vector3(0, 0, -10);
-        }
-        //--------------二段目-----------------------------------------------------------------------
-        if(AniObject.transform.position.y >= 3.5f && AniObject.transform.position.x >= 6.5f)
-        {
-            gameObject.transform.DOLocalMove(new Vector3(12.9f, 15, -10), 0.3f);
-        }
-        else if(AniObject.transform.position.y >= 3.5f && AniObject.transform.position.x < 6.5f)
-        {
-            gameObject.transform.DOLocalMove(new Vector3(0, 15, -10), 0.3f);
-        }
-        //---------------三段目------------------------------------------------------------------------
-        if(AniObject.transform.position.y >= 13.5f && AniObject.transform.position.x >= 6.5f)
-        {
-            gameObject.transform.DOLocalMove(new Vector3(12.9f, 30, -10), 0.3f);
-        }
-        else if(AniObject.transform.position.y >= 13.5f && AniObject.transform.position.x < 6.5f)
-        {
-            gameObject.transform.DOLocalMove(new Vector3(0, 30, -10), 0.3f);
+            gameObject.transform.position = new Vector3(12.9f, 0, -10);
         }
     }
+
+    /// <summary>
+    /// カメラが移動する処理（範囲で移動）
+    /// </summary>
+    //private void CameraMove()
+    //{
+    //    gameObject.transform.position = new Vector3(0, 0, -10);
+    //    //-------------一段目----------------------------------------------------------------------
+    //    if(AniObject.transform.position.x >= 6.5f)
+    //    {
+    //        gameObject.transform.DOLocalMove(new Vector3(12.9f,0,-10), 0.3f);
+    //    }
+    //    else
+    //    {
+    //        gameObject.transform.DOLocalMove(new Vector3(0, 0, -10), 0.3f);
+    //    }
+    //    //--------------二段目-----------------------------------------------------------------------
+    //    if(AniObject.transform.position.y >= 3.5f && AniObject.transform.position.x >= 6.5f)
+    //    {
+    //        gameObject.transform.DOLocalMove(new Vector3(12.9f, 15, -10), 0.3f);
+    //    }
+    //    else if(AniObject.transform.position.y >= 3.5f && AniObject.transform.position.x < 6.5f)
+    //    {
+    //        gameObject.transform.DOLocalMove(new Vector3(0, 15, -10), 0.3f);
+    //    }
+    //    //---------------三段目------------------------------------------------------------------------
+    //    if(AniObject.transform.position.y >= 13.5f && AniObject.transform.position.x >= 6.5f)
+    //    {
+    //        gameObject.transform.DOLocalMove(new Vector3(12.9f, 30, -10), 0.3f);
+    //    }
+    //    else if(AniObject.transform.position.y >= 13.5f && AniObject.transform.position.x < 6.5f)
+    //    {
+    //        gameObject.transform.DOLocalMove(new Vector3(0, 30, -10), 0.3f);
+    //    }
+    //}
     
 }
