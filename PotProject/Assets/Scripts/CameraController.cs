@@ -1,19 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 public class CameraController : MonoBehaviour {
 
     [SerializeField]
     private GameObject AniObject;
-    private Vector2 vec;
-    private Camera camera;
 
 	// Use this for initialization
 	void Start () {
-        camera = gameObject.GetComponent<Camera>();
-        vec = camera.ScreenToViewportPoint(new Vector2(0,0));
+        
 	}
 	
 	// Update is called once per frame
