@@ -24,6 +24,9 @@ public class StageManager : MonoBehaviour {
     private GameObject mapPrefab;
 
     [SerializeField]
+    private GameObject[] mapLists;
+
+    [SerializeField]
     private int stageLength;
 
     private float sizeX;
@@ -34,7 +37,10 @@ public class StageManager : MonoBehaviour {
         sizeX = mapPrefab.GetComponent<SpriteRenderer>().size.x;
         sizeY = mapPrefab.GetComponent<SpriteRenderer>().size.y;
 
-        CreateStage();
+        Debug.Log("X=" + sizeX + "Y=" + sizeY);
+
+        //CreateStage();
+        SetList();
         Debug.Log(Maps.Count);
 	}
 	
@@ -74,13 +80,30 @@ public class StageManager : MonoBehaviour {
                 GameObject map = Instantiate(mapPrefab);
                 map.name = ("Clone" + count);
 
-                map.transform.position = new Vector2(firstPos.position.x + (sizeX * j / 2), firstPos.position.y + (sizeY * -i / 2));
+                map.transform.position = new Vector2(firstPos.position.x + sizeX * j, firstPos.position.y + (sizeY * -i / 2));
+                //map.transform.position = new Vector2(firstPos.position.x + (sizeX * j / 2), firstPos.position.y + (sizeY * -i / 2));
                 mapClones.Add(map);
 
                 if(count % 2 == 0)
                 map.GetComponent<SpriteRenderer>().color = Color.blue;
             }
             Maps.Add(mapClones);
+        }
+    }
+
+    public void SetList()
+    {
+        int count = 0;
+        
+        for(int i = 0; i < 3; i++)
+        {
+            List<GameObject> varMap = new List<GameObject>();
+            for (int j = 0; j < 3; j++)
+            {
+                varMap.Add(mapLists[count]);
+                count++;
+            }
+            Maps.Add(varMap);
         }
     }
 
