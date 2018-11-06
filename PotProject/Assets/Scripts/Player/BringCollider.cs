@@ -8,8 +8,10 @@ public class BringCollider : MonoBehaviour {
     public bool _Brotherhit = false;
     [HideInInspector]
     public bool _Tubohit = false;
-    private bool _bring = false;
+    [HideInInspector]
+    public bool _bring = false;
     private MoveController move_controll;
+    private GameObject target;
 
     // Use this for initialization
     void Start ()
@@ -22,24 +24,37 @@ public class BringCollider : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
+        MoveCollider();
 	}
+
+    /// <summary>
+    /// 持つ範囲コライダーを左右に合わせて移動
+    /// </summary>
+    private void MoveCollider()
+    {
+        if (move_controll._onLeft)
+        {
+            gameObject.transform.position = new Vector2(0, 0);
+        }
+        if (move_controll._onRight)
+        {
+            gameObject.transform.position = new Vector2(8.8f, 0);
+        }
+    }
+
 
     /// <summary>
     /// 持てる範囲で□ボタンを押した時の処理
     /// </summary>
     private void SquereButton(Transform pos)
     {
+        Debug.Log("On Squere!");
         if (_Brotherhit && !_bring)
         {
-            Debug.Log("いける！");
-            if (move_controll._onSquere)
-            {
-                Debug.Log("On Squere!");
-                pos.localPosition = gameObject.transform.transform.position;
-                pos.parent = gameObject.transform.parent;
-                _bring = true;
-            }
+            Debug.Log("持つる！");
+            pos.localPosition = gameObject.transform.transform.position;
+            pos.parent = gameObject.transform.parent;
+            _bring = true;
         }
         else
         {
@@ -50,20 +65,19 @@ public class BringCollider : MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D col)
-    {
-        
-    }
-
     private void OnTriggerStay2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Ototo")
+        if (col.gameObject.tag == "Ototo" || col.gameObject.tag == "Monster")
         {
             Debug.Log("Collider内にOtotoが入ってます");
+            move_controll.target = col.gameObject;
             _Brotherhit = true;
-            SquereButton(col.transform);
+            //if (move_controll._onSquere)
+            //{
+            //    SquereButton(col.transform);
+            //}
         }
-        else if(col.gameObject.tag == "Tube")
+        if (col.gameObject.tag == "Tubo")
         {
             _Tubohit = true;
         }
@@ -71,11 +85,10 @@ public class BringCollider : MonoBehaviour {
 
     private void OnCollisionExit2D(Collision2D col)
     {
-        if(col.gameObject.tag == "Ototo" && !_Brotherhit)
-        {
-            gameObject.transform.position = col.transform.position;
-
-            _Brotherhit = true;
-        }
+        //if(col.gameObject.tag == "Ototo" && !_Brotherhit)
+        //{
+        //    gameObject.transform.position = col.transform.position;
+        //    _Brotherhit = true;
+        //}
     }
 }

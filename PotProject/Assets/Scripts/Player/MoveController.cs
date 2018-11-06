@@ -8,7 +8,7 @@ public class MoveController : MonoBehaviour {
     private float speed = 0f;
 
     private Rigidbody2D rig;
-    private bool _bring = false;
+    //private bool _bring = false;
     private bool _isJump = false;
     private bool _wait = false;
     private bool _hitOtoto = false;
@@ -23,6 +23,8 @@ public class MoveController : MonoBehaviour {
     //---------------------------------------------
     [SerializeField,Header("弟")]
     private GameObject Ototo;
+    [HideInInspector]
+    public GameObject target;
 
     [SerializeField]
     private GameObject managerGameObject;
@@ -53,10 +55,11 @@ public class MoveController : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        target = null;
         rig = gameObject.GetComponent<Rigidbody2D>();
         manager = managerGameObject.GetComponent<PlayerManager>();
         bringctr = gameObject.transform.GetChild(0).GetComponent<BringCollider>();
-        _bring = false;
+        //_bring = false;
         _isJump = false;
         _wait = false;
         _onRight = false;
@@ -72,10 +75,10 @@ public class MoveController : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        //if (_wait)
-        //{
-        //    CoolTime(1.0f);
-        //}
+        if (bringctr._bring)
+        {
+            target.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y+2f);
+        }
         BtnCheck();
 	}
 
@@ -112,7 +115,7 @@ public class MoveController : MonoBehaviour {
                 }
                 else
                 {
-                    rig.AddForce(Vector2.right * 8f, ForceMode2D.Impulse);
+                    //rig.AddForce(Vector2.right * 8f, ForceMode2D.Impulse);
                 }
                 _onLeft = true;
                 break;
@@ -126,7 +129,7 @@ public class MoveController : MonoBehaviour {
                 }
                 else
                 {
-                    rig.AddForce(Vector2.left * 8f, ForceMode2D.Impulse);
+                    //rig.AddForce(Vector2.left * 8f, ForceMode2D.Impulse);
                 }
                 _onRight = true;
                 break;
@@ -137,23 +140,28 @@ public class MoveController : MonoBehaviour {
 
             case ButtonType.SQUERE:
                 Debug.Log("□");
-                //if (!bringctr._Brotherhit)
-                //    return;
+                if (!bringctr._Brotherhit)
+                    return;
 
-                //if (!_bring)
-                //{
-                //    Debug.Log("持つ");
-                //    Ototo.gameObject.transform.parent = gameObject.transform;
-                //    Ototo.transform.position = new Vector3(gameObject.transform.position.x, 4f, 0);
-                //    _bring = true;
-                //}
-                //else
-                //{
-                //    Debug.Log("離す");
-                //    Ototo.gameObject.transform.position = new Vector2(10f, 0);
-                //    _bring = false;
-                //}
-                _onSquere = true;
+                if (!_onSquere)
+                {
+                    _onSquere = true;
+                    if (!bringctr._bring)
+                    {
+                        Debug.Log("持つ");
+                        target.gameObject.transform.parent = gameObject.transform;
+                        target.transform.position = new Vector3(gameObject.transform.position.x, 1f, 0);
+                        bringctr._bring = true;
+                    }
+                    else
+                    {
+                        Debug.Log("離す");
+                        target.gameObject.transform.position = new Vector2(gameObject.transform.position.x + 2f, gameObject.transform.position.y);
+                        target.gameObject.transform.parent = null;
+                        bringctr._bring = false;
+                    }
+                }
+                _onSquere = false;
                 break;
 
             case ButtonType.TRIANGLE:
@@ -283,18 +291,17 @@ public class MoveController : MonoBehaviour {
         }
         _onRight = false;
         _onLeft = false;
-        _onSquere = false;
     }
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Ototo")
-        {
-            Debug.Log("弟にあたった");
-            rig.velocity = new Vector2(0, rig.velocity.y);
-            _hitOtoto = true;
-            manager.HpMinus();
-        }
+        //if (col.gameObject.tag == "Ototo")
+        //{
+        //    Debug.Log("弟にあたった");
+        //    rig.velocity = new Vector2(0, rig.velocity.y);
+        //    _hitOtoto = true;
+        //    manager.HpMinus();
+        //}
     }
 
     private void OnCollisionStay2D(Collision2D col)
