@@ -30,6 +30,8 @@ public class MoveController : MonoBehaviour {
     private GameObject managerGameObject;
     private PlayerManager manager;
     private BringCollider bringctr;
+
+    private bool _onece = false;
     
     private enum ButtonType
     {
@@ -59,12 +61,12 @@ public class MoveController : MonoBehaviour {
         rig = gameObject.GetComponent<Rigidbody2D>();
         manager = managerGameObject.GetComponent<PlayerManager>();
         bringctr = gameObject.transform.GetChild(0).GetComponent<BringCollider>();
-        //_bring = false;
         _isJump = false;
         _wait = false;
         _onRight = false;
         _onLeft = false;
         _onSquere = false;
+        _onece = false;
 	}
 
     //private void FixedUpdate()
@@ -75,9 +77,9 @@ public class MoveController : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        if (bringctr._bring)
+        if (bringctr._bring && _onece)
         {
-            target.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y+2f);
+            target.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 2.5f);
         }
         BtnCheck();
 	}
@@ -107,31 +109,16 @@ public class MoveController : MonoBehaviour {
 
             case ButtonType.LEFT:
                 Debug.Log("LEFT");
-                //rig.velocity = new Vector2(-5f, rig.velocity.y);
-                if (!_hitOtoto)
-                {
-
-                    rig.velocity = new Vector2(-5f, rig.velocity.y);
-                }
-                else
-                {
-                    //rig.AddForce(Vector2.right * 8f, ForceMode2D.Impulse);
-                }
                 _onLeft = true;
+                _onRight = false;
+                rig.velocity = new Vector2(-5f, rig.velocity.y);
                 break;
 
             case ButtonType.RIGTH:
                 Debug.Log("RIGHT");
-                //rig.velocity = new Vector2(5f, rig.velocity.y);
-                if (!_hitOtoto)
-                {
-                    rig.velocity = new Vector2(5f, rig.velocity.y);
-                }
-                else
-                {
-                    //rig.AddForce(Vector2.left * 8f, ForceMode2D.Impulse);
-                }
                 _onRight = true;
+                _onLeft = false;
+                rig.velocity = new Vector2(5f, rig.velocity.y);
                 break;
 
             case ButtonType.CIRCLE:
@@ -143,22 +130,28 @@ public class MoveController : MonoBehaviour {
                 if (!bringctr._Brotherhit)
                     return;
 
-                if (!_onSquere)
+                if (!_onece)
                 {
                     _onSquere = true;
                     if (!bringctr._bring)
                     {
                         Debug.Log("持つ");
                         target.gameObject.transform.parent = gameObject.transform;
-                        target.transform.position = new Vector3(gameObject.transform.position.x, 1f, 0);
+                        target.GetComponent<Rigidbody2D>().simulated = false;
                         bringctr._bring = true;
+                        _onece = true;
                     }
-                    else
+                }
+                else
+                {
+                    if (bringctr._bring)
                     {
                         Debug.Log("離す");
-                        target.gameObject.transform.position = new Vector2(gameObject.transform.position.x + 2f, gameObject.transform.position.y);
+                        target.gameObject.transform.position = new Vector2(gameObject.transform.position.x + 2f, gameObject.transform.position.y + 1);
                         target.gameObject.transform.parent = null;
+                        target.GetComponent<Rigidbody2D>().simulated = true;
                         bringctr._bring = false;
+                        _onece = false;
                     }
                 }
                 _onSquere = false;
@@ -289,8 +282,6 @@ public class MoveController : MonoBehaviour {
         {//十字上ボタン or キーボードの「V」
             Move(ButtonType.CROSSY_UP);
         }
-        _onRight = false;
-        _onLeft = false;
     }
 
     private void OnCollisionEnter2D(Collision2D col)

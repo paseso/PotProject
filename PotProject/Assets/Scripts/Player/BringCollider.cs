@@ -34,11 +34,11 @@ public class BringCollider : MonoBehaviour {
     {
         if (move_controll._onLeft)
         {
-            gameObject.transform.position = new Vector2(0, 0);
+            gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
         }
         if (move_controll._onRight)
         {
-            gameObject.transform.position = new Vector2(8.8f, 0);
+            gameObject.transform.rotation = new Quaternion(0, 180, 0, 0);
         }
     }
 
@@ -52,14 +52,13 @@ public class BringCollider : MonoBehaviour {
         if (_Brotherhit && !_bring)
         {
             Debug.Log("持つる！");
-            pos.localPosition = gameObject.transform.transform.position;
-            pos.parent = gameObject.transform.parent;
+            pos.position = new Vector2(gameObject.transform.transform.position.x, gameObject.transform.transform.position.y + 5f);
             _bring = true;
         }
         else
         {
             pos.transform.parent = null;
-            pos.transform.position = new Vector2(gameObject.transform.parent.transform.position.x, gameObject.transform.parent.transform.position.y + 5);
+            pos.transform.position = new Vector2(gameObject.transform.parent.transform.position.x + 2, gameObject.transform.parent.transform.position.y);
             _bring = false;
             _Brotherhit = false;
         }
@@ -72,10 +71,6 @@ public class BringCollider : MonoBehaviour {
             Debug.Log("Collider内にOtotoが入ってます");
             move_controll.target = col.gameObject;
             _Brotherhit = true;
-            //if (move_controll._onSquere)
-            //{
-            //    SquereButton(col.transform);
-            //}
         }
         if (col.gameObject.tag == "Tubo")
         {

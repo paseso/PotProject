@@ -28,6 +28,8 @@ public class PlayerManager : MonoBehaviour {
     private List<Sprite> swordSpriteList;
 
     public Status status;
+    [SerializeField]
+    private AlchemyController alchemy_ctr;
 
 	// Use this for initialization
 	void Start () {
@@ -85,9 +87,9 @@ public class PlayerManager : MonoBehaviour {
     /// アイテムを錬金する処理
     /// </summary>
     /// <param name="item"></param>
-    private void ItemAlchemy(string item)
+    public void ItemAlchemy(ItemStatus.ITEM item)
     {
-
+        alchemy_ctr.MadeItem(item);
     }
 
     /// <summary>

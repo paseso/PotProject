@@ -257,6 +257,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3691c51628418e74092ea6a6c7f2ef87, type: 3}
   - {fileID: 21300000, guid: c0deddb703dce2642b0cc39c47710f46, type: 3}
   - {fileID: 21300000, guid: 7b5053858cab5684e938c84c3f756e48, type: 3}
+  alchemy_ctr: {fileID: 0}
 --- !u!1 &359875057
 GameObject:
   m_ObjectHideFlags: 0
@@ -683,6 +684,7 @@ MonoBehaviour:
   _onRight: 0
   _onLeft: 0
   Ototo: {fileID: 1660014888}
+  target: {fileID: 0}
   managerGameObject: {fileID: 214734539}
 --- !u!70 &818430062
 CapsuleCollider2D:
@@ -709,6 +711,8 @@ GameObject:
   - component: {fileID: 880344551}
   - component: {fileID: 880344550}
   - component: {fileID: 880344552}
+  - component: {fileID: 880344553}
+  - component: {fileID: 880344554}
   m_Layer: 0
   m_Name: Tubo
   m_TagString: Monster
@@ -795,6 +799,38 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.92, y: 3.85}
   m_EdgeRadius: 0
+--- !u!50 &880344553
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 880344549}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
+--- !u!114 &880344554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 880344549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c487676677cc884e97ca0d67ded1107, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Potion: {fileID: 0}
 --- !u!1001 &1021630150
 Prefab:
   m_ObjectHideFlags: 0
@@ -1437,14 +1473,14 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 20
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!212 &1660014893
 SpriteRenderer:

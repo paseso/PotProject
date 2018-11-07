@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AlchemyController : MonoBehaviour {
 
+    [SerializeField, Header("ポーション")]
+    private GameObject Potion;
     private TextAsset csvFile;
 
     // Use this for initialization
@@ -38,7 +40,8 @@ public class AlchemyController : MonoBehaviour {
         switch (item)
         {
             case ItemStatus.ITEM.SLIME:
-
+                GameObject obj = Instantiate(Potion, null);
+                obj.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y + 1);
                 break;
             case ItemStatus.ITEM.GOLEM:
 
