@@ -68,9 +68,12 @@ public class BringCollider : MonoBehaviour {
     {
         if (col.gameObject.tag == "Ototo" || col.gameObject.tag == "Monster")
         {
-            Debug.Log("Collider内にOtotoが入ってます");
-            move_controll.target = col.gameObject;
-            _Brotherhit = true;
+            if (!_bring)
+            {
+                Debug.Log("Collider内にOtotoが入ってます");
+                move_controll.target = col.gameObject;
+                _Brotherhit = true;
+            }
         }
         if (col.gameObject.tag == "Tubo")
         {

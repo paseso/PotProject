@@ -77,7 +77,7 @@ public class MoveController : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        if (bringctr._bring && _onece)
+        if (bringctr._bring)
         {
             target.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 2.5f);
         }
@@ -141,18 +141,19 @@ public class MoveController : MonoBehaviour {
                         bringctr._bring = true;
                         _onece = true;
                     }
-                }
-                else
-                {
-                    if (bringctr._bring)
+                    else if (bringctr._bring)
                     {
                         Debug.Log("離す");
                         target.gameObject.transform.position = new Vector2(gameObject.transform.position.x + 2f, gameObject.transform.position.y + 1);
                         target.gameObject.transform.parent = null;
                         target.GetComponent<Rigidbody2D>().simulated = true;
                         bringctr._bring = false;
-                        _onece = false;
                     }
+                    _onece = false;
+                }
+                else
+                {
+                    
                 }
                 _onSquere = false;
                 break;
