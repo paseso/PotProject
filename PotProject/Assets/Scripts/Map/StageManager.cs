@@ -18,20 +18,17 @@ public class StageManager : MonoBehaviour {
     private List<List<GameObject>> Maps = new List<List<GameObject>>();
 
     [SerializeField]
-    private Transform firstPos;
-
-    [SerializeField]
-    private GameObject mapPrefab;
-
-    [SerializeField]
     private GameObject[] mapLists;
 
     [SerializeField]
     private int stageLength;
 
-    void Start () {
+    void Awake() {
         SetList();
-        Debug.Log(Maps.Count);
+    }
+
+    void Start () {
+
 	}
 	
 	void Update () {
@@ -86,6 +83,7 @@ public class StageManager : MonoBehaviour {
         GameObject temp;
         Vector2 tempPos = new Vector2();
         Vector2 turnPos = new Vector2();
+        
         switch (dir)
         {
             case Direction.up: // 上
@@ -139,7 +137,6 @@ public class StageManager : MonoBehaviour {
                 break;
 
             case Direction.right:// 右
-
                 // 折り返し座標を保持
                 turnPos = Maps[num][0].transform.localPosition;
 

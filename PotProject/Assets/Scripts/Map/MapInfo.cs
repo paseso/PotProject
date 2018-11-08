@@ -6,6 +6,7 @@ public class MapInfo : MonoBehaviour {
 
     // どの場所にあるマップか
     public int mapNum;
+    public GameObject rock;
     [SerializeField]
     private bool _wood; // 伸びる木
     [SerializeField]
