@@ -153,15 +153,15 @@ InputManager:
     m_Name: Horizontal_ps4
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: joystick button 1
-    altNegativeButton: 
+    negativeButton: down
+    positiveButton: up
+    altNegativeButton: s
     altPositiveButton: w
-    gravity: 1
-    dead: 0.001
+    gravity: 0
+    dead: 0.19
     sensitivity: 1
     snap: 0
-    invert: 0
+    invert: 1
     type: 2
     axis: 1
     joyNum: 0

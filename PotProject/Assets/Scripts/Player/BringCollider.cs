@@ -16,6 +16,7 @@ public class BringCollider : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        target = null;
         _Brotherhit = false;
         _Tubohit = false;
         _bring = false;
@@ -24,6 +25,10 @@ public class BringCollider : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (_Tubohit)
+        {
+            SquereTubo();
+        }
         MoveCollider();
 	}
 
@@ -64,8 +69,17 @@ public class BringCollider : MonoBehaviour {
         }
     }
 
+    private void SquereTubo()
+    {
+        if (!move_controll._onSquere && !_bring)
+            return;
+
+
+    }
+
     private void OnTriggerStay2D(Collider2D col)
     {
+        //gameObject.transform.parent.position = new Vector2();
         if (col.gameObject.tag == "Ototo" || col.gameObject.tag == "Monster")
         {
             if (!_bring)
@@ -78,15 +92,16 @@ public class BringCollider : MonoBehaviour {
         if (col.gameObject.tag == "Tubo")
         {
             _Tubohit = true;
+            col.gameObject.transform.GetChild(0).gameObject.SetActive(true);
         }
     }
 
-    private void OnCollisionExit2D(Collision2D col)
+    private void OnTriggerExit2D(Collider2D col)
     {
-        //if(col.gameObject.tag == "Ototo" && !_Brotherhit)
-        //{
-        //    gameObject.transform.position = col.transform.position;
-        //    _Brotherhit = true;
-        //}
+        if(col.gameObject.tag == "Tubo")
+        {
+            _Tubohit = false;
+            col.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        }
     }
 }

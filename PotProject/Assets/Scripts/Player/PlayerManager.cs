@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public struct Status
 {
@@ -31,10 +32,15 @@ public class PlayerManager : MonoBehaviour {
     [SerializeField]
     private AlchemyController alchemy_ctr;
 
+    [SerializeField]
+    private GameObject Alchemy_ui;
+    private bool _alchemyUi = false;
+
 	// Use this for initialization
 	void Start () {
         status.PlayerHP = 5;
         status.ItemList = null;
+        _alchemyUi = false;
 	}
 	
 	// Update is called once per frame
@@ -90,6 +96,24 @@ public class PlayerManager : MonoBehaviour {
     public void ItemAlchemy(ItemStatus.ITEM item)
     {
         alchemy_ctr.MadeItem(item);
+    }
+
+    /// <summary>
+    /// 錬金UIを開く
+    /// </summary>
+    public void OpenAlchemy()
+    {
+        if (!_alchemyUi)
+        {
+            Alchemy_ui.transform.DOMove(new Vector2(3.5f, 0), 0.3f);
+            _alchemyUi = true;
+        }
+        else
+        {
+            Alchemy_ui.transform.DOMove(new Vector2(13.8f, 0), 0.3f);
+            _alchemyUi = false;
+        }
+        
     }
 
     /// <summary>

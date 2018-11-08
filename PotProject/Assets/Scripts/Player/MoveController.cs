@@ -38,6 +38,8 @@ public class MoveController : MonoBehaviour {
         JUMP = 0,
         RIGTH,
         LEFT,
+        UP,
+        DOWN,
         CIRCLE,
         SQUERE,
         TRIANGLE,
@@ -76,7 +78,6 @@ public class MoveController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-
         if (bringctr._bring)
         {
             target.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 2.5f);
@@ -103,7 +104,7 @@ public class MoveController : MonoBehaviour {
         {
             case ButtonType.JUMP:
                 Debug.Log("×");
-                rig.velocity = new Vector2(rig.velocity.x, 1f * speed);
+                rig.velocity = new Vector2(gameObject.transform.position.x, 1f * speed);
                 _wait = true;
                 break;
 
@@ -115,10 +116,18 @@ public class MoveController : MonoBehaviour {
                 break;
 
             case ButtonType.RIGTH:
-                Debug.Log("RIGHT");
+                Debug.Log("RIGTH");
                 _onRight = true;
                 _onLeft = false;
                 rig.velocity = new Vector2(5f, rig.velocity.y);
+                break;
+
+            case ButtonType.UP:
+                Debug.Log("UP");
+                break;
+
+            case ButtonType.DOWN:
+                Debug.Log("DOWN");
                 break;
 
             case ButtonType.CIRCLE:
@@ -130,36 +139,30 @@ public class MoveController : MonoBehaviour {
                 if (!bringctr._Brotherhit)
                     return;
 
-                if (!_onece)
+                _onSquere = true;
+                if (!bringctr._bring)
                 {
-                    _onSquere = true;
-                    if (!bringctr._bring)
-                    {
-                        Debug.Log("持つ");
-                        target.gameObject.transform.parent = gameObject.transform;
-                        target.GetComponent<Rigidbody2D>().simulated = false;
-                        bringctr._bring = true;
-                        _onece = true;
-                    }
-                    else if (bringctr._bring)
-                    {
-                        Debug.Log("離す");
-                        target.gameObject.transform.position = new Vector2(gameObject.transform.position.x + 2f, gameObject.transform.position.y + 1);
-                        target.gameObject.transform.parent = null;
-                        target.GetComponent<Rigidbody2D>().simulated = true;
-                        bringctr._bring = false;
-                    }
-                    _onece = false;
+                    Debug.Log("持つ");
+                    target.GetComponent<Rigidbody2D>().simulated = false;
+                    bringctr._bring = true;
                 }
-                else
+                else if (bringctr._bring)
                 {
-                    
+                    Debug.Log("離す");
+                    target.gameObject.transform.position = new Vector2(gameObject.transform.position.x + 2f, gameObject.transform.position.y + 1);
+                    target.gameObject.transform.parent = null;
+                    target.GetComponent<Rigidbody2D>().simulated = true;
+                    bringctr._bring = false;
                 }
                 _onSquere = false;
                 break;
 
             case ButtonType.TRIANGLE:
                 Debug.Log("△");
+                if (bringctr._Tubohit && !bringctr._bring)
+                {
+                    manager.OpenAlchemy();
+                }
                 break;
 
             case ButtonType.L1:
@@ -193,12 +196,15 @@ public class MoveController : MonoBehaviour {
             case ButtonType.CROSSX_RIGTH:
                 manager.SwordTypeChange(Status.SWORDTYPE.EARTH);
                 break;
+
             case ButtonType.CROSSX_LEFT:
                 manager.SwordTypeChange(Status.SWORDTYPE.WATER);
                 break;
+
             case ButtonType.CROSSY_UP:
                 manager.SwordTypeChange(Status.SWORDTYPE.FIRE);
                 break;
+
             case ButtonType.CROSSY_DOWN:
                 manager.SwordTypeChange(Status.SWORDTYPE.FIRE);
                 break;
@@ -226,44 +232,53 @@ public class MoveController : MonoBehaviour {
         {
             rig.velocity = new Vector2(0, rig.velocity.y);    //gameObject.transform.position.y
             Debug.Log("移動してない");
+        }else if (Input.GetAxis("Horizontal_ps4") >= 0.15f || Input.GetKey(KeyCode.W))
+        {
+            Move(ButtonType.UP);
+        }else if(Input.GetAxis("Horizontal_ps4") <= -0.15f || Input.GetKey(KeyCode.S))
+        {
+            Move(ButtonType.DOWN);
+        }else if(Input.GetAxis("Horizontal_ps4") <= 0.15f && Input.GetAxis("Horizontal_ps4") >= -0.15f)
+        {
+            rig.velocity = new Vector2(rig.velocity.x, 0);
         }
-        if (Input.GetButton("Squere") || Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetButtonDown("Squere") || Input.GetKeyDown(KeyCode.Q))
         {//□ボタン or キーボードの「Q」
             Move(ButtonType.SQUERE);
         }
-        if (Input.GetButton("Circle") || Input.GetKey(KeyCode.E))
+        if (Input.GetButtonDown("Circle") || Input.GetKeyDown(KeyCode.E))
         {//〇ボタン or キーボードの「E」
             Move(ButtonType.CIRCLE);
         }
-        if (Input.GetButton("Triangle") || Input.GetKeyDown(KeyCode.F))
+        if (Input.GetButtonDown("Triangle") || Input.GetKeyDown(KeyCode.F))
         {//△ボタン or キーボードの「F」
             Move(ButtonType.TRIANGLE);
         }
-        if (Input.GetButton("L1") || Input.GetKeyDown(KeyCode.L))
+        if (Input.GetButtonDown("L1") || Input.GetKeyDown(KeyCode.L))
         {// L1ボタン or キーボードの「L」
             Move(ButtonType.L1);
         }
-        if (Input.GetButton("R1") || Input.GetKeyDown(KeyCode.K))
+        if (Input.GetButtonDown("R1") || Input.GetKeyDown(KeyCode.K))
         {// R1ボタン or キーボードの「K」
             Move(ButtonType.R1);
         }
-        if (Input.GetButton("L2") || Input.GetKeyDown(KeyCode.P))
+        if (Input.GetButtonDown("L2") || Input.GetKeyDown(KeyCode.P))
         {// L2ボタン or キーボードの「P」
             Move(ButtonType.L2);
         }
-        if (Input.GetButton("R2") || Input.GetKeyDown(KeyCode.O))
+        if (Input.GetButtonDown("R2") || Input.GetKeyDown(KeyCode.O))
         {// R2ボタン or キーボードの「O」英語のオーです「o」
             Move(ButtonType.R2);
         }
-        if (Input.GetButton("Option") || Input.GetKeyDown(KeyCode.U))
+        if (Input.GetButtonDown("Option") || Input.GetKeyDown(KeyCode.U))
         {// Optionボタン or キーボードの「U」
             Move(ButtonType.OPTION);
         }
-        if (Input.GetButton("PSbtn") || Input.GetKeyDown(KeyCode.H))
+        if (Input.GetButtonDown("PSbtn") || Input.GetKeyDown(KeyCode.H))
         {// 真ん中のPSボタン or キーボードの「H」
             Move(ButtonType.PSBTN);
         }
-        if (Input.GetButton("PSpad") || Input.GetKeyDown(KeyCode.Y))
+        if (Input.GetButtonDown("PSpad") || Input.GetKeyDown(KeyCode.Y))
         {//PSパッドボタン or キーボードの「Y」
             Move(ButtonType.PSPAD);
         }
@@ -287,13 +302,7 @@ public class MoveController : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        //if (col.gameObject.tag == "Ototo")
-        //{
-        //    Debug.Log("弟にあたった");
-        //    rig.velocity = new Vector2(0, rig.velocity.y);
-        //    _hitOtoto = true;
-        //    manager.HpMinus();
-        //}
+        
     }
 
     private void OnCollisionStay2D(Collision2D col)

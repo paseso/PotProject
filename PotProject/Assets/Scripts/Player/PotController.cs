@@ -6,6 +6,8 @@ public class PotController : MonoBehaviour {
 
     [SerializeField]
     private PlayerManager manager;
+    [SerializeField]
+    private BringCollider bring_col;
 
 	// Use this for initialization
 	void Start () {
@@ -21,8 +23,12 @@ public class PotController : MonoBehaviour {
     {
         if(col.gameObject.tag == "Ototo")
         {
-            col.gameObject.SetActive(false);
-            manager.ItemAlchemy(ItemStatus.ITEM.SLIME);
+            if (bring_col._Tubohit)
+            {
+                Destroy(col.gameObject);
+                //col.gameObject.SetActive(false);
+                manager.ItemAlchemy(ItemStatus.ITEM.SLIME);
+            }
         }
 
     }
