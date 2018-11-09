@@ -23,15 +23,15 @@ public class CameraController : MonoBehaviour {
     /// </summary>
     private void CameraMove()
     {
-        gameObject.transform.position = new Vector3(AniObject.transform.position.x, AniObject.transform.position.y + 2.13f, -10);
-        if (gameObject.transform.position.x < 0)
-        {
-            gameObject.transform.position = new Vector3(0, AniObject.transform.position.y + 2.13f, -10);
-        }
-        if (gameObject.transform.position.x >= 12.9f)
-        {
-            gameObject.transform.position = new Vector3(12.9f, AniObject.transform.position.y + 2.13f, -10);
-        }
+        gameObject.transform.position = new Vector3(AniObject.transform.position.x, AniObject.transform.position.y + 2.13f, -100);
+        //if (gameObject.transform.position.x < 0)
+        //{
+        //    gameObject.transform.position = new Vector3(0, AniObject.transform.position.y + 2.13f, -10);
+        //}
+        //if (gameObject.transform.position.x >= 12.9f)
+        //{
+        //    gameObject.transform.position = new Vector3(12.9f, AniObject.transform.position.y + 2.13f, -10);
+        //}
     }
 
     /// <summary>
