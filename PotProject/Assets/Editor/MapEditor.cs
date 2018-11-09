@@ -26,31 +26,55 @@ public class MapEditor : EditorWindow {
     private Rect[,] gridRect = new Rect[10,10];
     private ScriptableObjectSample _sample;
     private Rect rect;
+    private float GRIDSIZE;
     
 
-    [MenuItem("Editor/Sample")]
+    [MenuItem("Editor/MapEditor")]
     private static void Create()
     {
         //  生成
-        MapEditor window = GetWindow<MapEditor>("サンプル");
+        MapEditor window = GetWindow<MapEditor>("MapEditor");
         //  最小サイズ設定
         window.minSize = new Vector2(320, 360);
         window.maxSize = new Vector2(320, 500);
     }
-
-
-
 
     private void OnGUI()
     {
         //  インスタンス生成
         if (_sample == null)
             _sample = ScriptableObject.CreateInstance<ScriptableObjectSample>();
-        
-        //  グリッド以外のラベル表示
-        DrawParamatorLabels();
 
-        rect = EditorGUILayout.GetControlRect();
+        //  グリッド以外のラベル表示
+        //  マップデータを書き出し
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("書き込み"))
+            Export();
+        //_sample.SampleIntValue = EditorGUILayout.IntField("サンプル", _sample.SampleIntValue);
+        GUILayout.EndHorizontal();
+
+
+        //  マスの画像を取得する
+        //  いまはこのクラスでやってるが後で別のクラスでやる予定
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Image Directory : ", GUILayout.Width(110));
+        imgDirectory = EditorGUILayout.ObjectField(imgDirectory, typeof(UnityEngine.Object), true);
+        GUILayout.EndHorizontal();
+
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.PrefixLabel("タイル画像");
+        tileSprite = (Texture2D)EditorGUILayout.ObjectField(tileSprite, typeof(Texture2D), allowSceneObjects: true);
+        EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.Label("グリッドの色", GUILayout.Width(150));
+        gridColor = EditorGUILayout.ColorField(gridColor);
+        EditorGUILayout.EndHorizontal();
+
+        rect = EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.EndHorizontal();
+
+        Debug.Log("RectX" + rect.xMax);
         gridRect = CreateGrid();
 
         for (int y = 0; y < gridNum; y++)
@@ -99,8 +123,7 @@ public class MapEditor : EditorWindow {
                         break;
                     }
                 }
-            }
-            
+            }            
         }
 
         // 画像を描画する
@@ -131,12 +154,13 @@ public class MapEditor : EditorWindow {
         }
         GUILayout.EndHorizontal();
 
-
         //  タイルの種類を分ける
         _sample.SampleIntValue = GUILayout.Toolbar(_sample.SampleIntValue, new string[] { "地面", "ギミック", "エネミー" });
 
         DrawImageParts();
     }
+
+
 
     private void Export()
     {
@@ -156,44 +180,16 @@ public class MapEditor : EditorWindow {
         AssetDatabase.Refresh();
     }
 
-    private void DrawParamatorLabels()
-    {
-        //  マップデータを書き出し
-        GUILayout.BeginHorizontal();
-        if (GUILayout.Button("書き込み"))
-            Export();
-        _sample.SampleIntValue = EditorGUILayout.IntField("サンプル", _sample.SampleIntValue);
-        GUILayout.EndHorizontal();
-
-
-        //  マスの画像を取得する
-        //  いまはこのクラスでやってるが後で別のクラスでやる予定
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("Image Directory : ", GUILayout.Width(110));
-        imgDirectory = EditorGUILayout.ObjectField(imgDirectory, typeof(UnityEngine.Object), true);
-        GUILayout.EndHorizontal();
-
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.PrefixLabel("タイル画像");
-        tileSprite = (Texture2D)EditorGUILayout.ObjectField(tileSprite, typeof(Texture2D), allowSceneObjects: true);
-        EditorGUILayout.EndHorizontal();
-
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("グリッドの色", GUILayout.Width(150));
-        gridColor = EditorGUILayout.ColorField(gridColor);
-        GUILayout.EndHorizontal();
-
-        rect = EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.EndHorizontal();
-    }
-
     //  グリッドのサイズを設定
     //  for分で回してバグの原因だった
     private Rect[,] CreateGrid()
     {
+        rect = EditorGUILayout.GetControlRect();
         float edgeX = 20f;
         float tmpX = edgeX;
-        float maxGridSize = EditorGUILayout.GetControlRect().xMax - edgeX * 2;
+        float maxGridSize = rect.xMax - edgeX * 2;
+        Debug.Log("MaxGrid " + EditorGUILayout.GetControlRect().xMax);
+        GRIDSIZE = maxGridSize;
         float gridSize = maxGridSize / gridNum;
         float y = rect.y + 10;
         Rect[,] resultRects = new Rect[gridNum, gridNum];
