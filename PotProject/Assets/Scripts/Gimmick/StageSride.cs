@@ -10,18 +10,12 @@ public class StageSride : MonoBehaviour {
         sManager = GameObject.Find("Controller").GetComponent<StageManager>();
         mInfo = transform.root.gameObject.GetComponent<MapInfo>();
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public void OnCollisionEnter2D(Collision2D col) {
-        Debug.Log("あたったお");
         if (col.gameObject.tag == "Player") {
             
             Debug.Log("あにきたお");
-            switch (gameObject.tag) {
+            switch (gameObject.name) {
                 case "Up":
                     break;
                 case "Down":
@@ -32,7 +26,7 @@ public class StageSride : MonoBehaviour {
                 case "Right":
                     sManager.SrideStage(0, StageManager.Direction.right);
                     break;
-                case "Rock":
+                case "RockUp":
                     Debug.Log("a");
                     Destroy(mInfo.rock);
                     break;
