@@ -12,6 +12,15 @@ public class MapInfo : MonoBehaviour {
     [SerializeField]
     private bool _upRock; // スイッチ岩
     [SerializeField]
-    private bool[] _ladders; // 縄ハシゴ
-    
+    private int ladderCount;
+
+    private bool[] _upLadders; // 縄ハシゴ
+    private bool[] _downLadders; // 縄ハシゴ
+
+    void Awake() {
+        this._upLadders = new bool[this.ladderCount];
+        this._downLadders = new bool[this.ladderCount];
+
+        Debug.Log(_upLadders.Length);
+    }
 }

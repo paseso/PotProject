@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class StageSride : MonoBehaviour {
     StageManager sManager = new StageManager();
@@ -28,9 +29,8 @@ public class StageSride : MonoBehaviour {
                     break;
                 case "RockUp":
                     Debug.Log("a");
-                    Destroy(mInfo.rock);
-                    break;
-                
+                    mInfo.rock.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
+                    break;  
             }
             Destroy(gameObject);
         }

@@ -1087,7 +1087,7 @@ GameObject:
   - component: {fileID: 55498601}
   - component: {fileID: 55498600}
   m_Layer: 0
-  m_Name: Rock
+  m_Name: Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1165,12 +1165,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 55498599}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.73, y: -2.95, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.01, y: -1.3400003, z: 0}
   m_LocalScale: {x: 0.3956151, y: 1.6274514, z: 1}
   m_Children: []
-  m_Father: {fileID: 1046846661}
-  m_RootOrder: 4
+  m_Father: {fileID: 626528943}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &74618250
 GameObject:
@@ -7009,6 +7009,35 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
+--- !u!1 &626528942
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 626528943}
+  m_Layer: 0
+  m_Name: Rock
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &626528943
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 626528942}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.78, y: -1.61, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 55498602}
+  m_Father: {fileID: 1046846661}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &627053366
 GameObject:
   m_ObjectHideFlags: 0
@@ -7759,7 +7788,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -11454,7 +11483,7 @@ Transform:
   - {fileID: 473142888}
   - {fileID: 1884469356}
   - {fileID: 1336736543}
-  - {fileID: 55498602}
+  - {fileID: 626528943}
   - {fileID: 1361693827}
   - {fileID: 2036769396}
   - {fileID: 2091349913}
@@ -11475,7 +11504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapNum: 0
-  rock: {fileID: 55498599}
+  rock: {fileID: 626528942}
   _wood: 0
   _upRock: 0
   _ladders: 
