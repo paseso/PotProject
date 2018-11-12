@@ -12,6 +12,7 @@ public class BringCollider : MonoBehaviour {
     public bool _bring = false;
     private MoveController move_controll;
     private GameObject target;
+    private GameObject ParentObject;
 
     // Use this for initialization
     void Start ()
@@ -20,6 +21,7 @@ public class BringCollider : MonoBehaviour {
         _Brotherhit = false;
         _Tubohit = false;
         _bring = false;
+        ParentObject = gameObject.transform.parent.GetComponent<GameObject>();
         move_controll = gameObject.transform.parent.GetComponent<MoveController>();
     }
 	
@@ -61,7 +63,11 @@ public class BringCollider : MonoBehaviour {
         else
         {
             pos.transform.parent = null;
-            pos.transform.position = new Vector2(gameObject.transform.parent.transform.position.x + 2, gameObject.transform.parent.transform.position.y);
+            if(move_controll._onRight)
+                pos.transform.position = new Vector2(ParentObject.transform.position.x - 2, ParentObject.transform.position.y);
+            else
+                pos.transform.position = new Vector2(ParentObject.transform.position.x + 2, ParentObject.transform.position.y);
+
             _bring = false;
             _Brotherhit = false;
         }
