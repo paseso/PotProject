@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class StageSride : MonoBehaviour {
     StageManager sManager = new StageManager();
-    MapInfo mInfo = new MapInfo();
+    MapInfo mInfo;
 	// Use this for initialization
 	void Start () {
         sManager = GameObject.Find("Controller").GetComponent<StageManager>();
@@ -14,7 +14,7 @@ public class StageSride : MonoBehaviour {
 
     public void OnCollisionEnter2D(Collision2D col) {
         if (col.gameObject.tag == "Player") {
-            
+            mInfo = transform.root.GetComponent<MapInfo>();
             Debug.Log("あにきたお");
             switch (gameObject.name) {
                 case "Up":
@@ -29,6 +29,7 @@ public class StageSride : MonoBehaviour {
                     break;
                 case "RockUp":
                     mInfo.rock.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
+                    mInfo.UpRock = true;
                     break;  
             }
             Destroy(gameObject);

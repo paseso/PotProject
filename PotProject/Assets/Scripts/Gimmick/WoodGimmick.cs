@@ -14,7 +14,7 @@ public class WoodGimmick : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.H))
         {
-            Debug.Log("oioioi");
+            if (!glowFlag) return;
             StartCoroutine(Grow());
         }
     }
@@ -27,14 +27,20 @@ public class WoodGimmick : MonoBehaviour {
 
     public void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.tag == "Player")
-            glowFlag = true;
+        if (col.gameObject.tag == "Player")
+        {
+            Debug.Log("Enter");
+            GlowWoodFlag = true;
+        }
     }
 
     public void OnTriggerExit2D(Collider2D col)
     {
         if (col.gameObject.tag == "Player")
-            glowFlag = false;
+        {
+            Debug.Log("Exit");
+            GlowWoodFlag = false;
+        }
     }
 
     public IEnumerator Grow()
