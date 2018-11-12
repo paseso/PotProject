@@ -28,7 +28,6 @@ public class StageSride : MonoBehaviour {
                     sManager.SrideStage(0, StageManager.Direction.right);
                     break;
                 case "RockUp":
-                    Debug.Log("a");
                     mInfo.rock.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
                     break;  
             }

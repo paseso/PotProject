@@ -274,7 +274,6 @@ MonoBehaviour:
   mapNum: 0
   rock: {fileID: 0}
   _wood: 0
-  _upRock: 0
   ladderCount: 0
 --- !u!1 &7856877
 GameObject:
@@ -3044,7 +3043,6 @@ MonoBehaviour:
   mapNum: 0
   rock: {fileID: 0}
   _wood: 0
-  _upRock: 0
   ladderCount: 0
 --- !u!1 &271159955
 GameObject:
@@ -3396,7 +3394,6 @@ MonoBehaviour:
   mapNum: 0
   rock: {fileID: 0}
   _wood: 0
-  _upRock: 0
   ladderCount: 0
 --- !u!1 &296823209
 GameObject:
@@ -5603,7 +5600,6 @@ MonoBehaviour:
   mapNum: 0
   rock: {fileID: 0}
   _wood: 0
-  _upRock: 0
   ladderCount: 0
 --- !u!1 &521358252
 GameObject:
@@ -5893,7 +5889,6 @@ MonoBehaviour:
   mapNum: 0
   rock: {fileID: 0}
   _wood: 0
-  _upRock: 0
   ladderCount: 0
 --- !u!1 &536237716
 GameObject:
@@ -8395,7 +8390,6 @@ MonoBehaviour:
   mapNum: 0
   rock: {fileID: 0}
   _wood: 0
-  _upRock: 0
   ladderCount: 0
 --- !u!1 &789820215
 GameObject:
@@ -10809,6 +10803,7 @@ GameObject:
   m_Component:
   - component: {fileID: 972058555}
   - component: {fileID: 972058556}
+  - component: {fileID: 972058557}
   m_Layer: 0
   m_Name: Down
   m_TagString: Untagged
@@ -10854,6 +10849,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &972058557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 972058554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 234577b86ec22a04f9ab4a6c2ac50a7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ladderNum: 1
 --- !u!1 &978489530
 GameObject:
   m_ObjectHideFlags: 0
@@ -11163,6 +11170,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1023704086}
   - component: {fileID: 1023704087}
+  - component: {fileID: 1023704088}
   m_Layer: 0
   m_Name: Down
   m_TagString: Untagged
@@ -11208,6 +11216,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1023704088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1023704085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 234577b86ec22a04f9ab4a6c2ac50a7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ladderNum: 0
 --- !u!1 &1033229819
 GameObject:
   m_ObjectHideFlags: 0
@@ -11506,7 +11526,6 @@ MonoBehaviour:
   mapNum: 0
   rock: {fileID: 626528942}
   _wood: 0
-  _upRock: 0
   ladderCount: 3
 --- !u!1 &1052723217
 GameObject:
@@ -14738,6 +14757,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1409156225}
   - component: {fileID: 1409156226}
+  - component: {fileID: 1409156227}
   m_Layer: 0
   m_Name: Up
   m_TagString: Untagged
@@ -14783,6 +14803,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1409156227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1409156224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 234577b86ec22a04f9ab4a6c2ac50a7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ladderNum: 1
 --- !u!1 &1417255699
 GameObject:
   m_ObjectHideFlags: 0
@@ -15817,7 +15849,6 @@ MonoBehaviour:
   mapNum: 0
   rock: {fileID: 0}
   _wood: 0
-  _upRock: 0
   ladderCount: 0
 --- !u!1 &1535139218
 GameObject:
@@ -16007,7 +16038,6 @@ MonoBehaviour:
   mapNum: 0
   rock: {fileID: 0}
   _wood: 0
-  _upRock: 0
   ladderCount: 0
 --- !u!1 &1558779264
 GameObject:
@@ -17759,6 +17789,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1693363928}
   - component: {fileID: 1693363929}
+  - component: {fileID: 1693363930}
   m_Layer: 0
   m_Name: Up
   m_TagString: Untagged
@@ -17804,6 +17835,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1693363930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1693363927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 234577b86ec22a04f9ab4a6c2ac50a7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ladderNum: 2
 --- !u!1 &1712011591
 GameObject:
   m_ObjectHideFlags: 0
@@ -20490,6 +20533,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1994593318}
   - component: {fileID: 1994593319}
+  - component: {fileID: 1994593320}
   m_Layer: 0
   m_Name: Up
   m_TagString: Untagged
@@ -20535,6 +20579,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1994593320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1994593317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 234577b86ec22a04f9ab4a6c2ac50a7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ladderNum: 0
 --- !u!1 &2007878354
 GameObject:
   m_ObjectHideFlags: 0
@@ -20659,6 +20715,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2027999636}
   - component: {fileID: 2027999637}
+  - component: {fileID: 2027999638}
   m_Layer: 0
   m_Name: Down
   m_TagString: Untagged
@@ -20704,6 +20761,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &2027999638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2027999635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 234577b86ec22a04f9ab4a6c2ac50a7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ladderNum: 2
 --- !u!1 &2036769395
 GameObject:
   m_ObjectHideFlags: 0
