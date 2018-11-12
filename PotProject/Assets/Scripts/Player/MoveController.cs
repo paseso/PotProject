@@ -8,10 +8,10 @@ public class MoveController : MonoBehaviour {
     private float speed = 0f;
 
     private Rigidbody2D rig;
-    //private bool _bring = false;
     private bool _isJump = false;
-    private bool _wait = false;
     private bool _hitOtoto = false;
+    [HideInInspector]
+    public bool _itemFall = false;
     //□ボタンを押しているかどうか
     [HideInInspector]
     public bool _onSquere = false;
@@ -64,20 +64,16 @@ public class MoveController : MonoBehaviour {
         manager = managerGameObject.GetComponent<PlayerManager>();
         bringctr = gameObject.transform.GetChild(0).GetComponent<BringCollider>();
         _isJump = false;
-        _wait = false;
         _onRight = false;
         _onLeft = false;
         _onSquere = false;
         _onece = false;
+        _itemFall = false;
 	}
-
-    //private void FixedUpdate()
-    //{
-    //    rig.AddForce(Vector2.down * 10, ForceMode2D.Force);
-    //}
 
     // Update is called once per frame
     void Update () {
+        Debug.DrawRay(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 1.7f, 0), new Vector3(0, -0.5f, 0), Color.red);
         if (bringctr._bring)
         {
             target.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 2.5f);
@@ -91,7 +87,22 @@ public class MoveController : MonoBehaviour {
         if (cooltime <= 0f)
         {
             cooltime = 1.0f;
-            _wait = false;
+        }
+    }
+
+    private void JumpRay()
+    {
+        Vector3 pos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 1.7f, 0);
+        RaycastHit2D rayhit = Physics2D.Raycast(pos, new Vector3(0, -0.5f, 0));
+        Debug.DrawRay(pos, new Vector3(0, -0.5f, 0), Color.red);
+        if (rayhit.collider)
+        {
+            _isJump = true;
+            rig.velocity = new Vector2(0, 1f * speed);
+        }
+        else 
+        {
+            _isJump = false;
         }
     }
 
@@ -104,8 +115,11 @@ public class MoveController : MonoBehaviour {
         {
             case ButtonType.JUMP:
                 Debug.Log("×");
-                rig.velocity = new Vector2(gameObject.transform.position.x, 1f * speed);
-                _wait = true;
+                JumpRay();
+                //if (_isJump)
+                //{
+                //    rig.velocity = new Vector2(0, 1f * speed);
+                //}
                 break;
 
             case ButtonType.LEFT:
@@ -141,28 +155,23 @@ public class MoveController : MonoBehaviour {
 
                 _onSquere = true;
                 if (!bringctr._bring)
-                {
-                    Debug.Log("持つ");
+                {//アイテムを持つ
                     target.GetComponent<Rigidbody2D>().simulated = false;
                     bringctr._bring = true;
                 }
                 else if (bringctr._bring)
-                {
-                    Debug.Log("離す");
+                {//アイテムを離す
                     target.gameObject.transform.position = new Vector2(gameObject.transform.position.x + 2f, gameObject.transform.position.y + 1);
                     target.gameObject.transform.parent = null;
                     target.GetComponent<Rigidbody2D>().simulated = true;
                     bringctr._bring = false;
+                    _itemFall = true;
                 }
                 _onSquere = false;
                 break;
 
             case ButtonType.TRIANGLE:
                 Debug.Log("△");
-                if (bringctr._Tubohit && !bringctr._bring)
-                {
-                    manager.OpenAlchemy();
-                }
                 break;
 
             case ButtonType.L1:
@@ -179,6 +188,7 @@ public class MoveController : MonoBehaviour {
 
             case ButtonType.R2:
                 Debug.Log("R2");
+                manager.OpenAlchemy();
                 break;
 
             case ButtonType.OPTION:
@@ -216,7 +226,7 @@ public class MoveController : MonoBehaviour {
     /// </summary>
     private void BtnCheck()
     {
-        if (Input.GetButton("Jump") && !_isJump)
+        if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space))
         {//×ボタン or キーボードの「W」
             Move(ButtonType.JUMP);
         }
@@ -231,7 +241,6 @@ public class MoveController : MonoBehaviour {
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
         {
             rig.velocity = new Vector2(0, rig.velocity.y);    //gameObject.transform.position.y
-            Debug.Log("移動してない");
         }else if (Input.GetAxis("Horizontal_ps4") >= 0.15f || Input.GetKey(KeyCode.W))
         {
             Move(ButtonType.UP);
@@ -307,21 +316,19 @@ public class MoveController : MonoBehaviour {
 
     private void OnCollisionStay2D(Collision2D col)
     {
-        if (col.gameObject.tag == "floor")
-        {
-            Debug.Log("floorに当たってるよ");
-            _isJump = false;
-        }
+        //if (col.gameObject)
+        //{
+        //    _isJump = true;
+        //}
+        //else
+        //{
+        //    _isJump = false;
+        //}
     }
 
     private void OnCollisionExit2D(Collision2D col)
     {
-        if(col.gameObject.tag == "floor")
-        {
-            Debug.Log("floorに当たってないよ");
-            _isJump = true;
-        }
-        if(col.gameObject.tag == "Ototo")
+        if (col.gameObject.tag == "Ototo")
         {
             _hitOtoto = false;
         }

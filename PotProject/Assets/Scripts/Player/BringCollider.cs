@@ -53,10 +53,8 @@ public class BringCollider : MonoBehaviour {
     /// </summary>
     private void SquereButton(Transform pos)
     {
-        Debug.Log("On Squere!");
         if (_Brotherhit && !_bring)
         {
-            Debug.Log("持つる！");
             pos.position = new Vector2(gameObject.transform.transform.position.x, gameObject.transform.transform.position.y + 5f);
             _bring = true;
         }
@@ -84,7 +82,6 @@ public class BringCollider : MonoBehaviour {
         {
             if (!_bring)
             {
-                Debug.Log("Collider内にOtotoが入ってます");
                 move_controll.target = col.gameObject;
                 _Brotherhit = true;
             }
