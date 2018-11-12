@@ -95,7 +95,7 @@ public class MoveController : MonoBehaviour {
         Vector3 pos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 1.7f, 0);
         RaycastHit2D rayhit = Physics2D.Raycast(pos, new Vector3(0, -0.5f, 0));
         Debug.DrawRay(pos, new Vector3(0, -0.5f, 0), Color.red);
-        if (!rayhit.collider)
+        if (rayhit.collider)
         {
             _isJump = true;
             rig.velocity = new Vector2(0, 1f * speed);
@@ -115,11 +115,11 @@ public class MoveController : MonoBehaviour {
         {
             case ButtonType.JUMP:
                 Debug.Log("×");
-                //JumpRay();
-                if (_isJump)
-                {
-                    rig.velocity = new Vector2(0, 1f * speed);
-                }
+                JumpRay();
+                //if (_isJump)
+                //{
+                //    rig.velocity = new Vector2(0, 1f * speed);
+                //}
                 break;
 
             case ButtonType.LEFT:
@@ -226,7 +226,7 @@ public class MoveController : MonoBehaviour {
     /// </summary>
     private void BtnCheck()
     {
-        if (Input.GetButton("Jump"))
+        if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space))
         {//×ボタン or キーボードの「W」
             Move(ButtonType.JUMP);
         }
@@ -316,14 +316,14 @@ public class MoveController : MonoBehaviour {
 
     private void OnCollisionStay2D(Collision2D col)
     {
-        if (col.gameObject)
-        {
-            _isJump = true;
-        }
-        else
-        {
-            _isJump = false;
-        }
+        //if (col.gameObject)
+        //{
+        //    _isJump = true;
+        //}
+        //else
+        //{
+        //    _isJump = false;
+        //}
     }
 
     private void OnCollisionExit2D(Collision2D col)
