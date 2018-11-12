@@ -181,7 +181,7 @@ Transform:
   m_LocalPosition: {x: 6.5, y: 10.38, z: 90}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children:
-  - {fileID: 1160301362}
+  - {fileID: 102306011}
   - {fileID: 1678494219}
   - {fileID: 1371965645}
   - {fileID: 1608092871}
@@ -199,9 +199,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ebc9622867d5d54791e55160a7cf0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapNum: 0
+  mapNumX: 0
+  mapNumY: 0
   rock: {fileID: 0}
   _wood: 0
+  _upRock: 0
   ladderCount: 0
 --- !u!1 &7856877
 GameObject:
@@ -1499,6 +1501,16 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
+--- !u!1 &102306010 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1799728638154852, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
+    type: 2}
+  m_PrefabInternal: {fileID: 1936961300}
+--- !u!4 &102306011 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
+    type: 2}
+  m_PrefabInternal: {fileID: 1936961300}
 --- !u!1 &116702575
 GameObject:
   m_ObjectHideFlags: 0
@@ -3068,9 +3080,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ebc9622867d5d54791e55160a7cf0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapNum: 0
+  mapNumX: 0
+  mapNumY: 0
   rock: {fileID: 0}
   _wood: 0
+  _upRock: 0
   ladderCount: 0
 --- !u!1 &271159955
 GameObject:
@@ -3419,9 +3433,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ebc9622867d5d54791e55160a7cf0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapNum: 0
+  mapNumX: 0
+  mapNumY: 0
   rock: {fileID: 0}
   _wood: 0
+  _upRock: 0
   ladderCount: 0
 --- !u!1 &296823209
 GameObject:
@@ -5543,9 +5559,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ebc9622867d5d54791e55160a7cf0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapNum: 0
+  mapNumX: 0
+  mapNumY: 0
   rock: {fileID: 0}
   _wood: 0
+  _upRock: 0
   ladderCount: 0
 --- !u!1 &521358252
 GameObject:
@@ -5832,9 +5850,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ebc9622867d5d54791e55160a7cf0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapNum: 0
+  mapNumX: 0
+  mapNumY: 0
   rock: {fileID: 0}
   _wood: 0
+  _upRock: 0
   ladderCount: 0
 --- !u!1 &536237716
 GameObject:
@@ -7735,7 +7755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acc042fb91aca940ae005d02a2547f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AniObject: {fileID: 1160301361}
+  AniObject: {fileID: 102306010}
 --- !u!1 &727100884
 GameObject:
   m_ObjectHideFlags: 0
@@ -8288,9 +8308,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ebc9622867d5d54791e55160a7cf0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapNum: 0
+  mapNumX: 0
+  mapNumY: 0
   rock: {fileID: 0}
   _wood: 0
+  _upRock: 0
   ladderCount: 0
 --- !u!1 &789820215
 GameObject:
@@ -11087,9 +11109,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ebc9622867d5d54791e55160a7cf0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapNum: 0
+  mapNumX: 0
+  mapNumY: 0
   rock: {fileID: 626528942}
   _wood: 0
+  _upRock: 0
   ladderCount: 3
 --- !u!1 &1052723217
 GameObject:
@@ -12063,16 +12087,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
---- !u!1 &1160301361 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1799728638154852, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
-    type: 2}
-  m_PrefabInternal: {fileID: 2132387049}
---- !u!4 &1160301362 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
-    type: 2}
-  m_PrefabInternal: {fileID: 2132387049}
 --- !u!1 &1161984174
 GameObject:
   m_ObjectHideFlags: 0
@@ -15235,9 +15249,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ebc9622867d5d54791e55160a7cf0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapNum: 0
+  mapNumX: 0
+  mapNumY: 0
   rock: {fileID: 0}
   _wood: 0
+  _upRock: 0
   ladderCount: 0
 --- !u!1 &1535139218
 GameObject:
@@ -15427,9 +15443,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ebc9622867d5d54791e55160a7cf0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapNum: 0
+  mapNumX: 0
+  mapNumY: 0
   rock: {fileID: 0}
   _wood: 0
+  _upRock: 0
   ladderCount: 0
 --- !u!1 &1558779264
 GameObject:
@@ -19076,6 +19094,66 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
+--- !u!1001 &1936961300
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6059101}
+    m_Modifications:
+    - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 1.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 212471720297927040, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114448673281316954, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
+        type: 2}
+      propertyPath: managerGameObject
+      value: 
+      objectReference: {fileID: 750616270}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1947210104
 GameObject:
   m_ObjectHideFlags: 0
@@ -20320,66 +20398,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
---- !u!1001 &2132387049
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 6059101}
-    m_Modifications:
-    - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0.67
-      objectReference: {fileID: 0}
-    - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -1.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114448673281316954, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
-        type: 2}
-      propertyPath: managerGameObject
-      value: 
-      objectReference: {fileID: 750616270}
-    - target: {fileID: 212471720297927040, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
-        type: 2}
-      propertyPath: m_SortingOrder
-      value: 100
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &2147182279
 GameObject:
   m_ObjectHideFlags: 0
