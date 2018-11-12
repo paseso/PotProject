@@ -8,6 +8,7 @@ public class MoveController : MonoBehaviour {
     private float speed = 0f;
 
     private Rigidbody2D rig;
+    //ジャンプできるかどうか
     private bool _isJump = false;
     private bool _hitOtoto = false;
     [HideInInspector]
@@ -115,25 +116,26 @@ public class MoveController : MonoBehaviour {
         {
             case ButtonType.JUMP:
                 Debug.Log("×");
-                JumpRay();
-                //if (_isJump)
-                //{
-                //    rig.velocity = new Vector2(0, 1f * speed);
-                //}
+                //JumpRay();
+                if (!_isJump)
+                    return;
+                rig.velocity = new Vector2(0, 1f * speed);
                 break;
 
             case ButtonType.LEFT:
                 Debug.Log("LEFT");
                 _onLeft = true;
                 _onRight = false;
-                rig.velocity = new Vector2(-5f, rig.velocity.y);
+                //rig.AddForce(new Vector2(rig.position.x - 4f, rig.velocity.y), ForceMode2D.Force);
+                rig.velocity = new Vector2(rig.velocity.x - 0.2f, rig.velocity.y);
                 break;
 
             case ButtonType.RIGTH:
                 Debug.Log("RIGTH");
                 _onRight = true;
                 _onLeft = false;
-                rig.velocity = new Vector2(5f, rig.velocity.y);
+                //rig.AddForce(new Vector2(rig.position.x + 4f, rig.velocity.y), ForceMode2D.Force);
+                rig.velocity = new Vector2(rig.velocity.x + 0.2f, rig.velocity.y);
                 break;
 
             case ButtonType.UP:
@@ -316,18 +318,12 @@ public class MoveController : MonoBehaviour {
 
     private void OnCollisionStay2D(Collision2D col)
     {
-        //if (col.gameObject)
-        //{
-        //    _isJump = true;
-        //}
-        //else
-        //{
-        //    _isJump = false;
-        //}
+        _isJump = true;
     }
 
     private void OnCollisionExit2D(Collision2D col)
     {
+        _isJump = false;
         if (col.gameObject.tag == "Ototo")
         {
             _hitOtoto = false;
