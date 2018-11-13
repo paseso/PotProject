@@ -5,6 +5,16 @@ using UnityEngine;
 public class GimmickController : MonoBehaviour {
     private StageManager sManager = new StageManager();
 
+    [SerializeField]
+    private enum GimmickType
+    {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT,
+        ROCK,
+        LADDER,
+    }
 
     public void IsMapSride(int nowMapNum ,StageManager.Direction dir)
     {

@@ -16,8 +16,11 @@ public class MapInfo : MonoBehaviour {
     [SerializeField]
     private int ladderCount; // 縄ハシゴ数
 
-    private bool[] _upLadders; // 縄ハシゴ
-    private bool[] _downLadders; // 縄ハシゴ
+    public int LadderCount
+    {
+        get { return ladderCount; }
+        private set { value = ladderCount; }
+    }
 
     public bool UpRock
     {
@@ -25,20 +28,7 @@ public class MapInfo : MonoBehaviour {
         set {value = this._upRock;}
     }
 
-    public bool[] UpLaddersFlag
-    {
-        get { return this._upLadders; }
-        set { value = this._upLadders; }
-    }
-
-    public bool[] DownLaddersFlag
-    {
-        get { return this._downLadders; }
-        set { value = this._downLadders; }
-    }
-
     void Awake() {
-        this._upLadders = new bool[this.ladderCount];
-        this._downLadders = new bool[this.ladderCount];
+        
     }
 }

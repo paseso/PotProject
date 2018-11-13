@@ -9,10 +9,10 @@ public class StageManager : MonoBehaviour {
     /// </summary>
     public enum Direction
     {
-        up,
-        down,
-        left,
-        right
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT,
     }
 
     private List<List<GameObject>> Maps = new List<List<GameObject>>();
@@ -34,22 +34,22 @@ public class StageManager : MonoBehaviour {
 	void Update () {
         if(Input.GetKeyDown(KeyCode.UpArrow)){
             Debug.Log("上");
-            SrideStage(0, Direction.up);
+            SrideStage(0, Direction.UP);
         }
 
         if(Input.GetKeyDown(KeyCode.DownArrow)){
             Debug.Log("下");
-            SrideStage(0, Direction.down);
+            SrideStage(0, Direction.DOWN);
         }
 
         if(Input.GetKeyDown(KeyCode.RightArrow)){
             Debug.Log("右");
-            SrideStage(1, Direction.right);
+            SrideStage(1, Direction.RIGHT);
         }
 
         if(Input.GetKeyDown(KeyCode.LeftArrow)){
             Debug.Log("左");
-            SrideStage(1, Direction.left);
+            SrideStage(1, Direction.LEFT);
         }
 
     }
@@ -86,7 +86,7 @@ public class StageManager : MonoBehaviour {
         
         switch (dir)
         {
-            case Direction.up: // 上
+            case Direction.UP: // 上
 
                 // 折り返し座標を保持
                 turnPos = Maps[stageLength - 1][num].transform.position;
@@ -115,7 +115,7 @@ public class StageManager : MonoBehaviour {
                 Maps[stageLength - 1][num] = temp;
                 break;
 
-            case Direction.down: // 下
+            case Direction.DOWN: // 下
 
                 // 折り返し座標を保持
                 turnPos = Maps[0][num].transform.position;
@@ -141,7 +141,7 @@ public class StageManager : MonoBehaviour {
                 Maps[0][num] = temp;
                 break;
 
-            case Direction.right:// 右
+            case Direction.RIGHT:// 右
                 // 折り返し座標を保持
                 turnPos = Maps[num][0].transform.position;
                 turnPos.z = 90;
@@ -164,7 +164,7 @@ public class StageManager : MonoBehaviour {
                 Maps[num][0] = temp;
                 break;
 
-            case Direction.left: // 左
+            case Direction.LEFT: // 左
                 turnPos = Maps[num][stageLength - 1].transform.position;
                 turnPos.z = 90;
                 for (int i = stageLength - 1; i > 0; i--)
