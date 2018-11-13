@@ -9,8 +9,10 @@ public class MoveController : MonoBehaviour {
 
     private Rigidbody2D rig;
     //ジャンプできるかどうか
-    private bool _isJump = false;
+    [HideInInspector]
+    public bool _isJump = false;
     private bool _hitOtoto = false;
+    private bool _hitWall = false;
     [HideInInspector]
     public bool _itemFall = false;
     //□ボタンを押しているかどうか
@@ -21,6 +23,8 @@ public class MoveController : MonoBehaviour {
     public bool _onRight = false;
     [HideInInspector]
     public bool _onLeft = false;
+    [HideInInspector]
+    public bool _onCircle = false;
     //---------------------------------------------
     [SerializeField,Header("弟")]
     private GameObject Ototo;
@@ -37,12 +41,12 @@ public class MoveController : MonoBehaviour {
     private enum ButtonType
     {
         JUMP = 0,
-        RIGTH,
+        RIGHT,
         LEFT,
         UP,
         DOWN,
         CIRCLE,
-        SQUERE,
+        SQUARE,
         TRIANGLE,
         L1,
         R1,
@@ -68,8 +72,10 @@ public class MoveController : MonoBehaviour {
         _onRight = false;
         _onLeft = false;
         _onSquere = false;
+        _onCircle = false;
         _onece = false;
         _itemFall = false;
+        _hitWall = false;
 	}
 
     // Update is called once per frame
@@ -101,7 +107,7 @@ public class MoveController : MonoBehaviour {
             _isJump = true;
             rig.velocity = new Vector2(0, 1f * speed);
         }
-        else 
+        else
         {
             _isJump = false;
         }
@@ -124,18 +130,26 @@ public class MoveController : MonoBehaviour {
 
             case ButtonType.LEFT:
                 Debug.Log("LEFT");
+                if (_hitWall)
+                    return;
+
                 _onLeft = true;
                 _onRight = false;
-                //rig.AddForce(new Vector2(rig.position.x - 4f, rig.velocity.y), ForceMode2D.Force);
-                rig.velocity = new Vector2(rig.velocity.x - 0.2f, rig.velocity.y);
+                rig.velocity = new Vector2(-5f, rig.velocity.y);
+                
+                Debug.Log("velocity: " + rig.velocity);
                 break;
 
-            case ButtonType.RIGTH:
-                Debug.Log("RIGTH");
+            case ButtonType.RIGHT:
+                Debug.Log("RIGHT");
+                if (_hitWall)
+                    return;
+
                 _onRight = true;
                 _onLeft = false;
-                //rig.AddForce(new Vector2(rig.position.x + 4f, rig.velocity.y), ForceMode2D.Force);
-                rig.velocity = new Vector2(rig.velocity.x + 0.2f, rig.velocity.y);
+                rig.velocity = new Vector2(5f, rig.velocity.y);
+                
+                Debug.Log("velocity: " + rig.velocity);
                 break;
 
             case ButtonType.UP:
@@ -148,9 +162,12 @@ public class MoveController : MonoBehaviour {
 
             case ButtonType.CIRCLE:
                 Debug.Log("〇");
+                if (!_onCircle)
+                    return;
+
                 break;
 
-            case ButtonType.SQUERE:
+            case ButtonType.SQUARE:
                 Debug.Log("□");
                 if (!bringctr._Brotherhit)
                     return;
@@ -238,7 +255,7 @@ public class MoveController : MonoBehaviour {
         }
         else if (Input.GetAxis("Vertical_ps4") <= -0.15f || Input.GetKey(KeyCode.D))
         {//左ジョイスティックを右にたおす or キーボードの「D」
-            Move(ButtonType.RIGTH);
+            Move(ButtonType.RIGHT);
         }
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
         {
@@ -255,7 +272,7 @@ public class MoveController : MonoBehaviour {
         }
         if (Input.GetButtonDown("Squere") || Input.GetKeyDown(KeyCode.Q))
         {//□ボタン or キーボードの「Q」
-            Move(ButtonType.SQUERE);
+            Move(ButtonType.SQUARE);
         }
         if (Input.GetButtonDown("Circle") || Input.GetKeyDown(KeyCode.E))
         {//〇ボタン or キーボードの「E」
@@ -311,19 +328,14 @@ public class MoveController : MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D col)
-    {
-        
-    }
-
     private void OnCollisionStay2D(Collision2D col)
     {
-        _isJump = true;
+        //_hitWall = true;
     }
 
     private void OnCollisionExit2D(Collision2D col)
     {
-        _isJump = false;
+        //_hitWall = false;
         if (col.gameObject.tag == "Ototo")
         {
             _hitOtoto = false;

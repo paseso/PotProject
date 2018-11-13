@@ -532,17 +532,23 @@ Prefab:
       propertyPath: managerGameObject
       value: 
       objectReference: {fileID: 214734539}
-    - target: {fileID: 114647269075690752, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
+    - target: {fileID: 61123801699535062, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
         type: 2}
-      propertyPath: Ototo
-      value: 
-      objectReference: {fileID: 1660014888}
-    - target: {fileID: 114647269075690752, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 70400265505175770, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
         type: 2}
-      propertyPath: managerGameObject
-      value: 
-      objectReference: {fileID: 214734539}
-    m_RemovedComponents: []
+      propertyPath: m_Offset.y
+      value: 0.11228943
+      objectReference: {fileID: 0}
+    - target: {fileID: 70400265505175770, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 12.455421
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 61180720996197930, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &508860022
@@ -847,6 +853,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &788257574 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1348854398056904, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
+    type: 2}
+  m_PrefabInternal: {fileID: 505705450}
+--- !u!114 &788257578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 788257574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bf826586c79ff04288340eb87b85e23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &809711478
 Prefab:
   m_ObjectHideFlags: 0
@@ -1898,7 +1920,7 @@ GameObject:
   - component: {fileID: 1660014892}
   m_Layer: 5
   m_Name: Ototo
-  m_TagString: Ototo
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1910,7 +1932,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1660014888}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.43, y: -0.66, z: 90}
+  m_LocalPosition: {x: -5.43, y: -0.04, z: 90}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0}
   m_Children: []
   m_Father: {fileID: 0}

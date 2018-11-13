@@ -43,11 +43,6 @@ public class PlayerManager : MonoBehaviour {
         _alchemyUi = false;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     /// <summary>
     /// 持ち物リストの情報
     /// </summary>
