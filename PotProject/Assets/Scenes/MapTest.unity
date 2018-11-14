@@ -202,9 +202,7 @@ MonoBehaviour:
   mapNumX: 0
   mapNumY: 0
   rock: {fileID: 0}
-  _wood: 0
-  _upRock: 0
-  ladderCount: 0
+  tree: {fileID: 0}
 --- !u!1 &7856877
 GameObject:
   m_ObjectHideFlags: 0
@@ -1195,7 +1193,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 55498599}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.01, y: -1.3400003, z: 0}
+  m_LocalPosition: {x: -0.009999633, y: -1.3400003, z: 0}
   m_LocalScale: {x: 0.3956151, y: 1.6274514, z: 1}
   m_Children: []
   m_Father: {fileID: 626528943}
@@ -3083,9 +3081,7 @@ MonoBehaviour:
   mapNumX: 0
   mapNumY: 0
   rock: {fileID: 0}
-  _wood: 0
-  _upRock: 0
-  ladderCount: 0
+  tree: {fileID: 0}
 --- !u!1 &271159955
 GameObject:
   m_ObjectHideFlags: 0
@@ -3436,9 +3432,7 @@ MonoBehaviour:
   mapNumX: 0
   mapNumY: 0
   rock: {fileID: 0}
-  _wood: 0
-  _upRock: 0
-  ladderCount: 0
+  tree: {fileID: 0}
 --- !u!1 &296823209
 GameObject:
   m_ObjectHideFlags: 0
@@ -3550,6 +3544,7 @@ GameObject:
   - component: {fileID: 315720201}
   - component: {fileID: 315720203}
   - component: {fileID: 315720202}
+  - component: {fileID: 315720204}
   m_Layer: 0
   m_Name: Brock_0 (25)
   m_TagString: Untagged
@@ -3639,6 +3634,18 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
+--- !u!114 &315720204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 315720200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccb62d7c26706244e85525a82b6801f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 6
 --- !u!1 &321639967
 GameObject:
   m_ObjectHideFlags: 0
@@ -4004,7 +4011,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.008014947, y: 0}
@@ -4120,6 +4127,36 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
+--- !u!1 &368577536
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 368577537}
+  m_Layer: 0
+  m_Name: Tree
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &368577537
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 368577536}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.86, y: -1.34, z: 0}
+  m_LocalScale: {x: 1, y: 0.15, z: 1}
+  m_Children:
+  - {fileID: 588884576}
+  - {fileID: 1558779265}
+  m_Father: {fileID: 1046846661}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &368718002
 GameObject:
   m_ObjectHideFlags: 0
@@ -5599,9 +5636,7 @@ MonoBehaviour:
   mapNumX: 0
   mapNumY: 0
   rock: {fileID: 0}
-  _wood: 0
-  _upRock: 0
-  ladderCount: 0
+  tree: {fileID: 0}
 --- !u!1 &521358252
 GameObject:
   m_ObjectHideFlags: 0
@@ -5890,9 +5925,7 @@ MonoBehaviour:
   mapNumX: 0
   mapNumY: 0
   rock: {fileID: 0}
-  _wood: 0
-  _upRock: 0
-  ladderCount: 0
+  tree: {fileID: 0}
 --- !u!1 &536237716
 GameObject:
   m_ObjectHideFlags: 0
@@ -6376,7 +6409,7 @@ GameObject:
   - component: {fileID: 588884577}
   - component: {fileID: 588884578}
   m_Layer: 0
-  m_Name: Wood
+  m_Name: Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6388,13 +6421,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 588884575}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.99, y: -0.63, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.2, z: 1}
-  m_Children:
-  - {fileID: 1558779265}
-  m_Father: {fileID: 1046846661}
-  m_RootOrder: 9
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.4399998, z: 0}
+  m_LocalScale: {x: 0.3, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 368577537}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &588884577
 SpriteRenderer:
@@ -6573,6 +6605,7 @@ GameObject:
   - component: {fileID: 613422665}
   - component: {fileID: 613422667}
   - component: {fileID: 613422666}
+  - component: {fileID: 613422668}
   m_Layer: 0
   m_Name: Brock_0 (23)
   m_TagString: Untagged
@@ -6662,6 +6695,18 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
+--- !u!114 &613422668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 613422664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccb62d7c26706244e85525a82b6801f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 6
 --- !u!1 &622761519
 GameObject:
   m_ObjectHideFlags: 0
@@ -6873,6 +6918,7 @@ GameObject:
   - component: {fileID: 625164876}
   - component: {fileID: 625164878}
   - component: {fileID: 625164877}
+  - component: {fileID: 625164879}
   m_Layer: 0
   m_Name: Brock_0 (16)
   m_TagString: Untagged
@@ -6962,6 +7008,18 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
+--- !u!114 &625164879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 625164875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccb62d7c26706244e85525a82b6801f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 6
 --- !u!1 &626528942
 GameObject:
   m_ObjectHideFlags: 0
@@ -6983,8 +7041,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 626528942}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.78, y: -1.61, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.7800001, y: -1.61, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 55498602}
@@ -7002,6 +7060,7 @@ GameObject:
   - component: {fileID: 627053367}
   - component: {fileID: 627053369}
   - component: {fileID: 627053368}
+  - component: {fileID: 627053370}
   m_Layer: 0
   m_Name: Brock_0 (26)
   m_TagString: Untagged
@@ -7091,6 +7150,18 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
+--- !u!114 &627053370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 627053366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccb62d7c26706244e85525a82b6801f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 6
 --- !u!1 &635156861
 GameObject:
   m_ObjectHideFlags: 0
@@ -8348,9 +8419,7 @@ MonoBehaviour:
   mapNumX: 0
   mapNumY: 0
   rock: {fileID: 0}
-  _wood: 0
-  _upRock: 0
-  ladderCount: 0
+  tree: {fileID: 0}
 --- !u!1 &789820215
 GameObject:
   m_ObjectHideFlags: 0
@@ -10997,7 +11066,7 @@ Transform:
   - {fileID: 2036769396}
   - {fileID: 2091349913}
   - {fileID: 347351668}
-  - {fileID: 588884576}
+  - {fileID: 368577537}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11015,9 +11084,7 @@ MonoBehaviour:
   mapNumX: 0
   mapNumY: 0
   rock: {fileID: 626528942}
-  _wood: 0
-  _upRock: 0
-  ladderCount: 3
+  tree: {fileID: 368577536}
 --- !u!1 &1052723217
 GameObject:
   m_ObjectHideFlags: 0
@@ -11801,6 +11868,7 @@ GameObject:
   - component: {fileID: 1147592129}
   - component: {fileID: 1147592131}
   - component: {fileID: 1147592130}
+  - component: {fileID: 1147592132}
   m_Layer: 0
   m_Name: Brock_0 (28)
   m_TagString: Untagged
@@ -11890,6 +11958,18 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
+--- !u!114 &1147592132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1147592128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccb62d7c26706244e85525a82b6801f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 6
 --- !u!1 &1148993196
 GameObject:
   m_ObjectHideFlags: 0
@@ -13144,8 +13224,8 @@ GameObject:
   - component: {fileID: 1336736543}
   - component: {fileID: 1336736545}
   - component: {fileID: 1336736544}
-  - component: {fileID: 1336736546}
   - component: {fileID: 1336736547}
+  - component: {fileID: 1336736546}
   m_Layer: 0
   m_Name: RockUp
   m_TagString: Rock
@@ -13240,7 +13320,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1336736542}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af6c09a35aad3b942a1399e705b4f1f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 9696294e9f29da043846bc1bdfa5a0bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1336736547
@@ -15169,9 +15249,7 @@ MonoBehaviour:
   mapNumX: 0
   mapNumY: 0
   rock: {fileID: 0}
-  _wood: 0
-  _upRock: 0
-  ladderCount: 0
+  tree: {fileID: 0}
 --- !u!1 &1535139218
 GameObject:
   m_ObjectHideFlags: 0
@@ -15363,9 +15441,7 @@ MonoBehaviour:
   mapNumX: 0
   mapNumY: 0
   rock: {fileID: 0}
-  _wood: 0
-  _upRock: 0
-  ladderCount: 0
+  tree: {fileID: 0}
 --- !u!1 &1558779264
 GameObject:
   m_ObjectHideFlags: 0
@@ -15375,8 +15451,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1558779265}
   - component: {fileID: 1558779266}
-  - component: {fileID: 1558779267}
   - component: {fileID: 1558779268}
+  - component: {fileID: 1558779269}
   m_Layer: 0
   m_Name: GrowCol
   m_TagString: Untagged
@@ -15390,12 +15466,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1558779264}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.86, z: 0}
-  m_LocalScale: {x: 1.2749995, y: 0.2, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: 5.299999, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.6666666, z: 1}
   m_Children: []
-  m_Father: {fileID: 588884576}
-  m_RootOrder: 0
+  m_Father: {fileID: 368577537}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1558779266
 BoxCollider2D:
@@ -15422,19 +15498,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1558779267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1558779264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d5ee0650db37d747b8bc18bba93a27a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wood: {fileID: 588884575}
-  growSpeed: 1
 --- !u!114 &1558779268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15446,7 +15509,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb62d7c26706244e85525a82b6801f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 6
+  type: 7
+--- !u!114 &1558779269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1558779264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9696294e9f29da043846bc1bdfa5a0bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1569566656
 GameObject:
   m_ObjectHideFlags: 0
@@ -15657,6 +15731,7 @@ GameObject:
   - component: {fileID: 1608092871}
   - component: {fileID: 1608092873}
   - component: {fileID: 1608092872}
+  - component: {fileID: 1608092875}
   - component: {fileID: 1608092874}
   m_Layer: 0
   m_Name: Right
@@ -15752,9 +15827,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1608092870}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af6c09a35aad3b942a1399e705b4f1f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 9696294e9f29da043846bc1bdfa5a0bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1608092875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1608092870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccb62d7c26706244e85525a82b6801f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 3
 --- !u!1 &1611109587
 GameObject:
   m_ObjectHideFlags: 0
@@ -18488,8 +18575,8 @@ GameObject:
   - component: {fileID: 1884469356}
   - component: {fileID: 1884469359}
   - component: {fileID: 1884469358}
-  - component: {fileID: 1884469357}
   - component: {fileID: 1884469360}
+  - component: {fileID: 1884469357}
   m_Layer: 0
   m_Name: Down
   m_TagString: Down
@@ -18518,7 +18605,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1884469355}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af6c09a35aad3b942a1399e705b4f1f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 9696294e9f29da043846bc1bdfa5a0bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &1884469358
@@ -18980,11 +19067,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 9.18
+      value: 2.7
       objectReference: {fileID: 0}
     - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -11.66
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
       propertyPath: m_LocalPosition.z
@@ -19524,7 +19611,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.019747078, y: 0.08760452}
@@ -19551,6 +19638,7 @@ GameObject:
   - component: {fileID: 2040026371}
   - component: {fileID: 2040026373}
   - component: {fileID: 2040026372}
+  - component: {fileID: 2040026374}
   m_Layer: 0
   m_Name: Brock_0 (54)
   m_TagString: Untagged
@@ -19640,6 +19728,18 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
+--- !u!114 &2040026374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2040026370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccb62d7c26706244e85525a82b6801f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 6
 --- !u!1 &2070148275
 GameObject:
   m_ObjectHideFlags: 0
@@ -19933,7 +20033,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0035576224, y: 0.09463692}

@@ -12,7 +12,6 @@ public class LadderGimmick : MonoBehaviour {
     void Awake()
     {
         info = transform.root.GetComponent<MapInfo>();
-        ladderFlag = new bool[info.LadderCount];
     }
 
     public bool[] LadderFlag

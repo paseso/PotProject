@@ -9,26 +9,29 @@ public class MapInfo : MonoBehaviour {
     public int mapNumY;
 
     public GameObject rock;
-    [SerializeField]
-    private bool _wood; // 伸びる木
-    [SerializeField]
-    private bool _upRock; // スイッチ岩
-    [SerializeField]
-    private int ladderCount; // 縄ハシゴ数
+    public GameObject tree;
+    // 伸びる木
+    private bool _tree;
+    public bool GrowTreeFlag { get; set; }
 
-    public int LadderCount
-    {
-        get { return ladderCount; }
-        private set { value = ladderCount; }
-    }
+    // スイッチ岩
+    private bool _upRock;
+    public bool UpRockFlag { get; set; }
 
-    public bool UpRock
-    {
-        get {return this._upRock;}
-        set {value = this._upRock;}
-    }
+    // はしごギミック判定
+    private bool ladderFlag;
+    public bool LadderFlag { get; set; }
 
-    void Awake() {
-        
-    }
+    //public int LadderCount
+    //{
+    //    get { return this.ladderCount; }
+    //    private set { value = this.ladderCount; }
+    //}
+
+    //public bool UpRock
+    //{
+    //    get {return this._upRock;}
+    //    set {value = this._upRock;}
+    //}
+
 }
