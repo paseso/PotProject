@@ -11,25 +11,27 @@ public class MoveController : MonoBehaviour {
     //ジャンプできるかどうか
     [HideInInspector]
     public bool _isJump = false;
-    private bool _hitOtoto = false;
+    //壁にあたったかどうか
     private bool _hitWall = false;
+    //ギミックに当たったかどうか
+    private bool _hitGimmick = false;
+
     [HideInInspector]
     public bool _itemFall = false;
-    //□ボタンを押しているかどうか
-    [HideInInspector]
-    public bool _onSquere = false;
-    //-------左右ボタンを押してるかどうか----------
+    //-------アクションボタンを押してるかどうか----------
     [HideInInspector]
     public bool _onRight = false;
     [HideInInspector]
     public bool _onLeft = false;
     [HideInInspector]
+    public bool _onSquare = false;
+    [HideInInspector]
     public bool _onCircle = false;
     //---------------------------------------------
-    [SerializeField,Header("弟")]
-    private GameObject Ototo;
     [HideInInspector]
     public GameObject target;
+    [SerializeField, Header("兄のSprite 0.左 1.右 2.後ろ")]
+    private List<Sprite> BrotherSprites;
 
     [SerializeField]
     private GameObject managerGameObject;
@@ -71,11 +73,12 @@ public class MoveController : MonoBehaviour {
         _isJump = false;
         _onRight = false;
         _onLeft = false;
-        _onSquere = false;
+        _onSquare = false;
         _onCircle = false;
         _onece = false;
         _itemFall = false;
         _hitWall = false;
+        _hitGimmick = false;
 	}
 
     // Update is called once per frame
@@ -130,6 +133,8 @@ public class MoveController : MonoBehaviour {
 
             case ButtonType.LEFT:
                 Debug.Log("LEFT");
+                
+                gameObject.GetComponent<SpriteRenderer>().sprite = BrotherSprites[0];
                 if (_hitWall)
                     return;
 
@@ -142,6 +147,7 @@ public class MoveController : MonoBehaviour {
 
             case ButtonType.RIGHT:
                 Debug.Log("RIGHT");
+                gameObject.GetComponent<SpriteRenderer>().sprite = BrotherSprites[1];
                 if (_hitWall)
                     return;
 
@@ -172,7 +178,7 @@ public class MoveController : MonoBehaviour {
                 if (!bringctr._Brotherhit)
                     return;
 
-                _onSquere = true;
+                _onSquare = true;
                 if (!bringctr._bring)
                 {//アイテムを持つ
                     target.GetComponent<Rigidbody2D>().simulated = false;
@@ -186,7 +192,7 @@ public class MoveController : MonoBehaviour {
                     bringctr._bring = false;
                     _itemFall = true;
                 }
-                _onSquere = false;
+                _onSquare = false;
                 break;
 
             case ButtonType.TRIANGLE:
@@ -328,6 +334,17 @@ public class MoveController : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// はしごのギミック処理
+    /// </summary>
+    private void GimmickLadder()
+    {
+        if (!_hitGimmick)
+            return;
+
+
+    }
+
     private void OnCollisionStay2D(Collision2D col)
     {
         //_hitWall = true;
@@ -338,7 +355,19 @@ public class MoveController : MonoBehaviour {
         //_hitWall = false;
         if (col.gameObject.tag == "Ototo")
         {
-            _hitOtoto = false;
+            
+        }
+        if(col.gameObject.tag == "Ladder")
+        {
+            _hitGimmick = false;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D col)
+    {
+        if(col.gameObject.tag == "Ladder")
+        {
+            _hitGimmick = true;
         }
     }
 }
