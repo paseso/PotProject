@@ -27,10 +27,6 @@ public class BringCollider : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (_Tubohit)
-        {
-            SquereTubo();
-        }
         MoveCollider();
 	}
 
@@ -64,26 +60,17 @@ public class BringCollider : MonoBehaviour {
         {
             pos.transform.parent = null;
             if(move_controll._onRight)
-                pos.transform.position = new Vector2(ParentObject.transform.position.x - 2, ParentObject.transform.position.y);
+                pos.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y);
             else
-                pos.transform.position = new Vector2(ParentObject.transform.position.x + 2, ParentObject.transform.position.y);
+                pos.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y);
 
             _bring = false;
             _Brotherhit = false;
         }
     }
-
-    private void SquereTubo()
-    {
-        if (!move_controll._onSquere && !_bring)
-            return;
-
-
-    }
-
+    
     private void OnTriggerStay2D(Collider2D col)
     {
-        //gameObject.transform.parent.position = new Vector2();
         if (col.gameObject.tag == "Ototo" || col.gameObject.tag == "Monster")
         {
             if (!_bring)
