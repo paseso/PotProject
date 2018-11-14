@@ -13,8 +13,8 @@ public class MoveController : MonoBehaviour {
     public bool _isJump = false;
     //壁にあたったかどうか
     private bool _hitWall = false;
-    //ギミックに当たったかどうか
-    private bool _hitGimmick = false;
+    //左右動かしてもいいかどうか
+    private bool _ActiveRightLeft = false;
 
     [HideInInspector]
     public bool _itemFall = false;
@@ -24,6 +24,10 @@ public class MoveController : MonoBehaviour {
     [HideInInspector]
     public bool _onLeft = false;
     [HideInInspector]
+    public bool _onUp = false;
+    [HideInInspector]
+    public bool _onDown = false;
+    [HideInInspector]
     public bool _onSquare = false;
     [HideInInspector]
     public bool _onCircle = false;
@@ -32,6 +36,8 @@ public class MoveController : MonoBehaviour {
     public GameObject target;
     [SerializeField, Header("兄のSprite 0.左 1.右 2.後ろ")]
     private List<Sprite> BrotherSprites;
+
+    private MapInfo mInfo;
 
     [SerializeField]
     private GameObject managerGameObject;
@@ -78,17 +84,19 @@ public class MoveController : MonoBehaviour {
         _onece = false;
         _itemFall = false;
         _hitWall = false;
-        _hitGimmick = false;
+        _ActiveRightLeft = true;
+        _onUp = false;
+        _onDown = false;
 	}
 
     // Update is called once per frame
     void Update () {
-        Debug.DrawRay(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 1.7f, 0), new Vector3(0, -0.5f, 0), Color.red);
         if (bringctr._bring)
         {
             target.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 2.5f);
         }
         BtnCheck();
+        GimmickLadder();
 	}
 
     private void CoolTime(float cooltime)
@@ -97,22 +105,6 @@ public class MoveController : MonoBehaviour {
         if (cooltime <= 0f)
         {
             cooltime = 1.0f;
-        }
-    }
-
-    private void JumpRay()
-    {
-        Vector3 pos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 1.7f, 0);
-        RaycastHit2D rayhit = Physics2D.Raycast(pos, new Vector3(0, -0.5f, 0));
-        Debug.DrawRay(pos, new Vector3(0, -0.5f, 0), Color.red);
-        if (rayhit.collider)
-        {
-            _isJump = true;
-            rig.velocity = new Vector2(0, 1f * speed);
-        }
-        else
-        {
-            _isJump = false;
         }
     }
 
@@ -125,7 +117,6 @@ public class MoveController : MonoBehaviour {
         {
             case ButtonType.JUMP:
                 Debug.Log("×");
-                //JumpRay();
                 if (!_isJump)
                     return;
                 rig.velocity = new Vector2(0, 1f * speed);
@@ -135,35 +126,34 @@ public class MoveController : MonoBehaviour {
                 Debug.Log("LEFT");
                 
                 gameObject.GetComponent<SpriteRenderer>().sprite = BrotherSprites[0];
-                if (_hitWall)
+                if (!_ActiveRightLeft)
                     return;
 
                 _onLeft = true;
                 _onRight = false;
                 rig.velocity = new Vector2(-5f, rig.velocity.y);
                 
-                Debug.Log("velocity: " + rig.velocity);
                 break;
 
             case ButtonType.RIGHT:
                 Debug.Log("RIGHT");
                 gameObject.GetComponent<SpriteRenderer>().sprite = BrotherSprites[1];
-                if (_hitWall)
+                if (!_ActiveRightLeft)
                     return;
 
                 _onRight = true;
                 _onLeft = false;
                 rig.velocity = new Vector2(5f, rig.velocity.y);
-                
-                Debug.Log("velocity: " + rig.velocity);
                 break;
 
             case ButtonType.UP:
                 Debug.Log("UP");
+                _onUp = true;
                 break;
 
             case ButtonType.DOWN:
                 Debug.Log("DOWN");
+                _onDown = true;
                 break;
 
             case ButtonType.CIRCLE:
@@ -244,6 +234,8 @@ public class MoveController : MonoBehaviour {
                 manager.SwordTypeChange(Status.SWORDTYPE.FIRE);
                 break;
         }
+        _onUp = false;
+        _onDown = false;
     }
 
     /// <summary>
@@ -258,21 +250,31 @@ public class MoveController : MonoBehaviour {
         else if (Input.GetAxis("Vertical_ps4") >= 0.15f || Input.GetKey(KeyCode.A))
         {//左ジョイスティックを左にたおす or キーボードの「A」
             Move(ButtonType.LEFT);
+            float f = Input.GetAxis("Vertical_ps4");
+            Debug.Log("Axis: " + f);
         }
         else if (Input.GetAxis("Vertical_ps4") <= -0.15f || Input.GetKey(KeyCode.D))
         {//左ジョイスティックを右にたおす or キーボードの「D」
             Move(ButtonType.RIGHT);
+            float f = Input.GetAxis("Vertical_ps4");
+            Debug.Log("Axis: " + f);
         }
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
         {
-            rig.velocity = new Vector2(0, rig.velocity.y);    //gameObject.transform.position.y
-        }else if (Input.GetAxis("Horizontal_ps4") >= 0.15f || Input.GetKey(KeyCode.W))
+            rig.velocity = new Vector2(0, rig.velocity.y);
+        }else if (Input.GetAxis("Vertical") >= 0.15f || Input.GetKey(KeyCode.S))
         {
             Move(ButtonType.UP);
-        }else if(Input.GetAxis("Horizontal_ps4") <= -0.15f || Input.GetKey(KeyCode.S))
+            float f = Input.GetAxis("Vertical_ps4");
+            Debug.Log("Axis: " + f);
+        }
+        else if(Input.GetAxis("Vertical") <= -0.15f || Input.GetKey(KeyCode.W))
         {
             Move(ButtonType.DOWN);
-        }else if(Input.GetAxis("Horizontal_ps4") <= 0.15f && Input.GetAxis("Horizontal_ps4") >= -0.15f)
+            float f = Input.GetAxis("Vertical_ps4");
+            Debug.Log("Axis: " + f);
+        }
+        else if(Input.GetAxis("Vertical") <= 0.15f && Input.GetAxis("Vertical") >= -0.15f)
         {
             rig.velocity = new Vector2(rig.velocity.x, 0);
         }
@@ -339,10 +341,15 @@ public class MoveController : MonoBehaviour {
     /// </summary>
     private void GimmickLadder()
     {
-        if (!_hitGimmick)
+        mInfo = transform.root.GetComponent<MapInfo>();
+        if (!mInfo.LadderFlag)
             return;
+        
+        gameObject.GetComponent<SpriteRenderer>().sprite = BrotherSprites[2];
+        Transform target_pos = gameObject.transform;
+        gameObject.transform.position = target_pos.transform.position;
 
-
+        
     }
 
     private void OnCollisionStay2D(Collision2D col)
@@ -353,21 +360,14 @@ public class MoveController : MonoBehaviour {
     private void OnCollisionExit2D(Collision2D col)
     {
         //_hitWall = false;
-        if (col.gameObject.tag == "Ototo")
-        {
-            
-        }
-        if(col.gameObject.tag == "Ladder")
-        {
-            _hitGimmick = false;
-        }
+        
     }
 
     private void OnTriggerStay2D(Collider2D col)
     {
-        if(col.gameObject.tag == "Ladder")
+        if (mInfo.LadderFlag)
         {
-            _hitGimmick = true;
+            
         }
     }
 }
