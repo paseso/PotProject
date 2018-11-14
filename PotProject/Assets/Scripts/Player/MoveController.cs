@@ -43,6 +43,7 @@ public class MoveController : MonoBehaviour {
     private GameObject managerGameObject;
     private PlayerManager manager;
     private BringCollider bringctr;
+    private AttackZoonController atc_ctr;
 
     private bool _onece = false;
     
@@ -76,6 +77,8 @@ public class MoveController : MonoBehaviour {
         rig = gameObject.GetComponent<Rigidbody2D>();
         manager = managerGameObject.GetComponent<PlayerManager>();
         bringctr = gameObject.transform.GetChild(0).GetComponent<BringCollider>();
+        mInfo = transform.root.GetComponent<MapInfo>();
+        atc_ctr = gameObject.GetComponentInChildren<AttackZoonController>();
         _isJump = false;
         _onRight = false;
         _onLeft = false;
@@ -91,12 +94,12 @@ public class MoveController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        
         if (bringctr._bring)
         {
             target.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 2.5f);
         }
         BtnCheck();
-        GimmickLadder();
 	}
 
     private void CoolTime(float cooltime)
@@ -132,7 +135,6 @@ public class MoveController : MonoBehaviour {
                 _onLeft = true;
                 _onRight = false;
                 rig.velocity = new Vector2(-5f, rig.velocity.y);
-                
                 break;
 
             case ButtonType.RIGHT:
@@ -149,17 +151,35 @@ public class MoveController : MonoBehaviour {
             case ButtonType.UP:
                 Debug.Log("UP");
                 _onUp = true;
+                if (_ActiveRightLeft)
+                    return;
+
+                gameObject.GetComponent<CapsuleCollider2D>().isTrigger = true;
+                rig.bodyType = RigidbodyType2D.Kinematic;
+                rig.gravityScale = 0;
+                rig.velocity = new Vector2(rig.velocity.x, 5f);
+                _onUp = false;
                 break;
 
             case ButtonType.DOWN:
                 Debug.Log("DOWN");
                 _onDown = true;
+                if (_ActiveRightLeft)
+                    return;
+
+                gameObject.GetComponent<CapsuleCollider2D>().isTrigger = true;
+                rig.bodyType = RigidbodyType2D.Kinematic;
+                rig.gravityScale = 0;
+                rig.velocity = new Vector2(rig.velocity.x, -5f);
+                _onDown = false;
                 break;
 
             case ButtonType.CIRCLE:
                 Debug.Log("〇");
                 if (!_onCircle)
                     return;
+
+                atc_ctr.AttackObject();
 
                 break;
 
@@ -247,36 +267,29 @@ public class MoveController : MonoBehaviour {
         {//×ボタン or キーボードの「W」
             Move(ButtonType.JUMP);
         }
-        else if (Input.GetAxis("Vertical_ps4") >= 0.15f || Input.GetKey(KeyCode.A))
+        if (Input.GetAxis("Vertical_ps4") >= 0.15f || Input.GetKey(KeyCode.A))
         {//左ジョイスティックを左にたおす or キーボードの「A」
             Move(ButtonType.LEFT);
-            float f = Input.GetAxis("Vertical_ps4");
-            Debug.Log("Axis: " + f);
-        }
-        else if (Input.GetAxis("Vertical_ps4") <= -0.15f || Input.GetKey(KeyCode.D))
+        }else if (Input.GetAxis("Vertical_ps4") <= -0.15f || Input.GetKey(KeyCode.D))
         {//左ジョイスティックを右にたおす or キーボードの「D」
             Move(ButtonType.RIGHT);
-            float f = Input.GetAxis("Vertical_ps4");
-            Debug.Log("Axis: " + f);
-        }
-        else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
+        }else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
         {
             rig.velocity = new Vector2(0, rig.velocity.y);
-        }else if (Input.GetAxis("Vertical") >= 0.15f || Input.GetKey(KeyCode.S))
+        }
+        if (Input.GetAxis("Horizontal_ps4") >= 0.15f || Input.GetKey(KeyCode.W))
         {
             Move(ButtonType.UP);
-            float f = Input.GetAxis("Vertical_ps4");
-            Debug.Log("Axis: " + f);
-        }
-        else if(Input.GetAxis("Vertical") <= -0.15f || Input.GetKey(KeyCode.W))
+        }else if(Input.GetAxis("Horizontal_ps4") <= -0.15f || Input.GetKey(KeyCode.S))
         {
             Move(ButtonType.DOWN);
-            float f = Input.GetAxis("Vertical_ps4");
-            Debug.Log("Axis: " + f);
-        }
-        else if(Input.GetAxis("Vertical") <= 0.15f && Input.GetAxis("Vertical") >= -0.15f)
+        }else if(Input.GetAxis("Horizontal_ps4") <= 0.15f && Input.GetAxis("Horizontal_ps4") >= -0.15f)
         {
-            rig.velocity = new Vector2(rig.velocity.x, 0);
+            rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y);
+            if (!_ActiveRightLeft)
+            {
+                rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0);
+            }
         }
         if (Input.GetButtonDown("Squere") || Input.GetKeyDown(KeyCode.Q))
         {//□ボタン or キーボードの「Q」
@@ -339,16 +352,15 @@ public class MoveController : MonoBehaviour {
     /// <summary>
     /// はしごのギミック処理
     /// </summary>
-    private void GimmickLadder()
+    private void GimmickLadder(Transform pos)
     {
-        mInfo = transform.root.GetComponent<MapInfo>();
-        if (!mInfo.LadderFlag)
-            return;
-        
+        _ActiveRightLeft = false;
+        if (gameObject.transform.GetComponentInChildren<LegCollider>())
+        {
+            gameObject.transform.GetComponentInChildren<LegCollider>().OnIsTrigger();
+        }
         gameObject.GetComponent<SpriteRenderer>().sprite = BrotherSprites[2];
-        Transform target_pos = gameObject.transform;
-        gameObject.transform.position = target_pos.transform.position;
-
+        gameObject.transform.position = new Vector2(pos.transform.position.x, gameObject.transform.position.y);
         
     }
 
@@ -365,9 +377,23 @@ public class MoveController : MonoBehaviour {
 
     private void OnTriggerStay2D(Collider2D col)
     {
-        if (mInfo.LadderFlag)
+        //はしごのcolliderにあたったってUPかDownボタンを押したら
+        if (mInfo.LadderFlag && _onUp || mInfo.LadderFlag && _onDown)
         {
-            
+            Debug.Log("イン");
+            GimmickLadder(col.transform);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D col)
+    {
+        if (!mInfo.LadderFlag)
+        {
+            Debug.Log("アウト");
+            _ActiveRightLeft = true;
+            gameObject.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+            gameObject.transform.GetComponentInChildren<LegCollider>().OffIsTrigger();
+            rig.gravityScale = 1;
         }
     }
 }

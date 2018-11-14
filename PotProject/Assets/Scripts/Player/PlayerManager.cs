@@ -100,12 +100,12 @@ public class PlayerManager : MonoBehaviour {
     {
         if (!_alchemyUi)
         {
-            Alchemy_ui.transform.DOMove(new Vector2(Alchemy_ui.transform.position.x - 13.5f, Alchemy_ui.transform.position.y), 0.3f);
+            Alchemy_ui.transform.DOMove(new Vector2(Alchemy_ui.transform.position.x - 14, Alchemy_ui.transform.position.y), 0.3f);
             _alchemyUi = true;
         }
         else
         {
-            Alchemy_ui.transform.DOMove(new Vector2(Alchemy_ui.transform.position.x + 13.5f, Alchemy_ui.transform.position.y), 0.3f);
+            Alchemy_ui.transform.DOMove(new Vector2(Alchemy_ui.transform.position.x + 14, Alchemy_ui.transform.position.y), 0.3f);
             _alchemyUi = false;
         }
         

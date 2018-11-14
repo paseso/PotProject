@@ -1784,11 +1784,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -2.38
+      value: -12.89
       objectReference: {fileID: 0}
     - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 6.1
+      value: 7.3
       objectReference: {fileID: 0}
     - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1819,7 +1819,13 @@ Prefab:
       propertyPath: managerGameObject
       value: 
       objectReference: {fileID: 214734539}
-    m_RemovedComponents: []
+    - target: {fileID: 70400265505175770, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 61985268673099726, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &452912003

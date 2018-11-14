@@ -10,6 +10,24 @@ public class LegCollider : MonoBehaviour {
 	void Start () {
         move_ctr = transform.parent.GetComponent<MoveController>();
 	}
+
+    /// <summary>
+    /// 足の部分のIsTriggerのON
+    /// </summary>
+    public void OnIsTrigger()
+    {
+        gameObject.GetComponent<Collider2D>().isTrigger = true;
+        Debug.Log("On");
+    }
+
+    /// <summary>
+    /// 足の部分のIsTriggerのOFF
+    /// </summary>
+    public void OffIsTrigger()
+    {
+        gameObject.GetComponent<Collider2D>().isTrigger = false;
+        Debug.Log("Off");
+    }
 	
     private void OnCollisionStay2D(Collision2D col)
     {
