@@ -16,7 +16,7 @@ public class MoveController : MonoBehaviour {
     //左右動かしてもいいかどうか
     private bool _ActiveRightLeft = false;
     //ギミックの中いるかどうか
-    [SerializeField]
+    [HideInInspector]
     public bool _InGimmick = false;
 
     [HideInInspector]
@@ -157,7 +157,6 @@ public class MoveController : MonoBehaviour {
 
                 gameObject.GetComponent<CapsuleCollider2D>().isTrigger = true;
                 rig.bodyType = RigidbodyType2D.Kinematic;
-                rig.gravityScale = 0;
                 rig.velocity = new Vector2(rig.velocity.x, 5f);
                 _onUp = false;
                 break;
@@ -170,7 +169,7 @@ public class MoveController : MonoBehaviour {
 
                 gameObject.GetComponent<CapsuleCollider2D>().isTrigger = true;
                 rig.bodyType = RigidbodyType2D.Kinematic;
-                rig.gravityScale = 0;
+                //rig.gravityScale = 0;
                 rig.velocity = new Vector2(rig.velocity.x, -5f);
                 _onDown = false;
                 break;
@@ -366,39 +365,40 @@ public class MoveController : MonoBehaviour {
     /// <summary>
     /// はしごのギミック処理
     /// </summary>
-    private void GimmickLadder(Transform pos)
+    public void GimmickLadder(Transform pos)
     {
-        if (!gameObject.GetComponentInChildren<LegCollider>()._ActiveTrigger)
+        _ActiveRightLeft = false;
+        if (gameObject.transform.GetComponentInChildren<LegCollider>())
         {
-            Debug.Log("アウト");
-            _ActiveRightLeft = true;
-            gameObject.GetComponent<CapsuleCollider2D>().isTrigger = false;
-            rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0);
-            rig.bodyType = RigidbodyType2D.Dynamic;
-            rig.gravityScale = 1;
-
+            gameObject.transform.GetComponentInChildren<LegCollider>().OnIsTrigger();
         }
-        else
-        {
-            _ActiveRightLeft = false;
-            if (gameObject.transform.GetComponentInChildren<LegCollider>())
-            {
-                gameObject.transform.GetComponentInChildren<LegCollider>().OnIsTrigger();
-            }
-            gameObject.GetComponent<SpriteRenderer>().sprite = BrotherSprites[2];
-            gameObject.transform.position = new Vector2(pos.transform.position.x, gameObject.transform.position.y);
-        }
-        
+        gameObject.GetComponent<SpriteRenderer>().sprite = BrotherSprites[2];
+        gameObject.transform.position = new Vector2(pos.transform.position.x, gameObject.transform.position.y);
     }
 
     private void OnTriggerStay2D(Collider2D col)
     {
+        //if(col.gameObject.tag == "floor")
+        //{
+        //    GimmickLadder(col.transform);
+        //}
         ladder_y = col.gameObject.transform.position.y + col.GetComponent<BoxCollider2D>().size.y;
         leg_y = gameObject.GetComponentInChildren<LegCollider>().transform.position.y;
+        if (!mInfo.LadderFlag || ladder_y - 1f >= leg_y)
+        {
+            Debug.Log("アウト");
+            _ActiveRightLeft = true;
+            gameObject.GetComponent<CapsuleCollider2D>().isTrigger = false;
+            gameObject.GetComponentInChildren<LegCollider>().OffIsTrigger();
+            rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0);
+            rig.bodyType = RigidbodyType2D.Dynamic;
+            rig.gravityScale = 1;
+            gameObject.GetComponentInChildren<LegCollider>().ClearFloorCount();
+        }
         //はしごのcolliderにあたったってUpかDownボタンを押したら
         if (mInfo.LadderFlag && _onUp || mInfo.LadderFlag && _onDown)
         {
-            if (ladder_y - 1.5f >= leg_y)
+            if (ladder_y - 1f <= leg_y)
             {
                 _InGimmick = true;
             }
@@ -406,18 +406,15 @@ public class MoveController : MonoBehaviour {
             GimmickLadder(col.transform);
             Debug.Log("_InGimmick: " + _InGimmick);
         }
-        
-
         //Debug.Log("ladder_y:leg_y = " + ladder_y + ":" + leg_y);
         //Debug.Log("Left: " + _onLeft + " Right: " + _onRight);
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.tag == "floor")
+        if (col.gameObject.tag == "floor")
         {
             Debug.Log("Floor");
         }
-        
     }
 }
