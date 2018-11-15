@@ -19,6 +19,14 @@ public class LegCollider : MonoBehaviour {
 	}
 
     /// <summary>
+    /// floor_countを0にする
+    /// </summary>
+    public void ClearFloorCount()
+    {
+        floor_count = 0;
+    }
+
+    /// <summary>
     /// 足の部分のIsTriggerのON
     /// </summary>
     public void OnIsTrigger()
@@ -57,7 +65,10 @@ public class LegCollider : MonoBehaviour {
             {
                 OffIsTrigger();
                 Debug.Log("二回目");
-                floor_count = 0;
+                move_ctr.GimmickLadderOut();
+            }
+            else if(floor_count == 1)
+            {
             }
         }
     }

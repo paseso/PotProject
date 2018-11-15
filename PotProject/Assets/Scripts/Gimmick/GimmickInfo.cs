@@ -17,6 +17,7 @@ public class GimmickInfo : MonoBehaviour {
         LADDER,
         LADDERBLOCK,
         TREE,
+        M_WATER,
     }
 
     public GimmickType type;

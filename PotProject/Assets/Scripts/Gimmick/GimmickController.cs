@@ -6,6 +6,7 @@ using DG.Tweening;
 /// <summary>
 /// 各ギミックの処理
 /// </summary>
+[RequireComponent(typeof(GimmickInfo))]
 public class GimmickController :MonoBehaviour {
     private StageManager sManager;
     private MapInfo mInfo;

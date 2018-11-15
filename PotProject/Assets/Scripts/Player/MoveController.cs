@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveController : MonoBehaviour {
+public class MoveController : MonoBehaviour
+{
 
     [SerializeField]
     private float speed = 0f;
@@ -16,7 +17,7 @@ public class MoveController : MonoBehaviour {
     //左右動かしてもいいかどうか
     private bool _ActiveRightLeft = false;
     //ギミックの中いるかどうか
-    [SerializeField]
+    [HideInInspector]
     public bool _InGimmick = false;
 
     [HideInInspector]
@@ -37,6 +38,7 @@ public class MoveController : MonoBehaviour {
     //---------------------------------------------
     [HideInInspector]
     public GameObject target;
+    private float gimmick_x = 0f;
     [SerializeField, Header("兄のSprite 0.左 1.右 2.後ろ")]
     private List<Sprite> BrotherSprites;
 
@@ -52,7 +54,7 @@ public class MoveController : MonoBehaviour {
     private MapInfo mInfo;
 
     private bool _onece = false;
-    
+
     private enum ButtonType
     {
         JUMP = 0,
@@ -97,19 +99,25 @@ public class MoveController : MonoBehaviour {
         _onUp = false;
         _onDown = false;
         _InGimmick = false;
+        gimmick_x = 0f;
         ladder_y = 0;
         leg_y = 0;
-	}
+    }
 
     // Update is called once per frame
-    void Update () {
-        
+    void Update()
+    {
+        if (!mInfo.LadderFlag)
+        {
+            GimmickLadderOut();
+        }
+
         if (bringctr._bring)
         {
             target.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 2.5f);
         }
         BtnCheck();
-	}
+    }
 
     #region Input内処理
 
@@ -155,9 +163,8 @@ public class MoveController : MonoBehaviour {
                 if (_ActiveRightLeft)
                     return;
 
-                gameObject.GetComponent<CapsuleCollider2D>().isTrigger = true;
+                //gameObject.GetComponent<CapsuleCollider2D>().isTrigger = true;
                 rig.bodyType = RigidbodyType2D.Kinematic;
-                rig.gravityScale = 0;
                 rig.velocity = new Vector2(rig.velocity.x, 5f);
                 _onUp = false;
                 break;
@@ -168,9 +175,8 @@ public class MoveController : MonoBehaviour {
                 if (_ActiveRightLeft)
                     return;
 
-                gameObject.GetComponent<CapsuleCollider2D>().isTrigger = true;
+                //gameObject.GetComponent<CapsuleCollider2D>().isTrigger = true;
                 rig.bodyType = RigidbodyType2D.Kinematic;
-                rig.gravityScale = 0;
                 rig.velocity = new Vector2(rig.velocity.x, -5f);
                 _onDown = false;
                 break;
@@ -197,7 +203,8 @@ public class MoveController : MonoBehaviour {
                 }
                 else if (bringctr._bring)
                 {//アイテムを離す
-                    target.gameObject.transform.position = new Vector2(gameObject.transform.position.x + 2f, gameObject.transform.position.y + 1);
+                    target.gameObject.transform.position = new Vector2(gameObject.transform.GetChild(0).transform.position.x, gameObject.transform.GetChild(0).transform.position.y);
+                    //target.gameObject.transform.position = new Vector2(gameObject.transform.position.x + 2f, gameObject.transform.position.y + 1);
                     target.gameObject.transform.parent = null;
                     target.GetComponent<Rigidbody2D>().simulated = true;
                     bringctr._bring = false;
@@ -268,17 +275,19 @@ public class MoveController : MonoBehaviour {
     /// </summary>
     private void BtnCheck()
     {
-        if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButton("Jump") || Input.GetKeyDown(KeyCode.Space))
         {//×ボタン or キーボードの「W」
             Move(ButtonType.JUMP);
         }
         if (Input.GetAxis("Vertical_ps4") >= 0.15f || Input.GetKey(KeyCode.A))
         {//左ジョイスティックを左にたおす or キーボードの「A」
             Move(ButtonType.LEFT);
-        }else if (Input.GetAxis("Vertical_ps4") <= -0.15f || Input.GetKey(KeyCode.D))
+        }
+        else if (Input.GetAxis("Vertical_ps4") <= -0.15f || Input.GetKey(KeyCode.D))
         {//左ジョイスティックを右にたおす or キーボードの「D」
             Move(ButtonType.RIGHT);
-        }else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
+        }
+        else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
         {
             rig.velocity = new Vector2(0, rig.velocity.y);
             _onLeft = false;
@@ -287,10 +296,12 @@ public class MoveController : MonoBehaviour {
         if (Input.GetAxis("Horizontal_ps4") >= 0.15f || Input.GetKey(KeyCode.W))
         {
             Move(ButtonType.UP);
-        }else if(Input.GetAxis("Horizontal_ps4") <= -0.15f || Input.GetKey(KeyCode.S))
+        }
+        else if (Input.GetAxis("Horizontal_ps4") <= -0.15f || Input.GetKey(KeyCode.S))
         {
             Move(ButtonType.DOWN);
-        }else if(Input.GetAxis("Horizontal_ps4") <= 0.15f && Input.GetAxis("Horizontal_ps4") >= -0.15f)
+        }
+        else if (Input.GetAxis("Horizontal_ps4") <= 0.15f && Input.GetAxis("Horizontal_ps4") >= -0.15f)
         {
             _onUp = false;
             _onDown = false;
@@ -366,57 +377,60 @@ public class MoveController : MonoBehaviour {
     /// <summary>
     /// はしごのギミック処理
     /// </summary>
-    private void GimmickLadder(Transform pos)
+    public void GimmickLadderIn(float pos_x)
     {
-        if (!gameObject.GetComponentInChildren<LegCollider>()._ActiveTrigger)
-        {
-            Debug.Log("アウト");
-            _ActiveRightLeft = true;
-            gameObject.GetComponent<CapsuleCollider2D>().isTrigger = false;
-            rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0);
-            rig.bodyType = RigidbodyType2D.Dynamic;
-            rig.gravityScale = 1;
-
-        }
-        else
-        {
-            _ActiveRightLeft = false;
-            if (gameObject.transform.GetComponentInChildren<LegCollider>())
-            {
-                gameObject.transform.GetComponentInChildren<LegCollider>().OnIsTrigger();
-            }
-            gameObject.GetComponent<SpriteRenderer>().sprite = BrotherSprites[2];
-            gameObject.transform.position = new Vector2(pos.transform.position.x, gameObject.transform.position.y);
-        }
-        
+        _ActiveRightLeft = false;
+        gameObject.GetComponent<SpriteRenderer>().sprite = BrotherSprites[2];
+        gameObject.transform.position = new Vector2(pos_x, gameObject.transform.position.y);
     }
 
-    private void OnTriggerStay2D(Collider2D col)
+    public void GimmickLadderOut()
     {
-        ladder_y = col.gameObject.transform.position.y + col.GetComponent<BoxCollider2D>().size.y;
-        leg_y = gameObject.GetComponentInChildren<LegCollider>().transform.position.y;
-        //はしごのcolliderにあたったってUpかDownボタンを押したら
-        if (mInfo.LadderFlag && _onUp || mInfo.LadderFlag && _onDown)
+        Debug.Log("アウト");
+        _ActiveRightLeft = true;
+        rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y);
+        rig.bodyType = RigidbodyType2D.Dynamic;
+    }
+
+    private void LadderTrigger()
+    {
+        if (!mInfo.LadderFlag)
+            return;
+        if(_onUp || _onDown)
         {
-            if (ladder_y - 1.5f >= leg_y)
-            {
-                _InGimmick = true;
-            }
             Debug.Log("イン");
-            GimmickLadder(col.transform);
+            GimmickLadderIn(gimmick_x);
             Debug.Log("_InGimmick: " + _InGimmick);
         }
-        
-
-        //Debug.Log("ladder_y:leg_y = " + ladder_y + ":" + leg_y);
-        //Debug.Log("Left: " + _onLeft + " Right: " + _onRight);
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
         if(col.gameObject.tag == "floor")
         {
-            Debug.Log("Floor");
+            GimmickLadderOut();
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D col)
+    {
+        if (col.gameObject.GetComponent<GimmickInfo>())
+        {
+            Debug.Log("GimmickInfoあります！");
+            GimmickInfo gInfo = col.gameObject.GetComponent<GimmickInfo>();
+            Debug.Log("Gimmick Type: " + gInfo.type);
+            if (gInfo.type == GimmickInfo.GimmickType.LADDER)
+            {
+                gimmick_x = col.gameObject.transform.position.x;
+                Debug.Log("LadderFlag: " + mInfo.LadderFlag);
+                LadderTrigger();
+            }
+        }
+
+        //木がのびるcolliderに当たった時
+        if (mInfo.GrowTreeFlag)
+        {
+
         }
         
     }

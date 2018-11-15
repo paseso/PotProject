@@ -12,6 +12,8 @@ public class AttackZoonController : MonoBehaviour {
     private float Impalce_x = 50;
     [SerializeField, Header("殴れるオブジェクトがy方向に飛ぶ距離")]
     private float Impalce_y = 50;
+    [SerializeField]
+    private PlayerManager manager;
 
 	// Use this for initialization
 	void Start () {
@@ -61,6 +63,7 @@ public class AttackZoonController : MonoBehaviour {
             move_ctr._onCircle = true;
             Debug.Log("殴れるよ");
             Attack_Target = col.gameObject;
+            
         }
     }
 
