@@ -5,18 +5,13 @@ using UnityEditorInternal;
 [CustomEditor(typeof(MapCreator))]
 public class MapCreatorInspector : Editor
 {
-
-    SerializedProperty mapdate;
-
+    //  順番が可変できるリスト
     ReorderableList reorderableList;
     bool foldout;
-
-    ScriptableObjectSample scriptableObjectSample;
 
     private void OnEnable()
     {
         var prop = serializedObject.FindProperty("tiles");
-        mapdate = serializedObject.FindProperty("scriptableObjectSample");
 
         reorderableList = new ReorderableList(serializedObject, prop);
         reorderableList.elementHeight = 55;
@@ -38,7 +33,9 @@ public class MapCreatorInspector : Editor
         //  最新情報に更新
         serializedObject.Update();
         //  マップデータ
+        MapCreator mapCreator = (MapCreator)target;
         //EditorGUILayout.ObjectField("マップデータ",mapdate, typeof(ScriptableObjectSample), false);
+        //mapCreator.
 
         if (GUILayout.Button("マップに変換"))
         {
@@ -57,8 +54,8 @@ public class MapCreatorInspector : Editor
 
     private void CreateMap()
     {
-        int xLength = scriptableObjectSample.MapData.GetLength(1);
-        int yLength = scriptableObjectSample.MapData.GetLength(0);
+        //int xLength = MapDate..GetLength(1);
+        //int yLength = MapDate.MapData.GetLength(0);
 
         var obj = new GameObject("RootObject");
         

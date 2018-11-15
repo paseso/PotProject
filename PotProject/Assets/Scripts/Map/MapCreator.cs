@@ -6,7 +6,7 @@ using UnityEngine;
 public class MapCreator : MonoBehaviour
 {
     [SerializeField]
-    private ScriptableObjectSample scriptableObjectSample;
+    private MapDate scriptableObjectSample;
     [SerializeField]
     private Tile[] tiles;
     //[SerializeField]

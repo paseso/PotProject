@@ -16,7 +16,7 @@ public class MapEditor : EditorWindow {
     private int gridNum = 20;
     private Color gridColor = Color.white;
     private Rect[,] gridRect = new Rect[20, 20];
-    private ScriptableObjectSample _sample;
+    private MapDate _sample;
     private Rect rect;
     private Tile[] tiles;
     //  選択中のボタンの種類
@@ -44,7 +44,7 @@ public class MapEditor : EditorWindow {
     {
         //  インスタンス生成
         if (_sample == null)
-            _sample = ScriptableObject.CreateInstance<ScriptableObjectSample>();
+            _sample = ScriptableObject.CreateInstance<MapDate>();
 
         //  グリッド以外のラベル表示
         //  グリッドのカラーを設定
@@ -64,7 +64,7 @@ public class MapEditor : EditorWindow {
             {
                 for (int yy = 0; yy < gridNum; yy++)
                 {
-                    _sample.MapData[yy, xx] = 0;
+                    _sample.MapDataList[yy, xx] = 0;
                 }
             }
         }
@@ -118,7 +118,7 @@ public class MapEditor : EditorWindow {
                     if (r.y <= pos.y && pos.y <= r.y + r.height)
                     {
                         //  配列に代入
-                        _sample.MapData[yy, xx] = SelectNum;
+                        _sample.MapDataList[yy, xx] = SelectNum;
                         Repaint();
                         break;
                     }
@@ -131,9 +131,9 @@ public class MapEditor : EditorWindow {
         {
             for (int xx = 0; xx < gridNum; xx++)
             {
-                if (_sample.MapData[yy, xx] != 0)
+                if (_sample.MapDataList[yy, xx] != 0)
                 {                    
-                    GUI.DrawTexture(gridRect[yy, xx], tiles[_sample.MapData[yy, xx]].TileImage);
+                    GUI.DrawTexture(gridRect[yy, xx], tiles[_sample.MapDataList[yy, xx]].TileImage);
                 }
             }
         }
