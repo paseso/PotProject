@@ -9,23 +9,29 @@ public class MoveController : MonoBehaviour {
 
     private Rigidbody2D rig;
     //ジャンプできるかどうか
-    private bool _isJump = false;
-    private bool _hitOtoto = false;
+    [HideInInspector]
+    public bool _isJump = false;
+    //壁にあたったかどうか
+    private bool _hitWall = false;
+    //ギミックに当たったかどうか
+    private bool _hitGimmick = false;
+
     [HideInInspector]
     public bool _itemFall = false;
-    //□ボタンを押しているかどうか
-    [HideInInspector]
-    public bool _onSquere = false;
-    //-------左右ボタンを押してるかどうか----------
+    //-------アクションボタンを押してるかどうか----------
     [HideInInspector]
     public bool _onRight = false;
     [HideInInspector]
     public bool _onLeft = false;
+    [HideInInspector]
+    public bool _onSquare = false;
+    [HideInInspector]
+    public bool _onCircle = false;
     //---------------------------------------------
-    [SerializeField,Header("弟")]
-    private GameObject Ototo;
     [HideInInspector]
     public GameObject target;
+    [SerializeField, Header("兄のSprite 0.左 1.右 2.後ろ")]
+    private List<Sprite> BrotherSprites;
 
     [SerializeField]
     private GameObject managerGameObject;
@@ -37,12 +43,12 @@ public class MoveController : MonoBehaviour {
     private enum ButtonType
     {
         JUMP = 0,
-        RIGTH,
+        RIGHT,
         LEFT,
         UP,
         DOWN,
         CIRCLE,
-        SQUERE,
+        SQUARE,
         TRIANGLE,
         L1,
         R1,
@@ -67,9 +73,12 @@ public class MoveController : MonoBehaviour {
         _isJump = false;
         _onRight = false;
         _onLeft = false;
-        _onSquere = false;
+        _onSquare = false;
+        _onCircle = false;
         _onece = false;
         _itemFall = false;
+        _hitWall = false;
+        _hitGimmick = false;
 	}
 
     // Update is called once per frame
@@ -101,7 +110,7 @@ public class MoveController : MonoBehaviour {
             _isJump = true;
             rig.velocity = new Vector2(0, 1f * speed);
         }
-        else 
+        else
         {
             _isJump = false;
         }
@@ -124,18 +133,29 @@ public class MoveController : MonoBehaviour {
 
             case ButtonType.LEFT:
                 Debug.Log("LEFT");
+                
+                gameObject.GetComponent<SpriteRenderer>().sprite = BrotherSprites[0];
+                if (_hitWall)
+                    return;
+
                 _onLeft = true;
                 _onRight = false;
-                //rig.AddForce(new Vector2(rig.position.x - 4f, rig.velocity.y), ForceMode2D.Force);
-                rig.velocity = new Vector2(rig.velocity.x - 0.2f, rig.velocity.y);
+                rig.velocity = new Vector2(-5f, rig.velocity.y);
+                
+                Debug.Log("velocity: " + rig.velocity);
                 break;
 
-            case ButtonType.RIGTH:
-                Debug.Log("RIGTH");
+            case ButtonType.RIGHT:
+                Debug.Log("RIGHT");
+                gameObject.GetComponent<SpriteRenderer>().sprite = BrotherSprites[1];
+                if (_hitWall)
+                    return;
+
                 _onRight = true;
                 _onLeft = false;
-                //rig.AddForce(new Vector2(rig.position.x + 4f, rig.velocity.y), ForceMode2D.Force);
-                rig.velocity = new Vector2(rig.velocity.x + 0.2f, rig.velocity.y);
+                rig.velocity = new Vector2(5f, rig.velocity.y);
+                
+                Debug.Log("velocity: " + rig.velocity);
                 break;
 
             case ButtonType.UP:
@@ -148,14 +168,17 @@ public class MoveController : MonoBehaviour {
 
             case ButtonType.CIRCLE:
                 Debug.Log("〇");
+                if (!_onCircle)
+                    return;
+
                 break;
 
-            case ButtonType.SQUERE:
+            case ButtonType.SQUARE:
                 Debug.Log("□");
                 if (!bringctr._Brotherhit)
                     return;
 
-                _onSquere = true;
+                _onSquare = true;
                 if (!bringctr._bring)
                 {//アイテムを持つ
                     target.GetComponent<Rigidbody2D>().simulated = false;
@@ -169,7 +192,7 @@ public class MoveController : MonoBehaviour {
                     bringctr._bring = false;
                     _itemFall = true;
                 }
-                _onSquere = false;
+                _onSquare = false;
                 break;
 
             case ButtonType.TRIANGLE:
@@ -238,7 +261,7 @@ public class MoveController : MonoBehaviour {
         }
         else if (Input.GetAxis("Vertical_ps4") <= -0.15f || Input.GetKey(KeyCode.D))
         {//左ジョイスティックを右にたおす or キーボードの「D」
-            Move(ButtonType.RIGTH);
+            Move(ButtonType.RIGHT);
         }
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
         {
@@ -255,7 +278,7 @@ public class MoveController : MonoBehaviour {
         }
         if (Input.GetButtonDown("Squere") || Input.GetKeyDown(KeyCode.Q))
         {//□ボタン or キーボードの「Q」
-            Move(ButtonType.SQUERE);
+            Move(ButtonType.SQUARE);
         }
         if (Input.GetButtonDown("Circle") || Input.GetKeyDown(KeyCode.E))
         {//〇ボタン or キーボードの「E」
@@ -311,22 +334,40 @@ public class MoveController : MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D col)
+    /// <summary>
+    /// はしごのギミック処理
+    /// </summary>
+    private void GimmickLadder()
     {
-        
+        if (!_hitGimmick)
+            return;
+
+
     }
 
     private void OnCollisionStay2D(Collision2D col)
     {
-        _isJump = true;
+        //_hitWall = true;
     }
 
     private void OnCollisionExit2D(Collision2D col)
     {
-        _isJump = false;
+        //_hitWall = false;
         if (col.gameObject.tag == "Ototo")
         {
-            _hitOtoto = false;
+            
+        }
+        if(col.gameObject.tag == "Ladder")
+        {
+            _hitGimmick = false;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D col)
+    {
+        if(col.gameObject.tag == "Ladder")
+        {
+            _hitGimmick = true;
         }
     }
 }
