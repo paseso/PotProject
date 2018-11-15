@@ -912,7 +912,6 @@ GameObject:
   - component: {fileID: 268587961}
   - component: {fileID: 268587960}
   - component: {fileID: 268587963}
-  - component: {fileID: 268587964}
   m_Layer: 0
   m_Name: Ladder (1)
   m_TagString: Untagged
@@ -957,7 +956,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0035576224, y: 2.4023027}
+  m_Offset: {x: 0.0035576224, y: 0.08700061}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -968,7 +967,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5855323, y: 0.31539416}
+  m_Size: {x: 0.5855323, y: 4.9459987}
   m_EdgeRadius: 0
 --- !u!212 &268587962
 SpriteRenderer:
@@ -1022,31 +1021,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9696294e9f29da043846bc1bdfa5a0bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!61 &268587964
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 268587958}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.008664966, y: -2.2045588}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.28, y: 5.12}
-    newSize: {x: 1.28, y: 5.12}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.6771016, y: 0.3313694}
-  m_EdgeRadius: 0
 --- !u!1 &287500626
 GameObject:
   m_ObjectHideFlags: 0
@@ -2480,7 +2454,6 @@ GameObject:
   - component: {fileID: 575805183}
   - component: {fileID: 575805186}
   - component: {fileID: 575805185}
-  - component: {fileID: 575805184}
   m_Layer: 0
   m_Name: Brock_0 (25)
   m_TagString: floor
@@ -2502,18 +2475,6 @@ Transform:
   m_Father: {fileID: 1416058045}
   m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &575805184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 575805182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccb62d7c26706244e85525a82b6801f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 6
 --- !u!61 &575805185
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3846,7 +3807,7 @@ GameObject:
   - component: {fileID: 892100248}
   m_Layer: 0
   m_Name: Brock_0 (23)
-  m_TagString: floor
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5126,7 +5087,6 @@ GameObject:
   - component: {fileID: 1166490556}
   - component: {fileID: 1166490555}
   - component: {fileID: 1166490558}
-  - component: {fileID: 1166490559}
   m_Layer: 0
   m_Name: Ladder
   m_TagString: Untagged
@@ -5171,7 +5131,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.019747078, y: 2.320093}
+  m_Offset: {x: 0.019747078, y: 0.12521994}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5182,7 +5142,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6086092, y: 0.47981405}
+  m_Size: {x: 0.6086092, y: 4.8695602}
   m_EdgeRadius: 0
 --- !u!212 &1166490557
 SpriteRenderer:
@@ -5236,31 +5196,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9696294e9f29da043846bc1bdfa5a0bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!61 &1166490559
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1166490553}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.00000017881393, y: -2.1113672}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.28, y: 5.12}
-    newSize: {x: 1.28, y: 5.12}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.7014103, y: 0.31192994}
-  m_EdgeRadius: 0
 --- !u!1 &1167349156
 GameObject:
   m_ObjectHideFlags: 0
@@ -7471,7 +7406,7 @@ GameObject:
   - component: {fileID: 1576323762}
   m_Layer: 0
   m_Name: Brock_0 (16)
-  m_TagString: floor
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8165,7 +8100,7 @@ GameObject:
   - component: {fileID: 1759628355}
   m_Layer: 0
   m_Name: Brock_0 (54)
-  m_TagString: floor
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9672,9 +9607,10 @@ GameObject:
   - component: {fileID: 2061171394}
   - component: {fileID: 2061171396}
   - component: {fileID: 2061171395}
+  - component: {fileID: 2061171397}
   m_Layer: 0
   m_Name: Brock_0 (21)
-  m_TagString: floor
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9761,6 +9697,18 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
+--- !u!114 &2061171397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2061171393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccb62d7c26706244e85525a82b6801f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 6
 --- !u!1 &2080160559
 GameObject:
   m_ObjectHideFlags: 0

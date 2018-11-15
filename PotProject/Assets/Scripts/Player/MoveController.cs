@@ -38,6 +38,7 @@ public class MoveController : MonoBehaviour
     //---------------------------------------------
     [HideInInspector]
     public GameObject target;
+    private float gimmick_x = 0f;
     [SerializeField, Header("兄のSprite 0.左 1.右 2.後ろ")]
     private List<Sprite> BrotherSprites;
 
@@ -98,6 +99,7 @@ public class MoveController : MonoBehaviour
         _onUp = false;
         _onDown = false;
         _InGimmick = false;
+        gimmick_x = 0f;
         ladder_y = 0;
         leg_y = 0;
     }
@@ -105,6 +107,10 @@ public class MoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!mInfo.LadderFlag)
+        {
+            GimmickLadderOut();
+        }
 
         if (bringctr._bring)
         {
@@ -154,10 +160,10 @@ public class MoveController : MonoBehaviour
             case ButtonType.UP:
                 Debug.Log("UP");
                 _onUp = true;
-                if (!_ActiveRightLeft)
+                if (_ActiveRightLeft)
                     return;
 
-                gameObject.GetComponent<CapsuleCollider2D>().isTrigger = true;
+                //gameObject.GetComponent<CapsuleCollider2D>().isTrigger = true;
                 rig.bodyType = RigidbodyType2D.Kinematic;
                 rig.velocity = new Vector2(rig.velocity.x, 5f);
                 _onUp = false;
@@ -166,10 +172,10 @@ public class MoveController : MonoBehaviour
             case ButtonType.DOWN:
                 Debug.Log("DOWN");
                 _onDown = true;
-                if (!_ActiveRightLeft)
+                if (_ActiveRightLeft)
                     return;
 
-                gameObject.GetComponent<CapsuleCollider2D>().isTrigger = true;
+                //gameObject.GetComponent<CapsuleCollider2D>().isTrigger = true;
                 rig.bodyType = RigidbodyType2D.Kinematic;
                 rig.velocity = new Vector2(rig.velocity.x, -5f);
                 _onDown = false;
@@ -370,70 +376,73 @@ public class MoveController : MonoBehaviour
     /// <summary>
     /// はしごのギミック処理
     /// </summary>
-    public void GimmickLadderIn(Transform pos)
+    public void GimmickLadderIn(float pos_x)
     {
-        _ActiveRightLeft = true;
-        if (gameObject.transform.GetComponentInChildren<LegCollider>())
-        {
-            gameObject.transform.GetComponentInChildren<LegCollider>().OnIsTrigger();
-        }
+        _ActiveRightLeft = false;
+        //if (gameObject.transform.GetComponentInChildren<LegCollider>())
+        //{
+        //    gameObject.transform.GetComponentInChildren<LegCollider>().OnIsTrigger();
+        //}
         gameObject.GetComponent<SpriteRenderer>().sprite = BrotherSprites[2];
-        gameObject.transform.position = new Vector2(pos.transform.position.x, gameObject.transform.position.y);
+        gameObject.transform.position = new Vector2(pos_x, gameObject.transform.position.y);
     }
 
     public void GimmickLadderOut()
     {
         Debug.Log("アウト");
-        _ActiveRightLeft = false;
-        gameObject.GetComponent<CapsuleCollider2D>().isTrigger = false;
-        gameObject.GetComponentInChildren<LegCollider>().OffIsTrigger();
-        rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y * 0);
+        _ActiveRightLeft = true;
+        //gameObject.GetComponent<CapsuleCollider2D>().isTrigger = false;
+        //gameObject.GetComponentInChildren<LegCollider>().OffIsTrigger();
+        rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y);
         rig.bodyType = RigidbodyType2D.Dynamic;
-        rig.gravityScale = 1;
-        gameObject.GetComponentInChildren<LegCollider>().ClearFloorCount();
+        //gameObject.GetComponentInChildren<LegCollider>().ClearFloorCount();
+    }
+
+    private void LadderTrigger()
+    {
+        if (!mInfo.LadderFlag)
+            return;
+        if(_onUp || _onDown)
+        {
+            Debug.Log("イン");
+            GimmickLadderIn(gimmick_x);
+            Debug.Log("_InGimmick: " + _InGimmick);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.gameObject.tag == "floor")
+        {
+            GimmickLadderOut();
+        }
     }
 
     private void OnTriggerStay2D(Collider2D col)
     {
-        //はしごに当たった時
-        if (mInfo.LadderFlag)
+        if (col.gameObject.GetComponent<GimmickInfo>())
         {
-            _InGimmick = true;
-            GimmickLadderIn(col.transform);
+            Debug.Log("GimmickInfoあります！");
+            GimmickInfo gInfo = col.gameObject.GetComponent<GimmickInfo>();
+            Debug.Log("Gimmick Type: " + gInfo.type);
+            if (gInfo.type == GimmickInfo.GimmickType.LADDER)
+            {
+                gimmick_x = col.gameObject.transform.position.x;
+                LadderTrigger();
+            }
         }
+        //はしごに当たった時
+        //if (mInfo.LadderFlag && !_InGimmick)
+        //{
+        //    _InGimmick = true;
+        //    GimmickLadderIn(col.transform);
+        //}
 
         //木がのびるcolliderに当たった時
         if (mInfo.GrowTreeFlag)
         {
 
         }
-
-        //ladder_y = col.gameObject.transform.position.y + col.GetComponent<BoxCollider2D>().size.y;
-        //leg_y = gameObject.GetComponentInChildren<LegCollider>().transform.position.y;
-        //if (!mInfo.LadderFlag || ladder_y - 1f >= leg_y)
-        //{
-        //    GimmickLadderOut();
-        //}
-        ////はしごのcolliderにあたったってUpかDownボタンを押したら
-        //if (mInfo.LadderFlag && _onUp || mInfo.LadderFlag && _onDown)
-        //{
-        //    if (ladder_y - 1f <= leg_y)
-        //    {
-        //        _InGimmick = true;
-        //    }
-        //    Debug.Log("イン");
-        //    GimmickLadderIn(col.transform);
-        //    Debug.Log("_InGimmick: " + _InGimmick);
-        //}
-        //Debug.Log("ladder_y:leg_y = " + ladder_y + ":" + leg_y);
-        //Debug.Log("Left: " + _onLeft + " Right: " + _onRight);
-    }
-
-    private void OnTriggerExit2D(Collider2D col)
-    {
-        if (mInfo.LadderFlag && _InGimmick)
-        {
-            GimmickLadderOut();
-        }
+        
     }
 }

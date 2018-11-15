@@ -3544,7 +3544,6 @@ GameObject:
   - component: {fileID: 315720201}
   - component: {fileID: 315720203}
   - component: {fileID: 315720202}
-  - component: {fileID: 315720204}
   m_Layer: 0
   m_Name: Brock_0 (25)
   m_TagString: floor
@@ -3634,18 +3633,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
---- !u!114 &315720204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 315720200}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccb62d7c26706244e85525a82b6801f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 6
 --- !u!1 &321639967
 GameObject:
   m_ObjectHideFlags: 0
@@ -6608,7 +6595,7 @@ GameObject:
   - component: {fileID: 613422668}
   m_Layer: 0
   m_Name: Brock_0 (23)
-  m_TagString: floor
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6921,7 +6908,7 @@ GameObject:
   - component: {fileID: 625164879}
   m_Layer: 0
   m_Name: Brock_0 (16)
-  m_TagString: floor
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7063,7 +7050,7 @@ GameObject:
   - component: {fileID: 627053370}
   m_Layer: 0
   m_Name: Brock_0 (26)
-  m_TagString: floor
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11953,7 +11940,7 @@ GameObject:
   - component: {fileID: 1147592132}
   m_Layer: 0
   m_Name: Brock_0 (28)
-  m_TagString: floor
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19837,7 +19824,7 @@ GameObject:
   - component: {fileID: 2040026374}
   m_Layer: 0
   m_Name: Brock_0 (54)
-  m_TagString: floor
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
