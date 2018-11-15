@@ -5,10 +5,17 @@ using UnityEngine;
 public class LegCollider : MonoBehaviour {
 
     private MoveController move_ctr;
+    private MapInfo mInfo;
+    private int floor_count = 0;
+    [HideInInspector]
+    public bool _ActiveTrigger = false;
 
 	// Use this for initialization
 	void Start () {
         move_ctr = transform.parent.GetComponent<MoveController>();
+        mInfo = gameObject.transform.root.GetComponent<MapInfo>();
+        floor_count = 0;
+        _ActiveTrigger = false;
 	}
 
     /// <summary>
@@ -17,7 +24,8 @@ public class LegCollider : MonoBehaviour {
     public void OnIsTrigger()
     {
         gameObject.GetComponent<Collider2D>().isTrigger = true;
-        Debug.Log("On");
+        _ActiveTrigger = true;
+        Debug.Log("IsTrigger On");
     }
 
     /// <summary>
@@ -26,7 +34,8 @@ public class LegCollider : MonoBehaviour {
     public void OffIsTrigger()
     {
         gameObject.GetComponent<Collider2D>().isTrigger = false;
-        Debug.Log("Off");
+        _ActiveTrigger = false;
+        Debug.Log("IsTrigger Off");
     }
 	
     private void OnCollisionStay2D(Collision2D col)
@@ -37,5 +46,19 @@ public class LegCollider : MonoBehaviour {
     private void OnCollisionExit2D(Collision2D col)
     {
         move_ctr._isJump = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.gameObject.tag == "floor")
+        {
+            floor_count++;
+            if(floor_count >= 2)
+            {
+                OffIsTrigger();
+                Debug.Log("二回目");
+                floor_count = 0;
+            }
+        }
     }
 }
