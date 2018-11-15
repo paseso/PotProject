@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System;
 
 [Serializable]
-public class Charactor{
-
+public class Charactor
+{
     [SerializeField]
     Texture icon;
 
@@ -17,5 +15,4 @@ public class Charactor{
 
     [SerializeField]
     int power;
-
 }

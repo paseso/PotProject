@@ -14,7 +14,7 @@ public class MapEditor : EditorWindow {
     // 仮画像のタイル画像データ
     private Texture2D tileSprite;
     // 選択した画像パス
-    private string selectedImagePath;
+    //private string selectedImagePath;
 
     /// <summary>
     /// アセットパス
@@ -264,7 +264,7 @@ public class MapEditor : EditorWindow {
                 Texture2D tex = (Texture2D)AssetDatabase.LoadAssetAtPath(d, typeof(Texture2D));
                 if (GUILayout.Button(tex, GUILayout.MaxWidth(w), GUILayout.MaxHeight(h), GUILayout.ExpandWidth(false), GUILayout.ExpandHeight(false)))
                 {
-                    selectedImagePath = d;
+                    //selectedImagePath = d;
                 }
                 GUILayout.FlexibleSpace();
                 x += w;

@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Example : MonoBehaviour {
-
+public class Example : MonoBehaviour
+{
     [SerializeField]
-    Charactor[] characters;
+    Charactor[] charactors;
 }

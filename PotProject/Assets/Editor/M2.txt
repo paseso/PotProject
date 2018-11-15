@@ -1,4 +1,4 @@
-ï»¿using System.Collections;
+using System.Collections;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,21 +10,21 @@ using UnityEditor;
 /// Map creater 
 /// </summary>
 
-public class MapCreater : EditorWindow
+public class MapCreater2 : EditorWindow
 {
-    // ç”»åƒãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
+    // ‰æ‘œƒfƒBƒŒƒNƒgƒŠ
     private Object imgDirectory;
-    // å‡ºåŠ›å…ˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª(nullã ã¨Assetsä¸‹ã«å‡ºåŠ›ã—ã¾ã™)
+    // o—ÍæƒfƒBƒŒƒNƒgƒŠ(null‚¾‚ÆAssets‰º‚Éo—Í‚µ‚Ü‚·)
     private Object outputDirectory;
-    // ãƒãƒƒãƒ—ã‚¨ãƒ‡ã‚£ã‚¿ã®ãƒã‚¹ã®æ•°
+    // ƒ}ƒbƒvƒGƒfƒBƒ^‚Ìƒ}ƒX‚Ì”
     private int mapSize = 10;
-    // ã‚°ãƒªãƒƒãƒ‰ã®å¤§ãã•ã€å°ã•ã„ã»ã©ç´°ã‹ããªã‚‹
+    // ƒOƒŠƒbƒh‚Ì‘å‚«‚³A¬‚³‚¢‚Ù‚Ç×‚©‚­‚È‚é
     private float gridSize = 50.0f;
-    // å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«å
+    // o—Íƒtƒ@ƒCƒ‹–¼
     private string outputFileName;
-    // é¸æŠã—ãŸç”»åƒãƒ‘ã‚¹
+    // ‘I‘ğ‚µ‚½‰æ‘œƒpƒX
     private string selectedImagePath;
-    // ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
+    // ƒTƒuƒEƒBƒ“ƒhƒE
     private MapCreaterSubWindow subWindow;
 
     private Example chara;
@@ -32,8 +32,8 @@ public class MapCreater : EditorWindow
     [MenuItem("Editor/MapCreater")]
     static void Create()
     {
-        MapCreater window = GetWindow<MapCreater>();
-        //  æœ€å°ã‚µã‚¤ã‚ºè¨­å®š
+        MapCreater2 window = GetWindow<MapCreater2>();
+        //  Å¬ƒTƒCƒYİ’è
         window.minSize = new Vector2(320, 360);
         window.maxSize = new Vector2(320, 500);
     }
@@ -80,7 +80,7 @@ public class MapCreater : EditorWindow
         DrawMapWindowButton();
     }
 
-    // ç”»åƒä¸€è¦§ã‚’ãƒœã‚¿ãƒ³é¸æŠå‡ºæ¥ã‚‹å½¢ã«ã—ã¦å‡ºåŠ›
+    // ‰æ‘œˆê——‚ğƒ{ƒ^ƒ“‘I‘ğo—ˆ‚éŒ`‚É‚µ‚Äo—Í
     private void DrawImageParts()
     {
         if (imgDirectory != null)
@@ -120,7 +120,7 @@ public class MapCreater : EditorWindow
         }
     }
 
-    // é¸æŠã—ãŸç”»åƒãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ç¤º
+    // ‘I‘ğ‚µ‚½‰æ‘œƒf[ƒ^‚ğ•\¦
     private void DrawSelectedImage()
     {
         if (selectedImagePath != null)
@@ -135,7 +135,7 @@ public class MapCreater : EditorWindow
         }
     }
 
-    // ãƒãƒƒãƒ—ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‹ããƒœã‚¿ãƒ³ã‚’ç”Ÿæˆ
+    // ƒ}ƒbƒvƒEƒBƒ“ƒhƒE‚ğŠJ‚­ƒ{ƒ^ƒ“‚ğ¶¬
     private void DrawMapWindowButton()
     {
         EditorGUILayout.BeginVertical();
@@ -169,7 +169,7 @@ public class MapCreater : EditorWindow
         get { return gridSize; }
     }
 
-    // å‡ºåŠ›å…ˆãƒ‘ã‚¹ã‚’ç”Ÿæˆ
+    // o—ÍæƒpƒX‚ğ¶¬
     public string OutputFilePath()
     {
         string resultPath = "";
@@ -192,22 +192,22 @@ public class MapCreater : EditorWindow
 /// </summary>
 public class MapCreaterSubWindow : EditorWindow
 {
-    // ãƒãƒƒãƒ—ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚µã‚¤ã‚º
+    // ƒ}ƒbƒvƒEƒBƒ“ƒhƒE‚ÌƒTƒCƒY
     const float WINDOW_W = 750.0f;
     const float WINDOW_H = 750.0f;
-    // ãƒãƒƒãƒ—ã®ã‚°ãƒªãƒƒãƒ‰æ•°
+    // ƒ}ƒbƒv‚ÌƒOƒŠƒbƒh”
     private int mapSize = 0;
-    // ã‚°ãƒªãƒƒãƒ‰ã‚µã‚¤ã‚ºã€‚è¦ªã‹ã‚‰å€¤ã‚’ã‚‚ã‚‰ã†
+    // ƒOƒŠƒbƒhƒTƒCƒYBe‚©‚ç’l‚ğ‚à‚ç‚¤
     private float gridSize = 0.0f;
-    // ãƒãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿
+    // ƒ}ƒbƒvƒf[ƒ^
     private string[,] map;
-    // ã‚°ãƒªãƒƒãƒ‰ã®å››è§’
+    // ƒOƒŠƒbƒh‚ÌlŠp
     private Rect[,] gridRect;
-    // è¦ªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å‚ç…§ã‚’æŒã¤
-    private MapCreater parent;
+    // eƒEƒBƒ“ƒhƒE‚ÌQÆ‚ğ‚Â
+    private MapCreater2 parent;
 
-    // ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‹ã
-    public static MapCreaterSubWindow WillAppear(MapCreater _parent)
+    // ƒTƒuƒEƒBƒ“ƒhƒE‚ğŠJ‚­
+    public static MapCreaterSubWindow WillAppear(MapCreater2 _parent)
     {
         MapCreaterSubWindow window = (MapCreaterSubWindow)EditorWindow.GetWindow(typeof(MapCreaterSubWindow), false);
         window.Show();
@@ -217,18 +217,18 @@ public class MapCreaterSubWindow : EditorWindow
         return window;
     }
 
-    private void SetParent(MapCreater _parent)
+    private void SetParent(MapCreater2 _parent)
     {
         parent = _parent;
     }
 
-    // ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®åˆæœŸåŒ–
+    // ƒTƒuƒEƒBƒ“ƒhƒE‚Ì‰Šú‰»
     public void init()
     {
         mapSize = parent.MapSize;
         gridSize = parent.GridSize;
 
-        // ãƒãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿ã‚’åˆæœŸåŒ–
+        // ƒ}ƒbƒvƒf[ƒ^‚ğ‰Šú‰»
         map = new string[mapSize, mapSize];
         for (int i = 0; i < mapSize; i++)
         {
@@ -237,7 +237,7 @@ public class MapCreaterSubWindow : EditorWindow
                 map[i, j] = "";
             }
         }
-        // ã‚°ãƒªãƒƒãƒ‰ãƒ‡ãƒ¼ã‚¿ã‚’ç”Ÿæˆ
+        // ƒOƒŠƒbƒhƒf[ƒ^‚ğ¶¬
         gridRect = CreateGrid(mapSize);
     }
 
@@ -245,7 +245,7 @@ public class MapCreaterSubWindow : EditorWindow
 
     void OnGUI()
     {
-        // ã‚°ãƒªãƒƒãƒ‰ç·šã‚’æç”»ã™ã‚‹
+        // ƒOƒŠƒbƒhü‚ğ•`‰æ‚·‚é
         for (int yy = 0; yy < mapSize; yy++)
         {
             for (int xx = 0; xx < mapSize; xx++)
@@ -254,13 +254,13 @@ public class MapCreaterSubWindow : EditorWindow
             }
         }
 
-        // ã‚¯ãƒªãƒƒã‚¯ã•ã‚ŒãŸä½ç½®ã‚’æ¢ã—ã¦ã€ãã®å ´æ‰€ã«ç”»åƒãƒ‡ãƒ¼ã‚¿ã‚’å…¥ã‚Œã‚‹
+        // ƒNƒŠƒbƒN‚³‚ê‚½ˆÊ’u‚ğ’T‚µ‚ÄA‚»‚ÌêŠ‚É‰æ‘œƒf[ƒ^‚ğ“ü‚ê‚é
         Event e = Event.current;
         if (e.type == EventType.MouseDown)
         {
             Vector2 pos = Event.current.mousePosition;
             int xx;
-            // xä½ç½®ã‚’å…ˆã«è¨ˆç®—ã—ã¦ã€è¨ˆç®—å›æ•°ã‚’æ¸›ã‚‰ã™
+            // xˆÊ’u‚ğæ‚ÉŒvZ‚µ‚ÄAŒvZ‰ñ”‚ğŒ¸‚ç‚·
             for (xx = 0; xx < mapSize; xx++)
             {
                 Rect r = gridRect[0, xx];
@@ -270,12 +270,12 @@ public class MapCreaterSubWindow : EditorWindow
                 }
             }
 
-            // å¾Œã¯yä½ç½®ã ã‘æ¢ã™
+            // Œã‚ÍyˆÊ’u‚¾‚¯’T‚·
             for (int yy = 0; yy < mapSize; yy++)
             {
                 if (gridRect[yy, xx].Contains(pos))
                 {
-                    // æ¶ˆã—ã‚´ãƒ ã®æ™‚ã¯ãƒ‡ãƒ¼ã‚¿ã‚’æ¶ˆã™
+                    // Á‚µƒSƒ€‚Ì‚Íƒf[ƒ^‚ğÁ‚·
                     if (parent.SelectedImagePath.IndexOf("000") > -1)
                     {
                         map[yy, xx] = "";
@@ -290,7 +290,7 @@ public class MapCreaterSubWindow : EditorWindow
             }
         }
 
-        // é¸æŠã—ãŸç”»åƒã‚’æç”»ã™ã‚‹
+        // ‘I‘ğ‚µ‚½‰æ‘œ‚ğ•`‰æ‚·‚é
         for (int yy = 0; yy < mapSize; yy++)
         {
             for (int xx = 0; xx < mapSize; xx++)
@@ -303,7 +303,7 @@ public class MapCreaterSubWindow : EditorWindow
             }
         }
 
-        // å‡ºåŠ›ãƒœã‚¿ãƒ³
+        // o—Íƒ{ƒ^ƒ“
         Rect rect = new Rect(0, WINDOW_H - 50, 300, 50);
         GUILayout.BeginArea(rect);
         if (GUILayout.Button("output file", GUILayout.MinWidth(300), GUILayout.MinHeight(50)))
@@ -315,7 +315,7 @@ public class MapCreaterSubWindow : EditorWindow
 
     }
 
-    // ã‚°ãƒªãƒƒãƒ‰ãƒ‡ãƒ¼ã‚¿ã‚’ç”Ÿæˆ
+    // ƒOƒŠƒbƒhƒf[ƒ^‚ğ¶¬
     private Rect[,] CreateGrid(int div)
     {
         int sizeW = div;
@@ -343,7 +343,7 @@ public class MapCreaterSubWindow : EditorWindow
         return resultRects;
     }
 
-    // ã‚°ãƒªãƒƒãƒ‰ç·šã‚’æç”»
+    // ƒOƒŠƒbƒhü‚ğ•`‰æ
     private void DrawGridLine(Rect r)
     {
         // grid
@@ -370,7 +370,7 @@ public class MapCreaterSubWindow : EditorWindow
             new Vector2(r.position.x + r.size.x, r.position.y + r.size.y));
     }
 
-    // ãƒ•ã‚¡ã‚¤ãƒ«ã§å‡ºåŠ›
+    // ƒtƒ@ƒCƒ‹‚Åo—Í
     private void OutputFile()
     {
         string path = parent.OutputFilePath();
@@ -381,11 +381,11 @@ public class MapCreaterSubWindow : EditorWindow
         sw.Flush();
         sw.Close();
 
-        // å®Œäº†ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—
+        // Š®—¹ƒ|ƒbƒvƒAƒbƒv
         EditorUtility.DisplayDialog("MapCreater", "output file success\n" + path, "ok");
     }
 
-    // å‡ºåŠ›ã™ã‚‹ãƒãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿æ•´å½¢
+    // o—Í‚·‚éƒ}ƒbƒvƒf[ƒ^®Œ`
     private string GetMapStrFormat()
     {
         string result = "";
