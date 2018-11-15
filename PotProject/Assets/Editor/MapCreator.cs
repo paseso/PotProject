@@ -27,6 +27,8 @@ public class MapCreater : EditorWindow
     // サブウィンドウ
     private MapCreaterSubWindow subWindow;
 
+    private Example chara;
+
     [MenuItem("Editor/MapCreater")]
     static void Create()
     {
@@ -44,31 +46,31 @@ public class MapCreater : EditorWindow
         GUILayout.Label("Image Directory : ", GUILayout.Width(110));
         imgDirectory = EditorGUILayout.ObjectField(imgDirectory, typeof(UnityEngine.Object), true);
         GUILayout.EndHorizontal();
-        EditorGUILayout.Space();
 
         GUILayout.BeginHorizontal();
         GUILayout.Label("map size : ", GUILayout.Width(110));
         mapSize = EditorGUILayout.IntField(mapSize);
         GUILayout.EndHorizontal();
-        EditorGUILayout.Space();
 
         GUILayout.BeginHorizontal();
         GUILayout.Label("grid size : ", GUILayout.Width(110));
         gridSize = EditorGUILayout.FloatField(gridSize);
         GUILayout.EndHorizontal();
-        EditorGUILayout.Space();
 
         GUILayout.BeginHorizontal();
         GUILayout.Label("Save Directory : ", GUILayout.Width(110));
         outputDirectory = EditorGUILayout.ObjectField(outputDirectory, typeof(UnityEngine.Object), true);
         GUILayout.EndHorizontal();
-        EditorGUILayout.Space();
 
         GUILayout.BeginHorizontal();
         GUILayout.Label("Save filename : ", GUILayout.Width(110));
         outputFileName = (string)EditorGUILayout.TextField(outputFileName);
         GUILayout.EndHorizontal();
-        EditorGUILayout.Space();
+
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Charactor");
+        chara = (Example)EditorGUILayout.ObjectField(chara, typeof(Example), true);
+        GUILayout.EndHorizontal();
 
 
         DrawImageParts();
