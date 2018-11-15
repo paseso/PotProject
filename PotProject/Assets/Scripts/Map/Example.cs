@@ -1,7 +1,12 @@
 ﻿using UnityEngine;
-using System;
 
-[Serializable]
+public class Example : MonoBehaviour
+{
+    [SerializeField]
+    Charactor[] charactors;
+}
+
+[System.Serializable]
 public class Charactor
 {
     [SerializeField]

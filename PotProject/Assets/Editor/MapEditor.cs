@@ -8,14 +8,6 @@ public class MapEditor : EditorWindow {
 
     //  参考サイト   https://qiita.com/shirasaya0201/items/ee32f35ad3caac428368 https://www.google.co.jp/search?q=unity+%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF%E3%83%BC&oq=unity%E3%80%80%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF%E3%83%BC&aqs=chrome..69i57.7637j0j1&sourceid=chrome&ie=UTF-8
 
-
-    // 画像ディレクトリ
-    private Object imgDirectory;
-    // 仮画像のタイル画像データ
-    private Texture2D tileSprite;
-    // 選択した画像パス
-    //private string selectedImagePath;
-
     /// <summary>
     /// アセットパス
     /// </summary>
@@ -26,7 +18,9 @@ public class MapEditor : EditorWindow {
     private Rect[,] gridRect = new Rect[10,10];
     private ScriptableObjectSample _sample;
     private Rect rect;
-    private float GRIDSIZE;
+    private Tile[] tiles;
+    //  選択中のボタンの種類
+    private int SelectNum = 0;
     
 
     [MenuItem("Editor/MapEditor")]
@@ -37,6 +31,13 @@ public class MapEditor : EditorWindow {
         //  最小サイズ設定
         window.minSize = new Vector2(320, 360);
         window.maxSize = new Vector2(320, 500);
+        //  クリエイター側からデータを拾う
+        window.Init();
+    }
+
+    public void Init()
+    {
+        tiles = FindObjectOfType<MapCreator>().GetTileList();
     }
 
     private void OnGUI()
@@ -46,30 +47,30 @@ public class MapEditor : EditorWindow {
             _sample = ScriptableObject.CreateInstance<ScriptableObjectSample>();
 
         //  グリッド以外のラベル表示
-        //  マップデータを書き出し
-        GUILayout.BeginHorizontal();
-        if (GUILayout.Button("書き込み"))
-            Export();
-        //_sample.SampleIntValue = EditorGUILayout.IntField("サンプル", _sample.SampleIntValue);
-        GUILayout.EndHorizontal();
-
-
-        //  マスの画像を取得する
-        //  いまはこのクラスでやってるが後で別のクラスでやる予定
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("Image Directory : ", GUILayout.Width(110));
-        imgDirectory = EditorGUILayout.ObjectField(imgDirectory, typeof(UnityEngine.Object), true);
-        GUILayout.EndHorizontal();
-
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.PrefixLabel("タイル画像");
-        tileSprite = (Texture2D)EditorGUILayout.ObjectField(tileSprite, typeof(Texture2D), allowSceneObjects: true);
-        EditorGUILayout.EndHorizontal();
-
+        //  グリッドのカラーを設定
         EditorGUILayout.BeginHorizontal();
         GUILayout.Label("グリッドの色", GUILayout.Width(150));
         gridColor = EditorGUILayout.ColorField(gridColor);
         EditorGUILayout.EndHorizontal();
+
+        //  マップデータを書き出し
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("書き込み"))
+            Export();
+        //  グリッドをリセットをする
+        if (GUILayout.Button("リセット"))
+        {
+            for (int xx = 0; xx < gridNum; xx++)
+            {
+                for (int yy = 0; yy < gridNum; yy++)
+                {
+                    _sample.MapData[yy, xx] = 0;
+                }
+            }
+        }
+        //_sample.SampleIntValue = EditorGUILayout.IntField("サンプル", _sample.SampleIntValue);
+        GUILayout.EndHorizontal();
+
 
         rect = EditorGUILayout.BeginHorizontal();
         EditorGUILayout.EndHorizontal();
@@ -117,7 +118,7 @@ public class MapEditor : EditorWindow {
                     if (r.y <= pos.y && pos.y <= r.y + r.height)
                     {
                         //  配列に代入
-                        _sample.MapData[yy, xx] = 1;
+                        _sample.MapData[yy, xx] = SelectNum;
                         Repaint();
                         break;
                     }
@@ -131,32 +132,20 @@ public class MapEditor : EditorWindow {
             for (int xx = 0; xx < gridNum; xx++)
             {
                 if (_sample.MapData[yy, xx] != 0)
-                {
-                    GUI.DrawTexture(gridRect[yy, xx], tileSprite);
+                {                    
+                    GUI.DrawTexture(gridRect[yy, xx], tiles[_sample.MapData[yy, xx]].TileImage);
                 }
             }
         }
 
         GUILayout.Space(280);
 
-        //  グリッドをリセットをする
-        GUILayout.BeginHorizontal();
-        if (GUILayout.Button("リセット"))
-        {
-            for (int xx = 0; xx < gridNum; xx++)
-            {
-                for (int yy = 0; yy < gridNum; yy++)
-                {
-                    _sample.MapData[yy, xx] = 0;
-                }
-            }
-        }
-        GUILayout.EndHorizontal();
 
         //  タイルの種類を分ける
         _sample.SampleIntValue = GUILayout.Toolbar(_sample.SampleIntValue, new string[] { "地面", "ギミック", "エネミー" });
 
-        DrawImageParts();
+        //DrawImageParts();
+        DrawTileButtons();
     }
 
 
@@ -187,7 +176,6 @@ public class MapEditor : EditorWindow {
         float edgeX = 20f;
         float tmpX = edgeX;
         float maxGridSize = rect.xMax - edgeX * 2;
-        GRIDSIZE = maxGridSize;
         float gridSize = maxGridSize / gridNum;
         float y = rect.y + 10;
         Rect[,] resultRects = new Rect[gridNum, gridNum];
@@ -233,38 +221,75 @@ public class MapEditor : EditorWindow {
             new Vector2(_rect.position.x + _rect.size.x, _rect.position.y + _rect.size.y));
     }
 
-    private void DrawImageParts()
+    //private void DrawImageParts()
+    //{
+    //    if (imgDirectory != null)
+    //    {
+    //        float x = 0.0f;
+
+    //        float y = 00.0f;
+    //        float w = 50.0f;
+    //        float h = 50.0f;
+    //        float maxW = 300.0f;
+
+    //        string path = AssetDatabase.GetAssetPath(imgDirectory);
+    //        string[] names = Directory.GetFiles(path, "*.png");
+    //        EditorGUILayout.Space();
+    //        EditorGUILayout.BeginHorizontal();
+    //        foreach (string d in names)
+    //        {
+    //            if (x > maxW)
+    //            {
+    //                x = 0.0f;
+    //                y += h;
+    //                EditorGUILayout.EndHorizontal();
+    //            }
+    //            if (x == 0.0f)
+    //            {
+    //                EditorGUILayout.BeginHorizontal();
+    //            }
+    //            //GUILayout.FlexibleSpace();
+    //            Texture2D tex = (Texture2D)AssetDatabase.LoadAssetAtPath(d, typeof(Texture2D));
+    //            if (GUILayout.Button(tex, GUILayout.MaxWidth(w), GUILayout.MaxHeight(h), GUILayout.ExpandWidth(false), GUILayout.ExpandHeight(false)))
+    //            {
+    //                //selectedImagePath = d;
+    //            }
+    //            GUILayout.FlexibleSpace();
+    //            x += w;
+    //        }
+    //        EditorGUILayout.EndHorizontal();
+    //    }
+    //}
+
+    private void DrawTileButtons()
     {
-        if (imgDirectory != null)
+        if (tiles != null)
         {
-            float x = 0.0f;
+            float x = 20.0f; ;
 
             float y = 00.0f;
             float w = 50.0f;
             float h = 50.0f;
             float maxW = 300.0f;
-
-            string path = AssetDatabase.GetAssetPath(imgDirectory);
-            string[] names = Directory.GetFiles(path, "*.png");
-            EditorGUILayout.Space();
+            //EditorGUILayout.Space();
             EditorGUILayout.BeginHorizontal();
-            foreach (string d in names)
+            for (int i = 0; i < tiles.Length; i++)
             {
                 if (x > maxW)
                 {
-                    x = 0.0f;
+                    x = 20.0f;
                     y += h;
                     EditorGUILayout.EndHorizontal();
                 }
-                if (x == 0.0f)
+                if (x == 20.0f)
                 {
                     EditorGUILayout.BeginHorizontal();
                 }
-                //GUILayout.FlexibleSpace();
-                Texture2D tex = (Texture2D)AssetDatabase.LoadAssetAtPath(d, typeof(Texture2D));
-                if (GUILayout.Button(tex, GUILayout.MaxWidth(w), GUILayout.MaxHeight(h), GUILayout.ExpandWidth(false), GUILayout.ExpandHeight(false)))
+                GUILayout.FlexibleSpace();
+                if (GUILayout.Button(tiles[i].TileImage, GUILayout.MaxWidth(w), GUILayout.MaxHeight(h), GUILayout.ExpandWidth(false), GUILayout.ExpandHeight(false)))
                 {
-                    //selectedImagePath = d;
+                    //  0の場合は要素の削除・それ以外はタイルの描画用のID
+                    SelectNum = i;
                 }
                 GUILayout.FlexibleSpace();
                 x += w;

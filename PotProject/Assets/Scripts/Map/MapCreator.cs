@@ -11,6 +11,32 @@ public class MapCreator : MonoBehaviour
     //private Gimmick[] gimmicks;
     //[SerializeField]
     //private Enemy[] enemys;
+
+    public Tile[] GetTileList()
+    {
+        return tiles;
+    }
+}
+
+[System.Serializable]
+public class Tile
+{
+    [SerializeField]
+    private Texture tileImage;
+    [SerializeField]
+    private GameObject tileObj;
+
+    public Texture TileImage
+    {
+        get { return tileImage; }
+        //set { tileImage = value; }
+    }
+
+    public GameObject TileObj
+    {
+        get { return tileObj; }
+        //set { tileObj = value; }
+    }
 }
 
 [System.Serializable]
