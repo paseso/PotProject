@@ -65,9 +65,10 @@ public class LegCollider : MonoBehaviour {
             {
                 OffIsTrigger();
                 Debug.Log("二回目");
-            }else if(floor_count == 1)
+                move_ctr.GimmickLadderOut();
+            }
+            else if(floor_count == 1)
             {
-                
             }
         }
     }
