@@ -59,6 +59,7 @@ public class GimmickController :MonoBehaviour {
         switch (gInfo.type) {
             case GimmickInfo.GimmickType.TREE:
                 mInfo.GrowTreeFlag = true;
+                Debug.Log("TreeFlag: " + mInfo.GrowTreeFlag);
                 break;
 
             case GimmickInfo.GimmickType.LADDER:
@@ -75,6 +76,7 @@ public class GimmickController :MonoBehaviour {
         switch (gInfo.type) {
             case GimmickInfo.GimmickType.TREE:
                 mInfo.GrowTreeFlag = false;
+                Debug.Log("TreeFlag: " + mInfo.GrowTreeFlag);
                 break;
 
             case GimmickInfo.GimmickType.LADDER:

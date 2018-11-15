@@ -201,7 +201,16 @@ public class MoveController : MonoBehaviour
                 }
                 else if (bringctr._bring)
                 {//アイテムを離す
-                    target.gameObject.transform.position = new Vector2(gameObject.transform.GetChild(0).transform.position.x * 1f, gameObject.transform.GetChild(0).transform.position.y * 1);
+                    if (_onRight)
+                    {
+                        target.gameObject.transform.position = new Vector2(bringctr.gameObject.transform.position.x + 2f, bringctr.gameObject.transform.position.y + 1.5f);
+                    }
+                    else
+                    {
+                        target.gameObject.transform.position = new Vector2(bringctr.gameObject.transform.position.x - 2f, bringctr.gameObject.transform.position.y + 1.5f);
+                    }
+                    Debug.Log("Right：" + _onRight);
+                    Debug.Log("Left：" + _onLeft);
                     //target.gameObject.transform.position = new Vector2(gameObject.transform.position.x + 2f, gameObject.transform.position.y + 1);
                     target.gameObject.transform.parent = null;
                     target.GetComponent<Rigidbody2D>().simulated = true;
@@ -288,8 +297,8 @@ public class MoveController : MonoBehaviour
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
         {
             rig.velocity = new Vector2(0, rig.velocity.y);
-            _onLeft = false;
-            _onRight = false;
+            //_onLeft = false;
+            //_onRight = false;
         }
         if (Input.GetAxis("Horizontal_ps4") >= 0.15f || Input.GetKey(KeyCode.W))
         {

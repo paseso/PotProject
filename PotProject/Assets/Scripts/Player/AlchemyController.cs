@@ -12,7 +12,6 @@ public class AlchemyController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        gimmick_ctr = FindObjectOfType<GimmickController>();
         mInfo = transform.root.GetComponent<MapInfo>();
 	}
 	
@@ -43,6 +42,7 @@ public class AlchemyController : MonoBehaviour {
         switch (item)
         {
             case ItemStatus.ITEM.SLIME:
+                gimmick_ctr = FindObjectOfType<GimmickController>();
                 mInfo = transform.root.GetComponent<MapInfo>();
                 Debug.Log("mInfo.GrowTreeFlag: " + mInfo.GrowTreeFlag);
                 Debug.Log("mInfo.name: " + mInfo.gameObject.name);
