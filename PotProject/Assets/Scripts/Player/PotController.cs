@@ -27,10 +27,10 @@ public class PotController : MonoBehaviour {
     /// </summary>
     private void MoveCollider()
     {
-        if (move_ctr._onLeft || move_ctr._onRight)
-        {
-            gameObject.transform.position = new Vector2(gameObject.transform.position.x * -1, gameObject.transform.position.y);
-        }
+        //if (move_ctr._onLeft || move_ctr._onRight)
+        //{
+        //    gameObject.transform.position = new Vector2(gameObject.transform.position.x * -1, gameObject.transform.position.y);
+        //}
     }
 
     private void OnCollisionEnter2D(Collision2D col)

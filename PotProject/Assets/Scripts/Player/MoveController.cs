@@ -163,7 +163,6 @@ public class MoveController : MonoBehaviour
                 if (_ActiveRightLeft)
                     return;
 
-                //gameObject.GetComponent<CapsuleCollider2D>().isTrigger = true;
                 rig.bodyType = RigidbodyType2D.Kinematic;
                 rig.velocity = new Vector2(rig.velocity.x, 5f);
                 _onUp = false;
@@ -175,7 +174,6 @@ public class MoveController : MonoBehaviour
                 if (_ActiveRightLeft)
                     return;
 
-                //gameObject.GetComponent<CapsuleCollider2D>().isTrigger = true;
                 rig.bodyType = RigidbodyType2D.Kinematic;
                 rig.velocity = new Vector2(rig.velocity.x, -5f);
                 _onDown = false;
@@ -203,7 +201,7 @@ public class MoveController : MonoBehaviour
                 }
                 else if (bringctr._bring)
                 {//アイテムを離す
-                    target.gameObject.transform.position = new Vector2(gameObject.transform.GetChild(0).transform.position.x, gameObject.transform.GetChild(0).transform.position.y);
+                    target.gameObject.transform.position = new Vector2(gameObject.transform.GetChild(0).transform.position.x * 1f, gameObject.transform.GetChild(0).transform.position.y * 1);
                     //target.gameObject.transform.position = new Vector2(gameObject.transform.position.x + 2f, gameObject.transform.position.y + 1);
                     target.gameObject.transform.parent = null;
                     target.GetComponent<Rigidbody2D>().simulated = true;
@@ -422,6 +420,7 @@ public class MoveController : MonoBehaviour
             if (gInfo.type == GimmickInfo.GimmickType.LADDER)
             {
                 gimmick_x = col.gameObject.transform.position.x;
+                mInfo = gameObject.transform.root.GetComponent<MapInfo>();
                 Debug.Log("LadderFlag: " + mInfo.LadderFlag);
                 LadderTrigger();
             }

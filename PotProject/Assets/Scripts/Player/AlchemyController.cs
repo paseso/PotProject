@@ -7,10 +7,11 @@ public class AlchemyController : MonoBehaviour {
     [SerializeField, Header("ポーション")]
     private GameObject Potion;
     private TextAsset csvFile;
+    private GimmickController gimmick_ctr;
 
     // Use this for initialization
     void Start () {
-		
+        gimmick_ctr = FindObjectOfType<GimmickController>();
 	}
 	
 	// Update is called once per frame
@@ -40,8 +41,9 @@ public class AlchemyController : MonoBehaviour {
         switch (item)
         {
             case ItemStatus.ITEM.SLIME:
-                GameObject obj = Instantiate(Potion, null);
-                obj.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y + 1);
+                gimmick_ctr.Grow();
+                //GameObject obj = Instantiate(Potion, null);
+                //obj.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y + 1);
                 break;
             case ItemStatus.ITEM.GOLEM:
 
