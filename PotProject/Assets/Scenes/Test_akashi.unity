@@ -620,7 +620,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 7b5053858cab5684e938c84c3f756e48, type: 3}
   - {fileID: 21300000, guid: 3691c51628418e74092ea6a6c7f2ef87, type: 3}
   - {fileID: 21300000, guid: c0deddb703dce2642b0cc39c47710f46, type: 3}
-  alchemy_ctr: {fileID: 553891005}
+  alchemy_ctr: {fileID: 0}
   Alchemy_ui: {fileID: 1248531726}
 --- !u!114 &154302733
 MonoBehaviour:
@@ -802,7 +802,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3691c51628418e74092ea6a6c7f2ef87, type: 3}
   - {fileID: 21300000, guid: c0deddb703dce2642b0cc39c47710f46, type: 3}
   - {fileID: 21300000, guid: 7b5053858cab5684e938c84c3f756e48, type: 3}
-  alchemy_ctr: {fileID: 553891005}
+  alchemy_ctr: {fileID: 0}
   Alchemy_ui: {fileID: 1819509575}
 --- !u!1 &243369724
 GameObject:
@@ -1808,7 +1808,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 4.284
+      value: 4.53
       objectReference: {fileID: 0}
     - target: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2437,12 +2437,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
---- !u!114 &553891005 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114107302058084470, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
-    type: 2}
-  m_PrefabInternal: {fileID: 443119170}
-  m_Script: {fileID: 11500000, guid: 4c487676677cc884e97ca0d67ded1107, type: 3}
 --- !u!1 &575805182
 GameObject:
   m_ObjectHideFlags: 0

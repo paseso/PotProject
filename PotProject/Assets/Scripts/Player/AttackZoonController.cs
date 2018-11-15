@@ -14,6 +14,8 @@ public class AttackZoonController : MonoBehaviour {
     private float Impalce_y = 50;
     [SerializeField]
     private PlayerManager manager;
+    [SerializeField]
+    private GameObject Sword;
 
 	// Use this for initialization
 	void Start () {
