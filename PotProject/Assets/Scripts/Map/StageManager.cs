@@ -32,25 +32,25 @@ public class StageManager : MonoBehaviour {
 	}
 	
 	void Update () {
-        if(Input.GetKeyDown(KeyCode.UpArrow)){
-            Debug.Log("上");
-            SrideStage(0, Direction.UP);
-        }
+        //if(Input.GetKeyDown(KeyCode.UpArrow)){
+        //    Debug.Log("上");
+        //    SrideStage(0, Direction.UP);
+        //}
 
-        if(Input.GetKeyDown(KeyCode.DownArrow)){
-            Debug.Log("下");
-            SrideStage(0, Direction.DOWN);
-        }
+        //if(Input.GetKeyDown(KeyCode.DownArrow)){
+        //    Debug.Log("下");
+        //    SrideStage(0, Direction.DOWN);
+        //}
 
-        if(Input.GetKeyDown(KeyCode.RightArrow)){
-            Debug.Log("右");
-            SrideStage(1, Direction.RIGHT);
-        }
+        //if(Input.GetKeyDown(KeyCode.RightArrow)){
+        //    Debug.Log("右");
+        //    SrideStage(1, Direction.RIGHT);
+        //}
 
-        if(Input.GetKeyDown(KeyCode.LeftArrow)){
-            Debug.Log("左");
-            SrideStage(1, Direction.LEFT);
-        }
+        //if(Input.GetKeyDown(KeyCode.LeftArrow)){
+        //    Debug.Log("左");
+        //    SrideStage(1, Direction.LEFT);
+        //}
 
     }
 
