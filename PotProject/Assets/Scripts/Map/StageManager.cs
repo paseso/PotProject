@@ -9,10 +9,10 @@ public class StageManager : MonoBehaviour {
     /// </summary>
     public enum Direction
     {
-        up,
-        down,
-        left,
-        right
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT,
     }
 
     private List<List<GameObject>> Maps = new List<List<GameObject>>();
@@ -28,29 +28,29 @@ public class StageManager : MonoBehaviour {
     }
 
     void Start () {
-
+        
 	}
 	
 	void Update () {
-        if(Input.GetKeyDown(KeyCode.UpArrow)){
-            Debug.Log("上");
-            SrideStage(0, Direction.up);
-        }
+        //if(Input.GetKeyDown(KeyCode.UpArrow)){
+        //    Debug.Log("上");
+        //    SrideStage(0, Direction.UP);
+        //}
 
-        if(Input.GetKeyDown(KeyCode.DownArrow)){
-            Debug.Log("下");
-            SrideStage(0, Direction.down);
-        }
+        //if(Input.GetKeyDown(KeyCode.DownArrow)){
+        //    Debug.Log("下");
+        //    SrideStage(0, Direction.DOWN);
+        //}
 
-        if(Input.GetKeyDown(KeyCode.RightArrow)){
-            Debug.Log("右");
-            SrideStage(1, Direction.right);
-        }
+        //if(Input.GetKeyDown(KeyCode.RightArrow)){
+        //    Debug.Log("右");
+        //    SrideStage(1, Direction.RIGHT);
+        //}
 
-        if(Input.GetKeyDown(KeyCode.LeftArrow)){
-            Debug.Log("左");
-            SrideStage(1, Direction.left);
-        }
+        //if(Input.GetKeyDown(KeyCode.LeftArrow)){
+        //    Debug.Log("左");
+        //    SrideStage(1, Direction.LEFT);
+        //}
 
     }
 
@@ -81,51 +81,56 @@ public class StageManager : MonoBehaviour {
     public void SrideStage(int num,Direction dir)
     {
         GameObject temp;
-        Vector2 tempPos = new Vector2();
-        Vector2 turnPos = new Vector2();
+        Vector3 tempPos = new Vector3();
+        Vector3 turnPos = new Vector3();
         
         switch (dir)
         {
-            case Direction.up: // 上
+            case Direction.UP: // 上
 
                 // 折り返し座標を保持
-                turnPos = Maps[stageLength - 1][num].transform.localPosition;
+                turnPos = Maps[stageLength - 1][num].transform.position;
+                turnPos.z = 90;
 
                 // 折り返しMap以外をスライド
                 for (int i = stageLength - 1; i > 0; i--)
                 {                    
-                    tempPos = Maps[i - 1][num].transform.localPosition;
-                    Maps[i][num].transform.localPosition = tempPos;
+                    tempPos = Maps[i - 1][num].transform.position;
+                    tempPos.z = 90;
+                    Maps[i][num].transform.position = tempPos;
                 }
 
                 // 折り返し
-                Maps[0][num].transform.localPosition = turnPos;
+                Maps[0][num].transform.position = turnPos;
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[0][num];
                 for (int i = 0; i < stageLength - 1; i++)
                 {
-                    int tempNum = 0;
-                    tempNum = Maps[i + 1][num].GetComponent<MapInfo>().mapNum;
+                    //int tempNum = 0;
+                    //tempNum = Maps[i + 1][num].GetComponent<MapInfo>().mapNum;
                     Maps[i][num] = Maps[i + 1][num];
                     
                 }
                 Maps[stageLength - 1][num] = temp;
                 break;
 
-            case Direction.down: // 下
+            case Direction.DOWN: // 下
 
                 // 折り返し座標を保持
-                turnPos = Maps[0][num].transform.localPosition;
+                turnPos = Maps[0][num].transform.position;
+                turnPos.z = 90;
 
                 // 折り返しMap以外をスライド
                 for (int i = 0; i < stageLength - 1; i++)
                 {
-                    tempPos = Maps[i + 1][num].transform.localPosition;
-                    Maps[i][num].transform.localPosition = tempPos;
+                    tempPos = Maps[i + 1][num].transform.position;
+                    tempPos.z = 90;
+                    
+                    Maps[i][num].transform.position = tempPos;
                 }
                 // 折り返し
-                Maps[stageLength - 1][num].transform.localPosition = turnPos;
+                Maps[stageLength - 1][num].transform.position = turnPos;
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[stageLength - 1][num];
@@ -136,16 +141,18 @@ public class StageManager : MonoBehaviour {
                 Maps[0][num] = temp;
                 break;
 
-            case Direction.right:// 右
+            case Direction.RIGHT:// 右
                 // 折り返し座標を保持
-                turnPos = Maps[num][0].transform.localPosition;
+                turnPos = Maps[num][0].transform.position;
+                turnPos.z = 90;
 
                 for (int i = 0; i < stageLength - 1; i++)
                 {
-                    tempPos = Maps[num][i + 1].transform.localPosition;
-                    Maps[num][i].transform.localPosition = tempPos;
+                    tempPos = Maps[num][i + 1].transform.position;
+                    tempPos.z = 90;
+                    Maps[num][i].transform.position = tempPos;
                 }
-                Maps[num][stageLength - 1].transform.localPosition = turnPos;
+                Maps[num][stageLength - 1].transform.position = turnPos;
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[num][stageLength - 1];
@@ -157,14 +164,16 @@ public class StageManager : MonoBehaviour {
                 Maps[num][0] = temp;
                 break;
 
-            case Direction.left: // 左
-                turnPos = Maps[num][stageLength - 1].transform.localPosition;
+            case Direction.LEFT: // 左
+                turnPos = Maps[num][stageLength - 1].transform.position;
+                turnPos.z = 90;
                 for (int i = stageLength - 1; i > 0; i--)
                 {
-                    tempPos = Maps[num][i - 1].transform.localPosition;
-                    Maps[num][i].transform.localPosition = tempPos;
+                    tempPos = Maps[num][i - 1].transform.position;
+                    tempPos.z = 90;
+                    Maps[num][i].transform.position = tempPos;
                 }
-                Maps[num][0].transform.localPosition = turnPos;
+                Maps[num][0].transform.position = turnPos;
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[num][0];

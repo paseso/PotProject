@@ -12,6 +12,7 @@ public class BringCollider : MonoBehaviour {
     public bool _bring = false;
     private MoveController move_controll;
     private GameObject target;
+    private GameObject ParentObject;
 
     // Use this for initialization
     void Start ()
@@ -20,15 +21,12 @@ public class BringCollider : MonoBehaviour {
         _Brotherhit = false;
         _Tubohit = false;
         _bring = false;
+        ParentObject = gameObject.transform.parent.GetComponent<GameObject>();
         move_controll = gameObject.transform.parent.GetComponent<MoveController>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (_Tubohit)
-        {
-            SquereTubo();
-        }
         MoveCollider();
 	}
 
@@ -53,38 +51,30 @@ public class BringCollider : MonoBehaviour {
     /// </summary>
     private void SquereButton(Transform pos)
     {
-        Debug.Log("On Squere!");
         if (_Brotherhit && !_bring)
         {
-            Debug.Log("持つる！");
             pos.position = new Vector2(gameObject.transform.transform.position.x, gameObject.transform.transform.position.y + 5f);
             _bring = true;
         }
         else
         {
             pos.transform.parent = null;
-            pos.transform.position = new Vector2(gameObject.transform.parent.transform.position.x + 2, gameObject.transform.parent.transform.position.y);
+            if(move_controll._onRight)
+                pos.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y);
+            else
+                pos.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y);
+
             _bring = false;
             _Brotherhit = false;
         }
     }
-
-    private void SquereTubo()
-    {
-        if (!move_controll._onSquere && !_bring)
-            return;
-
-
-    }
-
+    
     private void OnTriggerStay2D(Collider2D col)
     {
-        //gameObject.transform.parent.position = new Vector2();
         if (col.gameObject.tag == "Ototo" || col.gameObject.tag == "Monster")
         {
             if (!_bring)
             {
-                Debug.Log("Collider内にOtotoが入ってます");
                 move_controll.target = col.gameObject;
                 _Brotherhit = true;
             }
