@@ -13,7 +13,7 @@ public class AlchemyController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         gimmick_ctr = FindObjectOfType<GimmickController>();
-        mInfo = FindObjectOfType<MapInfo>();
+        mInfo = transform.root.GetComponent<MapInfo>();
 	}
 	
 	// Update is called once per frame
@@ -43,8 +43,9 @@ public class AlchemyController : MonoBehaviour {
         switch (item)
         {
             case ItemStatus.ITEM.SLIME:
-                mInfo = FindObjectOfType<MapInfo>();
+                mInfo = transform.root.GetComponent<MapInfo>();
                 Debug.Log("mInfo.GrowTreeFlag: " + mInfo.GrowTreeFlag);
+                Debug.Log("mInfo.name: " + mInfo.gameObject.name);
                 gimmick_ctr.Grow();
                 //GameObject obj = Instantiate(Potion, null);
                 //obj.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y + 1);

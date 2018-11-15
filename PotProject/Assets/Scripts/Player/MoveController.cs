@@ -129,14 +129,14 @@ public class MoveController : MonoBehaviour
         switch (btn)
         {
             case ButtonType.JUMP:
-                Debug.Log("×");
+                //Debug.Log("×");
                 if (!_isJump)
                     return;
                 rig.velocity = new Vector2(0, 1f * speed);
                 break;
 
             case ButtonType.LEFT:
-                Debug.Log("LEFT");
+                //Debug.Log("LEFT");
                 _onLeft = true;
                 _onRight = false;
                 if (!_ActiveRightLeft)
@@ -147,7 +147,7 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.RIGHT:
-                Debug.Log("RIGHT");
+                //Debug.Log("RIGHT");
                 _onRight = true;
                 _onLeft = false;
                 if (!_ActiveRightLeft)
@@ -158,7 +158,7 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.UP:
-                Debug.Log("UP");
+                //Debug.Log("UP");
                 _onUp = true;
                 if (_ActiveRightLeft)
                     return;
@@ -169,7 +169,7 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.DOWN:
-                Debug.Log("DOWN");
+                //Debug.Log("DOWN");
                 _onDown = true;
                 if (_ActiveRightLeft)
                     return;
