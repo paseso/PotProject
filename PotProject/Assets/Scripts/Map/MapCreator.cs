@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class MapCreator : MonoBehaviour
 {
-
+    [SerializeField]
+    private ScriptableObjectSample scriptableObjectSample;
     [SerializeField]
     private Tile[] tiles;
     //[SerializeField]

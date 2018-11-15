@@ -8,7 +8,7 @@ public class ScriptableObjectSample : ScriptableObject {
     [SerializeField]
     private int _sampleIntValue;
     [SerializeField]
-    private int[,] _mapData = new int[10,10];
+    private int[,] _mapData = new int[20, 20];
 
     public int SampleIntValue
     {

@@ -13,9 +13,9 @@ public class MapEditor : EditorWindow {
     /// </summary>
     private string ASSET_PATH = "Assets/Resources/MapData/";  //  ScriptableObjectSample.asset
     private string FileName = "aaa.asset";
-    private int gridNum = 10;
+    private int gridNum = 20;
     private Color gridColor = Color.white;
-    private Rect[,] gridRect = new Rect[10,10];
+    private Rect[,] gridRect = new Rect[20, 20];
     private ScriptableObjectSample _sample;
     private Rect rect;
     private Tile[] tiles;

@@ -19,14 +19,14 @@ public class TileDrawer : PropertyDrawer
             //各プロパティーの Rect を求める
             var iconRect = new Rect(position)
             {
-                width = 64,
-                height = 64
+                width = 50,
+                height = 50
             };
             var objRect = new Rect(position)
             {
-                width = position.width - 68,
-                x = position.x + 68,
-                y = iconRect.y + 24
+                width = position.width - 50,
+                x = position.x + 54,
+                y = iconRect.y + 10
             };
 
             //各プロパティーの SerializedProperty を求める
