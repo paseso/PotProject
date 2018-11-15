@@ -404,10 +404,7 @@ public class MoveController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.tag == "floor")
-        {
-            GimmickLadderOut();
-        }
+        
     }
 
     private void OnTriggerStay2D(Collider2D col)
@@ -426,11 +423,9 @@ public class MoveController : MonoBehaviour
             }
         }
 
-        //木がのびるcolliderに当たった時
-        if (mInfo.GrowTreeFlag)
+        if (col.gameObject.tag == "floor")
         {
-
+            GimmickLadderOut();
         }
-        
     }
 }
