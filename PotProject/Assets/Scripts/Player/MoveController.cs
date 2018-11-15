@@ -203,7 +203,8 @@ public class MoveController : MonoBehaviour
                 }
                 else if (bringctr._bring)
                 {//アイテムを離す
-                    target.gameObject.transform.position = new Vector2(gameObject.transform.position.x + 2f, gameObject.transform.position.y + 1);
+                    target.gameObject.transform.position = new Vector2(gameObject.transform.GetChild(0).transform.position.x, gameObject.transform.GetChild(0).transform.position.y);
+                    //target.gameObject.transform.position = new Vector2(gameObject.transform.position.x + 2f, gameObject.transform.position.y + 1);
                     target.gameObject.transform.parent = null;
                     target.GetComponent<Rigidbody2D>().simulated = true;
                     bringctr._bring = false;
@@ -274,7 +275,7 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void BtnCheck()
     {
-        if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButton("Jump") || Input.GetKeyDown(KeyCode.Space))
         {//×ボタン or キーボードの「W」
             Move(ButtonType.JUMP);
         }
@@ -379,10 +380,6 @@ public class MoveController : MonoBehaviour
     public void GimmickLadderIn(float pos_x)
     {
         _ActiveRightLeft = false;
-        //if (gameObject.transform.GetComponentInChildren<LegCollider>())
-        //{
-        //    gameObject.transform.GetComponentInChildren<LegCollider>().OnIsTrigger();
-        //}
         gameObject.GetComponent<SpriteRenderer>().sprite = BrotherSprites[2];
         gameObject.transform.position = new Vector2(pos_x, gameObject.transform.position.y);
     }
@@ -391,11 +388,8 @@ public class MoveController : MonoBehaviour
     {
         Debug.Log("アウト");
         _ActiveRightLeft = true;
-        //gameObject.GetComponent<CapsuleCollider2D>().isTrigger = false;
-        //gameObject.GetComponentInChildren<LegCollider>().OffIsTrigger();
         rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y);
         rig.bodyType = RigidbodyType2D.Dynamic;
-        //gameObject.GetComponentInChildren<LegCollider>().ClearFloorCount();
     }
 
     private void LadderTrigger()
@@ -428,15 +422,10 @@ public class MoveController : MonoBehaviour
             if (gInfo.type == GimmickInfo.GimmickType.LADDER)
             {
                 gimmick_x = col.gameObject.transform.position.x;
+                Debug.Log("LadderFlag: " + mInfo.LadderFlag);
                 LadderTrigger();
             }
         }
-        //はしごに当たった時
-        //if (mInfo.LadderFlag && !_InGimmick)
-        //{
-        //    _InGimmick = true;
-        //    GimmickLadderIn(col.transform);
-        //}
 
         //木がのびるcolliderに当たった時
         if (mInfo.GrowTreeFlag)

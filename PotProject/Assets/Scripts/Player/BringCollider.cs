@@ -71,7 +71,7 @@ public class BringCollider : MonoBehaviour {
     
     private void OnTriggerStay2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Ototo" || col.gameObject.tag == "Monster")
+        if (col.gameObject.tag == "Monster")
         {
             if (!_bring)
             {

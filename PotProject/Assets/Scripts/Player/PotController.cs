@@ -8,11 +8,13 @@ public class PotController : MonoBehaviour {
     private PlayerManager manager;
     [SerializeField]
     private BringCollider bring_col;
+    [SerializeField]
     private MoveController move_ctr;
+    
 
 	// Use this for initialization
 	void Start () {
-        move_ctr = gameObject.transform.parent.GetComponent<MoveController>();
+        
 	}
 	
 	// Update is called once per frame
@@ -33,7 +35,7 @@ public class PotController : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.gameObject.tag == "Ototo")
+        if(col.gameObject.tag == "Monster")
         {
             if (bring_col._Tubohit || move_ctr._itemFall)
             {
