@@ -6,13 +6,21 @@ using UnityEngine;
 public class MapCreator : MonoBehaviour
 {
     [SerializeField]
-    private ScriptableObjectSample scriptableObjectSample;
+    private Tile[]  tiles;
     [SerializeField]
-    private Tile[] tiles;
-    //[SerializeField]
-    //private Gimmick[] gimmicks;
-    //[SerializeField]
-    //private Enemy[] enemys;
+    private Gimmick[] gimmicks;
+    [SerializeField]
+    private Enemy[] enemys;
+    [SerializeField]
+    private MapDate map;
+    [HideInInspector]
+    public GameObject tilePrefab;
+
+    public MapDate Map
+    {
+        get{ return map; }
+        set{ map = value; }
+    }
 
     public Tile[] GetTileList()
     {

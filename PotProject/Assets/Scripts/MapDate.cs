@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class ScriptableObjectSample : ScriptableObject {
+public class MapDate : ScriptableObject {
 
     [SerializeField]
     private int _sampleIntValue;
     [SerializeField]
-    private int[,] _mapData = new int[20, 20];
+    private int[,] _mapDataList = new int[20, 20];
 
     public int SampleIntValue
     {
@@ -18,12 +18,12 @@ public class ScriptableObjectSample : ScriptableObject {
 #endif
     }
 
-    public int[,] MapData
+    public int[,] MapDataList
     {
-        get { return _mapData; }
+        get { return _mapDataList; }
 #if UNITY_EDITOR
-        set { _mapData = value; }
-    }
+        set { _mapDataList = value; }
 #endif
+    }
 
 }
