@@ -8,6 +8,7 @@ public class MapCreatorInspector : Editor
     //  順番が可変できるリスト
     ReorderableList reorderableList;
     bool foldout;
+    MapCreator mapCreator;
 
     private void OnEnable()
     {
@@ -33,9 +34,9 @@ public class MapCreatorInspector : Editor
         //  最新情報に更新
         serializedObject.Update();
         //  マップデータ
-        MapCreator mapCreator = (MapCreator)target;
-        //EditorGUILayout.ObjectField("マップデータ",mapdate, typeof(ScriptableObjectSample), false);
-        //mapCreator.
+        mapCreator = (MapCreator)target;
+        mapCreator.Map = (MapDate)EditorGUILayout.ObjectField("マップデータ", mapCreator.Map, typeof(MapDate), false);
+        mapCreator.tilePrefab = (GameObject)EditorGUILayout.ObjectField("TilePrefab", mapCreator.tilePrefab, typeof(GameObject), false);
 
         if (GUILayout.Button("マップに変換"))
         {
@@ -52,14 +53,27 @@ public class MapCreatorInspector : Editor
         serializedObject.ApplyModifiedProperties();
     }
 
+    //  マップを生成
     private void CreateMap()
     {
-        //int xLength = MapDate..GetLength(1);
-        //int yLength = MapDate.MapData.GetLength(0);
+        int xLength = mapCreator.Map.MapDataList.GetLength(1);
+        int yLength = mapCreator.Map.MapDataList.GetLength(0);
 
-        var obj = new GameObject("RootObject");
-        
+        //Debug.Log("SizeX = " + mapCreator.tilePrefab.GetComponent<SpriteRenderer>().sprite.texture.width);
+        float tileSize = mapCreator.tilePrefab.GetComponent<SpriteRenderer>().sprite.texture.width / 100;
+        //  ルートオブジェクトの作成
+        var rootObj = new GameObject("RootObject");
 
-        //scriptable.MapData.le
+        Vector2 startPos = rootObj.transform.position + new Vector3(tileSize * xLength, tileSize * yLength, 0);
+
+        for(int y = 0; y < yLength; y++)
+        {
+            for(int x = 0; x < xLength; x++)
+            {
+                var TileObj = Instantiate(mapCreator.tilePrefab);
+                TileObj.transform.parent = rootObj.transform;
+                TileObj.transform.position = startPos - new Vector2(tileSize * x, tileSize * y);
+            }
+        }
     }
 }

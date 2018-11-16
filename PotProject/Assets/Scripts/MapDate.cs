@@ -23,7 +23,7 @@ public class MapDate : ScriptableObject {
         get { return _mapDataList; }
 #if UNITY_EDITOR
         set { _mapDataList = value; }
-    }
 #endif
+    }
 
 }
