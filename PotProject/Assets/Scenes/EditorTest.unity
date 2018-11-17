@@ -468,7 +468,7 @@ GameObject:
   - component: {fileID: 1615938734}
   - component: {fileID: 1615938732}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: MapCreator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -498,7 +498,7 @@ MonoBehaviour:
     tileObj: {fileID: 0}
   gimmicks: []
   enemys: []
-  map: {fileID: 11400000, guid: 42f706ed095924c41acd50f4efa8f1c7, type: 2}
+  map: {fileID: 0}
   tilePrefab: {fileID: 1238842296989262, guid: 5a0bea7883f2a944ab6aa8d475404ccb, type: 2}
 --- !u!4 &1615938733
 Transform:

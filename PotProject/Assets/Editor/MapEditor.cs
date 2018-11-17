@@ -55,8 +55,33 @@ public class MapEditor : EditorWindow {
 
         //  マップデータを書き出し
         GUILayout.BeginHorizontal();
-        if (GUILayout.Button("書き込み"))
-            Export();
+        if (GUILayout.Button("ファイル出力"))
+        {
+            // 保存先のファイルパスを取得する
+            var filePath = EditorUtility.SaveFilePanel("Save", "Assets", "default_name", "asset");
+
+            // パスが入っていれば選択されたということ（キャンセルされたら入ってこない）
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                // 保存処理
+                var mapdata = CreateInstance<MapDate>();
+                AssetDatabase.CreateAsset(mapdata, filePath);
+            }
+            //string FILENAME = ASSET_PATH + FileName;
+            ////  新規の場合は作成
+            //if (!AssetDatabase.Contains(_sample as UnityEngine.Object))
+            //{
+            //    AssetDatabase.CreateAsset(_sample, FILENAME);
+            //}
+            ////  インスペクターから設定できないようにする
+            //_sample.hideFlags = HideFlags.NotEditable;
+            //  更新通知
+            EditorUtility.SetDirty(_sample);
+            //  保存
+            AssetDatabase.SaveAssets();
+            //  エディタを最新の状態にする
+            AssetDatabase.Refresh();
+        }
         //  グリッドをリセットをする
         if (GUILayout.Button("リセット"))
         {
@@ -148,25 +173,6 @@ public class MapEditor : EditorWindow {
         DrawTileButtons();
     }
 
-
-
-    private void Export()
-    {
-        string FILENAME = ASSET_PATH + FileName;
-        //  新規の場合は作成
-        if (!AssetDatabase.Contains(_sample as UnityEngine.Object))
-        {
-            AssetDatabase.CreateAsset(_sample, FILENAME);
-        }
-        //  インスペクターから設定できないようにする
-        _sample.hideFlags = HideFlags.NotEditable;
-        //  更新通知
-        EditorUtility.SetDirty(_sample);
-        //  保存
-        AssetDatabase.SaveAssets();
-        //  エディタを最新の状態にする
-        AssetDatabase.Refresh();
-    }
 
     //  グリッドのサイズを設定
     //  for分で回してバグの原因だった
