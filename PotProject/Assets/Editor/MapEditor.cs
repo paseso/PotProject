@@ -76,18 +76,18 @@ public class MapEditor : EditorWindow {
                 //  パスを短くする
                 string path = "Assets" + fullPath.Substring(Application.dataPath.Length);
                 // 保存処理
-                MapDate tmp = Instantiate(_sample);
+                MapDate tmp = ScriptableObject.CreateInstance<MapDate>();
+                tmp.MapDataList = _sample.MapDataList;
                 AssetDatabase.CreateAsset(tmp, path);
                 //  インスペクターから設定できないようにする
                 tmp.hideFlags = HideFlags.NotEditable;
-
+                //  更新通知
+                EditorUtility.SetDirty(tmp);
+                //  保存
+                AssetDatabase.SaveAssets();
+                //  エディタを最新の状態にする
+                AssetDatabase.Refresh();
             }
-            //  更新通知
-            EditorUtility.SetDirty(_sample);
-            //  保存
-            AssetDatabase.SaveAssets();
-            //  エディタを最新の状態にする
-            AssetDatabase.Refresh();
         }
         //  グリッドをリセットをする
         if (GUILayout.Button("リセット"))
