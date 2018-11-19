@@ -9,10 +9,9 @@ public class MapEditor : EditorWindow {
     //  参考サイト   https://qiita.com/shirasaya0201/items/ee32f35ad3caac428368 https://www.google.co.jp/search?q=unity+%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF%E3%83%BC&oq=unity%E3%80%80%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF%E3%83%BC&aqs=chrome..69i57.7637j0j1&sourceid=chrome&ie=UTF-8
 
     /// <summary>
-    /// アセットパス
+    /// データの保存先
     /// </summary>
-    private string ASSET_PATH = "Assets/Resources/MapData/";  //  ScriptableObjectSample.asset
-    private string FileName = "aaa.asset";
+    private string ASSET_PATH = "Assets/Resources/MapData/";
     private int gridNum = 20;
     private Color gridColor = Color.white;
     private Rect[,] gridRect = new Rect[20, 20];
@@ -31,21 +30,24 @@ public class MapEditor : EditorWindow {
         //  最小サイズ設定
         window.minSize = new Vector2(320, 360);
         window.maxSize = new Vector2(320, 500);
-        //  クリエイター側からデータを拾う
+        //  マップクリエイター側からデータを拾う
         window.Init();
     }
 
     public void Init()
     {
         tiles = FindObjectOfType<MapCreator>().GetTileList();
+
     }
 
     private void OnGUI()
     {
         //  インスタンス生成
-        if (_sample == null)
+        if (_sample == null){
             _sample = ScriptableObject.CreateInstance<MapDate>();
-
+            Debug.Log("CreateInstance " + _sample.GetInstanceID());
+        }
+            
         //  グリッド以外のラベル表示
         //  グリッドのカラーを設定
         EditorGUILayout.BeginHorizontal();
@@ -53,28 +55,33 @@ public class MapEditor : EditorWindow {
         gridColor = EditorGUILayout.ColorField(gridColor);
         EditorGUILayout.EndHorizontal();
 
-        //  マップデータを書き出し
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.Label("SampleINT", GUILayout.Width(150));
+        _sample.SampleIntValue = EditorGUILayout.IntField(_sample.SampleIntValue);
+        EditorGUILayout.EndHorizontal();
+
+
+
         GUILayout.BeginHorizontal();
+        //  マップデータを書き出し
         if (GUILayout.Button("ファイル出力"))
         {
             // 保存先のファイルパスを取得する
-            var filePath = EditorUtility.SaveFilePanel("Save", "Assets", "default_name", "asset");
+            var fullPath = EditorUtility.SaveFilePanel("マップデータの保存", ASSET_PATH, "default_name", "asset");
+            Debug.Log(_sample.GetInstanceID());
 
             // パスが入っていれば選択されたということ（キャンセルされたら入ってこない）
-            if (!string.IsNullOrEmpty(filePath))
+            if (!string.IsNullOrEmpty(fullPath))
             {
+                //  パスを短くする
+                string path = "Assets" + fullPath.Substring(Application.dataPath.Length);
                 // 保存処理
-                var mapdata = CreateInstance<MapDate>();
-                AssetDatabase.CreateAsset(mapdata, filePath);
+                MapDate tmp = Instantiate(_sample);
+                AssetDatabase.CreateAsset(tmp, path);
+                //  インスペクターから設定できないようにする
+                tmp.hideFlags = HideFlags.NotEditable;
+
             }
-            //string FILENAME = ASSET_PATH + FileName;
-            ////  新規の場合は作成
-            //if (!AssetDatabase.Contains(_sample as UnityEngine.Object))
-            //{
-            //    AssetDatabase.CreateAsset(_sample, FILENAME);
-            //}
-            ////  インスペクターから設定できないようにする
-            //_sample.hideFlags = HideFlags.NotEditable;
             //  更新通知
             EditorUtility.SetDirty(_sample);
             //  保存
@@ -85,6 +92,7 @@ public class MapEditor : EditorWindow {
         //  グリッドをリセットをする
         if (GUILayout.Button("リセット"))
         {
+            Debug.Log(_sample.GetInstanceID());
             for (int xx = 0; xx < gridNum; xx++)
             {
                 for (int yy = 0; yy < gridNum; yy++)
@@ -226,46 +234,6 @@ public class MapEditor : EditorWindow {
             new Vector2(_rect.position.x + _rect.size.x, _rect.position.y),
             new Vector2(_rect.position.x + _rect.size.x, _rect.position.y + _rect.size.y));
     }
-
-    //private void DrawImageParts()
-    //{
-    //    if (imgDirectory != null)
-    //    {
-    //        float x = 0.0f;
-
-    //        float y = 00.0f;
-    //        float w = 50.0f;
-    //        float h = 50.0f;
-    //        float maxW = 300.0f;
-
-    //        string path = AssetDatabase.GetAssetPath(imgDirectory);
-    //        string[] names = Directory.GetFiles(path, "*.png");
-    //        EditorGUILayout.Space();
-    //        EditorGUILayout.BeginHorizontal();
-    //        foreach (string d in names)
-    //        {
-    //            if (x > maxW)
-    //            {
-    //                x = 0.0f;
-    //                y += h;
-    //                EditorGUILayout.EndHorizontal();
-    //            }
-    //            if (x == 0.0f)
-    //            {
-    //                EditorGUILayout.BeginHorizontal();
-    //            }
-    //            //GUILayout.FlexibleSpace();
-    //            Texture2D tex = (Texture2D)AssetDatabase.LoadAssetAtPath(d, typeof(Texture2D));
-    //            if (GUILayout.Button(tex, GUILayout.MaxWidth(w), GUILayout.MaxHeight(h), GUILayout.ExpandWidth(false), GUILayout.ExpandHeight(false)))
-    //            {
-    //                //selectedImagePath = d;
-    //            }
-    //            GUILayout.FlexibleSpace();
-    //            x += w;
-    //        }
-    //        EditorGUILayout.EndHorizontal();
-    //    }
-    //}
 
     private void DrawTileButtons()
     {
