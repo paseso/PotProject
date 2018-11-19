@@ -5,17 +5,19 @@ using UnityEngine;
 public class LegCollider : MonoBehaviour {
 
     private MoveController move_ctr;
-    private MapInfo mInfo;
     private int floor_count = 0;
     [HideInInspector]
     public bool _ActiveTrigger = false;
+    //足の部分にfloorがあったってるかどうか
+    [HideInInspector]
+    public bool _legFloor = false;
 
 	// Use this for initialization
 	void Start () {
         move_ctr = transform.parent.GetComponent<MoveController>();
-        mInfo = gameObject.transform.root.GetComponent<MapInfo>();
         floor_count = 0;
         _ActiveTrigger = false;
+        _legFloor = false;
 	}
 
     /// <summary>
@@ -60,16 +62,7 @@ public class LegCollider : MonoBehaviour {
     {
         if(col.gameObject.tag == "floor")
         {
-            floor_count++;
-            if(floor_count >= 2)
-            {
-                OffIsTrigger();
-                Debug.Log("二回目");
-                move_ctr.GimmickLadderOut();
-            }
-            else if(floor_count == 1)
-            {
-            }
+            _legFloor = true;
         }
     }
 }
