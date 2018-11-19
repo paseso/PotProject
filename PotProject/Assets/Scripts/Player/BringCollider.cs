@@ -11,17 +11,13 @@ public class BringCollider : MonoBehaviour {
     [HideInInspector]
     public bool _bring = false;
     private MoveController move_controll;
-    private GameObject target;
-    private GameObject ParentObject;
 
     // Use this for initialization
     void Start ()
     {
-        target = null;
         _Brotherhit = false;
         _Tubohit = false;
         _bring = false;
-        ParentObject = gameObject.transform.parent.GetComponent<GameObject>();
         move_controll = gameObject.transform.parent.GetComponent<MoveController>();
     }
 	
