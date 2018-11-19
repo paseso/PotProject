@@ -30,29 +30,6 @@ public class StageManager : MonoBehaviour {
     void Start () {
         
 	}
-	
-	void Update () {
-        //if(Input.GetKeyDown(KeyCode.UpArrow)){
-        //    Debug.Log("上");
-        //    SrideStage(0, Direction.UP);
-        //}
-
-        //if(Input.GetKeyDown(KeyCode.DownArrow)){
-        //    Debug.Log("下");
-        //    SrideStage(0, Direction.DOWN);
-        //}
-
-        //if(Input.GetKeyDown(KeyCode.RightArrow)){
-        //    Debug.Log("右");
-        //    SrideStage(1, Direction.RIGHT);
-        //}
-
-        //if(Input.GetKeyDown(KeyCode.LeftArrow)){
-        //    Debug.Log("左");
-        //    SrideStage(1, Direction.LEFT);
-        //}
-
-    }
 
     /// <summary>
     /// ListにMapを入れる
@@ -107,10 +84,7 @@ public class StageManager : MonoBehaviour {
                 temp = Maps[0][num];
                 for (int i = 0; i < stageLength - 1; i++)
                 {
-                    //int tempNum = 0;
-                    //tempNum = Maps[i + 1][num].GetComponent<MapInfo>().mapNum;
                     Maps[i][num] = Maps[i + 1][num];
-                    
                 }
                 Maps[stageLength - 1][num] = temp;
                 break;
@@ -159,7 +133,6 @@ public class StageManager : MonoBehaviour {
                 for (int i = 0; i < stageLength - 1; i++)
                 {
                     Maps[num][stageLength - 1 - i] = Maps[num][stageLength - 2 - i];
-                    Debug.Log(Maps[num][stageLength - 1 - i].name);
                 }
                 Maps[num][0] = temp;
                 break;
@@ -185,6 +158,25 @@ public class StageManager : MonoBehaviour {
                 break;
             default:
                 break;
+        }
+    }
+
+    /// <summary>
+    /// ステージ入れ替え
+    /// </summary>
+    public void StageChange() {
+
+    }
+
+    /// <summary>
+    /// ステージシャッフル
+    /// </summary>
+    public void StageShuffle() {
+        for(int i = 0; i < Maps.Count; i++) {
+            GameObject[] tempMap = new GameObject[Maps[i].Count];
+            for(int j = 0; j < Maps[i].Count; i++) {
+
+            }
         }
     }
 }
