@@ -35,14 +35,34 @@ public class PotController : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.gameObject.tag == "Monster")
+        if (col.gameObject.GetComponent<MonsterInfo>())
         {
-            if (bring_col._Tubohit || move_ctr._itemFall)
+            Debug.Log("きてる！");
+            if (!bring_col._Tubohit || !move_ctr._itemFall)
+                return;
+
+            Destroy(col.gameObject);
+            MonsterInfo monInfo = col.gameObject.GetComponent<MonsterInfo>();
+            switch (monInfo.type)
             {
-                Destroy(col.gameObject);
-                manager.ItemAlchemy(ItemStatus.ITEM.SLIME);
+                case MonsterInfo.MonsterType.WATER:
+                    manager.setItemList(ItemStatus.ITEM.SLIME);
+                    break;
+
+                case MonsterInfo.MonsterType.SNAKE:
+                    manager.setItemList(ItemStatus.ITEM.SNAKE);
+                    break;
+
+                default:
+                    Debug.Log("Type: " + monInfo.type);
+                    break;
             }
+            Debug.Log("Type: " + monInfo.type);
         }
 
+        if (col.gameObject.GetComponent<GimmickInfo>())
+        {
+
+        }
     }
 }

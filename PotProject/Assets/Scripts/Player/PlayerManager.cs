@@ -33,7 +33,7 @@ public class PlayerManager : MonoBehaviour {
     private AlchemyController alchemy_ctr;
 
     [SerializeField]
-    private GameObject Alchemy_ui;
+    private RectTransform Alchemy_ui;
     private bool _alchemyUi = false;
 
 	// Use this for initialization
@@ -100,15 +100,14 @@ public class PlayerManager : MonoBehaviour {
     {
         if (!_alchemyUi)
         {
-            Alchemy_ui.transform.DOMove(new Vector2(Alchemy_ui.transform.position.x - 14, Alchemy_ui.transform.position.y), 0.3f);
+            Alchemy_ui.DOMoveX(-14, 0.3f).SetEase(Ease.Linear);
             _alchemyUi = true;
         }
         else
         {
-            Alchemy_ui.transform.DOMove(new Vector2(Alchemy_ui.transform.position.x + 14, Alchemy_ui.transform.position.y), 0.3f);
+            Alchemy_ui.DOMoveX(14, 0.3f).SetEase(Ease.Linear);
             _alchemyUi = false;
         }
-        
     }
 
     /// <summary>

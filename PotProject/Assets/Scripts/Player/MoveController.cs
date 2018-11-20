@@ -97,9 +97,9 @@ public class MoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HitRayWall();
+        //HitRayWall();
         //はしごColliderからはずれたらor足の部分にfloorがあたったら
-        if (!mInfo.LadderFlag || legcollider._legFloor)
+        if (!mInfo.LadderFlag) // || legcollider._legFloor
         {
             GimmickLadderOut();
         }
@@ -438,22 +438,9 @@ public class MoveController : MonoBehaviour
                 LadderTrigger();
             }
         }
-
+        if (col.gameObject.tag == "floor")
+        {
+            GimmickLadderOut();
+        }
     }
-
-    //private void OnCollisionStay2D(Collision2D col)
-    //{
-    //    if (col.gameObject.tag == "floor")
-    //    {
-    //        rig.gravityScale += 50;
-    //    }
-    //}
-
-    //private void OnCollisionExit2D(Collision2D col)
-    //{
-    //    if (col.gameObject.tag == "floor")
-    //    {
-    //        rig.gravityScale = 1;
-    //    }
-    //}
 }
