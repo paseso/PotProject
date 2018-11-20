@@ -91,15 +91,8 @@ public class GimmickController :MonoBehaviour {
     /// 木(ツル)を成長させる
     /// </summary>
     public void Grow() {
-        if (!mInfo.GrowTreeFlag) return;
-
         mInfo.tree.transform.DOScaleY(1f, 1f).SetEase(Ease.Linear);
     }
 
-    public void Ladder(GameObject player,float speed) {
-        Vector2 pos = player.transform.localPosition;
-        player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-        pos.y += speed;
-        player.GetComponent<Rigidbody2D>().velocity = pos;
-    }
+    
 }
