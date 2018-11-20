@@ -60,7 +60,7 @@ public class MoveController : MonoBehaviour
 
     [SerializeField]
     private GameObject managerGameObject;
-    private PlayerManager manager;
+    private PlayerController manager;
     private BringCollider bringctr;
     private AttackZoonController atc_ctr;
     private MapInfo mInfo;
@@ -94,7 +94,7 @@ public class MoveController : MonoBehaviour
     {
         target = null;
         rig = gameObject.GetComponent<Rigidbody2D>();
-        manager = managerGameObject.GetComponent<PlayerManager>();
+        manager = managerGameObject.GetComponent<PlayerController>();
         bringctr = gameObject.transform.GetChild(0).GetComponent<BringCollider>();
         mInfo = transform.root.GetComponent<MapInfo>();
         atc_ctr = gameObject.GetComponentInChildren<AttackZoonController>();

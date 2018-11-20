@@ -20,7 +20,7 @@ public struct Status
     public List<ItemStatus.ITEM> ItemList;
 }
 
-public class PlayerManager : MonoBehaviour {
+public class PlayerController : MonoBehaviour {
 
     [SerializeField, Header("剣Sprite")]
     private SpriteRenderer sword;

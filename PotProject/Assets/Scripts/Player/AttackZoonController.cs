@@ -13,7 +13,7 @@ public class AttackZoonController : MonoBehaviour {
     [SerializeField, Header("殴れるオブジェクトがy方向に飛ぶ距離")]
     private float Impalce_y = 50;
     [SerializeField]
-    private PlayerManager manager;
+    private PlayerController manager;
     [SerializeField]
     private GameObject Sword;
 

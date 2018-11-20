@@ -5,7 +5,7 @@ using UnityEngine;
 public class PotController : MonoBehaviour {
 
     [SerializeField]
-    private PlayerManager manager;
+    private PlayerController manager;
     [SerializeField]
     private BringCollider bring_col;
     [SerializeField]
