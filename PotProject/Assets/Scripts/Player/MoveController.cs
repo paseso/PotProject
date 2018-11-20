@@ -20,6 +20,8 @@ public class MoveController : MonoBehaviour
     //アイテムを落としたかどうか
     [HideInInspector]
     public bool _itemFall = false;
+    //はしごの処理を行えるかどうか
+    private bool _activeLadder = false;
     //-------アクションボタンを押してるかどうか----------
     [HideInInspector]
     public bool _onRight = false;
@@ -91,6 +93,7 @@ public class MoveController : MonoBehaviour
         _onUp = false;
         _onDown = false;
         _InGimmick = false;
+        _activeLadder = false;
         gimmick_x = 0f;
     }
 
@@ -152,7 +155,7 @@ public class MoveController : MonoBehaviour
             case ButtonType.UP:
                 //Debug.Log("UP");
                 _onUp = true;
-                if (_ActiveRightLeft)
+                if (!_activeLadder)
                     return;
 
                 rig.bodyType = RigidbodyType2D.Kinematic;
@@ -163,7 +166,7 @@ public class MoveController : MonoBehaviour
             case ButtonType.DOWN:
                 //Debug.Log("DOWN");
                 _onDown = true;
-                if (_ActiveRightLeft)
+                if (!_activeLadder)
                     return;
 
                 rig.bodyType = RigidbodyType2D.Kinematic;
@@ -420,6 +423,30 @@ public class MoveController : MonoBehaviour
             else
             {
                 _ActiveRightLeft = true;
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.GetComponent<GimmickInfo>())
+        {
+            GimmickInfo gimInfo = col.gameObject.GetComponent<GimmickInfo>();
+            if(gimInfo.type == GimmickInfo.GimmickType.LADDER)
+            {
+                _activeLadder = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.GetComponent<GimmickInfo>())
+        {
+            GimmickInfo gimInfo = col.gameObject.GetComponent<GimmickInfo>();
+            if (gimInfo.type == GimmickInfo.GimmickType.LADDER)
+            {
+                _activeLadder = false;
             }
         }
     }
