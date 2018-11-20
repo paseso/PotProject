@@ -11,6 +11,8 @@ public class GimmickController :MonoBehaviour {
     private StageController sManager;
     private MapInfo mInfo;
     private GimmickInfo gInfo;
+    
+    
 
     // Use this for initialization
     void Start() {
@@ -94,7 +96,10 @@ public class GimmickController :MonoBehaviour {
         mInfo.tree.transform.DOScaleY(1f, 1f).SetEase(Ease.Linear);
     }
 
-    public void Ladder() {
-
+    public void Ladder(GameObject player,float speed) {
+        Vector2 pos = player.transform.localPosition;
+        player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        pos.y += speed;
+        player.GetComponent<Rigidbody2D>().velocity = pos;
     }
 }
