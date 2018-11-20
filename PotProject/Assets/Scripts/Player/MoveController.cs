@@ -2,11 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct PlayerStatus
+{
+    // 兄がどの状態か
+    public enum State
+    {
+        NORMAL,
+        ONLADDER,
+        ONTREE,
+    }
+
+    public State state;
+}
+
 public class MoveController : MonoBehaviour
 {
 
     [SerializeField]
     private float speed = 0f;
+
+    [SerializeField]
+    private float ladderSpeed;
 
     private Rigidbody2D rig;
     //ジャンプできるかどうか
@@ -118,6 +134,7 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void Move(ButtonType btn)
     {
+        PlayerStatus status = GetComponent<PlayerStatus>();
         switch (btn)
         {
             case ButtonType.JUMP:
@@ -150,25 +167,35 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.UP:
-                //Debug.Log("UP");
-                _onUp = true;
-                if (_ActiveRightLeft)
-                    return;
+                if (status.state == PlayerStatus.State.ONLADDER)
+                {
+                    Ladder(gameObject, ladderSpeed, 1);
+                }
 
-                rig.bodyType = RigidbodyType2D.Kinematic;
-                rig.velocity = new Vector2(rig.velocity.x, 5f);
-                _onUp = false;
+                //Debug.Log("UP");
+                //_onUp = true;
+                //if (_ActiveRightLeft)
+                //    return;
+
+                //rig.bodyType = RigidbodyType2D.Kinematic;
+                //rig.velocity = new Vector2(rig.velocity.x, 5f);
+                //_onUp = false;
                 break;
 
             case ButtonType.DOWN:
-                //Debug.Log("DOWN");
-                _onDown = true;
-                if (_ActiveRightLeft)
-                    return;
+                if(status.state == PlayerStatus.State.ONLADDER)
+                {
+                    Ladder(gameObject, ladderSpeed, -1);
+                }
 
-                rig.bodyType = RigidbodyType2D.Kinematic;
-                rig.velocity = new Vector2(rig.velocity.x, -5f);
-                _onDown = false;
+                //Debug.Log("DOWN");
+                //_onDown = true;
+                //if (_ActiveRightLeft)
+                //    return;
+
+                //rig.bodyType = RigidbodyType2D.Kinematic;
+                //rig.velocity = new Vector2(rig.velocity.x, -5f);
+                //_onDown = false;
                 break;
 
             case ButtonType.CIRCLE:
@@ -372,6 +399,19 @@ public class MoveController : MonoBehaviour
     }
 
     #endregion
+
+    /// <summary>
+    /// はしごの上下処理
+    /// </summary>
+    /// <param name="player"></param>
+    /// <param name="speed"></param>
+    /// <param name="dir"></param>
+    public void Ladder(GameObject player, float speed, float dir)
+    {
+        Vector2 pos = player.transform.localPosition;
+        pos.y += speed * dir;
+        player.GetComponent<Rigidbody2D>().velocity = pos;
+    }
 
     /// <summary>
     /// はしごのギミックに入ってる時の処理

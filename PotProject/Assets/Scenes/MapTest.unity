@@ -4062,7 +4062,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.008014947, y: 0}
+  m_Offset: {x: 0.008014947, y: 0.36420786}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -4073,7 +4073,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6548403, y: 5.12}
+  m_Size: {x: 0.6548403, y: 5.8484154}
   m_EdgeRadius: 0
 --- !u!114 &347351672
 MonoBehaviour:
@@ -8278,6 +8278,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c0deddb703dce2642b0cc39c47710f46, type: 3}
   alchemy_ctr: {fileID: 2016768457}
   Alchemy_ui: {fileID: 982456695}
+  _alchemyUi: 0
 --- !u!82 &750616274
 AudioSource:
   m_ObjectHideFlags: 0
@@ -19558,8 +19559,8 @@ GameObject:
   - component: {fileID: 1960131915}
   - component: {fileID: 1960131918}
   - component: {fileID: 1960131917}
-  - component: {fileID: 1960131916}
   - component: {fileID: 1960131919}
+  - component: {fileID: 1960131916}
   m_Layer: 0
   m_Name: WaterMonster
   m_TagString: Monster
@@ -19588,10 +19589,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1960131914}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccb62d7c26706244e85525a82b6801f7, type: 3}
+  m_Script: {fileID: 11500000, guid: fd229fd54d0c8d241846c6b53edd4566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 8
+  type: 0
 --- !u!61 &1960131917
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -20121,7 +20122,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.019747078, y: 0.08760452}
+  m_Offset: {x: 0.019747078, y: 0.5716932}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -20132,7 +20133,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6086092, y: 4.944791}
+  m_Size: {x: 0.6086092, y: 5.700767}
   m_EdgeRadius: 0
 --- !u!114 &2036769400
 MonoBehaviour:
@@ -20656,7 +20657,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0035576224, y: 0.09463692}
+  m_Offset: {x: 0.0035576224, y: 0.5061101}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -20667,7 +20668,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5855323, y: 4.930726}
+  m_Size: {x: 0.5855323, y: 5.6779995}
   m_EdgeRadius: 0
 --- !u!114 &2091349917
 MonoBehaviour:
