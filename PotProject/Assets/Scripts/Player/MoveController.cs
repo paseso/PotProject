@@ -176,15 +176,15 @@ public class MoveController : MonoBehaviour
                 }
 
                 //Debug.Log("UP");
-<<<<<<< HEAD
+
                 _onUp = true;
                 if (!_activeLadder)
                     return;
-=======
+
                 //_onUp = true;
                 //if (_ActiveRightLeft)
                 //    return;
->>>>>>> Washizu
+
 
                 //rig.bodyType = RigidbodyType2D.Kinematic;
                 //rig.velocity = new Vector2(rig.velocity.x, 5f);
@@ -198,15 +198,14 @@ public class MoveController : MonoBehaviour
                 }
 
                 //Debug.Log("DOWN");
-<<<<<<< HEAD
+
                 _onDown = true;
                 if (!_activeLadder)
                     return;
-=======
+
                 //_onDown = true;
                 //if (_ActiveRightLeft)
                 //    return;
->>>>>>> Washizu
 
                 //rig.bodyType = RigidbodyType2D.Kinematic;
                 //rig.velocity = new Vector2(rig.velocity.x, -5f);
