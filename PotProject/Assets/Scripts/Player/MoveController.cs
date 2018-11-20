@@ -65,6 +65,7 @@ public class MoveController : MonoBehaviour
     private AttackZoonController atc_ctr;
     private MapInfo mInfo;
     private LegCollider legcollider;
+    private PlayerStatus status;
 
     private enum ButtonType
     {
@@ -137,7 +138,6 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void Move(ButtonType btn)
     {
-        PlayerStatus status = GetComponent<PlayerStatus>();
         switch (btn)
         {
             case ButtonType.JUMP:
