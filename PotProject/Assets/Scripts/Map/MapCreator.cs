@@ -13,6 +13,7 @@ public class MapCreator : MonoBehaviour
     private Enemy[] enemys;
     [SerializeField]
     private MapDate map;
+    public MapDate ResourceMap;
     [HideInInspector]
     public GameObject tilePrefab;
 

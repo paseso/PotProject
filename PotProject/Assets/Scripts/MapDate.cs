@@ -8,7 +8,17 @@ public class MapDate : ScriptableObject {
     [SerializeField]
     private int _sampleIntValue;
     [SerializeField]
-    private int[,] _mapDataList = new int[20, 20];
+    private int[,] _mapDataList;
+    [SerializeField]
+    private int[] testArray = new int[5];
+
+    //MapDate()
+    //{
+    //    if (_mapDataList == null)
+    //    {
+    //        _mapDataList = new int[20, 20];
+    //    }
+    //}
 
     public int SampleIntValue
     {
@@ -21,9 +31,11 @@ public class MapDate : ScriptableObject {
     public int[,] MapDataList
     {
         get { return _mapDataList; }
-#if UNITY_EDITOR
-        set { _mapDataList = value; }
-#endif
+//#if UNITY_EDITOR
+        set {
+            _mapDataList = value;
+        }
+//#endif
     }
 
 }

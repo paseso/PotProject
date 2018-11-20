@@ -36,10 +36,14 @@ public class MapCreatorInspector : Editor
         //  マップデータ
         mapCreator = (MapCreator)target;
         mapCreator.Map = (MapDate)EditorGUILayout.ObjectField("マップデータ", mapCreator.Map, typeof(MapDate), false);
+        //string[] path = AssetDatabase.GetAssetPath(mapCreator.Map).Split('/');
+        //Debug.Log(path);
+        //mapCreator.ResourceMap = Resources.Load(path[2] + "/" + path[3]) as MapDate;
         mapCreator.tilePrefab = (GameObject)EditorGUILayout.ObjectField("TilePrefab", mapCreator.tilePrefab, typeof(GameObject), false);
 
         if (GUILayout.Button("マップに変換")) { CreateMap(); }
         if (GUILayout.Button("test")) { PrintlistNum(); }
+        if (GUILayout.Button("ResourceLoadのTest")) { PrintlistNum2(); }
         EditorGUI.indentLevel++;
         foldout = EditorGUILayout.Foldout( foldout,"Tile" );
 		if(foldout)
@@ -70,7 +74,7 @@ public class MapCreatorInspector : Editor
         //  ルートオブジェクトの作成
         var rootObj = new GameObject("StageRootObject");
         //  エディター側では左上が始点なので、その分場所の移動
-        Vector2 startPos = rootObj.transform.position + new Vector3(0, tileSize * -yLength, 0);
+        Vector2 startPos = rootObj.transform.position + new Vector3(0, tileSize * yLength, 0);
 
         for(int y = 0; y < yLength; y++)
         {
@@ -80,7 +84,7 @@ public class MapCreatorInspector : Editor
                 {
                     var TileObj = Instantiate(mapCreator.tilePrefab);
                     TileObj.transform.parent = rootObj.transform;
-                    TileObj.transform.position = startPos + new Vector2(tileSize * x, tileSize * y);
+                    TileObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
                 }
             }
         }
@@ -96,6 +100,21 @@ public class MapCreatorInspector : Editor
             for (int x = 0; x < xLength; x++)
             {
                 Debug.Log(mapCreator.Map.MapDataList[y, x]);
+            }
+        }
+    }
+
+    private void PrintlistNum2()
+    {
+        //  配列の長さを取得
+        int xLength = mapCreator.ResourceMap.MapDataList.GetLength(1);
+        int yLength = mapCreator.ResourceMap.MapDataList.GetLength(0);
+
+        for (int y = 0; y < yLength; y++)
+        {
+            for (int x = 0; x < xLength; x++)
+            {
+                Debug.Log(mapCreator.ResourceMap.MapDataList[y, x]);
             }
         }
     }

@@ -16,6 +16,7 @@ public class MapEditor : EditorWindow {
     private Color gridColor = Color.white;
     private Rect[,] gridRect = new Rect[20, 20];
     private MapDate _sample;
+    //private int[,] mapDate = new int[20, 20];
     private Rect rect;
     private Tile[] tiles;
     //  選択中のボタンの種類
@@ -42,12 +43,14 @@ public class MapEditor : EditorWindow {
 
     private void OnGUI()
     {
-        //  インスタンス生成
-        if (_sample == null){
+        //インスタンス生成
+        if (_sample == null)
+        {
             _sample = ScriptableObject.CreateInstance<MapDate>();
-            Debug.Log("CreateInstance " + _sample.GetInstanceID());
+            _sample.MapDataList = new int[20, 20];
+            Debug.Log("CreateInstance : " + _sample.GetInstanceID());
         }
-            
+
         //  グリッド以外のラベル表示
         //  グリッドのカラーを設定
         EditorGUILayout.BeginHorizontal();
@@ -56,7 +59,8 @@ public class MapEditor : EditorWindow {
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.BeginHorizontal();
-        GUILayout.Label("SampleINT", GUILayout.Width(150));
+        GUILayout.Label("INT", GUILayout.Width(150));
+        //
         _sample.SampleIntValue = EditorGUILayout.IntField(_sample.SampleIntValue);
         EditorGUILayout.EndHorizontal();
 
@@ -77,10 +81,12 @@ public class MapEditor : EditorWindow {
                 string path = "Assets" + fullPath.Substring(Application.dataPath.Length);
                 // 保存処理
                 MapDate tmp = ScriptableObject.CreateInstance<MapDate>();
-                tmp.MapDataList = _sample.MapDataList;
+                tmp.SampleIntValue = _sample.SampleIntValue;
+                tmp.MapDataList = new int[20, 20];
+                System.Array.Copy(_sample.MapDataList, tmp.MapDataList, _sample.MapDataList.Length);
                 AssetDatabase.CreateAsset(tmp, path);
                 //  インスペクターから設定できないようにする
-                tmp.hideFlags = HideFlags.NotEditable;
+                //tmp.hideFlags = HideFlags.NotEditable;
                 //  更新通知
                 EditorUtility.SetDirty(tmp);
                 //  保存
@@ -92,7 +98,6 @@ public class MapEditor : EditorWindow {
         //  グリッドをリセットをする
         if (GUILayout.Button("リセット"))
         {
-            Debug.Log(_sample.GetInstanceID());
             for (int xx = 0; xx < gridNum; xx++)
             {
                 for (int yy = 0; yy < gridNum; yy++)
