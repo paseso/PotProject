@@ -2,11 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct PlayerStatus
+{
+    // 兄がどの状態か
+    public enum State
+    {
+        NORMAL,
+        ONLADDER,
+        ONTREE,
+    }
+
+    public State state;
+}
+
 public class MoveController : MonoBehaviour
 {
 
     [SerializeField]
     private float speed = 0f;
+
+    [SerializeField]
+    private float ladderSpeed;
 
     private Rigidbody2D rig;
     //ジャンプできるかどうか
@@ -121,6 +137,7 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void Move(ButtonType btn)
     {
+        PlayerStatus status = GetComponent<PlayerStatus>();
         switch (btn)
         {
             case ButtonType.JUMP:
@@ -153,25 +170,47 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.UP:
+                if (status.state == PlayerStatus.State.ONLADDER)
+                {
+                    Ladder(gameObject, ladderSpeed, 1);
+                }
+
                 //Debug.Log("UP");
+<<<<<<< HEAD
                 _onUp = true;
                 if (!_activeLadder)
                     return;
+=======
+                //_onUp = true;
+                //if (_ActiveRightLeft)
+                //    return;
+>>>>>>> Washizu
 
-                rig.bodyType = RigidbodyType2D.Kinematic;
-                rig.velocity = new Vector2(rig.velocity.x, 5f);
-                _onUp = false;
+                //rig.bodyType = RigidbodyType2D.Kinematic;
+                //rig.velocity = new Vector2(rig.velocity.x, 5f);
+                //_onUp = false;
                 break;
 
             case ButtonType.DOWN:
+                if (status.state == PlayerStatus.State.ONLADDER)
+                {
+                    Ladder(gameObject, ladderSpeed, -1);
+                }
+
                 //Debug.Log("DOWN");
+<<<<<<< HEAD
                 _onDown = true;
                 if (!_activeLadder)
                     return;
+=======
+                //_onDown = true;
+                //if (_ActiveRightLeft)
+                //    return;
+>>>>>>> Washizu
 
-                rig.bodyType = RigidbodyType2D.Kinematic;
-                rig.velocity = new Vector2(rig.velocity.x, -5f);
-                _onDown = false;
+                //rig.bodyType = RigidbodyType2D.Kinematic;
+                //rig.velocity = new Vector2(rig.velocity.x, -5f);
+                //_onDown = false;
                 break;
 
             case ButtonType.CIRCLE:
@@ -377,6 +416,19 @@ public class MoveController : MonoBehaviour
     #endregion
 
     /// <summary>
+    /// はしごの上下処理
+    /// </summary>
+    /// <param name="player"></param>
+    /// <param name="speed"></param>
+    /// <param name="dir"></param>
+    public void Ladder(GameObject player, float speed, float dir)
+    {
+        Vector2 pos = player.transform.localPosition;
+        pos.y += speed * dir;
+        player.GetComponent<Rigidbody2D>().velocity = pos;
+    }
+
+    /// <summary>
     /// はしごのギミックに入ってる時の処理
     /// </summary>
     public void GimmickLadderIn(float pos_x)
@@ -403,7 +455,7 @@ public class MoveController : MonoBehaviour
     {
         if (!mInfo.LadderFlag)
             return;
-        if(_onUp || _onDown)
+        if (_onUp || _onDown)
         {
             GimmickLadderIn(gimmick_x);
             Debug.Log("_InGimmick: " + _InGimmick);
@@ -414,7 +466,7 @@ public class MoveController : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, Vector2.right);
         Debug.DrawRay(gameObject.transform.position, hit.point * 2, Color.red);
-        if(Physics2D.Raycast(gameObject.transform.position, hit.point * 2, 2))
+        if (Physics2D.Raycast(gameObject.transform.position, hit.point * 2, 2))
         {
             if (hit.collider.tag == "floor")
             {
@@ -432,7 +484,7 @@ public class MoveController : MonoBehaviour
         if (col.gameObject.GetComponent<GimmickInfo>())
         {
             GimmickInfo gimInfo = col.gameObject.GetComponent<GimmickInfo>();
-            if(gimInfo.type == GimmickInfo.GimmickType.LADDER)
+            if (gimInfo.type == GimmickInfo.GimmickType.LADDER)
             {
                 _activeLadder = true;
             }
