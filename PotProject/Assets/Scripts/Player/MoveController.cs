@@ -2,19 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct PlayerStatus
-{
-    // 兄がどの状態か
-    public enum State
-    {
-        NORMAL,
-        ONLADDER,
-        ONTREE,
-    }
-
-    public State state;
-}
-
 public class MoveController : MonoBehaviour
 {
 
@@ -65,7 +52,7 @@ public class MoveController : MonoBehaviour
     private AttackZoonController atc_ctr;
     private MapInfo mInfo;
     private LegCollider legcollider;
-    private PlayerStatus status;
+    private Status status;
 
     private enum ButtonType
     {
@@ -170,7 +157,7 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.UP:
-                if (status.state == PlayerStatus.State.ONLADDER)
+                if (status.state == Status.State.ONLADDER)
                 {
                     Ladder(gameObject, ladderSpeed, 1);
                 }
@@ -192,7 +179,7 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.DOWN:
-                if (status.state == PlayerStatus.State.ONLADDER)
+                if (status.state == Status.State.ONLADDER)
                 {
                     Ladder(gameObject, ladderSpeed, -1);
                 }
@@ -478,8 +465,26 @@ public class MoveController : MonoBehaviour
         }
     }
 
+    //private void OnCollisionEnter2D(Collision2D col)
+    //{
+    //    if(col.gameObject.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDERBLOCK)
+    //    {
+    //        col.gameObject.layer = 8;
+    //    }
+    //}
+
     private void OnTriggerEnter2D(Collider2D col)
     {
+        switch (col.GetComponent<GimmickInfo>().type)
+        {
+            case GimmickInfo.GimmickType.LADDER:
+                status.state = Status.State.ONLADDER;
+                break;
+            case GimmickInfo.GimmickType.TREE:
+                status.state = Status.State.ONTREE;
+                break;
+        }
+
         if (col.gameObject.GetComponent<GimmickInfo>())
         {
             GimmickInfo gimInfo = col.gameObject.GetComponent<GimmickInfo>();
@@ -492,6 +497,8 @@ public class MoveController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D col)
     {
+        status.state = Status.State.NORMAL;
+
         if (col.gameObject.GetComponent<GimmickInfo>())
         {
             GimmickInfo gimInfo = col.gameObject.GetComponent<GimmickInfo>();
@@ -502,23 +509,23 @@ public class MoveController : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D col)
-    {
-        if (col.gameObject.GetComponent<GimmickInfo>())
-        {
-            GimmickInfo gInfo = col.gameObject.GetComponent<GimmickInfo>();
-            Debug.Log("Gimmick Type: " + gInfo.type);
-            if (gInfo.type == GimmickInfo.GimmickType.LADDER)
-            {
-                gimmick_x = col.gameObject.transform.position.x;
-                mInfo = gameObject.transform.root.GetComponent<MapInfo>();
-                Debug.Log("LadderFlag: " + mInfo.LadderFlag);
-                LadderTrigger();
-            }
-        }
-        if (col.gameObject.tag == "floor")
-        {
-            GimmickLadderOut();
-        }
-    }
+    //private void OnTriggerStay2D(Collider2D col)
+    //{
+    //    if (col.gameObject.GetComponent<GimmickInfo>())
+    //    {
+    //        GimmickInfo gInfo = col.gameObject.GetComponent<GimmickInfo>();
+    //        Debug.Log("Gimmick Type: " + gInfo.type);
+    //        if (gInfo.type == GimmickInfo.GimmickType.LADDER)
+    //        {
+    //            gimmick_x = col.gameObject.transform.position.x;
+    //            mInfo = gameObject.transform.root.GetComponent<MapInfo>();
+    //            Debug.Log("LadderFlag: " + mInfo.LadderFlag);
+    //            LadderTrigger();
+    //        }
+    //    }
+    //    if (col.gameObject.tag == "floor")
+    //    {
+    //        GimmickLadderOut();
+    //    }
+    //}
 }

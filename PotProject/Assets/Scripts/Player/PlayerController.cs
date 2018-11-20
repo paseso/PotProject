@@ -14,8 +14,21 @@ public struct Status
         WATER,
         EARTH
     }
+
+    // 兄がどの状態か
+    public enum State
+    {
+        NORMAL,
+        ONLADDER,
+        ONTREE,
+    }
+
     //アイテム
     public SWORDTYPE swordtype;
+
+    // 状態
+    public State state;
+
     //持ち物に入ってるアイテム
     public List<ItemStatus.ITEM> ItemList;
 }
