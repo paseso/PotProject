@@ -26,20 +26,23 @@ public class AttackZoonController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         MoveCollider();
-
     }
 
     /// <summary>
-    /// 持つ範囲コライダーを左右に合わせて移動
+    /// 持つ範囲コライダーと剣を左右に合わせて移動
     /// </summary>
     private void MoveCollider()
     {
         if (move_ctr._onLeft)
         {
+            //Sword.transform.position = new Vector2(Sword.transform.position.x - 0.9f, Sword.transform.position.y);
+            Sword.transform.rotation = Quaternion.Euler(0, 0, 51);
             gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
         }
         if (move_ctr._onRight)
         {
+            //Sword.transform.position = new Vector2(Sword.transform.position.x + 0.9f, Sword.transform.position.y);
+            Sword.transform.rotation = Quaternion.Euler(0, 0, -51);
             gameObject.transform.rotation = new Quaternion(0, 180, 0, 0);
         }
     }
@@ -65,7 +68,6 @@ public class AttackZoonController : MonoBehaviour {
             move_ctr._onCircle = true;
             Debug.Log("殴れるよ");
             Attack_Target = col.gameObject;
-            
         }
     }
 

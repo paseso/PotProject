@@ -1908,11 +1908,27 @@ Prefab:
       propertyPath: managerGameObject
       value: 
       objectReference: {fileID: 214734539}
-    - target: {fileID: 114406556467583622, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
+    - target: {fileID: 114136352367407402, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
         type: 2}
       propertyPath: manager
       value: 
-      objectReference: {fileID: 214734541}
+      objectReference: {fileID: 154302732}
+    - target: {fileID: 4070267491358916, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4070267491358916, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4070267491358916, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4070267491358916, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
   m_IsPrefabParent: 0
