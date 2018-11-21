@@ -13,10 +13,11 @@ public class MapEditor : EditorWindow {
     /// </summary>
     private string ASSET_PATH = "Assets/Resources/MapData/";
     private int gridNum = 20;
+    private int sampleInt;
     private Color gridColor = Color.white;
     private Rect[,] gridRect = new Rect[20, 20];
-    private MapDate _sample;
-    //private int[,] mapDate = new int[20, 20];
+    //private MapDate _sample;
+    private int[,] mapDate = new int[20, 20];
     private Rect rect;
     private Tile[] tiles;
     //  選択中のボタンの種類
@@ -43,13 +44,13 @@ public class MapEditor : EditorWindow {
 
     private void OnGUI()
     {
-        //インスタンス生成
-        if (_sample == null)
-        {
-            _sample = ScriptableObject.CreateInstance<MapDate>();
-            _sample.MapDataList = new int[20, 20];
-            Debug.Log("CreateInstance : " + _sample.GetInstanceID());
-        }
+        ////インスタンス生成
+        //if (_sample == null)
+        //{
+        //    _sample = ScriptableObject.CreateInstance<MapDate>();
+        //    _sample.MapDataList = new int[20, 20];
+        //    Debug.Log("CreateInstance : " + _sample.GetInstanceID());
+        //}
 
         //  グリッド以外のラベル表示
         //  グリッドのカラーを設定
@@ -61,7 +62,7 @@ public class MapEditor : EditorWindow {
         EditorGUILayout.BeginHorizontal();
         GUILayout.Label("INT", GUILayout.Width(150));
         //
-        _sample.SampleIntValue = EditorGUILayout.IntField(_sample.SampleIntValue);
+        sampleInt = EditorGUILayout.IntField(sampleInt);
         EditorGUILayout.EndHorizontal();
 
 
@@ -72,7 +73,7 @@ public class MapEditor : EditorWindow {
         {
             // 保存先のファイルパスを取得する
             var fullPath = EditorUtility.SaveFilePanel("マップデータの保存", ASSET_PATH, "default_name", "asset");
-            Debug.Log(_sample.GetInstanceID());
+            //Debug.Log(_sample.GetInstanceID());
 
             // パスが入っていれば選択されたということ（キャンセルされたら入ってこない）
             if (!string.IsNullOrEmpty(fullPath))
@@ -81,9 +82,9 @@ public class MapEditor : EditorWindow {
                 string path = "Assets" + fullPath.Substring(Application.dataPath.Length);
                 // 保存処理
                 MapDate tmp = ScriptableObject.CreateInstance<MapDate>();
-                tmp.SampleIntValue = _sample.SampleIntValue;
+                tmp.SampleIntValue = sampleInt;
                 tmp.MapDataList = new int[20, 20];
-                System.Array.Copy(_sample.MapDataList, tmp.MapDataList, _sample.MapDataList.Length);
+                System.Array.Copy(mapDate, tmp.MapDataList, mapDate.Length);
                 AssetDatabase.CreateAsset(tmp, path);
                 //  インスペクターから設定できないようにする
                 //tmp.hideFlags = HideFlags.NotEditable;
@@ -102,11 +103,10 @@ public class MapEditor : EditorWindow {
             {
                 for (int yy = 0; yy < gridNum; yy++)
                 {
-                    _sample.MapDataList[yy, xx] = 0;
+                    mapDate[yy, xx] = 0;
                 }
             }
         }
-        //_sample.SampleIntValue = EditorGUILayout.IntField("サンプル", _sample.SampleIntValue);
         GUILayout.EndHorizontal();
 
 
@@ -156,7 +156,7 @@ public class MapEditor : EditorWindow {
                     if (r.y <= pos.y && pos.y <= r.y + r.height)
                     {
                         //  配列に代入
-                        _sample.MapDataList[yy, xx] = SelectNum;
+                        mapDate[yy, xx] = SelectNum;
                         Repaint();
                         break;
                     }
@@ -169,9 +169,9 @@ public class MapEditor : EditorWindow {
         {
             for (int xx = 0; xx < gridNum; xx++)
             {
-                if (_sample.MapDataList[yy, xx] != 0)
+                if (mapDate[yy, xx] != 0)
                 {                    
-                    GUI.DrawTexture(gridRect[yy, xx], tiles[_sample.MapDataList[yy, xx]].TileImage);
+                    GUI.DrawTexture(gridRect[yy, xx], tiles[mapDate[yy, xx]].TileImage);
                 }
             }
         }
@@ -180,7 +180,7 @@ public class MapEditor : EditorWindow {
 
 
         //  タイルの種類を分ける
-        _sample.SampleIntValue = GUILayout.Toolbar(_sample.SampleIntValue, new string[] { "地面", "ギミック", "エネミー" });
+        sampleInt = GUILayout.Toolbar(sampleInt, new string[] { "地面", "ギミック", "エネミー" });
 
         //DrawImageParts();
         DrawTileButtons();

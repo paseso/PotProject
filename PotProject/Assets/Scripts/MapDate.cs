@@ -12,13 +12,14 @@ public class MapDate : ScriptableObject {
     [SerializeField]
     private int[] testArray = new int[5];
 
-    //MapDate()
-    //{
-    //    if (_mapDataList == null)
-    //    {
-    //        _mapDataList = new int[20, 20];
-    //    }
-    //}
+    MapDate()
+    {
+        if (_mapDataList == null)
+        {
+            Debug.Log(System.DateTime.Now);
+            //_mapDataList = new int[20, 20];
+        }
+    }
 
     public int SampleIntValue
     {
