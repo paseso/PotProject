@@ -5,7 +5,7 @@ using UnityEngine;
 public class PotController : MonoBehaviour {
 
     [SerializeField]
-    private PlayerManager manager;
+    private PlayerController manager;
     [SerializeField]
     private BringCollider bring_col;
     [SerializeField]
@@ -27,22 +27,42 @@ public class PotController : MonoBehaviour {
     /// </summary>
     private void MoveCollider()
     {
-        if (move_ctr._onLeft || move_ctr._onRight)
-        {
-            gameObject.transform.position = new Vector2(gameObject.transform.position.x * -1, gameObject.transform.position.y);
-        }
+        //if (move_ctr._onLeft || move_ctr._onRight)
+        //{
+        //    gameObject.transform.position = new Vector2(gameObject.transform.position.x * -1, gameObject.transform.position.y);
+        //}
     }
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.gameObject.tag == "Monster")
+        if (col.gameObject.GetComponent<MonsterInfo>())
         {
-            if (bring_col._Tubohit || move_ctr._itemFall)
+            Debug.Log("きてる！");
+            if (!bring_col._Tubohit || !move_ctr._itemFall)
+                return;
+
+            Destroy(col.gameObject);
+            MonsterInfo monInfo = col.gameObject.GetComponent<MonsterInfo>();
+            switch (monInfo.type)
             {
-                Destroy(col.gameObject);
-                manager.ItemAlchemy(ItemStatus.ITEM.SLIME);
+                case MonsterInfo.MonsterType.WATER:
+                    manager.setItemList(ItemStatus.ITEM.SLIME);
+                    break;
+
+                case MonsterInfo.MonsterType.SNAKE:
+                    manager.setItemList(ItemStatus.ITEM.SNAKE);
+                    break;
+
+                default:
+                    Debug.Log("Type: " + monInfo.type);
+                    break;
             }
+            Debug.Log("Type: " + monInfo.type);
         }
 
+        if (col.gameObject.GetComponent<GimmickInfo>())
+        {
+
+        }
     }
 }

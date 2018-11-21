@@ -8,20 +8,23 @@ public class MoveController : MonoBehaviour
     [SerializeField]
     private float speed = 0f;
 
+    [SerializeField]
+    private float ladderSpeed;
+
     private Rigidbody2D rig;
     //ジャンプできるかどうか
     [HideInInspector]
     public bool _isJump = false;
-    //壁にあたったかどうか
-    private bool _hitWall = false;
     //左右動かしてもいいかどうか
     private bool _ActiveRightLeft = false;
     //ギミックの中いるかどうか
     [HideInInspector]
     public bool _InGimmick = false;
-
+    //アイテムを落としたかどうか
     [HideInInspector]
     public bool _itemFall = false;
+    //はしごの処理を行えるかどうか
+    private bool _activeLadder = false;
     //-------アクションボタンを押してるかどうか----------
     [HideInInspector]
     public bool _onRight = false;
@@ -42,18 +45,14 @@ public class MoveController : MonoBehaviour
     [SerializeField, Header("兄のSprite 0.左 1.右 2.後ろ")]
     private List<Sprite> BrotherSprites;
 
-
-    private float ladder_y = 0;
-    private float leg_y = 0;
-
     [SerializeField]
     private GameObject managerGameObject;
-    private PlayerManager manager;
+    private PlayerController manager;
     private BringCollider bringctr;
     private AttackZoonController atc_ctr;
     private MapInfo mInfo;
-
-    private bool _onece = false;
+    private LegCollider legcollider;
+    private Status status;
 
     private enum ButtonType
     {
@@ -83,31 +82,31 @@ public class MoveController : MonoBehaviour
     {
         target = null;
         rig = gameObject.GetComponent<Rigidbody2D>();
-        manager = managerGameObject.GetComponent<PlayerManager>();
+        manager = managerGameObject.GetComponent<PlayerController>();
         bringctr = gameObject.transform.GetChild(0).GetComponent<BringCollider>();
         mInfo = transform.root.GetComponent<MapInfo>();
         atc_ctr = gameObject.GetComponentInChildren<AttackZoonController>();
+        legcollider = gameObject.GetComponentInChildren<LegCollider>();
         _isJump = false;
         _onRight = false;
         _onLeft = false;
         _onSquare = false;
         _onCircle = false;
-        _onece = false;
         _itemFall = false;
-        _hitWall = false;
         _ActiveRightLeft = true;
         _onUp = false;
         _onDown = false;
         _InGimmick = false;
+        _activeLadder = false;
         gimmick_x = 0f;
-        ladder_y = 0;
-        leg_y = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!mInfo.LadderFlag)
+        //HitRayWall();
+        //はしごColliderからはずれたらor足の部分にfloorがあたったら
+        if (!mInfo.LadderFlag) // || legcollider._legFloor
         {
             GimmickLadderOut();
         }
@@ -129,14 +128,14 @@ public class MoveController : MonoBehaviour
         switch (btn)
         {
             case ButtonType.JUMP:
-                Debug.Log("×");
+                //Debug.Log("×");
                 if (!_isJump)
                     return;
                 rig.velocity = new Vector2(0, 1f * speed);
                 break;
 
             case ButtonType.LEFT:
-                Debug.Log("LEFT");
+                //Debug.Log("LEFT");
                 _onLeft = true;
                 _onRight = false;
                 if (!_ActiveRightLeft)
@@ -147,7 +146,7 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.RIGHT:
-                Debug.Log("RIGHT");
+                //Debug.Log("RIGHT");
                 _onRight = true;
                 _onLeft = false;
                 if (!_ActiveRightLeft)
@@ -158,31 +157,50 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.UP:
-                Debug.Log("UP");
+                if (status.state == Status.State.ONLADDER)
+                {
+                    Ladder(gameObject, ladderSpeed, 1);
+                }
+
+                //Debug.Log("UP");
+
                 _onUp = true;
-                if (_ActiveRightLeft)
+                if (!_activeLadder)
                     return;
 
-                //gameObject.GetComponent<CapsuleCollider2D>().isTrigger = true;
-                rig.bodyType = RigidbodyType2D.Kinematic;
-                rig.velocity = new Vector2(rig.velocity.x, 5f);
-                _onUp = false;
+                //_onUp = true;
+                //if (_ActiveRightLeft)
+                //    return;
+
+
+                //rig.bodyType = RigidbodyType2D.Kinematic;
+                //rig.velocity = new Vector2(rig.velocity.x, 5f);
+                //_onUp = false;
                 break;
 
             case ButtonType.DOWN:
-                Debug.Log("DOWN");
+                if (status.state == Status.State.ONLADDER)
+                {
+                    Ladder(gameObject, ladderSpeed, -1);
+                }
+
+                //Debug.Log("DOWN");
+
                 _onDown = true;
-                if (_ActiveRightLeft)
+                if (!_activeLadder)
                     return;
 
-                //gameObject.GetComponent<CapsuleCollider2D>().isTrigger = true;
-                rig.bodyType = RigidbodyType2D.Kinematic;
-                rig.velocity = new Vector2(rig.velocity.x, -5f);
-                _onDown = false;
+                //_onDown = true;
+                //if (_ActiveRightLeft)
+                //    return;
+
+                //rig.bodyType = RigidbodyType2D.Kinematic;
+                //rig.velocity = new Vector2(rig.velocity.x, -5f);
+                //_onDown = false;
                 break;
 
             case ButtonType.CIRCLE:
-                Debug.Log("〇");
+                //Debug.Log("〇");
                 if (!_onCircle)
                     return;
 
@@ -191,7 +209,7 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.SQUARE:
-                Debug.Log("□");
+                //Debug.Log("□");
                 if (!bringctr._Brotherhit)
                     return;
 
@@ -203,7 +221,16 @@ public class MoveController : MonoBehaviour
                 }
                 else if (bringctr._bring)
                 {//アイテムを離す
-                    target.gameObject.transform.position = new Vector2(gameObject.transform.GetChild(0).transform.position.x, gameObject.transform.GetChild(0).transform.position.y);
+                    if (_onRight)
+                    {
+                        target.gameObject.transform.position = new Vector2(bringctr.gameObject.transform.position.x + 2f, bringctr.gameObject.transform.position.y + 1.5f);
+                    }
+                    else
+                    {
+                        target.gameObject.transform.position = new Vector2(bringctr.gameObject.transform.position.x - 2f, bringctr.gameObject.transform.position.y + 1.5f);
+                    }
+                    Debug.Log("Right：" + _onRight);
+                    Debug.Log("Left：" + _onLeft);
                     //target.gameObject.transform.position = new Vector2(gameObject.transform.position.x + 2f, gameObject.transform.position.y + 1);
                     target.gameObject.transform.parent = null;
                     target.GetComponent<Rigidbody2D>().simulated = true;
@@ -290,8 +317,8 @@ public class MoveController : MonoBehaviour
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
         {
             rig.velocity = new Vector2(0, rig.velocity.y);
-            _onLeft = false;
-            _onRight = false;
+            //_onLeft = false;
+            //_onRight = false;
         }
         if (Input.GetAxis("Horizontal_ps4") >= 0.15f || Input.GetKey(KeyCode.W))
         {
@@ -375,7 +402,20 @@ public class MoveController : MonoBehaviour
     #endregion
 
     /// <summary>
-    /// はしごのギミック処理
+    /// はしごの上下処理
+    /// </summary>
+    /// <param name="player"></param>
+    /// <param name="speed"></param>
+    /// <param name="dir"></param>
+    public void Ladder(GameObject player, float speed, float dir)
+    {
+        Vector2 pos = player.transform.localPosition;
+        pos.y += speed * dir;
+        player.GetComponent<Rigidbody2D>().velocity = pos;
+    }
+
+    /// <summary>
+    /// はしごのギミックに入ってる時の処理
     /// </summary>
     public void GimmickLadderIn(float pos_x)
     {
@@ -384,54 +424,108 @@ public class MoveController : MonoBehaviour
         gameObject.transform.position = new Vector2(pos_x, gameObject.transform.position.y);
     }
 
+    /// <summary>
+    /// はしごのギミックから出る時の処理
+    /// </summary>
     public void GimmickLadderOut()
     {
-        Debug.Log("アウト");
         _ActiveRightLeft = true;
         rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y);
         rig.bodyType = RigidbodyType2D.Dynamic;
     }
 
+    /// <summary>
+    /// はしごのギミックに入る時の処理
+    /// </summary>
     private void LadderTrigger()
     {
         if (!mInfo.LadderFlag)
             return;
-        if(_onUp || _onDown)
+        if (_onUp || _onDown)
         {
-            Debug.Log("イン");
             GimmickLadderIn(gimmick_x);
             Debug.Log("_InGimmick: " + _InGimmick);
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    private void HitRayWall()
     {
-        if(col.gameObject.tag == "floor")
+        RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, Vector2.right);
+        Debug.DrawRay(gameObject.transform.position, hit.point * 2, Color.red);
+        if (Physics2D.Raycast(gameObject.transform.position, hit.point * 2, 2))
         {
-            GimmickLadderOut();
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D col)
-    {
-        if (col.gameObject.GetComponent<GimmickInfo>())
-        {
-            Debug.Log("GimmickInfoあります！");
-            GimmickInfo gInfo = col.gameObject.GetComponent<GimmickInfo>();
-            Debug.Log("Gimmick Type: " + gInfo.type);
-            if (gInfo.type == GimmickInfo.GimmickType.LADDER)
+            if (hit.collider.tag == "floor")
             {
-                gimmick_x = col.gameObject.transform.position.x;
-                Debug.Log("LadderFlag: " + mInfo.LadderFlag);
-                LadderTrigger();
+                _ActiveRightLeft = false;
+            }
+            else
+            {
+                _ActiveRightLeft = true;
             }
         }
-
-        //木がのびるcolliderに当たった時
-        if (mInfo.GrowTreeFlag)
-        {
-
-        }
-        
     }
+
+    //private void OnCollisionEnter2D(Collision2D col)
+    //{
+    //    if(col.gameObject.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDERBLOCK)
+    //    {
+    //        col.gameObject.layer = 8;
+    //    }
+    //}
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        switch (col.GetComponent<GimmickInfo>().type)
+        {
+            case GimmickInfo.GimmickType.LADDER:
+                status.state = Status.State.ONLADDER;
+                break;
+            case GimmickInfo.GimmickType.TREE:
+                status.state = Status.State.ONTREE;
+                break;
+        }
+
+        if (col.gameObject.GetComponent<GimmickInfo>())
+        {
+            GimmickInfo gimInfo = col.gameObject.GetComponent<GimmickInfo>();
+            if (gimInfo.type == GimmickInfo.GimmickType.LADDER)
+            {
+                _activeLadder = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D col)
+    {
+        status.state = Status.State.NORMAL;
+
+        if (col.gameObject.GetComponent<GimmickInfo>())
+        {
+            GimmickInfo gimInfo = col.gameObject.GetComponent<GimmickInfo>();
+            if (gimInfo.type == GimmickInfo.GimmickType.LADDER)
+            {
+                _activeLadder = false;
+            }
+        }
+    }
+
+    //private void OnTriggerStay2D(Collider2D col)
+    //{
+    //    if (col.gameObject.GetComponent<GimmickInfo>())
+    //    {
+    //        GimmickInfo gInfo = col.gameObject.GetComponent<GimmickInfo>();
+    //        Debug.Log("Gimmick Type: " + gInfo.type);
+    //        if (gInfo.type == GimmickInfo.GimmickType.LADDER)
+    //        {
+    //            gimmick_x = col.gameObject.transform.position.x;
+    //            mInfo = gameObject.transform.root.GetComponent<MapInfo>();
+    //            Debug.Log("LadderFlag: " + mInfo.LadderFlag);
+    //            LadderTrigger();
+    //        }
+    //    }
+    //    if (col.gameObject.tag == "floor")
+    //    {
+    //        GimmickLadderOut();
+    //    }
+    //}
 }
