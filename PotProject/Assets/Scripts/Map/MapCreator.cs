@@ -11,6 +11,7 @@ public class MapCreator : MonoBehaviour
     private Gimmick[] gimmicks;
     [SerializeField]
     private Enemy[] enemys;
+    [SerializeField]
     private MapDate map;
     public MapDate ResourceMap;
     [HideInInspector]

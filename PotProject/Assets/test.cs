@@ -2,14 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class aaaa : MonoBehaviour {
+public class test : MonoBehaviour {
 
     [SerializeField]
-    private int[] intValue;
-    [SerializeField]
-    private List<int> intValues;
-
-	// Use this for initialization
+    MapDate date;
 	void Start () {
 		
 	}
@@ -18,9 +14,4 @@ public class aaaa : MonoBehaviour {
 	void Update () {
 		
 	}
-}
-
-public class MapDataList
-{
-
 }

@@ -83,8 +83,10 @@ public class MapEditor : EditorWindow {
                 // 保存処理
                 MapDate tmp = ScriptableObject.CreateInstance<MapDate>();
                 tmp.SampleIntValue = sampleInt;
-                tmp.MapDataList = new int[20, 20];
-                System.Array.Copy(mapDate, tmp.MapDataList, mapDate.Length);
+                tmp.
+                System.Array.Copy(mapDate, tmp.MapDataList, mapDate.Length);                
+                for(int i = 0; i < 5; i++)
+                    tmp.TestArray[i] = 10;
                 AssetDatabase.CreateAsset(tmp, path);
                 //  インスペクターから設定できないようにする
                 //tmp.hideFlags = HideFlags.NotEditable;
