@@ -44,9 +44,11 @@ public class PlayerController : MonoBehaviour {
     public Status status;
     [SerializeField]
     private AlchemyController alchemy_ctr;
+    [SerializeField]
+    private AlchemyUIController alchemyUI_ctr;
 
     [SerializeField]
-    private RectTransform Alchemy_ui;
+    private RectTransform Pot_UI;
     private bool _alchemyUi = false;
 
 	// Use this for initialization
@@ -113,12 +115,13 @@ public class PlayerController : MonoBehaviour {
     {
         if (!_alchemyUi)
         {
-            Alchemy_ui.DOMoveX(-14, 0.3f).SetEase(Ease.Linear);
+            alchemyUI_ctr.setItemboxImage();
+            Pot_UI.DOMoveX(-14, 0.3f).SetEase(Ease.Linear);
             _alchemyUi = true;
         }
         else
         {
-            Alchemy_ui.DOMoveX(14, 0.3f).SetEase(Ease.Linear);
+            Pot_UI.DOMoveX(14, 0.3f).SetEase(Ease.Linear);
             _alchemyUi = false;
         }
     }

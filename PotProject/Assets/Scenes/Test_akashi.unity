@@ -620,7 +620,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3691c51628418e74092ea6a6c7f2ef87, type: 3}
   - {fileID: 21300000, guid: c0deddb703dce2642b0cc39c47710f46, type: 3}
   alchemy_ctr: {fileID: 939045828}
-  Alchemy_ui: {fileID: 327374387}
+  alchemyUI_ctr: {fileID: 327374390}
+  Pot_UI: {fileID: 327374387}
 --- !u!114 &154302733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -802,7 +803,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c0deddb703dce2642b0cc39c47710f46, type: 3}
   - {fileID: 21300000, guid: 7b5053858cab5684e938c84c3f756e48, type: 3}
   alchemy_ctr: {fileID: 0}
-  Alchemy_ui: {fileID: 0}
+  alchemyUI_ctr: {fileID: 0}
+  Pot_UI: {fileID: 0}
 --- !u!1 &243369724
 GameObject:
   m_ObjectHideFlags: 0
@@ -1477,6 +1479,7 @@ GameObject:
   - component: {fileID: 327374387}
   - component: {fileID: 327374389}
   - component: {fileID: 327374388}
+  - component: {fileID: 327374390}
   m_Layer: 0
   m_Name: Alchemy_UI
   m_TagString: Untagged
@@ -1537,6 +1540,26 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 327374386}
+--- !u!114 &327374390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 327374386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d90fddad30405a40b2fd34037e76ad5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Itembox:
+  - {fileID: 1468337635}
+  - {fileID: 1868392904}
+  - {fileID: 1065906330}
+  ItemImage:
+  - {fileID: 21300000, guid: f4c6df7a78221554b8cc43c6823405d7, type: 3}
+  - {fileID: 21300000, guid: 4da0539c6a8bd54418ed7751c49c09de, type: 3}
+  - {fileID: 21300000, guid: 6a991f66ad9706446b5806a24262241c, type: 3}
+  player_ctr: {fileID: 154302732}
 --- !u!1001 &351272777
 Prefab:
   m_ObjectHideFlags: 0
