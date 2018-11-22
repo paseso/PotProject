@@ -43,12 +43,11 @@ public class MapCreatorInspector : Editor
 
         if (GUILayout.Button("マップに変換")) { CreateMap(); }
         if (GUILayout.Button("マップのタイルID表示")) { PrintlistNum(); }
-        EditorGUI.indentLevel++;
         foldout = EditorGUILayout.Foldout( foldout,"Tile" );
 		if(foldout)
 		{
-            EditorGUI.indentLevel--;
-			EditorGUILayout.LabelField("タイルのTextureとPrefab ※0番目は消しゴムのままで!!");
+			EditorGUILayout.LabelField("タイルのTextureとPrefab");
+            EditorGUILayout.HelpBox("※0番目は消しゴムのままで!!", MessageType.Warning);
             reorderableList.DoLayoutList();
         }
         serializedObject.ApplyModifiedProperties();

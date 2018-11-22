@@ -6,20 +6,19 @@ using UnityEditor;
 
 public class MapEditor : EditorWindow {
 
-    //  参考サイト   https://qiita.com/shirasaya0201/items/ee32f35ad3caac428368 https://www.google.co.jp/search?q=unity+%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF%E3%83%BC&oq=unity%E3%80%80%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF%E3%83%BC&aqs=chrome..69i57.7637j0j1&sourceid=chrome&ie=UTF-8
+    //  参考サイト   https://qiita.com/shirasaya0201/items/ee32f35ad3caac428368
 
-    /// <summary>
-    /// データの保存先
-    /// </summary>
-    private string ASSET_PATH = "Assets/Resources/MapData/";
-    private int gridNum = 20;
-    private int typeInt;
-    private Color gridColor = Color.white;
-    private Rect[,] gridRect = new Rect[20, 20];
-    //private MapDate _sample;
-    private int[,] mapDate = new int[20, 20];
+    private const string ASSET_PATH = "Assets/Resources/MapData/";
+    private const int gridNum = 20;
+    private Tile[] tiles;    
+    private int toolberInt;
+    private int[,] mapDate;
+    private int[,] gimmickDate;
+    private int[,] enemyDate;
     private Rect rect;
-    private Tile[] tiles;
+    private Rect[,] gridRect;
+    private Color gridColor;
+
     //  選択中のボタンの種類
     private int SelectNum = 0;
     
@@ -30,7 +29,7 @@ public class MapEditor : EditorWindow {
         //  生成
         MapEditor window = GetWindow<MapEditor>("MapEditor");
         //  最小サイズ設定
-        window.minSize = new Vector2(320, 360);
+        window.minSize = new Vector2(320, 500);
         window.maxSize = new Vector2(320, 500);
         //  マップクリエイター側からデータを拾う
         window.Init();
@@ -39,84 +38,37 @@ public class MapEditor : EditorWindow {
     public void Init()
     {
         tiles = FindObjectOfType<MapCreator>().GetTileList();
+        mapDate = new int[gridNum, gridNum];
+        gimmickDate = new int[gridNum, gridNum];
+        enemyDate = new int[gridNum, gridNum];
+        gridRect = new Rect[20, 20];
+        gridColor = Color.white;
+    }
 
+    private void OnEnable()
+    {
+        Debug.Log("OnEnable");
+        Create();
     }
 
     private void OnGUI()
     {
-        //  グリッド以外のラベル表示
-        //  グリッドのカラーを設定
+        //  グリッド以外のフィールドの表示
         EditorGUILayout.BeginHorizontal();
         GUILayout.Label("グリッドの色", GUILayout.Width(150));
         gridColor = EditorGUILayout.ColorField(gridColor);
         EditorGUILayout.EndHorizontal();
 
-        //EditorGUILayout.BeginHorizontal();
-        //GUILayout.Label("INT", GUILayout.Width(150));
-        //typeInt = EditorGUILayout.IntField(typeInt);
-        //EditorGUILayout.EndHorizontal();
-
-
-
         GUILayout.BeginHorizontal();
         //  マップデータを書き出し
-        if (GUILayout.Button("ファイル出力"))
-        {
-            // 保存先のファイルパスを取得する
-            var fullPath = EditorUtility.SaveFilePanel("マップデータの保存", ASSET_PATH, "default_name", "asset");
-
-            // パスが入っていれば選択されたということ（キャンセルされたら入ってこない）
-            if (!string.IsNullOrEmpty(fullPath))
-            {
-                //  パスを短くする
-                string path = "Assets" + fullPath.Substring(Application.dataPath.Length);
-                // 保存処理
-                MapDate tmp = ScriptableObject.CreateInstance<MapDate>();
-                Debug.Log(tmp.mapArray.Length);
-                for (int i = 0; i < tmp.mapArray.Length; i++)
-                {
-                    tmp.mapArray[i] = new MapArray();
-                    tmp.mapArray[i].mapNum = new int[gridNum];
-                }
-                Debug.Log("NumberLength : " + tmp.mapArray[0].mapNum.Length);
-
-                for (int i = 0; i < tmp.mapArray.Length; i++)
-                {
-                    for (int j = 0; j < tmp.mapArray[i].mapNum.Length; j++)
-                    {
-                        tmp.mapArray[i].mapNum[j] = mapDate[i,j];
-                    }
-                }
-                AssetDatabase.CreateAsset(tmp, path);
-                //  インスペクターから設定できないようにする
-                //tmp.hideFlags = HideFlags.NotEditable;
-                //  更新通知
-                EditorUtility.SetDirty(tmp);
-                //  保存
-                AssetDatabase.SaveAssets();
-                //  エディタを最新の状態にする
-                AssetDatabase.Refresh();
-            }
-        }
+        if (GUILayout.Button("ファイル出力")) { ExportMapDate(); }
         //  グリッドをリセットをする
-        if (GUILayout.Button("リセット"))
-        {
-            for (int xx = 0; xx < gridNum; xx++)
-            {
-                for (int yy = 0; yy < gridNum; yy++)
-                {
-                    mapDate[yy, xx] = 0;
-                }
-            }
-        }
+        if (GUILayout.Button("リセット")) { mapDate = new int[gridNum, gridNum]; }
         GUILayout.EndHorizontal();
 
-
-        rect = EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.EndHorizontal();
-
+        //  グリッドのサイズを設定
         gridRect = CreateGrid();
-
+        //  グリッドの描画
         for (int y = 0; y < gridNum; y++)
         {
             for (int x = 0; x < gridNum; x++)
@@ -138,7 +90,7 @@ public class MapEditor : EditorWindow {
             {
                 isWithin = false;
             }
-            //  trueのままだったら配列に格納
+            //  範囲内だったら配列にデータを設定
             if (isWithin)
             {
                 int xx;
@@ -167,32 +119,88 @@ public class MapEditor : EditorWindow {
         }
 
         // 画像を描画する
-        for (int yy = 0; yy < gridNum; yy++)
+        for (int y = 0; y < gridNum; y++)
         {
-            for (int xx = 0; xx < gridNum; xx++)
+            for (int x = 0; x < gridNum; x++)
             {
-                if (mapDate[yy, xx] != 0)
-                {                    
-                    GUI.DrawTexture(gridRect[yy, xx], tiles[mapDate[yy, xx]].TileImage);
+                switch (toolberInt)
+                {
+                    case 0:
+                        //  ノーマルタイルだけ表示
+                        if (mapDate[y, x] != 0) { GUI.DrawTexture(gridRect[y, x], tiles[mapDate[y, x]].TileImage); }
+                        break;
+                    case 1:
+                        //  ノーマルタイルとギミックタイルを表示
+                        //  GUI.DrawTextureではアルファ値がいじれなかったので、こちらはGraphics.DrawTextureを使用
+                        if (mapDate[y, x] != 0) { Graphics.DrawTexture(gridRect[y, x], tiles[mapDate[y, x]].TileImage, new Rect(0, 0, 1, 1), 0, 0, 0, 0, new Color(0.5f, 0.5f, 0.5f, 0.25f)); }
+                        if (gimmickDate[y, x] != 0) { GUI.DrawTexture(gridRect[y, x], tiles[gimmickDate[y, x]].TileImage); }
+                        break;
+                    case 2:
+                        //  ノーマルタイルとポジションタイルを表示
+                        if (mapDate[y, x] != 0) { Graphics.DrawTexture(gridRect[y, x], tiles[mapDate[y, x]].TileImage, new Rect(0, 0, 1, 1), 0, 0, 0, 0, new Color(0.5f, 0.5f, 0.5f, 0.25f)); }
+                        if (enemyDate[y, x] != 0) { Graphics.DrawTexture(gridRect[y, x], tiles[mapDate[y, x]].TileImage, new Rect(0, 0, 1, 1), 0, 0, 0, 0, new Color(0.5f, 0.5f, 0.5f, 0.25f)); }                        
+                        break;
+                    default:
+                        Debug.Log("ツールバーの値が不正です");
+                        break;
                 }
             }
         }
 
         GUILayout.Space(280);
 
-
         //  タイルの種類を分ける
-        typeInt = GUILayout.Toolbar(typeInt, new string[] { "地面", "ギミック", "エネミー" });
-
-        //DrawImageParts();
+        toolberInt = GUILayout.Toolbar(toolberInt, new string[] { "地面", "ギミック", "エネミー" });
+        //  タイルのボタンを描画
         DrawTileButtons();
     }
 
 
+    //  ScriptableObjectにデータの書き出し
+    private void ExportMapDate()
+    {
+        // 保存先のファイルパスを取得する
+        var fullPath = EditorUtility.SaveFilePanel("マップデータの保存", ASSET_PATH, "default_name", "asset");
+
+        // パスが入っていれば選択されたということ（キャンセルされたら入ってこない）
+        if (!string.IsNullOrEmpty(fullPath))
+        {
+            //  フルパスから相対パスへ
+            string path = "Assets" + fullPath.Substring(Application.dataPath.Length);
+            //  保存処理
+            MapDate tmp = ScriptableObject.CreateInstance<MapDate>();
+            //  配列を動的に確保　※そうしないと確保されない
+            for (int i = 0; i < tmp.mapArray.Length; i++)
+            {
+                tmp.mapArray[i] = new MapArray();
+                tmp.mapArray[i].mapNum = new int[gridNum];
+            }
+            Debug.Log("NumberLength : " + tmp.mapArray[0].mapNum.Length);
+            //  値の代入
+            for (int i = 0; i < tmp.mapArray.Length; i++)
+            {
+                for (int j = 0; j < tmp.mapArray[i].mapNum.Length; j++)
+                {
+                    tmp.mapArray[i].mapNum[j] = mapDate[i, j];
+                }
+            }
+            AssetDatabase.CreateAsset(tmp, path);
+            //  インスペクターから設定できないようにする
+            tmp.hideFlags = HideFlags.NotEditable;
+            //  更新通知
+            EditorUtility.SetDirty(tmp);
+            //  保存
+            AssetDatabase.SaveAssets();
+            //  エディタを最新の状態にする
+            AssetDatabase.Refresh();
+        }
+    }
+
+
     //  グリッドのサイズを設定
-    //  for分で回してバグの原因だった
     private Rect[,] CreateGrid()
     {
+        //  EditorGUILayout.GetControlRectを呼ぶとSpace()が勝手に入るようでfor文で回したときバグの原因だった
         rect = EditorGUILayout.GetControlRect();
         float edgeX = 20f;
         float tmpX = edgeX;
@@ -217,9 +225,8 @@ public class MapEditor : EditorWindow {
     //  Rect通りにグリッドを表示
     private void DrawGrig(Rect _rect)
     {
-        //Debug.Log("Draw");
-        // grid
-        Handles.color = gridColor;
+        //  グリッドの色を設定
+        Handles.color = (toolberInt == 0) ? gridColor : (toolberInt == 1) ? Color.red : Color.green;
 
         // upper line
         Handles.DrawLine(
@@ -244,18 +251,18 @@ public class MapEditor : EditorWindow {
 
     private void DrawTileButtons()
     {
-        switch (typeInt)
+        float x = 20.0f;
+        float y = 00.0f;
+        float w = 50.0f;
+        float h = 50.0f;
+        float maxW = 300.0f;
+        GUILayout.Space(5);
+
+        switch (toolberInt)
         {
             case 0:
                 if (tiles != null)
                 {
-                    float x = 20.0f;
-                    float y = 00.0f;
-                    float w = 50.0f;
-                    float h = 50.0f;
-                    float maxW = 300.0f;
-                    GUILayout.Space(5);
-                    //EditorGUILayout.BeginHorizontal();
                     for (int i = 0; i < tiles.Length; i++)
                     {
                         if (x > maxW)
