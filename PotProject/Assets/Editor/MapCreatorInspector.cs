@@ -36,12 +36,13 @@ public class MapCreatorInspector : Editor
         //  マップデータ
         mapCreator = (MapCreator)target;
         mapCreator.Map = (MapDate)EditorGUILayout.ObjectField("マップデータ", mapCreator.Map, typeof(MapDate), false);
+        //string[] path = AssetDatabase.GetAssetPath(mapCreator.Map).Split('/');
+        //Debug.Log(path);
+        //mapCreator.ResourceMap = Resources.Load(path[2] + "/" + path[3]) as MapDate;
         mapCreator.tilePrefab = (GameObject)EditorGUILayout.ObjectField("TilePrefab", mapCreator.tilePrefab, typeof(GameObject), false);
 
-        if (GUILayout.Button("マップに変換"))
-        {
-            CreateMap();
-        }
+        if (GUILayout.Button("マップに変換")) { CreateMap(); }
+        if (GUILayout.Button("マップのタイルID表示")) { PrintlistNum(); }
         EditorGUI.indentLevel++;
         foldout = EditorGUILayout.Foldout( foldout,"Tile" );
 		if(foldout)
@@ -52,27 +53,52 @@ public class MapCreatorInspector : Editor
         }
         serializedObject.ApplyModifiedProperties();
     }
-
-    //  マップを生成
+    /// <summary>
+    /// マップを生成
+    /// </summary>
     private void CreateMap()
     {
-        int xLength = mapCreator.Map.MapDataList.GetLength(1);
-        int yLength = mapCreator.Map.MapDataList.GetLength(0);
+        if (!mapCreator.Map)
+        {
+            EditorUtility.DisplayDialog("Error", "マップデータがセットされていません", "OK");
+            return;
+        }
 
-        //Debug.Log("SizeX = " + mapCreator.tilePrefab.GetComponent<SpriteRenderer>().sprite.texture.width);
+        //  配列の長さを取得
+        int xLength = mapCreator.Map.mapArray[0].mapNum.Length;
+        int yLength = mapCreator.Map.mapArray.Length;
+
+        //  タイルのサイズを取得
         float tileSize = mapCreator.tilePrefab.GetComponent<SpriteRenderer>().sprite.texture.width / 100;
         //  ルートオブジェクトの作成
-        var rootObj = new GameObject("RootObject");
-
-        Vector2 startPos = rootObj.transform.position + new Vector3(tileSize * xLength, tileSize * yLength, 0);
+        var rootObj = new GameObject("StageRootObject");
+        //  エディター側では左上が始点なので、その分場所の移動
+        Vector2 startPos = rootObj.transform.position + new Vector3(0, tileSize * yLength, 0);
 
         for(int y = 0; y < yLength; y++)
         {
             for(int x = 0; x < xLength; x++)
             {
-                var TileObj = Instantiate(mapCreator.tilePrefab);
-                TileObj.transform.parent = rootObj.transform;
-                TileObj.transform.position = startPos - new Vector2(tileSize * x, tileSize * y);
+                if (mapCreator.Map.mapArray[y].mapNum[x] != 0)
+                {
+                    var TileObj = Instantiate(mapCreator.tilePrefab);
+                    TileObj.transform.parent = rootObj.transform;
+                    TileObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
+                }
+            }
+        }
+    }
+    private void PrintlistNum()
+    {
+        //  配列の長さを取得
+        int xLength = mapCreator.Map.mapArray[0].mapNum.Length;
+        int yLength = mapCreator.Map.mapArray.Length;
+
+        for (int y = 0; y < yLength; y++)
+        {
+            for (int x = 0; x < xLength; x++)
+            {
+                Debug.Log("TileID : " + mapCreator.Map.mapArray[y].mapNum[x]);
             }
         }
     }
