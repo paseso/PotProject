@@ -1,9 +1,15 @@
 fileFormatVersion: 2
 guid: 953e7baa1a2862c44ba2befbbb9a6bb3
-timeCreated: 1542908048
+timeCreated: 1542912122
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Barabara_0
+    21300002: Barabara_1
+    21300004: Barabara_2
+    21300006: Barabara_3
+    21300008: Barabara_4
+    21300010: Barabara_5
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -34,7 +40,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -58,11 +64,97 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Barabara_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 173
+        width: 161
+        height: 193
+      alignment: 9
+      pivot: {x: 0.48447207, y: 0.51295334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Barabara_1
+      rect:
+        serializedVersion: 2
+        x: 189.00002
+        y: 198.00002
+        width: 82.999985
+        height: 145.99998
+      alignment: 9
+      pivot: {x: 0.4999999, y: 0.50342464}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Barabara_2
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 181
+        width: 46
+        height: 156
+      alignment: 9
+      pivot: {x: 0.57608694, y: 0.46794873}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Barabara_3
+      rect:
+        serializedVersion: 2
+        x: 6.5
+        y: 0
+        width: 157
+        height: 149
+      alignment: 9
+      pivot: {x: 0.49044585, y: 0.47651008}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Barabara_4
+      rect:
+        serializedVersion: 2
+        x: 173.00002
+        y: 117
+        width: 90.999985
+        height: 67
+      alignment: 9
+      pivot: {x: 0.49999994, y: 0.5074627}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Barabara_5
+      rect:
+        serializedVersion: 2
+        x: 239.00002
+        y: 0
+        width: 84.999985
+        height: 151
+      alignment: 9
+      pivot: {x: 0.5411764, y: 0.47682118}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
-  userData: 
+  userData: 101116284206382
   assetBundleName: 
   assetBundleVariant: 
