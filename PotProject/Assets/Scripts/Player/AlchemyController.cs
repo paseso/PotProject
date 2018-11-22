@@ -47,11 +47,11 @@ public class AlchemyController : MonoBehaviour {
                 Debug.Log("mInfo.GrowTreeFlag: " + mInfo.GrowTreeFlag);
                 Debug.Log("mInfo.name: " + mInfo.gameObject.name);
                 gimmick_ctr.Grow();
-                //GameObject obj = Instantiate(Potion, null);
-                //obj.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y + 1);
+                
                 break;
             case ItemStatus.ITEM.GOLEM:
-
+                GameObject obj = Instantiate(Potion, null);
+                obj.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y + 1);
                 break;
             case ItemStatus.ITEM.SNAKE:
 

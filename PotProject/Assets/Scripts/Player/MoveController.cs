@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//優先度アップ
+[DefaultExecutionOrder(-1)]
 public class MoveController : MonoBehaviour
 {
 
@@ -35,6 +37,14 @@ public class MoveController : MonoBehaviour
     [HideInInspector]
     public bool _onDown = false;
     [HideInInspector]
+    public bool _onRJoystickRight = false;
+    [HideInInspector]
+    public bool _onRJoystickLeft = false;
+    [HideInInspector]
+    public bool _onRJoystickUp = false;
+    [HideInInspector]
+    public bool _onRJoystickDown = false;
+    [HideInInspector]
     public bool _onSquare = false;
     [HideInInspector]
     public bool _onCircle = false;
@@ -45,8 +55,6 @@ public class MoveController : MonoBehaviour
     [SerializeField, Header("兄のSprite 0.左 1.右 2.後ろ")]
     private List<Sprite> BrotherSprites;
 
-    [SerializeField]
-    private GameObject managerGameObject;
     private PlayerController manager;
     private BringCollider bringctr;
     private AttackZoonController atc_ctr;
@@ -57,10 +65,14 @@ public class MoveController : MonoBehaviour
     private enum ButtonType
     {
         JUMP = 0,
-        RIGHT,
-        LEFT,
-        UP,
-        DOWN,
+        LEFTJOYSTICK_RIGHT,
+        LEFTJOYSTICK_LEFT,
+        LEFTJOYSTICK_UP,
+        LEFTJOYSTICK_DOWN,
+        RIGHTJOYSTICK_RIGHT,
+        RIGHTJOYSTICK_LEFT,
+        RIGHTJOYSTICK_UP,
+        RIGHTJOYSTICK_DOWN,
         CIRCLE,
         SQUARE,
         TRIANGLE,
@@ -77,27 +89,26 @@ public class MoveController : MonoBehaviour
         CROSSY_DOWN,
     };
 
+    private void Awake()
+    {
+        target = null;
+        _itemFall = false;
+        _ActiveRightLeft = true;
+        _InGimmick = false;
+        _activeLadder = false;
+        ClearBtnFlg();
+    }
+
     // Use this for initialization
     void Start()
     {
-        target = null;
         rig = gameObject.GetComponent<Rigidbody2D>();
-        manager = managerGameObject.GetComponent<PlayerController>();
+        manager = GameObject.Find("Controller").GetComponent<PlayerController>();
         bringctr = gameObject.transform.GetChild(0).GetComponent<BringCollider>();
         mInfo = transform.root.GetComponent<MapInfo>();
         atc_ctr = gameObject.GetComponentInChildren<AttackZoonController>();
         legcollider = gameObject.GetComponentInChildren<LegCollider>();
-        _isJump = false;
-        _onRight = false;
-        _onLeft = false;
-        _onSquare = false;
-        _onCircle = false;
-        _itemFall = false;
-        _ActiveRightLeft = true;
-        _onUp = false;
-        _onDown = false;
-        _InGimmick = false;
-        _activeLadder = false;
+        
         gimmick_x = 0f;
     }
 
@@ -118,6 +129,24 @@ public class MoveController : MonoBehaviour
         BtnCheck();
     }
 
+    /// <summary>
+    /// 移動フラグを全部falseにする処理
+    /// </summary>
+    private void ClearBtnFlg()
+    {
+        _isJump = false;
+        _onUp = false;
+        _onDown = false;
+        _onRight = false;
+        _onLeft = false;
+        _onRJoystickLeft = false;
+        _onRJoystickRight = false;
+        _onRJoystickUp = false;
+        _onRJoystickDown = false;
+        _onSquare = false;
+        _onCircle = false;
+    }
+
     #region Input内処理
 
     /// <summary>
@@ -134,7 +163,7 @@ public class MoveController : MonoBehaviour
                 rig.velocity = new Vector2(0, 1f * speed);
                 break;
 
-            case ButtonType.LEFT:
+            case ButtonType.LEFTJOYSTICK_LEFT:
                 //Debug.Log("LEFT");
                 _onLeft = true;
                 _onRight = false;
@@ -145,7 +174,7 @@ public class MoveController : MonoBehaviour
                 rig.velocity = new Vector2(-5f, rig.velocity.y);
                 break;
 
-            case ButtonType.RIGHT:
+            case ButtonType.LEFTJOYSTICK_RIGHT:
                 //Debug.Log("RIGHT");
                 _onRight = true;
                 _onLeft = false;
@@ -156,7 +185,7 @@ public class MoveController : MonoBehaviour
                 rig.velocity = new Vector2(5f, rig.velocity.y);
                 break;
 
-            case ButtonType.UP:
+            case ButtonType.LEFTJOYSTICK_UP:
                 if (status.state == Status.State.ONLADDER)
                 {
                     Ladder(gameObject, ladderSpeed, 1);
@@ -178,7 +207,7 @@ public class MoveController : MonoBehaviour
                 //_onUp = false;
                 break;
 
-            case ButtonType.DOWN:
+            case ButtonType.LEFTJOYSTICK_DOWN:
                 if (status.state == Status.State.ONLADDER)
                 {
                     Ladder(gameObject, ladderSpeed, -1);
@@ -197,6 +226,38 @@ public class MoveController : MonoBehaviour
                 //rig.bodyType = RigidbodyType2D.Kinematic;
                 //rig.velocity = new Vector2(rig.velocity.x, -5f);
                 //_onDown = false;
+                break;
+
+            case ButtonType.RIGHTJOYSTICK_LEFT:
+                Debug.Log("Right Joystick Left");
+                if (!manager._alchemyUi)
+                    return;
+                _onRJoystickLeft = true;
+
+                break;
+
+            case ButtonType.RIGHTJOYSTICK_RIGHT:
+                Debug.Log("Right Joystick Right");
+                if (!manager._alchemyUi)
+                    return;
+                _onRJoystickRight = true;
+
+                break;
+
+            case ButtonType.RIGHTJOYSTICK_UP:
+                Debug.Log("Right Joystick Up");
+                if (!manager._alchemyUi)
+                    return;
+                _onRJoystickUp = true;
+
+                break;
+
+            case ButtonType.RIGHTJOYSTICK_DOWN:
+                Debug.Log("Right Joystick Down");
+                if (!manager._alchemyUi)
+                    return;
+                _onRJoystickDown = true;
+
                 break;
 
             case ButtonType.CIRCLE:
@@ -302,17 +363,18 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void BtnCheck()
     {
+        ClearBtnFlg();
         if (Input.GetButton("Jump") || Input.GetKeyDown(KeyCode.Space))
         {//×ボタン or キーボードの「W」
             Move(ButtonType.JUMP);
         }
         if (Input.GetAxis("Vertical_ps4") >= 0.15f || Input.GetKey(KeyCode.A))
         {//左ジョイスティックを左にたおす or キーボードの「A」
-            Move(ButtonType.LEFT);
+            Move(ButtonType.LEFTJOYSTICK_LEFT);
         }
         else if (Input.GetAxis("Vertical_ps4") <= -0.15f || Input.GetKey(KeyCode.D))
         {//左ジョイスティックを右にたおす or キーボードの「D」
-            Move(ButtonType.RIGHT);
+            Move(ButtonType.LEFTJOYSTICK_RIGHT);
         }
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
         {
@@ -322,11 +384,11 @@ public class MoveController : MonoBehaviour
         }
         if (Input.GetAxis("Horizontal_ps4") >= 0.15f || Input.GetKey(KeyCode.W))
         {
-            Move(ButtonType.UP);
+            Move(ButtonType.LEFTJOYSTICK_UP);
         }
         else if (Input.GetAxis("Horizontal_ps4") <= -0.15f || Input.GetKey(KeyCode.S))
         {
-            Move(ButtonType.DOWN);
+            Move(ButtonType.LEFTJOYSTICK_DOWN);
         }
         else if (Input.GetAxis("Horizontal_ps4") <= 0.15f && Input.GetAxis("Horizontal_ps4") >= -0.15f)
         {
@@ -396,6 +458,32 @@ public class MoveController : MonoBehaviour
         if (Input.GetAxis("CrossY") <= -0.15f || Input.GetKey(KeyCode.V))
         {//十字上ボタン or キーボードの「V」
             Move(ButtonType.CROSSY_UP);
+        }
+        if (Input.GetAxis("RightHorizontal_ps4") <= -0.15f || Input.GetKey(KeyCode.LeftArrow))
+        {
+            Move(ButtonType.RIGHTJOYSTICK_LEFT);
+        }
+        else if (Input.GetAxis("RightHorizontal_ps4") >= 0.15f || Input.GetKey(KeyCode.RightArrow))
+        {
+            Move(ButtonType.RIGHTJOYSTICK_RIGHT);
+        }
+        else if (Input.GetAxis("RightHorizontal_ps4") <= -0.15f && Input.GetAxis("RightHorizontal_ps4") >= 0.15f)
+        {
+            _onRJoystickLeft = false;
+            _onRJoystickRight = false;
+        }
+        if (Input.GetAxis("RightVertical_ps4") <= -0.15f || Input.GetKey(KeyCode.UpArrow))
+        {
+            Move(ButtonType.RIGHTJOYSTICK_UP);
+        }
+        else if (Input.GetAxis("RightVertical_ps4") >= 0.15f || Input.GetKey(KeyCode.DownArrow))
+        {
+            Move(ButtonType.RIGHTJOYSTICK_DOWN);
+        }
+        else if (Input.GetAxis("RightVertical_ps4") <= -0.15f && Input.GetAxis("RightVertical_ps4") >= 0.15f)
+        {
+            _onRJoystickUp = false;
+            _onRJoystickLeft = false;
         }
     }
 

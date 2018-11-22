@@ -49,12 +49,16 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField]
     private RectTransform Pot_UI;
-    private bool _alchemyUi = false;
+    [HideInInspector]
+    public bool _alchemyUi = false;
+    //アイテムボックスがMaxかどうか
+    private bool _itemMax = false;
 
 	// Use this for initialization
 	void Start () {
         status.PlayerHP = 5;
-        status.ItemList = null;
+        status.ItemList = new List<ItemStatus.ITEM>();
+        _itemMax = false;
         _alchemyUi = false;
 	}
 	
@@ -73,7 +77,16 @@ public class PlayerController : MonoBehaviour {
     /// <param name="name"></param>
     public void setItemList(ItemStatus.ITEM Item_Id)
     {
-        status.ItemList.Add(Item_Id);
+        if(status.ItemList.Count == 3)
+        {
+            _itemMax = true;
+            Debug.Log("アイテムボックスは最大です！");
+            return;
+        }
+        else
+        {
+            status.ItemList.Add(Item_Id);
+        }
     }
 
     /// <summary>
@@ -116,12 +129,12 @@ public class PlayerController : MonoBehaviour {
         if (!_alchemyUi)
         {
             alchemyUI_ctr.setItemboxImage();
-            Pot_UI.DOMoveX(-14, 0.3f).SetEase(Ease.Linear);
+            Pot_UI.DOMoveX(gameObject.transform.position.x + 27, 0.3f).SetEase(Ease.Linear);
             _alchemyUi = true;
         }
         else
         {
-            Pot_UI.DOMoveX(14, 0.3f).SetEase(Ease.Linear);
+            Pot_UI.DOMoveX(gameObject.transform.position.x - 27, 0.3f).SetEase(Ease.Linear);
             _alchemyUi = false;
         }
     }
