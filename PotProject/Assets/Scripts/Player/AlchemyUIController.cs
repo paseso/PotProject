@@ -14,6 +14,9 @@ public class AlchemyUIController : MonoBehaviour {
     [SerializeField]
     private PlayerController player_ctr;
 
+    [SerializeField]
+    private GameObject ItemFrame;
+
     private MoveController move_ctr;
 
     //---ジョイスティックを回す時に使う変数-----
@@ -22,19 +25,14 @@ public class AlchemyUIController : MonoBehaviour {
     private bool _three = false;
     private int RotationCount = 0;
     //------------------------------------------
-
-
-    // Use this for initialization
+    
     void Start () {
         //デバッグ用
         player_ctr.setItemList(ItemStatus.ITEM.SNAKE);
         player_ctr.setItemList(ItemStatus.ITEM.SLIME);
         //player_ctr.setItemList(ItemStatus.ITEM.GOLEM);
         move_ctr = GameObject.Find("Brother").GetComponent<MoveController>();
-        _one = false;
-        _two = false;
-        _three = false;
-        RotationCount = 0;
+        ClearJoystickRotation();
     }
 	
 	// Update is called once per frame
@@ -43,26 +41,31 @@ public class AlchemyUIController : MonoBehaviour {
     }
 
     /// <summary>
+    /// アイテム選択フレームの移動処理
+    /// </summary>
+    private void ItemFramemove()
+    {
+
+    }
+
+    /// <summary>
     /// 右ジョイスティックを回転させる処理
     /// </summary>
     private void RightJoyStickRotation()
     {
-        if (!move_ctr._onRJoystickUp && !move_ctr._onRJoystickDown && !move_ctr._onRJoystickRight && !move_ctr._onRJoystickLeft)
+        if (!move_ctr.OnRJoystickUp && !move_ctr.OnRJoystickDown && !move_ctr.OnRJoystickRight && !move_ctr.OnRJoystickLeft)
         {
-            _one = false;
-            _two = false;
-            _three = false;
-            RotationCount = 0;
+            ClearJoystickRotation();
         }
 
-        if (move_ctr._onRJoystickUp)
+        if (move_ctr.OnRJoystickUp)
             _one = true;
-        if (move_ctr._onRJoystickRight)
+        if (move_ctr.OnRJoystickRight)
             _two = true;
-        if (move_ctr._onRJoystickDown)
+        if (move_ctr.OnRJoystickDown)
             _three = true;
 
-        if (move_ctr._onRJoystickLeft)
+        if (move_ctr.OnRJoystickLeft)
         {
             if (!_one || !_two || !_three)
                 return;
@@ -74,12 +77,20 @@ public class AlchemyUIController : MonoBehaviour {
             {
                 player_ctr.ItemAlchemy(ItemStatus.ITEM.GOLEM);
                 Debug.Log("生成");
-                _one = false;
-                _two = false;
-                _three = false;
-                RotationCount = 0;
+                ClearJoystickRotation();
             }
         }
+    }
+
+    /// <summary>
+    /// ジョイスティックを回転させる処理の初期化
+    /// </summary>
+    private void ClearJoystickRotation()
+    {
+        _one = false;
+        _two = false;
+        _three = false;
+        RotationCount = 0;
     }
 
     /// <summary>

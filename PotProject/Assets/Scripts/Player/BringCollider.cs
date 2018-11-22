@@ -31,11 +31,11 @@ public class BringCollider : MonoBehaviour {
     /// </summary>
     private void MoveCollider()
     {
-        if (move_controll._onLeft)
+        if (move_controll.OnLeft)
         {
             gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
         }
-        if (move_controll._onRight)
+        if (move_controll.OnRight)
         {
             gameObject.transform.rotation = new Quaternion(0, 180, 0, 0);
         }
@@ -55,7 +55,7 @@ public class BringCollider : MonoBehaviour {
         else
         {
             pos.transform.parent = null;
-            if(move_controll._onRight)
+            if(move_controll.OnRight)
                 pos.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y);
             else
                 pos.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y);

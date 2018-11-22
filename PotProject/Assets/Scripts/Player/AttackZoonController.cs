@@ -33,13 +33,13 @@ public class AttackZoonController : MonoBehaviour {
     /// </summary>
     private void MoveCollider()
     {
-        if (move_ctr._onLeft)
+        if (move_ctr.OnLeft)
         {
             //Sword.transform.position = new Vector2(Sword.transform.position.x - 0.9f, Sword.transform.position.y);
             Sword.transform.rotation = Quaternion.Euler(0, 0, 51);
             gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
         }
-        if (move_ctr._onRight)
+        if (move_ctr.OnRight)
         {
             //Sword.transform.position = new Vector2(Sword.transform.position.x + 0.9f, Sword.transform.position.y);
             Sword.transform.rotation = Quaternion.Euler(0, 0, -51);
@@ -53,7 +53,7 @@ public class AttackZoonController : MonoBehaviour {
     /// <param name="obj">殴るオブジェクト</param>
     public void AttackObject()
     {
-        if (!move_ctr._onCircle || Attack_Target == null)
+        if (!move_ctr.OnCircle || Attack_Target == null)
             return;
 
         Rigidbody2D target_rig = Attack_Target.GetComponent<Rigidbody2D>();
@@ -65,7 +65,8 @@ public class AttackZoonController : MonoBehaviour {
     {
         if(col.gameObject.tag == "Monster")
         {
-            move_ctr._onCircle = true;
+            //エラー
+            //move_ctr.OnCircle = true;
             Debug.Log("殴れるよ");
             Attack_Target = col.gameObject;
         }
@@ -73,6 +74,7 @@ public class AttackZoonController : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        move_ctr._onCircle = false;
+        //エラー
+        //move_ctr.OnCircle = false;
     }
 }

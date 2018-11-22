@@ -28,26 +28,16 @@ public class MoveController : MonoBehaviour
     //はしごの処理を行えるかどうか
     private bool _activeLadder = false;
     //-------アクションボタンを押してるかどうか----------
-    [HideInInspector]
-    public bool _onRight = false;
-    [HideInInspector]
-    public bool _onLeft = false;
-    [HideInInspector]
-    public bool _onUp = false;
-    [HideInInspector]
-    public bool _onDown = false;
-    [HideInInspector]
-    public bool _onRJoystickRight = false;
-    [HideInInspector]
-    public bool _onRJoystickLeft = false;
-    [HideInInspector]
-    public bool _onRJoystickUp = false;
-    [HideInInspector]
-    public bool _onRJoystickDown = false;
-    [HideInInspector]
-    public bool _onSquare = false;
-    [HideInInspector]
-    public bool _onCircle = false;
+    private bool _onRight = false;
+    private bool _onLeft = false;
+    private bool _onUp = false;
+    private bool _onDown = false;
+    private bool _onRJoystickRight = false;
+    private bool _onRJoystickLeft = false;
+    private bool _onRJoystickUp = false;
+    private bool _onRJoystickDown = false;
+    private bool _onSquare = false;
+    private bool _onCircle = false;
     //---------------------------------------------
     [HideInInspector]
     public GameObject target;
@@ -61,6 +51,57 @@ public class MoveController : MonoBehaviour
     private MapInfo mInfo;
     private LegCollider legcollider;
     private Status status;
+    //----------ボタンFlagのget---------------------
+    public bool OnRight
+    {
+        get { return _onRight; }
+    }
+
+    public bool OnLeft
+    {
+        get { return _onLeft; }
+    }
+
+    public bool OnUp
+    {
+        get { return _onUp; }
+    }
+
+    public bool OnDown
+    {
+        get { return _onDown; }
+    }
+
+    public bool OnRJoystickRight
+    {
+        get { return _onRJoystickRight; }
+    }
+
+    public bool OnRJoystickLeft
+    {
+        get { return _onRJoystickLeft; }
+    }
+
+    public bool OnRJoystickUp
+    {
+        get { return _onRJoystickUp; }
+    }
+
+    public bool OnRJoystickDown
+    {
+        get { return _onRJoystickDown; }
+    }
+
+    public bool OnSquere
+    {
+        get { return _onSquare; }
+    }
+
+    public bool OnCircle
+    {
+        get { return _onCircle; }
+    }
+    //------------------------------------------
 
     private enum ButtonType
     {
@@ -282,7 +323,7 @@ public class MoveController : MonoBehaviour
                 }
                 else if (bringctr._bring)
                 {//アイテムを離す
-                    if (_onRight)
+                    if (OnRight)
                     {
                         target.gameObject.transform.position = new Vector2(bringctr.gameObject.transform.position.x + 2f, bringctr.gameObject.transform.position.y + 1.5f);
                     }
@@ -290,8 +331,8 @@ public class MoveController : MonoBehaviour
                     {
                         target.gameObject.transform.position = new Vector2(bringctr.gameObject.transform.position.x - 2f, bringctr.gameObject.transform.position.y + 1.5f);
                     }
-                    Debug.Log("Right：" + _onRight);
-                    Debug.Log("Left：" + _onLeft);
+                    Debug.Log("Right：" + OnRight);
+                    Debug.Log("Left：" + OnLeft);
                     //target.gameObject.transform.position = new Vector2(gameObject.transform.position.x + 2f, gameObject.transform.position.y + 1);
                     target.gameObject.transform.parent = null;
                     target.GetComponent<Rigidbody2D>().simulated = true;
