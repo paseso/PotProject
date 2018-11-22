@@ -5,34 +5,12 @@ using UnityEngine;
 [Serializable]
 public class MapDate : ScriptableObject {
 
-    public MapArray[] mapArray;    
+    public MapArray[] mapArray = new MapArray[20];    
 
+    public int _sampleIntValue;
     [SerializeField]
-    private int _sampleIntValue;
-    [SerializeField]
-    private int[,] _mapDataList = new int[20,20];
-    [SerializeField]
-    private int[] testArray = new int[5];
-    
-    //MapDate()
-    //{
-    //    if (_mapDataList == null)
-    //    {
+    private int[,] _mapDataList;
 
-    //        //_mapDataList = new int[20, 20];
-    //    }
-    //}
-
-
-
-
-    public int SampleIntValue
-    {
-        get { return _sampleIntValue; }
-#if UNITY_EDITOR
-        set { _sampleIntValue = Mathf.Clamp(value, 0, int.MaxValue); }
-#endif
-    }
 
     public int[,] MapDataList
     {
@@ -47,25 +25,12 @@ public class MapDate : ScriptableObject {
         }
 //#endif
     }
-
-    public int[] TestArray
-    {
-        get
-        {
-            return testArray;
-        }
-
-        set
-        {
-            testArray = value;
-        }
-    }
 }
 
 [System.Serializable]
 public class MapArray {
 
-    public int[] mapNumber;    
+    public int[] mapNum;
 
 }
 

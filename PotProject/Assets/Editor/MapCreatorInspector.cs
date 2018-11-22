@@ -42,8 +42,7 @@ public class MapCreatorInspector : Editor
         mapCreator.tilePrefab = (GameObject)EditorGUILayout.ObjectField("TilePrefab", mapCreator.tilePrefab, typeof(GameObject), false);
 
         if (GUILayout.Button("マップに変換")) { CreateMap(); }
-        if (GUILayout.Button("test")) { PrintlistNum(); }
-        if (GUILayout.Button("ResourceLoadのTest")) { PrintlistNum2(); }
+        if (GUILayout.Button("マップのタイルID表示")) { PrintlistNum(); }
         EditorGUI.indentLevel++;
         foldout = EditorGUILayout.Foldout( foldout,"Tile" );
 		if(foldout)
@@ -66,8 +65,8 @@ public class MapCreatorInspector : Editor
         }
 
         //  配列の長さを取得
-        int xLength = mapCreator.Map.MapDataList.GetLength(1);
-        int yLength = mapCreator.Map.MapDataList.GetLength(0);
+        int xLength = mapCreator.Map.mapArray[0].mapNum.Length;
+        int yLength = mapCreator.Map.mapArray.Length;
 
         //  タイルのサイズを取得
         float tileSize = mapCreator.tilePrefab.GetComponent<SpriteRenderer>().sprite.texture.width / 100;
@@ -80,7 +79,7 @@ public class MapCreatorInspector : Editor
         {
             for(int x = 0; x < xLength; x++)
             {
-                if (mapCreator.Map.MapDataList[y,x] != 0)
+                if (mapCreator.Map.mapArray[y].mapNum[x] != 0)
                 {
                     var TileObj = Instantiate(mapCreator.tilePrefab);
                     TileObj.transform.parent = rootObj.transform;
@@ -92,29 +91,14 @@ public class MapCreatorInspector : Editor
     private void PrintlistNum()
     {
         //  配列の長さを取得
-        int xLength = mapCreator.Map.MapDataList.GetLength(1);
-        int yLength = mapCreator.Map.MapDataList.GetLength(0);
+        int xLength = mapCreator.Map.mapArray[0].mapNum.Length;
+        int yLength = mapCreator.Map.mapArray.Length;
 
         for (int y = 0; y < yLength; y++)
         {
             for (int x = 0; x < xLength; x++)
             {
-                Debug.Log(mapCreator.Map.MapDataList[y, x]);
-            }
-        }
-    }
-
-    private void PrintlistNum2()
-    {
-        //  配列の長さを取得
-        int xLength = mapCreator.ResourceMap.MapDataList.GetLength(1);
-        int yLength = mapCreator.ResourceMap.MapDataList.GetLength(0);
-
-        for (int y = 0; y < yLength; y++)
-        {
-            for (int x = 0; x < xLength; x++)
-            {
-                Debug.Log(mapCreator.ResourceMap.MapDataList[y, x]);
+                Debug.Log("TileID : " + mapCreator.Map.mapArray[y].mapNum[x]);
             }
         }
     }

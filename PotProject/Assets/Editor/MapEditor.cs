@@ -13,7 +13,7 @@ public class MapEditor : EditorWindow {
     /// </summary>
     private string ASSET_PATH = "Assets/Resources/MapData/";
     private int gridNum = 20;
-    private int sampleInt;
+    private int typeInt;
     private Color gridColor = Color.white;
     private Rect[,] gridRect = new Rect[20, 20];
     //private MapDate _sample;
@@ -44,14 +44,6 @@ public class MapEditor : EditorWindow {
 
     private void OnGUI()
     {
-        ////インスタンス生成
-        //if (_sample == null)
-        //{
-        //    _sample = ScriptableObject.CreateInstance<MapDate>();
-        //    _sample.MapDataList = new int[20, 20];
-        //    Debug.Log("CreateInstance : " + _sample.GetInstanceID());
-        //}
-
         //  グリッド以外のラベル表示
         //  グリッドのカラーを設定
         EditorGUILayout.BeginHorizontal();
@@ -59,11 +51,10 @@ public class MapEditor : EditorWindow {
         gridColor = EditorGUILayout.ColorField(gridColor);
         EditorGUILayout.EndHorizontal();
 
-        EditorGUILayout.BeginHorizontal();
-        GUILayout.Label("INT", GUILayout.Width(150));
-        //
-        sampleInt = EditorGUILayout.IntField(sampleInt);
-        EditorGUILayout.EndHorizontal();
+        //EditorGUILayout.BeginHorizontal();
+        //GUILayout.Label("INT", GUILayout.Width(150));
+        //typeInt = EditorGUILayout.IntField(typeInt);
+        //EditorGUILayout.EndHorizontal();
 
 
 
@@ -73,7 +64,6 @@ public class MapEditor : EditorWindow {
         {
             // 保存先のファイルパスを取得する
             var fullPath = EditorUtility.SaveFilePanel("マップデータの保存", ASSET_PATH, "default_name", "asset");
-            //Debug.Log(_sample.GetInstanceID());
 
             // パスが入っていれば選択されたということ（キャンセルされたら入ってこない）
             if (!string.IsNullOrEmpty(fullPath))
@@ -82,11 +72,21 @@ public class MapEditor : EditorWindow {
                 string path = "Assets" + fullPath.Substring(Application.dataPath.Length);
                 // 保存処理
                 MapDate tmp = ScriptableObject.CreateInstance<MapDate>();
-                tmp.SampleIntValue = sampleInt;
-                tmp.
-                System.Array.Copy(mapDate, tmp.MapDataList, mapDate.Length);                
-                for(int i = 0; i < 5; i++)
-                    tmp.TestArray[i] = 10;
+                Debug.Log(tmp.mapArray.Length);
+                for (int i = 0; i < tmp.mapArray.Length; i++)
+                {
+                    tmp.mapArray[i] = new MapArray();
+                    tmp.mapArray[i].mapNum = new int[gridNum];
+                }
+                Debug.Log("NumberLength : " + tmp.mapArray[0].mapNum.Length);
+
+                for (int i = 0; i < tmp.mapArray.Length; i++)
+                {
+                    for (int j = 0; j < tmp.mapArray[i].mapNum.Length; j++)
+                    {
+                        tmp.mapArray[i].mapNum[j] = mapDate[i,j];
+                    }
+                }
                 AssetDatabase.CreateAsset(tmp, path);
                 //  インスペクターから設定できないようにする
                 //tmp.hideFlags = HideFlags.NotEditable;
@@ -182,7 +182,7 @@ public class MapEditor : EditorWindow {
 
 
         //  タイルの種類を分ける
-        sampleInt = GUILayout.Toolbar(sampleInt, new string[] { "地面", "ギミック", "エネミー" });
+        typeInt = GUILayout.Toolbar(typeInt, new string[] { "地面", "ギミック", "エネミー" });
 
         //DrawImageParts();
         DrawTileButtons();
@@ -244,38 +244,50 @@ public class MapEditor : EditorWindow {
 
     private void DrawTileButtons()
     {
-        if (tiles != null)
+        switch (typeInt)
         {
-            float x = 20.0f; ;
-
-            float y = 00.0f;
-            float w = 50.0f;
-            float h = 50.0f;
-            float maxW = 300.0f;
-            //EditorGUILayout.Space();
-            EditorGUILayout.BeginHorizontal();
-            for (int i = 0; i < tiles.Length; i++)
-            {
-                if (x > maxW)
+            case 0:
+                if (tiles != null)
                 {
-                    x = 20.0f;
-                    y += h;
+                    float x = 20.0f;
+                    float y = 00.0f;
+                    float w = 50.0f;
+                    float h = 50.0f;
+                    float maxW = 300.0f;
+                    GUILayout.Space(5);
+                    //EditorGUILayout.BeginHorizontal();
+                    for (int i = 0; i < tiles.Length; i++)
+                    {
+                        if (x > maxW)
+                        {
+                            x = 20.0f;
+                            y += h;
+                            EditorGUILayout.EndHorizontal();
+                        }
+                        if (x == 20.0f)
+                        {
+                            EditorGUILayout.BeginHorizontal();
+                        }
+                        GUILayout.FlexibleSpace();
+                        if (GUILayout.Button(tiles[i].TileImage, GUILayout.MaxWidth(w), GUILayout.MaxHeight(h), GUILayout.ExpandWidth(false), GUILayout.ExpandHeight(false)))
+                        {
+                            //  0の場合は要素の削除・それ以外はタイルの描画用のID
+                            SelectNum = i;
+                        }
+                        GUILayout.FlexibleSpace();
+                        x += w;
+                    }
                     EditorGUILayout.EndHorizontal();
                 }
-                if (x == 20.0f)
-                {
-                    EditorGUILayout.BeginHorizontal();
-                }
-                GUILayout.FlexibleSpace();
-                if (GUILayout.Button(tiles[i].TileImage, GUILayout.MaxWidth(w), GUILayout.MaxHeight(h), GUILayout.ExpandWidth(false), GUILayout.ExpandHeight(false)))
-                {
-                    //  0の場合は要素の削除・それ以外はタイルの描画用のID
-                    SelectNum = i;
-                }
-                GUILayout.FlexibleSpace();
-                x += w;
-            }
-            EditorGUILayout.EndHorizontal();
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            default:
+                Debug.Log("ツールバーの値が不正");
+                break;
+
         }
     }
 
