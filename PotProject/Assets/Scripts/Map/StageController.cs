@@ -173,6 +173,7 @@ public class StageController : MonoBehaviour {
     /// </summary>
     public void StageShuffle() {
         GameObject[] tempMap = new GameObject[Maps.Count];
+        Vector2 standardPos = Maps[0][0].transform.localPosition;
         int count = 0;
         for (int i = 0; i < Maps.Count; i++) {
             
@@ -181,6 +182,13 @@ public class StageController : MonoBehaviour {
                 count++;
 
             }
+        }
+
+        for(int i = 0; i <= count; i++) {
+            int rand = Random.Range(0, count + 1);
+            GameObject temp = tempMap[rand];
+            tempMap[rand] = tempMap[i];
+            tempMap[i] = temp;
         }
     }
 }
