@@ -54,9 +54,9 @@ public class Tile
 public class Gimmick
 {
     [SerializeField]
-    private Texture2D gimmickImage;
+    private Texture gimmickImage;
     [SerializeField]
-    private Vector2 size;
+    private Vector2 gimmickSize;
     [SerializeField]
     private GameObject gimmickObj;
 }
@@ -65,7 +65,7 @@ public class Gimmick
 public class Enemy
 {
     [SerializeField]
-    private Texture2D enemyImage;
+    private Texture enemyImage;
     [SerializeField]
     private GameObject enemyObj;
 }

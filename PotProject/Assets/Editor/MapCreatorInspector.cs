@@ -6,27 +6,52 @@ using UnityEditorInternal;
 public class MapCreatorInspector : Editor
 {
     //  順番が可変できるリスト
-    ReorderableList reorderableList;
-    bool foldout;
+    ReorderableList tileReorderableList;
+    ReorderableList gimmickReorderList;
+    ReorderableList enemyReorderableList;
+    bool tileFoldOut;
+    bool gimmickFoldOut;
+    bool enemyFoldOut;
     MapCreator mapCreator;
 
     private void OnEnable()
     {
-        var prop = serializedObject.FindProperty("tiles");
+        var tileProp = serializedObject.FindProperty("tiles");
+        var gimmickProp = serializedObject.FindProperty("gimmicks");
+        var enemyProp = serializedObject.FindProperty("enemys");
 
-        reorderableList = new ReorderableList(serializedObject, prop);
-        reorderableList.elementHeight = 55;
-        reorderableList.drawElementCallback = (rect, index, isActive, isFocused) =>
+
+        tileReorderableList = new ReorderableList(serializedObject, tileProp);
+        tileReorderableList.elementHeight = 55;
+        tileReorderableList.drawElementCallback = (rect, index, isActive, isFocused) =>
           {
-              var element = prop.GetArrayElementAtIndex(index);
+              var element = tileProp.GetArrayElementAtIndex(index);
               rect.height -= 4;
               rect.y += 2;
               EditorGUI.PropertyField(rect, element);
           };
+        gimmickReorderList = new ReorderableList(serializedObject, gimmickProp);
+        gimmickReorderList.elementHeight = 55;
+        gimmickReorderList.drawElementCallback = (rect, index, isActive, isFocused) =>
+        {
+            var element = gimmickProp.GetArrayElementAtIndex(index);
+            rect.height -= 4;
+            rect.y += 2;
+            EditorGUI.PropertyField(rect, element);
+        };
+        enemyReorderableList = new ReorderableList(serializedObject, enemyProp);
+        enemyReorderableList.elementHeight = 55;
+        enemyReorderableList.drawElementCallback = (rect, index, isActive, isFocused) =>
+        {
+            var element = enemyProp.GetArrayElementAtIndex(index);
+            rect.height -= 4;
+            rect.y += 2;
+            EditorGUI.PropertyField(rect, element);
+        };
 
         var defaultColor = GUI.backgroundColor;
 
-        reorderableList.drawHeaderCallback = (rect) => EditorGUI.LabelField(rect, prop.displayName);
+        tileReorderableList.drawHeaderCallback = (rect) => EditorGUI.LabelField(rect, tileProp.displayName);
     }
 
     public override void OnInspectorGUI()
@@ -43,13 +68,25 @@ public class MapCreatorInspector : Editor
 
         if (GUILayout.Button("マップに変換")) { CreateMap(); }
         if (GUILayout.Button("マップのタイルID表示")) { PrintlistNum(); }
-        foldout = EditorGUILayout.Foldout( foldout,"Tile" );
-		if(foldout)
+        tileFoldOut = EditorGUILayout.Foldout( tileFoldOut,"Tile" );
+		if(tileFoldOut)
 		{
 			EditorGUILayout.LabelField("タイルのTextureとPrefab");
             EditorGUILayout.HelpBox("※0番目は消しゴムのままで!!", MessageType.Warning);
-            reorderableList.DoLayoutList();
+            tileReorderableList.DoLayoutList();
         }
+        gimmickFoldOut = EditorGUILayout.Foldout( gimmickFoldOut, "Gimmick");
+        if (gimmickFoldOut)
+        {
+            gimmickReorderList.DoLayoutList();
+        }
+        enemyFoldOut = EditorGUILayout.Foldout(enemyFoldOut, "Enemy");
+        if (enemyFoldOut)
+        {
+            enemyReorderableList.DoLayoutList();
+        }
+
+
         serializedObject.ApplyModifiedProperties();
     }
     /// <summary>

@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class test : MonoBehaviour {
+public class TileList : MonoBehaviour {
 
-    [SerializeField]
-    MapDate date;
+	// Use this for initialization
 	void Start () {
 		
 	}
