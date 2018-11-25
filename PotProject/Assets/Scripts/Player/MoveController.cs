@@ -227,10 +227,7 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.LEFTJOYSTICK_UP:
-                if (status.state == Status.State.ONLADDER)
-                {
-                    Ladder(ladderSpeed, 1);
-                }
+                
 
                 //Debug.Log("UP");
 
@@ -238,10 +235,13 @@ public class MoveController : MonoBehaviour
                 if (!_activeLadder)
                     return;
 
-                //_onUp = true;
-                //if (_ActiveRightLeft)
-                //    return;
+                _onUp = true;
+                if (_ActiveRightLeft)
+                    return;
 
+                if (status.state == Status.State.ONLADDER) {
+                    Ladder(ladderSpeed, 1);
+                }
 
                 //rig.bodyType = RigidbodyType2D.Kinematic;
                 //rig.velocity = new Vector2(rig.velocity.x, 5f);
@@ -538,8 +538,8 @@ public class MoveController : MonoBehaviour
     /// <param name="dir"></param>
     public void Ladder(float speed, float dir)
     {
+        Debug.Log("Ladder");
         gameObject.layer = LayerMask.NameToLayer("LadderPlayer");
-
         gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed * dir);
     }
 
@@ -566,16 +566,16 @@ public class MoveController : MonoBehaviour
     /// <summary>
     /// はしごのギミックに入る時の処理
     /// </summary>
-    private void LadderTrigger()
-    {
-        if (!mInfo.LadderFlag)
-            return;
-        if (_onUp || _onDown)
-        {
-            //GimmickLadderIn(gimmick_x);
-            Debug.Log("_InGimmick: " + _InGimmick);
-        }
-    }
+    //private void LadderTrigger()
+    //{
+    //    if (!mInfo.LadderFlag)
+    //        return;
+    //    if (_onUp || _onDown)
+    //    {
+    //        //GimmickLadderIn(gimmick_x);
+    //        Debug.Log("_InGimmick: " + _InGimmick);
+    //    }
+    //}
 
     private void HitRayWall()
     {
