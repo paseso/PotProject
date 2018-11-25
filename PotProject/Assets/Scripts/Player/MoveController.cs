@@ -149,7 +149,8 @@ public class MoveController : MonoBehaviour
         mInfo = transform.root.GetComponent<MapInfo>();
         atc_ctr = gameObject.GetComponentInChildren<AttackZoonController>();
         legcollider = gameObject.GetComponentInChildren<LegCollider>();
-        
+
+        _isJump = false;
         gimmick_x = 0f;
     }
 
@@ -175,7 +176,6 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void ClearBtnFlg()
     {
-        _isJump = false;
         _onUp = false;
         _onDown = false;
         _onRight = false;
