@@ -160,7 +160,7 @@ public class MoveController : MonoBehaviour
         //はしごColliderからはずれたらor足の部分にfloorがあたったら
         if (!mInfo.LadderFlag) // || legcollider._legFloor
         {
-            GimmickLadderOut();
+            //GimmickLadderOut();
         }
 
         if (bringctr._bring)
@@ -229,7 +229,7 @@ public class MoveController : MonoBehaviour
             case ButtonType.LEFTJOYSTICK_UP:
                 if (status.state == Status.State.ONLADDER)
                 {
-                    Ladder(gameObject, ladderSpeed, 1);
+                    Ladder(ladderSpeed, 1);
                 }
 
                 //Debug.Log("UP");
@@ -251,7 +251,7 @@ public class MoveController : MonoBehaviour
             case ButtonType.LEFTJOYSTICK_DOWN:
                 if (status.state == Status.State.ONLADDER)
                 {
-                    Ladder(gameObject, ladderSpeed, -1);
+                    Ladder(ladderSpeed, -1);
                 }
 
                 //Debug.Log("DOWN");
@@ -536,32 +536,32 @@ public class MoveController : MonoBehaviour
     /// <param name="player"></param>
     /// <param name="speed"></param>
     /// <param name="dir"></param>
-    public void Ladder(GameObject player, float speed, float dir)
+    public void Ladder(float speed, float dir)
     {
-        Vector2 pos = player.transform.localPosition;
-        pos.y += speed * dir;
-        player.GetComponent<Rigidbody2D>().velocity = pos;
+        gameObject.layer = LayerMask.NameToLayer("LadderPlayer");
+
+        gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed * dir);
     }
 
     /// <summary>
     /// はしごのギミックに入ってる時の処理
     /// </summary>
-    public void GimmickLadderIn(float pos_x)
-    {
-        _ActiveRightLeft = false;
-        gameObject.GetComponent<SpriteRenderer>().sprite = BrotherSprites[2];
-        gameObject.transform.position = new Vector2(pos_x, gameObject.transform.position.y);
-    }
+    //public void GimmickLadderIn(float pos_x)
+    //{
+    //    _ActiveRightLeft = false;
+    //    gameObject.GetComponent<SpriteRenderer>().sprite = BrotherSprites[2];
+    //    gameObject.transform.position = new Vector2(pos_x, gameObject.transform.position.y);
+    //}
 
     /// <summary>
     /// はしごのギミックから出る時の処理
     /// </summary>
-    public void GimmickLadderOut()
-    {
-        _ActiveRightLeft = true;
-        rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y);
-        rig.bodyType = RigidbodyType2D.Dynamic;
-    }
+    //public void GimmickLadderOut()
+    //{
+    //    _ActiveRightLeft = true;
+    //    rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y);
+    //    rig.bodyType = RigidbodyType2D.Dynamic;
+    //}
 
     /// <summary>
     /// はしごのギミックに入る時の処理
@@ -572,7 +572,7 @@ public class MoveController : MonoBehaviour
             return;
         if (_onUp || _onDown)
         {
-            GimmickLadderIn(gimmick_x);
+            //GimmickLadderIn(gimmick_x);
             Debug.Log("_InGimmick: " + _InGimmick);
         }
     }
@@ -604,14 +604,15 @@ public class MoveController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        switch (col.GetComponent<GimmickInfo>().type)
-        {
-            case GimmickInfo.GimmickType.LADDER:
-                status.state = Status.State.ONLADDER;
-                break;
-            case GimmickInfo.GimmickType.TREE:
-                status.state = Status.State.ONTREE;
-                break;
+        if (col.GetComponent<GimmickInfo>()) {
+            switch (col.GetComponent<GimmickInfo>().type) {
+                case GimmickInfo.GimmickType.LADDER:
+                    status.state = Status.State.ONLADDER;
+                    break;
+                case GimmickInfo.GimmickType.TREE:
+                    status.state = Status.State.ONTREE;
+                    break;
+            }
         }
 
         if (col.gameObject.GetComponent<GimmickInfo>())
@@ -627,7 +628,10 @@ public class MoveController : MonoBehaviour
     private void OnTriggerExit2D(Collider2D col)
     {
         status.state = Status.State.NORMAL;
-
+        if(gameObject.layer != LayerMask.NameToLayer("Player")) {
+            gameObject.layer = LayerMask.NameToLayer("Player");
+        }
+        
         if (col.gameObject.GetComponent<GimmickInfo>())
         {
             GimmickInfo gimInfo = col.gameObject.GetComponent<GimmickInfo>();
