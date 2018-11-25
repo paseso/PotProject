@@ -227,17 +227,8 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.LEFTJOYSTICK_UP:
-                
-
-                //Debug.Log("UP");
 
                 _onUp = true;
-                if (!_activeLadder)
-                    return;
-
-                _onUp = true;
-                if (_ActiveRightLeft)
-                    return;
 
                 if (status.state == Status.State.ONLADDER) {
                     Ladder(ladderSpeed, 1);
@@ -245,20 +236,17 @@ public class MoveController : MonoBehaviour
 
                 //rig.bodyType = RigidbodyType2D.Kinematic;
                 //rig.velocity = new Vector2(rig.velocity.x, 5f);
-                //_onUp = false;
+                _onUp = false;
                 break;
 
             case ButtonType.LEFTJOYSTICK_DOWN:
-                if (status.state == Status.State.ONLADDER)
-                {
-                    Ladder(ladderSpeed, -1);
-                }
-
-                //Debug.Log("DOWN");
+                
+                Debug.Log("DOWN");
 
                 _onDown = true;
-                if (!_activeLadder)
-                    return;
+                if (status.state == Status.State.ONLADDER) {
+                    Ladder(ladderSpeed, -1);
+                }
 
                 //_onDown = true;
                 //if (_ActiveRightLeft)
@@ -543,40 +531,6 @@ public class MoveController : MonoBehaviour
         gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed * dir);
     }
 
-    /// <summary>
-    /// はしごのギミックに入ってる時の処理
-    /// </summary>
-    //public void GimmickLadderIn(float pos_x)
-    //{
-    //    _ActiveRightLeft = false;
-    //    gameObject.GetComponent<SpriteRenderer>().sprite = BrotherSprites[2];
-    //    gameObject.transform.position = new Vector2(pos_x, gameObject.transform.position.y);
-    //}
-
-    /// <summary>
-    /// はしごのギミックから出る時の処理
-    /// </summary>
-    //public void GimmickLadderOut()
-    //{
-    //    _ActiveRightLeft = true;
-    //    rig.velocity = new Vector2(rig.velocity.x, rig.velocity.y);
-    //    rig.bodyType = RigidbodyType2D.Dynamic;
-    //}
-
-    /// <summary>
-    /// はしごのギミックに入る時の処理
-    /// </summary>
-    //private void LadderTrigger()
-    //{
-    //    if (!mInfo.LadderFlag)
-    //        return;
-    //    if (_onUp || _onDown)
-    //    {
-    //        //GimmickLadderIn(gimmick_x);
-    //        Debug.Log("_InGimmick: " + _InGimmick);
-    //    }
-    //}
-
     private void HitRayWall()
     {
         RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, Vector2.right);
@@ -594,14 +548,6 @@ public class MoveController : MonoBehaviour
         }
     }
 
-    //private void OnCollisionEnter2D(Collision2D col)
-    //{
-    //    if(col.gameObject.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDERBLOCK)
-    //    {
-    //        col.gameObject.layer = 8;
-    //    }
-    //}
-
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.GetComponent<GimmickInfo>()) {
@@ -615,19 +561,21 @@ public class MoveController : MonoBehaviour
             }
         }
 
-        if (col.gameObject.GetComponent<GimmickInfo>())
-        {
-            GimmickInfo gimInfo = col.gameObject.GetComponent<GimmickInfo>();
-            if (gimInfo.type == GimmickInfo.GimmickType.LADDER)
-            {
-                _activeLadder = true;
-            }
-        }
+        //if (col.gameObject.GetComponent<GimmickInfo>())
+        //{
+        //    GimmickInfo gimInfo = col.gameObject.GetComponent<GimmickInfo>();
+        //    if (gimInfo.type == GimmickInfo.GimmickType.LADDER)
+        //    {
+        //        _activeLadder = true;
+        //    }
+        //}
     }
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        status.state = Status.State.NORMAL;
+        if (status.state != Status.State.NORMAL) {
+            status.state = Status.State.NORMAL;
+        }
         if(gameObject.layer != LayerMask.NameToLayer("Player")) {
             gameObject.layer = LayerMask.NameToLayer("Player");
         }
@@ -641,24 +589,4 @@ public class MoveController : MonoBehaviour
             }
         }
     }
-
-    //private void OnTriggerStay2D(Collider2D col)
-    //{
-    //    if (col.gameObject.GetComponent<GimmickInfo>())
-    //    {
-    //        GimmickInfo gInfo = col.gameObject.GetComponent<GimmickInfo>();
-    //        Debug.Log("Gimmick Type: " + gInfo.type);
-    //        if (gInfo.type == GimmickInfo.GimmickType.LADDER)
-    //        {
-    //            gimmick_x = col.gameObject.transform.position.x;
-    //            mInfo = gameObject.transform.root.GetComponent<MapInfo>();
-    //            Debug.Log("LadderFlag: " + mInfo.LadderFlag);
-    //            LadderTrigger();
-    //        }
-    //    }
-    //    if (col.gameObject.tag == "floor")
-    //    {
-    //        GimmickLadderOut();
-    //    }
-    //}
 }

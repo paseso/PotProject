@@ -515,7 +515,7 @@ GameObject:
   - component: {fileID: 21780562}
   - component: {fileID: 21780561}
   - component: {fileID: 21780563}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Brock_0 (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -827,7 +827,7 @@ GameObject:
   - component: {fileID: 39076609}
   - component: {fileID: 39076611}
   - component: {fileID: 39076610}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Brock_0 (61)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5721,7 +5721,7 @@ GameObject:
   - component: {fileID: 521358255}
   - component: {fileID: 521358254}
   - component: {fileID: 521358256}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Brock_0 (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6860,7 +6860,7 @@ GameObject:
   - component: {fileID: 622761520}
   - component: {fileID: 622761522}
   - component: {fileID: 622761521}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Brock_0 (48)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7061,7 +7061,7 @@ GameObject:
   - component: {fileID: 625164878}
   - component: {fileID: 625164877}
   - component: {fileID: 625164879}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Brock_0 (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8277,7 +8277,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3691c51628418e74092ea6a6c7f2ef87, type: 3}
   - {fileID: 21300000, guid: c0deddb703dce2642b0cc39c47710f46, type: 3}
   alchemy_ctr: {fileID: 2016768457}
-  Alchemy_ui: {fileID: 982456695}
+  alchemyUI_ctr: {fileID: 0}
+  Pot_UI: {fileID: 0}
+  _alchemyUi: 0
 --- !u!82 &750616274
 AudioSource:
   m_ObjectHideFlags: 0
@@ -15619,7 +15621,7 @@ GameObject:
   - component: {fileID: 1558497829}
   - component: {fileID: 1558497828}
   - component: {fileID: 1558497830}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Map6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20157,7 +20159,7 @@ GameObject:
   - component: {fileID: 2040026373}
   - component: {fileID: 2040026372}
   - component: {fileID: 2040026374}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Brock_0 (54)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20476,6 +20478,16 @@ Prefab:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 114826993995417326, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
+        type: 2}
+      propertyPath: ladderSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 58238275156899280, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
   m_IsPrefabParent: 0
@@ -20777,7 +20789,7 @@ GameObject:
   - component: {fileID: 2103273152}
   - component: {fileID: 2103273154}
   - component: {fileID: 2103273153}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Brock_0 (56)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
