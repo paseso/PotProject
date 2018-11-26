@@ -134,12 +134,13 @@ public class PlayerController : MonoBehaviour {
         if (!_alchemyUi)
         {
             alchemyUI_ctr.setItemboxImage();
-            Pot_UI.DOMoveX(gameObject.transform.position.x + 27, 0.3f).SetEase(Ease.Linear);
+            alchemyUI_ctr.ItemFrameReSet();
+            Pot_UI.DOLocalMoveX(0, 0.3f).SetEase(Ease.Linear);
             _alchemyUi = true;
         }
         else
         {
-            Pot_UI.DOMoveX(gameObject.transform.position.x - 27, 0.3f).SetEase(Ease.Linear);
+            Pot_UI.DOLocalMoveX(1745, 0.3f).SetEase(Ease.Linear);
             _alchemyUi = false;
         }
     }

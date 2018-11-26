@@ -27,6 +27,8 @@ public class MoveController : MonoBehaviour
     public bool _itemFall = false;
     //はしごの処理を行えるかどうか
     private bool _activeLadder = false;
+    //CrossYが一回押されたかどうか
+    private bool _onCrossYTrigger = false;
     //-------アクションボタンを押してるかどうか----------
     private bool _onRight = false;
     private bool _onLeft = false;
@@ -160,6 +162,7 @@ public class MoveController : MonoBehaviour
         atc_ctr = gameObject.GetComponentInChildren<AttackZoonController>();
 
         _isJump = false;
+        _onCrossYTrigger = false;
     }
 
     // Update is called once per frame
@@ -170,6 +173,7 @@ public class MoveController : MonoBehaviour
             target.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 2.5f);
         }
         BtnCheck();
+        _onCrossYTrigger = true;
     }
 
     /// <summary>
@@ -254,7 +258,7 @@ public class MoveController : MonoBehaviour
                 //_onDown = true;
                 //if (_ActiveRightLeft)
                 //    return;
-
+                
                 //rig.bodyType = RigidbodyType2D.Kinematic;
                 //rig.velocity = new Vector2(rig.velocity.x, -5f);
                 //_onDown = false;
@@ -376,16 +380,14 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.CROSSY_UP:
                 Debug.Log("Cross_Up");
-                if (!manager.AlchemyWindow)
+                if (!manager.AlchemyWindow && _onCrossYTrigger)
                     return;
-                _onCrossUp = true;
                 break;
 
             case ButtonType.CROSSY_DOWN:
                 Debug.Log("Cross_Down");
                 if (!manager.AlchemyWindow)
                     return;
-                _onCrossDown = true;
                 break;
         }
         _onUp = false;
@@ -485,7 +487,7 @@ public class MoveController : MonoBehaviour
         {// 十字左ボタン or キーボードの「C」
             Move(ButtonType.CROSSX_LEFT);
         }
-        if (Input.GetAxis("CrossX") <= -0.15f || Input.GetKey(KeyCode.X))
+        else if (Input.GetAxis("CrossX") <= -0.15f || Input.GetKey(KeyCode.X))
         {//十字右ボタン or キーボードの「X」
             Move(ButtonType.CROSSX_RIGTH);
         }
@@ -493,9 +495,14 @@ public class MoveController : MonoBehaviour
         {//十字下ボタン or キーボードの「Z」
             Move(ButtonType.CROSSY_DOWN);
         }
-        if (Input.GetAxis("CrossY") <= -0.15f || Input.GetKey(KeyCode.V))
+        else if (Input.GetAxis("CrossY") <= -0.15f || Input.GetKey(KeyCode.V))
         {//十字上ボタン or キーボードの「V」
             Move(ButtonType.CROSSY_UP);
+        }
+        else if (Input.GetAxis("CrossY") >= -0.15f && Input.GetAxis("CrossY") <= 0.15f)
+        {
+            _onCrossDown = false;
+            _onCrossUp = false;
         }
         if (Input.GetAxis("RightHorizontal_ps4") <= -0.15f || Input.GetKey(KeyCode.LeftArrow))
         {

@@ -16,6 +16,7 @@ public class AlchemyUIController : MonoBehaviour {
 
     [SerializeField]
     private GameObject ItemFrame;
+    private int nowBox = 0;
 
     private MoveController move_ctr;
 
@@ -31,6 +32,7 @@ public class AlchemyUIController : MonoBehaviour {
         player_ctr.setItemList(ItemStatus.ITEM.SNAKE);
         player_ctr.setItemList(ItemStatus.ITEM.SLIME);
         //player_ctr.setItemList(ItemStatus.ITEM.GOLEM);
+        nowBox = 0;
         move_ctr = GameObject.Find("Brother").GetComponent<MoveController>();
         ClearJoystickRotation();
     }
@@ -38,6 +40,16 @@ public class AlchemyUIController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         RightJoyStickRotation();
+        ItemFramemove();
+    }
+
+    /// <summary>
+    /// アイテム選択フレームのリセット
+    /// </summary>
+    public void ItemFrameReSet()
+    {
+        nowBox = 0;
+        ItemFrame.transform.position = Itembox[nowBox].transform.position;
     }
 
     /// <summary>
@@ -45,7 +57,28 @@ public class AlchemyUIController : MonoBehaviour {
     /// </summary>
     private void ItemFramemove()
     {
+        while (move_ctr.OnCrossUp || move_ctr.OnCrossDown)
+        {
+            if (!move_ctr.OnCrossUp && !move_ctr.OnCrossDown)
+                break;
 
+            if (move_ctr.OnCrossUp)
+            {
+                if (nowBox - 1 < 0)
+                    nowBox = Itembox.Length - 1;
+                else
+                    nowBox--;
+            }
+            if (move_ctr.OnCrossDown)
+            {
+                if (Itembox.Length - 1 < nowBox + 1)
+                    nowBox = 0;
+                else
+                    nowBox++;
+            }
+            ItemFrame.transform.position = Itembox[nowBox].transform.position;
+            break;
+        }
     }
 
     /// <summary>
@@ -99,7 +132,6 @@ public class AlchemyUIController : MonoBehaviour {
     public void setItemboxImage()
     {
         List<ItemStatus.ITEM> items = player_ctr.getItemList();
-        Debug.Log("items: " + items);
         for (int i = 0; i < items.Count; i++)
         {
             Image item_img = Itembox[i].GetComponent<Image>();
