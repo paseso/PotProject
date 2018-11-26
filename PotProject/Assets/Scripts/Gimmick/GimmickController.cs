@@ -22,9 +22,9 @@ public class GimmickController :MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.G)) {
-            Grow();
-        }
+        //if (Input.GetKeyDown(KeyCode.G)) {
+        //    BakeTree(gameObject);
+        //}
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class GimmickController :MonoBehaviour {
     /// <param name="col"></param>
     public void OnTriggerEnter2D(Collider2D col) {
         switch (gInfo.type) {
-            case GimmickInfo.GimmickType.TREE:
+            case GimmickInfo.GimmickType.GROWTREE:
                 mInfo.GrowTreeFlag = true;
                 Debug.Log("TreeFlag: " + mInfo.GrowTreeFlag);
                 break;
@@ -76,7 +76,7 @@ public class GimmickController :MonoBehaviour {
     /// <param name="col"></param>
     public void OnTriggerExit2D(Collider2D col) {
         switch (gInfo.type) {
-            case GimmickInfo.GimmickType.TREE:
+            case GimmickInfo.GimmickType.GROWTREE:
                 mInfo.GrowTreeFlag = false;
                 Debug.Log("TreeFlag: " + mInfo.GrowTreeFlag);
                 break;
@@ -94,5 +94,29 @@ public class GimmickController :MonoBehaviour {
         mInfo.tree.transform.DOScaleY(1f, 1f).SetEase(Ease.Linear);
     }
 
+    /// <summary>
+    /// 木を焼く
+    /// </summary>
+    /// <param name="obj"></param>
+    public void BakeTree(GameObject obj)
+    {
+        StartCoroutine(Bake(obj));
+    }
+
+    /// <summary>
+    /// 木を焼くコルーチン
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    public IEnumerator Bake(GameObject obj)
+    {
+        for (int i = 2; i >= 0; i--)
+        {
+            yield return new WaitForSeconds(1f);
+            Debug.Log("bake" + i);
+            // 画像変更処理
+        }
+        // Destroy
+    }
     
 }
