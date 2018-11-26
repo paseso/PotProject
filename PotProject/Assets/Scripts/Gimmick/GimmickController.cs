@@ -94,5 +94,10 @@ public class GimmickController :MonoBehaviour {
         mInfo.tree.transform.DOScaleY(1f, 1f).SetEase(Ease.Linear);
     }
 
+    public void BakeTree()
+    {
+
+    }
+
     
 }
