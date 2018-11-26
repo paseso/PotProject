@@ -18,7 +18,7 @@ public class MapCreatorInspector : Editor
     {
         var tileProp = serializedObject.FindProperty("tiles");
         var gimmickProp = serializedObject.FindProperty("gimmicks");
-        var enemyProp = serializedObject.FindProperty("enemys");
+        var enemyProp = serializedObject.FindProperty("enemies");
 
 
         tileReorderableList = new ReorderableList(serializedObject, tileProp);
@@ -109,7 +109,7 @@ public class MapCreatorInspector : Editor
         //  ルートオブジェクトの作成
         var rootObj = new GameObject("StageRootObject");
         //  エディター側では左上が始点なので、その分場所の移動
-        Vector2 startPos = rootObj.transform.position + new Vector3(0, tileSize * yLength, 0);
+        Vector2 startPos = rootObj.transform.position + new Vector3(tileSize / 2, tileSize * yLength - tileSize / 2, 0);
 
         for(int y = 0; y < yLength; y++)
         {

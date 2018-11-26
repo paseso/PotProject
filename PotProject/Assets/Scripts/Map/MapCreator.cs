@@ -10,12 +10,16 @@ public class MapCreator : MonoBehaviour
     [SerializeField]
     private Gimmick[] gimmicks;
     [SerializeField]
-    private Enemy[] enemys;
+    private Enemy[] enemies;
     [SerializeField]
     private MapDate map;
     public MapDate ResourceMap;
     [HideInInspector]
     public GameObject tilePrefab;
+
+    public Tile[] GetTiles() { return tiles; }
+    public Gimmick[] GetGimmicks() { return gimmicks; }
+    public Enemy[] GetEnemies() { return enemies; }
 
     public MapDate Map
     {
@@ -23,10 +27,6 @@ public class MapCreator : MonoBehaviour
         set{ map = value; }
     }
 
-    public Tile[] GetTileList()
-    {
-        return tiles;
-    }
 }
 
 [System.Serializable]
@@ -59,6 +59,22 @@ public class Gimmick
     private Vector2 gimmickSize;
     [SerializeField]
     private GameObject gimmickObj;
+
+    public Texture GimmickImage
+    {
+        get { return gimmickImage; }
+        //set { gimmickImage = value; }
+    }
+    public Vector2 GimmickSize
+    {
+        get { return gimmickSize; }
+        //set { gimmickSize = value; }
+    }
+    public GameObject GimmickObj
+    {
+        get { return gimmickObj; }
+        //set { gimmickObj = value; }
+    }
 }
 
 [System.Serializable]
@@ -68,5 +84,17 @@ public class Enemy
     private Texture enemyImage;
     [SerializeField]
     private GameObject enemyObj;
+
+    public Texture EnemyImage
+    {
+        get { return enemyImage; }
+        //set { enemyImage = value; }
+    }
+
+    public GameObject EnemyObj
+    {
+        get { return enemyObj; }
+        //set { enemyObj = value; }
+    }
 }
 

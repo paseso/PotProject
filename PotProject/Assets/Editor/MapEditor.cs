@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System;
 
 public class MapEditor : EditorWindow {
 
@@ -10,7 +11,9 @@ public class MapEditor : EditorWindow {
 
     private const string ASSET_PATH = "Assets/Resources/MapData/";
     private const int gridNum = 20;
-    private Tile[] tiles;    
+    private Tile[] tiles;
+    private Gimmick[] gimmicks;
+    private Enemy[] enemies;
     private int toolberInt;
     private int[,] mapDate;
     private int[,] gimmickDate;
@@ -37,11 +40,14 @@ public class MapEditor : EditorWindow {
 
     public void Init()
     {
-        tiles = FindObjectOfType<MapCreator>().GetTileList();
+        MapCreator mapCreator = FindObjectOfType<MapCreator>();
+        tiles = mapCreator.GetTiles();
+        gimmicks = mapCreator.GetGimmicks();
+        enemies = mapCreator.GetEnemies();
         mapDate = new int[gridNum, gridNum];
         gimmickDate = new int[gridNum, gridNum];
         enemyDate = new int[gridNum, gridNum];
-        gridRect = new Rect[20, 20];
+        gridRect = new Rect[gridNum, gridNum];
         gridColor = Color.white;
     }
 
@@ -77,7 +83,48 @@ public class MapEditor : EditorWindow {
             }
         }
 
-        // クリックされた位置を探して、その場所に画像ナンバーを入れる
+        // クリックされた場所の配列にデータを追加
+        SetMapDate();
+
+        // 画像を描画する
+        for (int y = 0; y < gridNum; y++)
+        {
+            for (int x = 0; x < gridNum; x++)
+            {
+                switch (toolberInt)
+                {
+                    case 0:
+                        //  ノーマルタイルだけ表示
+                        if (mapDate[y, x] != 0) { GUI.DrawTexture(gridRect[y, x], tiles[mapDate[y, x]].TileImage); }
+                        break;
+                    case 1:
+                        //  ノーマルタイルとギミックタイルを表示
+                        //  GUI.DrawTextureではアルファ値がいじれなかったので、こちらはGraphics.DrawTextureを使用
+                        if (mapDate[y, x] != 0) { Graphics.DrawTexture(gridRect[y, x], tiles[mapDate[y, x]].TileImage, new Rect(0, 0, 1, 1), 0, 0, 0, 0, new Color(0.5f, 0.5f, 0.5f, 0.25f)); }
+                        if (gimmickDate[y, x] != 0) { GUI.DrawTexture(gridRect[y, x], gimmicks[gimmickDate[y, x]].GimmickImage); }
+                        break;
+                    case 2:
+                        //  ノーマルタイルとポジションタイルを表示
+                        if (mapDate[y, x] != 0) { Graphics.DrawTexture(gridRect[y, x], tiles[mapDate[y, x]].TileImage, new Rect(0, 0, 1, 1), 0, 0, 0, 0, new Color(0.5f, 0.5f, 0.5f, 0.25f)); }
+                        if (enemyDate[y, x] != 0) { Graphics.DrawTexture(gridRect[y, x], enemies[enemyDate[y, x]].EnemyImage, new Rect(0, 0, 1, 1), 0, 0, 0, 0, new Color(0.5f, 0.5f, 0.5f, 0.25f)); }                        
+                        break;
+                    default:
+                        Debug.Log("ツールバーの値が不正です");
+                        break;
+                }
+            }
+        }
+
+        GUILayout.Space(280);
+
+        //  タイルの種類を分ける
+        toolberInt = GUILayout.Toolbar(toolberInt, new string[] { "地面", "ギミック", "エネミー" });
+        //  タイルのボタンを描画
+        DrawTileButtons();
+    }
+
+    private void SetMapDate()
+    {
         Event e = Event.current;
         if (e.type == EventType.MouseDown || e.type == EventType.MouseDrag)
         {
@@ -110,51 +157,34 @@ public class MapEditor : EditorWindow {
                     if (r.y <= pos.y && pos.y <= r.y + r.height)
                     {
                         //  配列に代入
-                        mapDate[yy, xx] = SelectNum;
+                        switch (toolberInt)
+                        {
+                            case 0:
+                                mapDate[yy, xx] = SelectNum;
+                                break;
+                            case 1:
+                                if (SelectNum < gimmicks.Length)
+                                {
+                                    gimmickDate[yy, xx] = SelectNum;
+                                }                                
+                                break;
+                            case 2:
+                                if (SelectNum < enemies.Length)
+                                {
+                                    enemyDate[yy, xx] = SelectNum;
+                                }
+                                break;
+                            default:
+                                Debug.LogError("SetMapDateでエラー");
+                                break;
+                        }
                         Repaint();
                         break;
                     }
                 }
-            }            
-        }
-
-        // 画像を描画する
-        for (int y = 0; y < gridNum; y++)
-        {
-            for (int x = 0; x < gridNum; x++)
-            {
-                switch (toolberInt)
-                {
-                    case 0:
-                        //  ノーマルタイルだけ表示
-                        if (mapDate[y, x] != 0) { GUI.DrawTexture(gridRect[y, x], tiles[mapDate[y, x]].TileImage); }
-                        break;
-                    case 1:
-                        //  ノーマルタイルとギミックタイルを表示
-                        //  GUI.DrawTextureではアルファ値がいじれなかったので、こちらはGraphics.DrawTextureを使用
-                        if (mapDate[y, x] != 0) { Graphics.DrawTexture(gridRect[y, x], tiles[mapDate[y, x]].TileImage, new Rect(0, 0, 1, 1), 0, 0, 0, 0, new Color(0.5f, 0.5f, 0.5f, 0.25f)); }
-                        if (gimmickDate[y, x] != 0) { GUI.DrawTexture(gridRect[y, x], tiles[gimmickDate[y, x]].TileImage); }
-                        break;
-                    case 2:
-                        //  ノーマルタイルとポジションタイルを表示
-                        if (mapDate[y, x] != 0) { Graphics.DrawTexture(gridRect[y, x], tiles[mapDate[y, x]].TileImage, new Rect(0, 0, 1, 1), 0, 0, 0, 0, new Color(0.5f, 0.5f, 0.5f, 0.25f)); }
-                        if (enemyDate[y, x] != 0) { Graphics.DrawTexture(gridRect[y, x], tiles[mapDate[y, x]].TileImage, new Rect(0, 0, 1, 1), 0, 0, 0, 0, new Color(0.5f, 0.5f, 0.5f, 0.25f)); }                        
-                        break;
-                    default:
-                        Debug.Log("ツールバーの値が不正です");
-                        break;
-                }
             }
         }
-
-        GUILayout.Space(280);
-
-        //  タイルの種類を分ける
-        toolberInt = GUILayout.Toolbar(toolberInt, new string[] { "地面", "ギミック", "エネミー" });
-        //  タイルのボタンを描画
-        DrawTileButtons();
     }
-
 
     //  ScriptableObjectにデータの書き出し
     private void ExportMapDate()
@@ -261,7 +291,7 @@ public class MapEditor : EditorWindow {
         switch (toolberInt)
         {
             case 0:
-                if (tiles != null)
+                if (gimmicks.Length > 0)
                 {
                     for (int i = 0; i < tiles.Length; i++)
                     {
@@ -288,13 +318,62 @@ public class MapEditor : EditorWindow {
                 }
                 break;
             case 1:
+                if (gimmicks.Length > 0)
+                {
+                    for (int i = 0; i < gimmicks.Length; i++)
+                    {
+                        if (x > maxW)
+                        {
+                            x = 20.0f;
+                            y += h;
+                            EditorGUILayout.EndHorizontal();
+                        }
+                        if (x == 20.0f)
+                        {
+                            EditorGUILayout.BeginHorizontal();
+                        }
+                        GUILayout.FlexibleSpace();
+                        if (GUILayout.Button(gimmicks[i].GimmickImage, GUILayout.MaxWidth(w), GUILayout.MaxHeight(h), GUILayout.ExpandWidth(false), GUILayout.ExpandHeight(false)))
+                        {
+                            //  0の場合は要素の削除・それ以外はタイルの描画用のID
+                            SelectNum = i;
+                        }
+                        GUILayout.FlexibleSpace();
+                        x += w;
+                    }
+                    EditorGUILayout.EndHorizontal();
+                }
                 break;
             case 2:
+                if (enemies.Length > 0)
+                {
+                    for (int i = 0; i < enemies.Length; i++)
+                    {
+                        if (x > maxW)
+                        {
+                            x = 20.0f;
+                            y += h;
+                            EditorGUILayout.EndHorizontal();
+                        }
+                        if (x == 20.0f)
+                        {
+                            EditorGUILayout.BeginHorizontal();
+                        }
+                        GUILayout.FlexibleSpace();
+                        if (GUILayout.Button(enemies[i].EnemyImage, GUILayout.MaxWidth(w), GUILayout.MaxHeight(h), GUILayout.ExpandWidth(false), GUILayout.ExpandHeight(false)))
+                        {
+                            //  0の場合は要素の削除・それ以外はタイルの描画用のID
+                            SelectNum = i;
+                        }
+                        GUILayout.FlexibleSpace();
+                        x += w;
+                    }
+                    EditorGUILayout.EndHorizontal();
+                }
                 break;
             default:
                 Debug.Log("ツールバーの値が不正");
                 break;
-
         }
     }
 
