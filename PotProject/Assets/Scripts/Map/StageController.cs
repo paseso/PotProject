@@ -172,23 +172,39 @@ public class StageController : MonoBehaviour {
     /// ステージシャッフル
     /// </summary>
     public void StageShuffle() {
-        GameObject[] tempMap = new GameObject[Maps.Count];
+        GameObject[] tempMap = new GameObject[Maps.Count * 3];
+        Vector2[] mapPos = new Vector2[Maps.Count * 3];
         Vector2 standardPos = Maps[0][0].transform.localPosition;
         int count = 0;
         for (int i = 0; i < Maps.Count; i++) {
             
             for(int j = 0; j < Maps[i].Count; i++) {
                 tempMap[count] = Maps[i][j];
+                mapPos[count] = tempMap[count].transform.localPosition;
                 count++;
-
             }
         }
 
+        // シャッフル
         for(int i = 0; i <= count; i++) {
             int rand = Random.Range(0, count + 1);
             GameObject temp = tempMap[rand];
             tempMap[rand] = tempMap[i];
             tempMap[i] = temp;
+        }
+
+        // 再配置
+        int num = 0;
+        for(int i = 0; i < stageLength; i++)
+        {
+            for (int j = 0; j < stageLength; j++)
+            {
+                tempMap[num].transform.localPosition = mapPos[num];
+                tempMap[num].GetComponent<MapInfo>().mapNumX = j;
+                tempMap[num].GetComponent<MapInfo>().mapNumY = i;
+                Maps[i][j] = tempMap[num];
+                num++;
+            }
         }
     }
 }
