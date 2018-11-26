@@ -38,10 +38,11 @@ public class MoveController : MonoBehaviour
     private bool _onRJoystickDown = false;
     private bool _onSquare = false;
     private bool _onCircle = false;
+    private bool _onCrossUp = false;
+    private bool _onCrossDown = false;
     //---------------------------------------------
     [HideInInspector]
     public GameObject target;
-    private float gimmick_x = 0f;
     [SerializeField, Header("兄のSprite 0.左 1.右 2.後ろ")]
     private List<Sprite> BrotherSprites;
 
@@ -49,7 +50,6 @@ public class MoveController : MonoBehaviour
     private BringCollider bringctr;
     private AttackZoonController atc_ctr;
     private MapInfo mInfo;
-    private LegCollider legcollider;
     private Status status;
     //----------ボタンFlagのget---------------------
     public bool OnRight
@@ -101,6 +101,16 @@ public class MoveController : MonoBehaviour
     {
         get { return _onCircle; }
     }
+
+    public bool OnCrossUp
+    {
+        get { return _onCrossUp; }
+    }
+
+    public bool OnCrossDown
+    {
+        get { return _onCrossDown; }
+    }
     //------------------------------------------
 
     private enum ButtonType
@@ -148,22 +158,13 @@ public class MoveController : MonoBehaviour
         bringctr = gameObject.transform.GetChild(0).GetComponent<BringCollider>();
         mInfo = transform.root.GetComponent<MapInfo>();
         atc_ctr = gameObject.GetComponentInChildren<AttackZoonController>();
-        legcollider = gameObject.GetComponentInChildren<LegCollider>();
 
         _isJump = false;
-        gimmick_x = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //HitRayWall();
-        //はしごColliderからはずれたらor足の部分にfloorがあたったら
-        if (!mInfo.LadderFlag) // || legcollider._legFloor
-        {
-            //GimmickLadderOut();
-        }
-
         if (bringctr._bring)
         {
             target.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 2.5f);
@@ -186,6 +187,8 @@ public class MoveController : MonoBehaviour
         _onRJoystickDown = false;
         _onSquare = false;
         _onCircle = false;
+        _onCrossUp = false;
+        _onCrossDown = false;
     }
 
     #region Input内処理
@@ -259,7 +262,7 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.RIGHTJOYSTICK_LEFT:
                 Debug.Log("Right Joystick Left");
-                if (!manager._alchemyUi)
+                if (!manager.AlchemyWindow)
                     return;
                 _onRJoystickLeft = true;
 
@@ -267,7 +270,7 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.RIGHTJOYSTICK_RIGHT:
                 Debug.Log("Right Joystick Right");
-                if (!manager._alchemyUi)
+                if (!manager.AlchemyWindow)
                     return;
                 _onRJoystickRight = true;
 
@@ -275,7 +278,7 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.RIGHTJOYSTICK_UP:
                 Debug.Log("Right Joystick Up");
-                if (!manager._alchemyUi)
+                if (!manager.AlchemyWindow)
                     return;
                 _onRJoystickUp = true;
 
@@ -283,7 +286,7 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.RIGHTJOYSTICK_DOWN:
                 Debug.Log("Right Joystick Down");
-                if (!manager._alchemyUi)
+                if (!manager.AlchemyWindow)
                     return;
                 _onRJoystickDown = true;
 
@@ -372,11 +375,17 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.CROSSY_UP:
-                manager.SwordTypeChange(Status.SWORDTYPE.FIRE);
+                Debug.Log("Cross_Up");
+                if (!manager.AlchemyWindow)
+                    return;
+                _onCrossUp = true;
                 break;
 
             case ButtonType.CROSSY_DOWN:
-                manager.SwordTypeChange(Status.SWORDTYPE.FIRE);
+                Debug.Log("Cross_Down");
+                if (!manager.AlchemyWindow)
+                    return;
+                _onCrossDown = true;
                 break;
         }
         _onUp = false;

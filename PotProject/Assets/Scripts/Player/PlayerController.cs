@@ -49,10 +49,15 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField]
     private RectTransform Pot_UI;
-    [HideInInspector]
-    public bool _alchemyUi = false;
+    //錬金UIが開いてるかどうか
+    private bool _alchemyUi = false;
     //アイテムボックスがMaxかどうか
     private bool _itemMax = false;
+
+    public bool AlchemyWindow
+    {
+        get { return _alchemyUi; }
+    }
 
 	// Use this for initialization
 	void Start () {
