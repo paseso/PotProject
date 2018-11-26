@@ -380,14 +380,18 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.CROSSY_UP:
                 Debug.Log("Cross_Up");
-                if (!manager.AlchemyWindow && _onCrossYTrigger)
+                if (!manager.AlchemyWindow)
                     return;
+
+                _onCrossUp = true;
                 break;
 
             case ButtonType.CROSSY_DOWN:
                 Debug.Log("Cross_Down");
                 if (!manager.AlchemyWindow)
                     return;
+
+                _onCrossDown = true;
                 break;
         }
         _onUp = false;
@@ -571,20 +575,11 @@ public class MoveController : MonoBehaviour
                 case GimmickInfo.GimmickType.LADDER:
                     status.state = Status.State.ONLADDER;
                     break;
-                case GimmickInfo.GimmickType.TREE:
+                case GimmickInfo.GimmickType.GROWTREE:
                     status.state = Status.State.ONTREE;
                     break;
             }
         }
-
-        //if (col.gameObject.GetComponent<GimmickInfo>())
-        //{
-        //    GimmickInfo gimInfo = col.gameObject.GetComponent<GimmickInfo>();
-        //    if (gimInfo.type == GimmickInfo.GimmickType.LADDER)
-        //    {
-        //        _activeLadder = true;
-        //    }
-        //}
     }
 
     private void OnTriggerExit2D(Collider2D col)
