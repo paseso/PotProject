@@ -34,10 +34,6 @@ public class AlchemyUIController : MonoBehaviour {
     //------------------------------------------
     
     void Start () {
-        //デバッグ用
-        player_ctr.setItemList(ItemStatus.ITEM.SNAKE);
-        player_ctr.setItemList(ItemStatus.ITEM.SLIME);
-        //player_ctr.setItemList(ItemStatus.ITEM.GOLEM);
         nowBox = 0;
         move_ctr = GameObject.Find("Brother").GetComponent<MoveController>();
         mtr_0 = IntoPot.transform.GetChild(0).GetChild(0).GetComponent<Image>();
@@ -141,7 +137,6 @@ public class AlchemyUIController : MonoBehaviour {
             else
             {
                 player_ctr.ItemAlchemy(ItemStatus.ITEM.GOLEM);
-                Debug.Log("生成");
                 ClearJoystickRotation();
             }
         }
