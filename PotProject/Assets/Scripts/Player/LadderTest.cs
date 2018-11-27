@@ -7,8 +7,13 @@ public class LadderTest : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        status = GetComponent<Status>();
+        
 	}
+
+    void Update()
+    {
+        Debug.Log("LadderTest=" + status.state);
+    }
 
     public void OnTriggerEnter2D(Collider2D col)
     {
@@ -30,7 +35,7 @@ public class LadderTest : MonoBehaviour {
     {
         if (col.GetComponent<GimmickInfo>())
         {
-            if (status.state != Status.State.NORMAL)
+            if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
             {
                 status.state = Status.State.NORMAL;
             }
