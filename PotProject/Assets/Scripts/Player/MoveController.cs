@@ -455,6 +455,14 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void BtnCheck()
     {
+        if(Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.W))
+        {
+            if (status.state == Status.State.ONLADDER)
+            {
+                gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
+            }
+        }
+
         if (Input.GetButton("Jump") || Input.GetKeyDown(KeyCode.Space))
         {//×ボタン or キーボードの「W」
             Move(ButtonType.JUMP);
@@ -593,6 +601,7 @@ public class MoveController : MonoBehaviour
     /// <param name="dir"></param>
     public void Ladder(float speed, float dir)
     {
+        gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         Debug.Log("Ladder");
         gameObject.layer = LayerMask.NameToLayer("LadderPlayer");
         gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed * dir);
@@ -615,38 +624,34 @@ public class MoveController : MonoBehaviour
         }
     }
 
-    //private void OnTriggerEnter2D(Collider2D col)
-    //{
-    //    if (col.GetComponent<GimmickInfo>()) {
-    //        switch (col.GetComponent<GimmickInfo>().type) {
-    //            case GimmickInfo.GimmickType.LADDER:
-    //                status.state = Status.State.ONLADDER;
-    //                break;
-    //            case GimmickInfo.GimmickType.GROWTREE:
-    //                status.state = Status.State.ONTREE;
-    //                break;
-    //        }
-    //    }
-    //}
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.GetComponent<GimmickInfo>())
+        {
+            switch (col.GetComponent<GimmickInfo>().type)
+            {
+                case GimmickInfo.GimmickType.LADDER:
+                    status.state = Status.State.ONLADDER;
+                    break;
+                case GimmickInfo.GimmickType.GROWTREE:
+                    status.state = Status.State.ONTREE;
+                    break;
+            }
+        }
+    }
 
-    //private void OnTriggerExit2D(Collider2D col)
-    //{
-    //    if (status.state != Status.State.NORMAL)
-    //    {
-    //        status.state = Status.State.NORMAL;
-    //    }
-    //    if (gameObject.layer != LayerMask.NameToLayer("Player"))
-    //    {
-    //        gameObject.layer = LayerMask.NameToLayer("Player");
-    //    }
-
-    //    if (col.gameObject.GetComponent<GimmickInfo>())
-    //    {
-    //        GimmickInfo gimInfo = col.gameObject.GetComponent<GimmickInfo>();
-    //        if (gimInfo.type == GimmickInfo.GimmickType.LADDER)
-    //        {
-    //            _activeLadder = false;
-    //        }
-    //    }
-    //}
+    private void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.GetComponent<GimmickInfo>())
+        {
+            if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
+            {
+                status.state = Status.State.NORMAL;
+            }
+            if (gameObject.layer != LayerMask.NameToLayer("Player"))
+            {
+                gameObject.layer = LayerMask.NameToLayer("Player");
+            }
+        }
+    }
 }
