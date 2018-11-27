@@ -49,7 +49,6 @@ public class GimmickController :MonoBehaviour {
                     mInfo.UpRockFlag = true;
                     break;
             }
-            Destroy(gameObject);
         }
     }
 

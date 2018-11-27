@@ -568,36 +568,38 @@ public class MoveController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.GetComponent<GimmickInfo>()) {
-            switch (col.GetComponent<GimmickInfo>().type) {
-                case GimmickInfo.GimmickType.LADDER:
-                    status.state = Status.State.ONLADDER;
-                    break;
-                case GimmickInfo.GimmickType.GROWTREE:
-                    status.state = Status.State.ONTREE;
-                    break;
-            }
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D col)
+    //{
+    //    if (col.GetComponent<GimmickInfo>()) {
+    //        switch (col.GetComponent<GimmickInfo>().type) {
+    //            case GimmickInfo.GimmickType.LADDER:
+    //                status.state = Status.State.ONLADDER;
+    //                break;
+    //            case GimmickInfo.GimmickType.GROWTREE:
+    //                status.state = Status.State.ONTREE;
+    //                break;
+    //        }
+    //    }
+    //}
 
-    private void OnTriggerExit2D(Collider2D col)
-    {
-        if (status.state != Status.State.NORMAL) {
-            status.state = Status.State.NORMAL;
-        }
-        if(gameObject.layer != LayerMask.NameToLayer("Player")) {
-            gameObject.layer = LayerMask.NameToLayer("Player");
-        }
-        
-        if (col.gameObject.GetComponent<GimmickInfo>())
-        {
-            GimmickInfo gimInfo = col.gameObject.GetComponent<GimmickInfo>();
-            if (gimInfo.type == GimmickInfo.GimmickType.LADDER)
-            {
-                _activeLadder = false;
-            }
-        }
-    }
+    //private void OnTriggerExit2D(Collider2D col)
+    //{
+    //    if (status.state != Status.State.NORMAL)
+    //    {
+    //        status.state = Status.State.NORMAL;
+    //    }
+    //    if (gameObject.layer != LayerMask.NameToLayer("Player"))
+    //    {
+    //        gameObject.layer = LayerMask.NameToLayer("Player");
+    //    }
+
+    //    if (col.gameObject.GetComponent<GimmickInfo>())
+    //    {
+    //        GimmickInfo gimInfo = col.gameObject.GetComponent<GimmickInfo>();
+    //        if (gimInfo.type == GimmickInfo.GimmickType.LADDER)
+    //        {
+    //            _activeLadder = false;
+    //        }
+    //    }
+    //}
 }
