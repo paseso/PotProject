@@ -42,6 +42,7 @@ public class MoveController : MonoBehaviour
     private bool _onCircle = false;
     private bool _onCrossUp = false;
     private bool _onCrossDown = false;
+    private bool _onR2 = false;
     //---------------------------------------------
     [HideInInspector]
     public GameObject target;
@@ -113,6 +114,11 @@ public class MoveController : MonoBehaviour
     {
         get { return _onCrossDown; }
     }
+
+    public bool OnR2
+    {
+        get { return _onR2; }
+    }
     //------------------------------------------
 
     private enum ButtonType
@@ -172,8 +178,46 @@ public class MoveController : MonoBehaviour
         {
             target.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 2.5f);
         }
-        BtnCheck();
+
+        ClearBtnFlg();
+        EventStateCheck();
         _onCrossYTrigger = true;
+    }
+
+    /// <summary>
+    /// 今のEventStateをチェックして各処理に移る
+    /// </summary>
+    private void EventStateCheck()
+    {
+        switch (manager.status.event_state)
+        {
+            case Status.EventState.NORMAL:
+                Debug.Log("Normal");
+                BtnCheck();
+                break;
+
+            case Status.EventState.CAMERA:
+                Debug.Log("Camera");
+                break;
+
+            case Status.EventState.ALCHEMYUI:
+                Debug.Log("AlchemyUI");
+                UIControll();
+
+                break;
+        }
+
+    }
+
+    /// <summary>
+    /// 錬金UIを開いている時の制御
+    /// </summary>
+    private void UIControll()
+    {
+        _isJump = false;
+        _ActiveRightLeft = false;
+        BtnCheck();
+
     }
 
     /// <summary>
@@ -193,6 +237,7 @@ public class MoveController : MonoBehaviour
         _onCircle = false;
         _onCrossUp = false;
         _onCrossDown = false;
+        _onR2 = false;
     }
 
     #region Input内処理
@@ -298,11 +343,14 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.CIRCLE:
                 //Debug.Log("〇");
-                if (!_onCircle)
-                    return;
-
-                atc_ctr.AttackObject();
-
+                if (atc_ctr.AttackMonster)
+                {
+                    atc_ctr.AttackObject();
+                }
+                else if (manager.AlchemyWindow)
+                {
+                    _onCircle = true;
+                }
                 break;
 
             case ButtonType.SQUARE:
@@ -407,7 +455,6 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void BtnCheck()
     {
-        ClearBtnFlg();
         if (Input.GetButton("Jump") || Input.GetKeyDown(KeyCode.Space))
         {//×ボタン or キーボードの「W」
             Move(ButtonType.JUMP);

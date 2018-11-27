@@ -23,11 +23,21 @@ public struct Status
         ONTREE,
     }
 
+    //今のイベント状態
+    public enum EventState
+    {
+        NORMAL = 0,
+        CAMERA,
+        ALCHEMYUI,
+    }
+
     //アイテム
     public SWORDTYPE swordtype;
 
     // 状態
     public State state;
+
+    public EventState event_state;
 
     //持ち物に入ってるアイテム
     public List<ItemStatus.ITEM> ItemList;
@@ -66,6 +76,27 @@ public class PlayerController : MonoBehaviour {
         _itemMax = false;
         _alchemyUi = false;
 	}
+
+    /// <summary>
+    /// EventStateの設定
+    /// </summary>
+    private void setEventState(Status.EventState st)
+    {
+        switch (st)
+        {
+            case Status.EventState.NORMAL:
+
+                break;
+
+            case Status.EventState.CAMERA:
+
+                break;
+
+            case Status.EventState.ALCHEMYUI:
+
+                break;
+        }
+    }
 	
     /// <summary>
     /// 持ち物リストの情報

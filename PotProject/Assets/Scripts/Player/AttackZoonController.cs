@@ -16,11 +16,19 @@ public class AttackZoonController : MonoBehaviour {
     private PlayerController manager;
     [SerializeField]
     private GameObject Sword;
+    //モンスターをアタックできるかどうか
+    private bool _attackMonster = false;
+
+    public bool AttackMonster
+    {
+        get { return _attackMonster; }
+    }
 
 	// Use this for initialization
 	void Start () {
         move_ctr = gameObject.transform.parent.GetComponent<MoveController>();
         Attack_Target = null;
+        _attackMonster = false;
 	}
 	
 	// Update is called once per frame
@@ -65,8 +73,7 @@ public class AttackZoonController : MonoBehaviour {
     {
         if(col.gameObject.tag == "Monster")
         {
-            //エラー
-            //move_ctr.OnCircle = true;
+            _attackMonster = true;
             Debug.Log("殴れるよ");
             Attack_Target = col.gameObject;
         }
@@ -74,7 +81,6 @@ public class AttackZoonController : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        //エラー
-        //move_ctr.OnCircle = false;
+        _attackMonster = false;
     }
 }
