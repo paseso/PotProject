@@ -21,8 +21,10 @@ GameObject:
   - component: {fileID: 4196791766188648}
   - component: {fileID: 212747581882539502}
   - component: {fileID: 61919816325627008}
+  - component: {fileID: 114898581946340354}
+  - component: {fileID: 114644971316633192}
   m_Layer: 0
-  m_Name: Brock_0
+  m_Name: Brock_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,6 +68,29 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &114644971316633192
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1238842296989262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9696294e9f29da043846bc1bdfa5a0bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114898581946340354
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1238842296989262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccb62d7c26706244e85525a82b6801f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 5
 --- !u!212 &212747581882539502
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -98,7 +123,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: a1c9904cd922e3d4eb545d696a9adb20, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 39cdedf6643e2dd4fa2227fc244acddd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

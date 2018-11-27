@@ -13,20 +13,21 @@ public class MapCreator : MonoBehaviour
     private Enemy[] enemies;
     [SerializeField]
     private MapDate map;
-    public MapDate ResourceMap;
     [HideInInspector]
     public GameObject tilePrefab;
 
     public Tile[] GetTiles() { return tiles; }
+    public Tile GetTile(int index) { return tiles[index]; }
     public Gimmick[] GetGimmicks() { return gimmicks; }
+    public Gimmick GetGimmick(int index) { return gimmicks[index]; }
     public Enemy[] GetEnemies() { return enemies; }
+    public Enemy GetEnemy(int index) { return enemies[index]; }
 
     public MapDate Map
     {
         get{ return map; }
         set{ map = value; }
     }
-
 }
 
 [System.Serializable]

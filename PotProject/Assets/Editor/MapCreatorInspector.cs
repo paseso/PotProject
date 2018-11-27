@@ -20,7 +20,6 @@ public class MapCreatorInspector : Editor
         var gimmickProp = serializedObject.FindProperty("gimmicks");
         var enemyProp = serializedObject.FindProperty("enemies");
 
-
         tileReorderableList = new ReorderableList(serializedObject, tileProp);
         tileReorderableList.elementHeight = 55;
         tileReorderableList.drawElementCallback = (rect, index, isActive, isFocused) =>
@@ -61,9 +60,6 @@ public class MapCreatorInspector : Editor
         //  マップデータ
         mapCreator = (MapCreator)target;
         mapCreator.Map = (MapDate)EditorGUILayout.ObjectField("マップデータ", mapCreator.Map, typeof(MapDate), false);
-        //string[] path = AssetDatabase.GetAssetPath(mapCreator.Map).Split('/');
-        //Debug.Log(path);
-        //mapCreator.ResourceMap = Resources.Load(path[2] + "/" + path[3]) as MapDate;
         mapCreator.tilePrefab = (GameObject)EditorGUILayout.ObjectField("TilePrefab", mapCreator.tilePrefab, typeof(GameObject), false);
 
         if (GUILayout.Button("マップに変換")) { CreateMap(); }
@@ -86,7 +82,6 @@ public class MapCreatorInspector : Editor
             enemyReorderableList.DoLayoutList();
         }
 
-
         serializedObject.ApplyModifiedProperties();
     }
     /// <summary>
@@ -99,10 +94,9 @@ public class MapCreatorInspector : Editor
             EditorUtility.DisplayDialog("Error", "マップデータがセットされていません", "OK");
             return;
         }
-
         //  配列の長さを取得
-        int xLength = mapCreator.Map.mapArray[0].mapNum.Length;
-        int yLength = mapCreator.Map.mapArray.Length;
+        int xLength = mapCreator.Map.mapDate[0].mapNum.Length;
+        int yLength = mapCreator.Map.mapDate.Length;
 
         //  タイルのサイズを取得
         float tileSize = mapCreator.tilePrefab.GetComponent<SpriteRenderer>().sprite.texture.width / 100;
@@ -110,16 +104,34 @@ public class MapCreatorInspector : Editor
         var rootObj = new GameObject("StageRootObject");
         //  エディター側では左上が始点なので、その分場所の移動
         Vector2 startPos = rootObj.transform.position + new Vector3(tileSize / 2, tileSize * yLength - tileSize / 2, 0);
-
+        //  オブジェクトの生成
         for(int y = 0; y < yLength; y++)
         {
             for(int x = 0; x < xLength; x++)
             {
-                if (mapCreator.Map.mapArray[y].mapNum[x] != 0)
+                if (mapCreator.Map.mapDate[y].mapNum[x] != 0)
                 {
-                    var TileObj = Instantiate(mapCreator.tilePrefab);
-                    TileObj.transform.parent = rootObj.transform;
-                    TileObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
+                    var tileObj = Instantiate(mapCreator.GetTile(mapCreator.Map.mapDate[y].mapNum[x]).TileObj);
+                    //  ギミックを配置するポジションにタイルがあったらレイヤーを変更
+                    //if (mapCreator.GetGimmick(mapCreator.Map.mapDate[y].mapNum[x]).GimmickObj.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
+                    //{
+                    //    Debug.Log("レイヤー変更");
+                    //    tileObj.layer = LayerMask.NameToLayer("LadderBrock");
+                    //}
+                    tileObj.transform.parent = rootObj.transform;
+                    tileObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
+                }
+                if (mapCreator.Map.gimmickDate[y].mapNum[x] != 0)
+                {
+                    var gimmickObj = Instantiate(mapCreator.GetGimmick(mapCreator.Map.gimmickDate[y].mapNum[x]).GimmickObj);
+                    gimmickObj.transform.parent = rootObj.transform;
+                    gimmickObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
+                }
+                if (mapCreator.Map.enemyDate[y].mapNum[x] != 0)
+                {
+                    var enemyObj = Instantiate(mapCreator.GetEnemy(mapCreator.Map.enemyDate[y].mapNum[x]).EnemyObj);
+                    enemyObj.transform.parent = rootObj.transform;
+                    enemyObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
                 }
             }
         }
@@ -127,14 +139,14 @@ public class MapCreatorInspector : Editor
     private void PrintlistNum()
     {
         //  配列の長さを取得
-        int xLength = mapCreator.Map.mapArray[0].mapNum.Length;
-        int yLength = mapCreator.Map.mapArray.Length;
+        int xLength = mapCreator.Map.mapDate[0].mapNum.Length;
+        int yLength = mapCreator.Map.mapDate.Length;
 
         for (int y = 0; y < yLength; y++)
         {
             for (int x = 0; x < xLength; x++)
             {
-                Debug.Log("TileID : " + mapCreator.Map.mapArray[y].mapNum[x]);
+                Debug.Log("TileID : " + mapCreator.Map.mapDate[y].mapNum[x]);
             }
         }
     }

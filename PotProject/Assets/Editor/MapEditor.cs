@@ -21,6 +21,8 @@ public class MapEditor : EditorWindow {
     private Rect rect;
     private Rect[,] gridRect;
     private Color gridColor;
+    private Color gridColorRed = new Color(1,0,0,0.25f);
+    private Color gridColorGreen = new Color(0,1,0,0.5f);
 
     //  選択中のボタンの種類
     private int SelectNum = 0;
@@ -157,6 +159,7 @@ public class MapEditor : EditorWindow {
                     if (r.y <= pos.y && pos.y <= r.y + r.height)
                     {
                         //  配列に代入
+                        //  条件によって代入する配列を変化
                         switch (toolberInt)
                         {
                             case 0:
@@ -200,18 +203,23 @@ public class MapEditor : EditorWindow {
             //  保存処理
             MapDate tmp = ScriptableObject.CreateInstance<MapDate>();
             //  配列を動的に確保　※そうしないと確保されない
-            for (int i = 0; i < tmp.mapArray.Length; i++)
+            for (int i = 0; i < tmp.mapDate.Length; i++)
             {
-                tmp.mapArray[i] = new MapArray();
-                tmp.mapArray[i].mapNum = new int[gridNum];
+                tmp.mapDate[i] = new MapArray();
+                tmp.mapDate[i].mapNum = new int[gridNum];
+                tmp.gimmickDate[i] = new MapArray();
+                tmp.gimmickDate[i].mapNum = new int[gridNum];
+                tmp.enemyDate[i] = new MapArray();
+                tmp.enemyDate[i].mapNum = new int[gridNum];
             }
-            Debug.Log("NumberLength : " + tmp.mapArray[0].mapNum.Length);
             //  値の代入
-            for (int i = 0; i < tmp.mapArray.Length; i++)
+            for (int i = 0; i < tmp.mapDate.Length; i++)
             {
-                for (int j = 0; j < tmp.mapArray[i].mapNum.Length; j++)
+                for (int j = 0; j < tmp.mapDate[i].mapNum.Length; j++)
                 {
-                    tmp.mapArray[i].mapNum[j] = mapDate[i, j];
+                    tmp.mapDate[i].mapNum[j] = mapDate[i, j];
+                    tmp.gimmickDate[i].mapNum[j] = gimmickDate[i, j];
+                    tmp.enemyDate[i].mapNum[j] = enemyDate[i, j];
                 }
             }
             AssetDatabase.CreateAsset(tmp, path);
@@ -256,8 +264,7 @@ public class MapEditor : EditorWindow {
     private void DrawGrig(Rect _rect)
     {
         //  グリッドの色を設定
-        Handles.color = (toolberInt == 0) ? gridColor : (toolberInt == 1) ? Color.red : Color.green;
-
+        Handles.color = (toolberInt == 0) ? new Color(1,1,1,0.25f) : (toolberInt == 1) ? gridColorRed : new Color(0,1,0,0.25f);
         // upper line
         Handles.DrawLine(
             new Vector2(_rect.position.x, _rect.position.y),
@@ -376,5 +383,4 @@ public class MapEditor : EditorWindow {
                 break;
         }
     }
-
 }
