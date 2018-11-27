@@ -16,6 +16,12 @@ public class AlchemyUIController : MonoBehaviour {
 
     [SerializeField]
     private GameObject ItemFrame;
+    [SerializeField]
+    private GameObject IntoPot;
+    //---IntoPotの子オブジェクト---------
+    private Image mtr_0;
+    private Image mtr_1;
+    //-----------------------------------
     private int nowBox = 0;
 
     private MoveController move_ctr;
@@ -34,13 +40,35 @@ public class AlchemyUIController : MonoBehaviour {
         //player_ctr.setItemList(ItemStatus.ITEM.GOLEM);
         nowBox = 0;
         move_ctr = GameObject.Find("Brother").GetComponent<MoveController>();
+        mtr_0 = IntoPot.transform.GetChild(0).GetChild(0).GetComponent<Image>();
+        mtr_1 = IntoPot.transform.GetChild(0).GetChild(1).GetComponent<Image>();
         ClearJoystickRotation();
     }
 	
 	// Update is called once per frame
 	void Update () {
         RightJoyStickRotation();
-        ItemFramemove();
+        ItemFrameMove();
+        PickItem();
+    }
+    
+    /// <summary>
+    /// アイテムの決定
+    /// </summary>
+    private void PickItem()
+    {
+        if (!move_ctr.OnCircle)
+            return;
+
+        Sprite img = Itembox[nowBox].GetComponent<Image>().sprite;
+        if(mtr_0.sprite == null)
+        {
+            mtr_0.sprite = img;
+        }
+        else if(mtr_1.sprite == null)
+        {
+            mtr_1.sprite = img;
+        }
     }
 
     /// <summary>
@@ -55,7 +83,7 @@ public class AlchemyUIController : MonoBehaviour {
     /// <summary>
     /// アイテム選択フレームの移動処理
     /// </summary>
-    private void ItemFramemove()
+    private void ItemFrameMove()
     {
         while (move_ctr.OnCrossUp || move_ctr.OnCrossDown)
         {
@@ -86,6 +114,7 @@ public class AlchemyUIController : MonoBehaviour {
     /// </summary>
     private void RightJoyStickRotation()
     {
+        //該当のボタンが押されてない時
         if (!move_ctr.OnRJoystickUp && !move_ctr.OnRJoystickDown && !move_ctr.OnRJoystickRight && !move_ctr.OnRJoystickLeft)
         {
             ClearJoystickRotation();
@@ -105,6 +134,9 @@ public class AlchemyUIController : MonoBehaviour {
             if (RotationCount < 3)
             {
                 RotationCount++;
+                _one = false;
+                _two = false;
+                _three = false;
             }
             else
             {
