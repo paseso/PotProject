@@ -14,7 +14,7 @@ public class MapChangeTrigger : MonoBehaviour {
         Debug.Log("kitao");
         if (col.gameObject.tag == "Player")
         {
-            col.transform.SetParent(transform.root.gameObject.transform);
+            col.transform.root.gameObject.transform.SetParent(transform.root.gameObject.transform);
         }
     }
 }

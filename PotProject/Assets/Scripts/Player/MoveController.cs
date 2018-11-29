@@ -480,7 +480,10 @@ public class MoveController : MonoBehaviour
         {
             if (status.state == Status.State.ONLADDER)
             {
-                gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
+                transform.parent.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+                Vector2 pos = transform.position;
+                RaycastHit2D ray = Physics2D.Raycast(pos, new Vector2(0, -1));
+                
             }
         }
 
@@ -622,10 +625,12 @@ public class MoveController : MonoBehaviour
     /// <param name="dir"></param>
     public void Ladder(float speed, float dir)
     {
-        gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        transform.parent.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         Debug.Log("Ladder");
         gameObject.layer = LayerMask.NameToLayer("LadderPlayer");
-        gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed * dir);
+        transform.parent.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed * dir);
+        Vector2 pos = transform.position;
+        Debug.DrawRay(pos, new Vector2(0, -1),Color.red,10f);
     }
 
     private void HitRayWall()
