@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
@@ -22,9 +23,7 @@ public class GimmickController :MonoBehaviour {
     }
 
     void Update() {
-        //if (Input.GetKeyDown(KeyCode.G)) {
-        //    BakeTree(gameObject);
-        //}
+        
     }
 
     /// <summary>
@@ -100,6 +99,7 @@ public class GimmickController :MonoBehaviour {
     public void BakeTree(GameObject obj)
     {
         StartCoroutine(Bake(obj));
+        StartCoroutine(DelayMethod(1f, Grow));
     }
 
     /// <summary>
@@ -111,11 +111,25 @@ public class GimmickController :MonoBehaviour {
     {
         for (int i = 2; i >= 0; i--)
         {
-            yield return new WaitForSeconds(1f);
-            Debug.Log("bake" + i);
+            if (i == 2)
+            {
+                // 燃えるエフェクト
+                yield return new WaitForSeconds(1f);
+                continue;
+            }
             // 画像変更処理
+            yield return new WaitForSeconds(1f);
+            
+            Debug.Log("bake" + i);
         }
+        yield return new WaitForSeconds(1f);
         // Destroy
+    }
+
+    public IEnumerator DelayMethod(float time,Action action)
+    {
+        yield return new WaitForSeconds(time);
+        action();
     }
     
 }
