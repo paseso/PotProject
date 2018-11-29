@@ -113,11 +113,14 @@ public class MapCreatorInspector : Editor
                 {
                     var tileObj = Instantiate(mapCreator.GetTile(mapCreator.Map.mapDate[y].mapNum[x]).TileObj);
                     //  ギミックを配置するポジションにタイルがあったらレイヤーを変更
-                    //if (mapCreator.GetGimmick(mapCreator.Map.mapDate[y].mapNum[x]).GimmickObj.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
-                    //{
-                    //    Debug.Log("レイヤー変更");
-                    //    tileObj.layer = LayerMask.NameToLayer("LadderBrock");
-                    //}
+                    if (mapCreator.GetGimmick(mapCreator.Map.gimmickDate[y].mapNum[x]).GimmickObj != null && mapCreator.GetGimmick(mapCreator.Map.gimmickDate[y].mapNum[x]).GimmickObj.GetComponent<GimmickInfo>() != null)
+                    {
+                        if (mapCreator.GetGimmick(mapCreator.Map.gimmickDate[y].mapNum[x]).GimmickObj.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
+                        {
+                            Debug.Log("レイヤー変更");
+                            tileObj.layer = LayerMask.NameToLayer("LadderBrock");
+                        }
+                    }
                     tileObj.transform.parent = rootObj.transform;
                     tileObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
                 }
