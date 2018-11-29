@@ -103,6 +103,23 @@ public class AlchemyUIController : MonoBehaviour {
             ItemFrame.transform.position = Itembox[nowBox].transform.position;
             break;
         }
+
+        while(move_ctr.OnCrossRigtht || move_ctr.OnCrossLeft)
+        {
+            if (!move_ctr.OnCrossRigtht && !move_ctr.OnCrossLeft)
+                break;
+
+            if (move_ctr.OnCrossRigtht)
+            {
+                
+            }
+            if (move_ctr.OnCrossLeft)
+            {
+
+            }
+            ItemFrame.transform.position = Itembox[nowBox].transform.position;
+            break;
+        }
     }
 
     /// <summary>
