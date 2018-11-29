@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,12 +37,15 @@ public class AlchemyUIController : MonoBehaviour {
     //------------------------------------------
     
     void Start () {
+        //デバッグ
+        player_ctr.setItemList(ItemStatus.ITEM.SLIME);
+        player_ctr.setItemList(ItemStatus.ITEM.SNAKE);
         nowBox = 0;
         move_ctr = GameObject.Find("Brother/Body").GetComponent<MoveController>();
         mtr_0 = IntoPot.transform.GetChild(0).GetChild(0).gameObject;
         mtr_1 = IntoPot.transform.GetChild(0).GetChild(1).gameObject;
         _boxRight = true;
-        ItemFrameReSet();
+        Box_item = new GameObject[Itembox.Length];
         ClearJoystickRotation();
     }
 	
@@ -60,16 +64,25 @@ public class AlchemyUIController : MonoBehaviour {
         if (!move_ctr.OnCircle)
             return;
 
-        Sprite img = Itembox[nowBox].GetComponent<Image>().sprite;
-        Sprite mtr_0_img = mtr_0.GetComponent<Image>().sprite;
-        Sprite mtr_1_img = mtr_1.GetComponent<Image>().sprite;
-        if (mtr_0_img == null)
+        if (_boxRight)
         {
-            mtr_0_img = img;
+            Sprite img = Box_item[nowBox].GetComponent<Image>().sprite;
+            if (img == null)
+                return;
+            Image mtr_0_img = mtr_0.GetComponent<Image>();
+            Image mtr_1_img = mtr_1.GetComponent<Image>();
+            if (mtr_0_img.sprite == null)
+            {
+                mtr_0_img.sprite = img;
+            }
+            else if (mtr_1_img.sprite == null)
+            {
+                mtr_1_img.sprite = img;
+            }
         }
-        else if(mtr_1_img == null)
+        else
         {
-            mtr_1_img = img;
+            Box_item[nowBox].GetComponent<Image>().sprite = null;
         }
     }
 
@@ -79,8 +92,9 @@ public class AlchemyUIController : MonoBehaviour {
     public void ItemFrameReSet()
     {
         nowBox = 0;
-        Box_item = Itembox;
+        Array.Copy(Itembox, Box_item, Itembox.Length);
         ItemFrame.transform.position = Box_item[0].transform.position;
+        _boxRight = true;
     }
 
     /// <summary>
@@ -118,18 +132,17 @@ public class AlchemyUIController : MonoBehaviour {
 
             if (_boxRight)
             {
+                Box_item = new GameObject[2];
                 Box_item[0] = mtr_0;
                 Box_item[1] = mtr_1;
-                Debug.Log("Item:" + Box_item[0].name);
                 _boxRight = false;
             }
             else
             {
-                
-                Debug.Log("Item:" + Box_item[0].name);
+                Box_item = new GameObject[Itembox.Length];
+                Array.Copy(Itembox, Box_item, Itembox.Length);
                 _boxRight = true;
             }
-            Debug.Log("_boxRight = " + _boxRight);
             
             ItemFrame.transform.position = Box_item[0].transform.position;
             break;
