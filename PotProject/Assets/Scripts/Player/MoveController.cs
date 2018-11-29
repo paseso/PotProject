@@ -42,6 +42,8 @@ public class MoveController : MonoBehaviour
     private bool _onCircle = false;
     private bool _onCrossUp = false;
     private bool _onCrossDown = false;
+    private bool _onCrossRight = false;
+    private bool _onCrossLeft = false;
     private bool _onR2 = false;
     //---------------------------------------------
     [HideInInspector]
@@ -113,6 +115,16 @@ public class MoveController : MonoBehaviour
     public bool OnCrossDown
     {
         get { return _onCrossDown; }
+    }
+
+    public bool OnCrossRigtht
+    {
+        get { return _onCrossRight; }
+    }
+
+    public bool OnCrossLeft
+    {
+        get { return _onCrossLeft; }
     }
 
     public bool OnR2
@@ -237,6 +249,8 @@ public class MoveController : MonoBehaviour
         _onCircle = false;
         _onCrossUp = false;
         _onCrossDown = false;
+        _onCrossRight = false;
+        _onCrossLeft = false;
         _onR2 = false;
     }
 
@@ -419,11 +433,17 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.CROSSX_RIGTH:
-                manager.SwordTypeChange(Status.SWORDTYPE.EARTH);
+                if (!manager.AlchemyWindow)
+                    return;
+
+                _onCrossRight = true;
                 break;
 
             case ButtonType.CROSSX_LEFT:
-                manager.SwordTypeChange(Status.SWORDTYPE.WATER);
+                if (!manager.AlchemyWindow)
+                    return;
+
+                _onCrossLeft = true;
                 break;
 
             case ButtonType.CROSSY_UP:
