@@ -50,6 +50,7 @@ public class MoveController : MonoBehaviour
     public GameObject target;
     [SerializeField, Header("兄のSprite 0.左 1.右 2.後ろ")]
     private List<Sprite> BrotherSprites;
+    private SpriteRenderer obj_sprite;
 
     private PlayerController manager;
     private BringCollider bringctr;
@@ -173,12 +174,12 @@ public class MoveController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        rig = gameObject.GetComponent<Rigidbody2D>();
+        rig = gameObject.transform.parent.GetComponent<Rigidbody2D>();
         manager = GameObject.Find("Controller").GetComponent<PlayerController>();
-        bringctr = gameObject.transform.GetChild(0).GetComponent<BringCollider>();
+        bringctr = gameObject.transform.parent.GetChild(0).GetComponent<BringCollider>();
         mInfo = transform.root.GetComponent<MapInfo>();
         atc_ctr = gameObject.GetComponentInChildren<AttackZoonController>();
-
+        obj_sprite = gameObject.transform.parent.GetComponent<SpriteRenderer>();
         _isJump = false;
         _onCrossYTrigger = false;
     }
@@ -277,7 +278,7 @@ public class MoveController : MonoBehaviour
                 if (!_ActiveRightLeft)
                     return;
 
-                gameObject.GetComponent<SpriteRenderer>().sprite = BrotherSprites[0];
+                obj_sprite.sprite = BrotherSprites[0];
                 rig.velocity = new Vector2(-5f, rig.velocity.y);
                 break;
 
@@ -288,7 +289,7 @@ public class MoveController : MonoBehaviour
                 if (!_ActiveRightLeft)
                     return;
 
-                gameObject.GetComponent<SpriteRenderer>().sprite = BrotherSprites[1];
+                obj_sprite.sprite = BrotherSprites[1];
                 rig.velocity = new Vector2(5f, rig.velocity.y);
                 break;
 

@@ -1855,6 +1855,12 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &412721094 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114763582987822830, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
+    type: 2}
+  m_PrefabInternal: {fileID: 443119170}
+  m_Script: {fileID: 11500000, guid: 6d890114033d3ce42945e15d78752ae3, type: 3}
 --- !u!1001 &443119170
 Prefab:
   m_ObjectHideFlags: 0
@@ -3636,12 +3642,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4084281898384212, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
     type: 2}
   m_PrefabInternal: {fileID: 443119170}
---- !u!114 &818430059 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114826993995417326, guid: 1bd617ce126ed4d49bbb472ce68d1d29,
-    type: 2}
-  m_PrefabInternal: {fileID: 443119170}
-  m_Script: {fileID: 11500000, guid: 6d890114033d3ce42945e15d78752ae3, type: 3}
 --- !u!1 &819417504
 GameObject:
   m_ObjectHideFlags: 0
@@ -4362,9 +4362,13 @@ Prefab:
         type: 2}
       propertyPath: move_ctr
       value: 
-      objectReference: {fileID: 818430059}
-    m_RemovedComponents:
-    - {fileID: 50152016025688070, guid: 31540ee08190b3e468c23fd2ea13c394, type: 2}
+      objectReference: {fileID: 412721094}
+    - target: {fileID: 255912989710814624, guid: 31540ee08190b3e468c23fd2ea13c394,
+        type: 2}
+      propertyPath: m_ConnectedRigidBody
+      value: 
+      objectReference: {fileID: 1987710556}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 31540ee08190b3e468c23fd2ea13c394, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &939045827 stripped
@@ -8983,48 +8987,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
---- !u!1 &1749391349 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1266365615057778, guid: 31540ee08190b3e468c23fd2ea13c394,
-    type: 2}
-  m_PrefabInternal: {fileID: 939045826}
---- !u!255 &1749391350
-FixedJoint2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1749391349}
-  m_Enabled: 0
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 1987710556}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -4.2811303, y: 0.37010527}
-  m_DampingRatio: 0
-  m_Frequency: 0
---- !u!50 &1749391351
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1749391349}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1001 &1759468279
 Prefab:
   m_ObjectHideFlags: 0

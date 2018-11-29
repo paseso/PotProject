@@ -19,10 +19,12 @@ public class AlchemyUIController : MonoBehaviour {
     [SerializeField]
     private GameObject IntoPot;
     //---IntoPotの子オブジェクト---------
-    private Image mtr_0;
-    private Image mtr_1;
+    private GameObject mtr_0;
+    private GameObject mtr_1;
     //-----------------------------------
     private int nowBox = 0;
+    private GameObject[] Box_item;
+    private bool _boxRight = true;
 
     private MoveController move_ctr;
 
@@ -35,9 +37,11 @@ public class AlchemyUIController : MonoBehaviour {
     
     void Start () {
         nowBox = 0;
-        move_ctr = GameObject.Find("Brother").GetComponent<MoveController>();
-        mtr_0 = IntoPot.transform.GetChild(0).GetChild(0).GetComponent<Image>();
-        mtr_1 = IntoPot.transform.GetChild(0).GetChild(1).GetComponent<Image>();
+        move_ctr = GameObject.Find("Brother/Body").GetComponent<MoveController>();
+        mtr_0 = IntoPot.transform.GetChild(0).GetChild(0).gameObject;
+        mtr_1 = IntoPot.transform.GetChild(0).GetChild(1).gameObject;
+        _boxRight = true;
+        ItemFrameReSet();
         ClearJoystickRotation();
     }
 	
@@ -57,13 +61,15 @@ public class AlchemyUIController : MonoBehaviour {
             return;
 
         Sprite img = Itembox[nowBox].GetComponent<Image>().sprite;
-        if(mtr_0.sprite == null)
+        Sprite mtr_0_img = mtr_0.GetComponent<Image>().sprite;
+        Sprite mtr_1_img = mtr_1.GetComponent<Image>().sprite;
+        if (mtr_0_img == null)
         {
-            mtr_0.sprite = img;
+            mtr_0_img = img;
         }
-        else if(mtr_1.sprite == null)
+        else if(mtr_1_img == null)
         {
-            mtr_1.sprite = img;
+            mtr_1_img = img;
         }
     }
 
@@ -73,7 +79,8 @@ public class AlchemyUIController : MonoBehaviour {
     public void ItemFrameReSet()
     {
         nowBox = 0;
-        ItemFrame.transform.position = Itembox[nowBox].transform.position;
+        Box_item = Itembox;
+        ItemFrame.transform.position = Box_item[0].transform.position;
     }
 
     /// <summary>
@@ -89,18 +96,18 @@ public class AlchemyUIController : MonoBehaviour {
             if (move_ctr.OnCrossUp)
             {
                 if (nowBox - 1 < 0)
-                    nowBox = Itembox.Length - 1;
+                    nowBox = Box_item.Length - 1;
                 else
                     nowBox--;
             }
             if (move_ctr.OnCrossDown)
             {
-                if (Itembox.Length - 1 < nowBox + 1)
+                if (Box_item.Length - 1 < nowBox + 1)
                     nowBox = 0;
                 else
                     nowBox++;
             }
-            ItemFrame.transform.position = Itembox[nowBox].transform.position;
+            ItemFrame.transform.position = Box_item[nowBox].transform.position;
             break;
         }
 
@@ -109,15 +116,22 @@ public class AlchemyUIController : MonoBehaviour {
             if (!move_ctr.OnCrossRigtht && !move_ctr.OnCrossLeft)
                 break;
 
-            if (move_ctr.OnCrossRigtht)
+            if (_boxRight)
+            {
+                Box_item[0] = mtr_0;
+                Box_item[1] = mtr_1;
+                Debug.Log("Item:" + Box_item[0].name);
+                _boxRight = false;
+            }
+            else
             {
                 
+                Debug.Log("Item:" + Box_item[0].name);
+                _boxRight = true;
             }
-            if (move_ctr.OnCrossLeft)
-            {
-
-            }
-            ItemFrame.transform.position = Itembox[nowBox].transform.position;
+            Debug.Log("_boxRight = " + _boxRight);
+            
+            ItemFrame.transform.position = Box_item[0].transform.position;
             break;
         }
     }

@@ -18,7 +18,7 @@ public class BringCollider : MonoBehaviour {
         _Brotherhit = false;
         _Tubohit = false;
         _bring = false;
-        move_controll = gameObject.transform.parent.GetComponent<MoveController>();
+        move_controll = gameObject.transform.parent.GetComponentInChildren<MoveController>();
     }
 	
 	// Update is called once per frame

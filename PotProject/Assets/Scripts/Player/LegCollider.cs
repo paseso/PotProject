@@ -9,7 +9,7 @@ public class LegCollider : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        move_ctr = transform.parent.GetComponent<MoveController>();
+        move_ctr = transform.parent.GetComponentInChildren<MoveController>();
         _legFloor = false;
 	}
     

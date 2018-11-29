@@ -26,7 +26,7 @@ public class AttackZoonController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        move_ctr = gameObject.transform.parent.GetComponent<MoveController>();
+        move_ctr = gameObject.transform.parent.GetComponentInChildren<MoveController>();
         Attack_Target = null;
         _attackMonster = false;
 	}
