@@ -12,8 +12,6 @@ public class GimmickController :MonoBehaviour {
     private StageController sManager;
     private MapInfo mInfo;
     private GimmickInfo gInfo;
-    
-    
 
     // Use this for initialization
     void Start() {
@@ -89,7 +87,14 @@ public class GimmickController :MonoBehaviour {
     /// 木(ツル)を成長させる
     /// </summary>
     public void Grow() {
+        Vector2 defaultScale = mInfo.tree.transform.localScale;
         mInfo.tree.transform.DOScaleY(1f, 1f).SetEase(Ease.Linear);
+        float time = 0;
+        while(time < 3)
+        {
+            time += 1 * Time.deltaTime;
+        }
+        mInfo.tree.transform.DOScaleY(defaultScale.y, 1f).SetEase(Ease.Linear);
     }
 
     /// <summary>
@@ -99,7 +104,6 @@ public class GimmickController :MonoBehaviour {
     public void BakeTree(GameObject obj)
     {
         StartCoroutine(Bake(obj));
-        StartCoroutine(DelayMethod(1f, Grow));
     }
 
     /// <summary>
@@ -126,10 +130,15 @@ public class GimmickController :MonoBehaviour {
         // Destroy
     }
 
-    public IEnumerator DelayMethod(float time,Action action)
+    // 浮く座標(仮)
+    private float endPos;
+
+    /// <summary>
+    /// 水でタイルを浮かせる
+    /// </summary>
+    public void FloatingTile(GameObject obj)
     {
-        yield return new WaitForSeconds(time);
-        action();
+        obj.transform.DOLocalMoveX(endPos,1f);
     }
-    
+
 }
