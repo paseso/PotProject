@@ -112,8 +112,10 @@ public class MapCreatorInspector : Editor
                 if (mapCreator.Map.mapDate[y].mapNum[x] != 0)
                 {
                     var tileObj = Instantiate(mapCreator.GetTile(mapCreator.Map.mapDate[y].mapNum[x]).TileObj);
-                    //  ギミックを配置するポジションにタイルがあったらレイヤーを変更
-                    if (mapCreator.GetGimmick(mapCreator.Map.gimmickDate[y].mapNum[x]).GimmickObj != null && mapCreator.GetGimmick(mapCreator.Map.gimmickDate[y].mapNum[x]).GimmickObj.GetComponent<GimmickInfo>() != null)
+                    tileObj.transform.parent = rootObj.transform;
+                    tileObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
+                    //  周りにはしごギミックがあったらレイヤーを変更
+                    if (mapCreator.Map.gimmickDate[y].mapNum[x] != 0 && mapCreator.GetGimmick(mapCreator.Map.gimmickDate[y].mapNum[x]).GimmickObj.GetComponent<GimmickInfo>() != null)
                     {
                         if (mapCreator.GetGimmick(mapCreator.Map.gimmickDate[y].mapNum[x]).GimmickObj.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
                         {
@@ -121,8 +123,6 @@ public class MapCreatorInspector : Editor
                             tileObj.layer = LayerMask.NameToLayer("LadderBrock");
                         }
                     }
-                    tileObj.transform.parent = rootObj.transform;
-                    tileObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
                 }
                 if (mapCreator.Map.gimmickDate[y].mapNum[x] != 0)
                 {
