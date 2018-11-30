@@ -6,7 +6,6 @@ using UnityEngine;
 [DefaultExecutionOrder(-1)]
 public class MoveController : MonoBehaviour
 {
-
     [SerializeField]
     private float speed = 0f;
 
@@ -216,7 +215,6 @@ public class MoveController : MonoBehaviour
             case Status.EventState.ALCHEMYUI:
                 Debug.Log("AlchemyUI");
                 UIControll();
-
                 break;
         }
 
@@ -358,11 +356,12 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.CIRCLE:
                 //Debug.Log("〇");
-                if (atc_ctr.AttackMonster)
-                {
-                    atc_ctr.AttackObject();
-                }
-                else if (manager.AlchemyWindow)
+                //if (atc_ctr.AttackMonster)
+                //{
+                //    atc_ctr.AttackObject();
+                //}
+                //else 
+                if (manager.AlchemyWindow)
                 {
                     _onCircle = true;
                 }
@@ -436,14 +435,14 @@ public class MoveController : MonoBehaviour
             case ButtonType.CROSSX_RIGTH:
                 if (!manager.AlchemyWindow)
                     return;
-
+                
                 _onCrossRight = true;
                 break;
 
             case ButtonType.CROSSX_LEFT:
                 if (!manager.AlchemyWindow)
                     return;
-
+                
                 _onCrossLeft = true;
                 break;
 
@@ -451,7 +450,7 @@ public class MoveController : MonoBehaviour
                 Debug.Log("Cross_Up");
                 if (!manager.AlchemyWindow)
                     return;
-
+                
                 _onCrossUp = true;
                 break;
 
@@ -459,7 +458,7 @@ public class MoveController : MonoBehaviour
                 Debug.Log("Cross_Down");
                 if (!manager.AlchemyWindow)
                     return;
-
+                
                 _onCrossDown = true;
                 break;
         }
