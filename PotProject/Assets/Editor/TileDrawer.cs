@@ -10,9 +10,8 @@ public class TileDrawer : PropertyDrawer
         //元は 1 つのプロパティーであることを示すために PropertyScope で囲む
         using (new EditorGUI.PropertyScope(position, label, property))
         {
-
             //サムネの領域を確保するためにラベル領域の幅を小さくする
-            EditorGUIUtility.labelWidth = 50;
+            EditorGUIUtility.labelWidth = 5000;
 
             position.height = EditorGUIUtility.singleLineHeight;
 
@@ -34,12 +33,8 @@ public class TileDrawer : PropertyDrawer
             var objProperty = property.FindPropertyRelative("tileObj");
 
             //各プロパティーの GUI を描画
-            iconProperty.objectReferenceValue =
-              EditorGUI.ObjectField(iconRect,
-                iconProperty.objectReferenceValue, typeof(Texture), false);
-            objProperty.objectReferenceValue =
-                EditorGUI.ObjectField(objRect,
-                objProperty.objectReferenceValue, typeof(GameObject), false);
+            iconProperty.objectReferenceValue = EditorGUI.ObjectField(iconRect, iconProperty.objectReferenceValue, typeof(Texture), false);
+            objProperty.objectReferenceValue = EditorGUI.ObjectField(objRect, objProperty.objectReferenceValue, typeof(GameObject), false);
         }
     }
 
