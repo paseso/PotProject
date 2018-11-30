@@ -13,13 +13,39 @@ using UnityEngine;
 
 public class CrossAxisDown : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
+    //前回のAxis値
+    private float beforeValue = 0f;
+    //今回のAxis値
+    private float afterValue = 0f;
+    //比較してちがうかどうか
+    private bool _comparison = false;
+    //押してるかどうか
+    private bool _keepDown = false;
+    //CrossRightの上下左右のフラグ
+    private bool[] _crossFlag = { false, false, false, false };
+
+    private MoveController move_ctr;
+
+    // Use this for initialization
+    void Start () {
+        move_ctr = GetComponent<MoveController>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    /// <summary>
+    /// CrossRightのInput.GetDownを取得する処理
+    /// </summary>
+    private void CrossDown()
+    {
+        //今回の値を取得
+        afterValue = move_ctr.CrossAxisValue;
+
+
+        //今回の値を前回の値変数に入れる
+        beforeValue = afterValue;
+    }
 }
