@@ -102,6 +102,7 @@ public class AlchemyUIController : MonoBehaviour {
     /// </summary>
     private void ItemFrameMove()
     {
+        //上下押した時
         while (move_ctr.OnCrossUp || move_ctr.OnCrossDown)
         {
             if (!move_ctr.OnCrossUp && !move_ctr.OnCrossDown)
@@ -124,7 +125,7 @@ public class AlchemyUIController : MonoBehaviour {
             ItemFrame.transform.position = Box_item[nowBox].transform.position;
             break;
         }
-
+        //左右押した時
         while(move_ctr.OnCrossRigtht || move_ctr.OnCrossLeft)
         {
             if (!move_ctr.OnCrossRigtht && !move_ctr.OnCrossLeft)
