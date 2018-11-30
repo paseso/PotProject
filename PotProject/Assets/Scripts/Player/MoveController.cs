@@ -12,6 +12,8 @@ public class MoveController : MonoBehaviour
     [SerializeField]
     private float ladderSpeed;
 
+    private float axisValue = 0f;
+
     private Rigidbody2D rig;
     //ジャンプできるかどうか
     [HideInInspector]
@@ -132,6 +134,11 @@ public class MoveController : MonoBehaviour
         get { return _onR2; }
     }
     //------------------------------------------
+    //CrossX,YのAixsの値
+    public float CrossAxisValue
+    {
+        get { return axisValue; }
+    }
 
     private enum ButtonType
     {
@@ -181,6 +188,7 @@ public class MoveController : MonoBehaviour
         obj_sprite = gameObject.transform.parent.GetComponent<SpriteRenderer>();
         _isJump = false;
         _onCrossYTrigger = false;
+        axisValue = 0f;
     }
 
     // Update is called once per frame
@@ -435,14 +443,16 @@ public class MoveController : MonoBehaviour
             case ButtonType.CROSSX_RIGTH:
                 if (!manager.AlchemyWindow)
                     return;
-                
+
+                axisValue = Input.GetAxis("CrossX");
                 _onCrossRight = true;
                 break;
 
             case ButtonType.CROSSX_LEFT:
                 if (!manager.AlchemyWindow)
                     return;
-                
+
+                axisValue = Input.GetAxis("CrossX");
                 _onCrossLeft = true;
                 break;
 
@@ -450,7 +460,8 @@ public class MoveController : MonoBehaviour
                 Debug.Log("Cross_Up");
                 if (!manager.AlchemyWindow)
                     return;
-                
+
+                axisValue = Input.GetAxis("CrossY");
                 _onCrossUp = true;
                 break;
 
@@ -458,7 +469,8 @@ public class MoveController : MonoBehaviour
                 Debug.Log("Cross_Down");
                 if (!manager.AlchemyWindow)
                     return;
-                
+
+                axisValue = Input.GetAxis("CrossY");
                 _onCrossDown = true;
                 break;
         }

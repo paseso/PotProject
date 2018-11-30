@@ -1,22 +1,122 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
+[RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoBehaviour {
 
-    public enum BGMList {
-        Title,
-        Main,
-        Result,
+    #region Singleton
+
+    private static SoundManager instance;
+
+    public static SoundManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = (SoundManager)FindObjectOfType(typeof(SoundManager));
+
+                if (instance == null)
+                {
+                    Debug.LogError(typeof(SoundManager) + "is nothing");
+                }
+            }
+            return instance;
+        }
     }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    #endregion Singleton
+
+
+    public enum BGM_NAME {
+        Title,
+        Main,
+        Result
+    };
+    public enum SE_NAME
+    {
+        ButtonTap1 = 0,
+        ButtonTap2,
+        ButtonTap3,
+    };
+
+
+    [SerializeField]
+    AudioClip[] BGMList = new AudioClip[3];
+
+    [SerializeField]
+    AudioClip[] SEList = new AudioClip[3];
+
+    private AudioSource audioSource;
+
+    [SerializeField]
+    AudioMixer bgmMixer;
+
+    void Awake()
+    {
+        if (this != Instance)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        DontDestroyOnLoad(gameObject);
+    }
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+        PlayBgm(0);
+    }
+    public void PlayBgm(int BGM_num)
+    {
+        audioSource.clip = BGMList[BGM_num];
+        audioSource.Play();
+    }
+
+    public void PlaySe(int SEnum)
+    {
+        audioSource.PlayOneShot(SEList[SEnum]);
+    }
+    public void PlaySe(int SEnum, float vol = 1.0f)
+    {
+        audioSource.PlayOneShot(SEList[SEnum], vol);
+    }
+
+    public void FadeOutBGM()
+    {
+        StartCoroutine(FadeOutBgm(1));
+    }
+
+    public void FadeInBGM()
+    {
+        StartCoroutine(FadeOutBgm(1));
+    }
+
+
+    IEnumerator FadeOutBgm(float interval)
+    {
+        //だんだん小さく
+        float time = 0;
+        while (time <= interval)
+        {
+            bgmMixer.SetFloat("BGM", Mathf.Lerp(0, -40, time / interval));
+            time += Time.unscaledDeltaTime;
+            yield return 0;
+        }
+        yield break;
+    }
+    IEnumerator FadeInBgm(float interval)
+    {
+        //だんだん小さく
+        float time = 0;
+        while (time <= interval)
+        {
+            bgmMixer.SetFloat("BGM", Mathf.Lerp(-40, 0, time / interval));
+            time += Time.unscaledDeltaTime;
+            yield return 0;
+        }
+        yield break;
+    }
 }

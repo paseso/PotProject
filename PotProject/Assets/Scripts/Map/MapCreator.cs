@@ -10,22 +10,23 @@ public class MapCreator : MonoBehaviour
     [SerializeField]
     private Gimmick[] gimmicks;
     [SerializeField]
-    private Enemy[] enemys;
+    private Enemy[] enemies;
     [SerializeField]
     private MapDate map;
-    public MapDate ResourceMap;
     [HideInInspector]
     public GameObject tilePrefab;
+
+    public Tile[] GetTiles() { return tiles; }
+    public Tile GetTile(int index) { return tiles[index]; }
+    public Gimmick[] GetGimmicks() { return gimmicks; }
+    public Gimmick GetGimmick(int index) { return gimmicks[index]; }
+    public Enemy[] GetEnemies() { return enemies; }
+    public Enemy GetEnemy(int index) { return enemies[index]; }
 
     public MapDate Map
     {
         get{ return map; }
         set{ map = value; }
-    }
-
-    public Tile[] GetTileList()
-    {
-        return tiles;
     }
 }
 
@@ -54,19 +55,47 @@ public class Tile
 public class Gimmick
 {
     [SerializeField]
-    private Texture2D gimmickImage;
+    private Texture gimmickImage;
     [SerializeField]
-    private Vector2 size;
+    private Vector2 gimmickSize;
     [SerializeField]
     private GameObject gimmickObj;
+
+    public Texture GimmickImage
+    {
+        get { return gimmickImage; }
+        //set { gimmickImage = value; }
+    }
+    public Vector2 GimmickSize
+    {
+        get { return gimmickSize; }
+        //set { gimmickSize = value; }
+    }
+    public GameObject GimmickObj
+    {
+        get { return gimmickObj; }
+        //set { gimmickObj = value; }
+    }
 }
 
 [System.Serializable]
 public class Enemy
 {
     [SerializeField]
-    private Texture2D enemyImage;
+    private Texture enemyImage;
     [SerializeField]
     private GameObject enemyObj;
+
+    public Texture EnemyImage
+    {
+        get { return enemyImage; }
+        //set { enemyImage = value; }
+    }
+
+    public GameObject EnemyObj
+    {
+        get { return enemyObj; }
+        //set { enemyObj = value; }
+    }
 }
 
