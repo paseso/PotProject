@@ -15,6 +15,15 @@ public class MoveController : MonoBehaviour
     private float axisValue = 0f;
 
     private Rigidbody2D rig;
+
+    private bool isLadderTop = false;
+    // はしごの上に足がついているか
+    public bool IsLadderTop {
+        get { return isLadderTop; }
+        set { value = isLadderTop; }
+    }
+
+
     //ジャンプできるかどうか
     [HideInInspector]
     public bool _isJump = false;
@@ -271,14 +280,12 @@ public class MoveController : MonoBehaviour
         switch (btn)
         {
             case ButtonType.JUMP:
-                //Debug.Log("×");
                 if (!_isJump)
                     return;
                 rig.velocity = new Vector2(0, 1f * speed);
                 break;
 
             case ButtonType.LEFTJOYSTICK_LEFT:
-                //Debug.Log("LEFT");
                 _onLeft = true;
                 _onRight = false;
                 if (!_ActiveRightLeft)
@@ -289,7 +296,6 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.LEFTJOYSTICK_RIGHT:
-                //Debug.Log("RIGHT");
                 _onRight = true;
                 _onLeft = false;
                 if (!_ActiveRightLeft)
@@ -306,9 +312,6 @@ public class MoveController : MonoBehaviour
                 if (status.state == Status.State.ONLADDER) {
                     Ladder(ladderSpeed, 1);
                 }
-
-                //rig.bodyType = RigidbodyType2D.Kinematic;
-                //rig.velocity = new Vector2(rig.velocity.x, 5f);
                 _onUp = false;
                 break;
 
@@ -320,14 +323,6 @@ public class MoveController : MonoBehaviour
                 if (status.state == Status.State.ONLADDER) {
                     Ladder(ladderSpeed, -1);
                 }
-
-                //_onDown = true;
-                //if (_ActiveRightLeft)
-                //    return;
-                
-                //rig.bodyType = RigidbodyType2D.Kinematic;
-                //rig.velocity = new Vector2(rig.velocity.x, -5f);
-                //_onDown = false;
                 break;
 
             case ButtonType.RIGHTJOYSTICK_LEFT:
@@ -363,12 +358,6 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.CIRCLE:
-                //Debug.Log("〇");
-                //if (atc_ctr.AttackMonster)
-                //{
-                //    atc_ctr.AttackObject();
-                //}
-                //else 
                 if (manager.AlchemyWindow)
                 {
                     _onCircle = true;
@@ -376,7 +365,6 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.SQUARE:
-                //Debug.Log("□");
                 if (!bringctr._Brotherhit)
                     return;
 
@@ -398,7 +386,6 @@ public class MoveController : MonoBehaviour
                     }
                     Debug.Log("Right：" + OnRight);
                     Debug.Log("Left：" + OnLeft);
-                    //target.gameObject.transform.position = new Vector2(gameObject.transform.position.x + 2f, gameObject.transform.position.y + 1);
                     target.gameObject.transform.parent = null;
                     target.GetComponent<Rigidbody2D>().simulated = true;
                     bringctr._bring = false;
@@ -487,14 +474,12 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void BtnCheck()
     {
+        // はしご内で昇降ボタンを離したとき
         if(Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.W))
         {
-            if (status.state == Status.State.ONLADDER)
+            if (status.state == Status.State.ONLADDER && !_isJump)
             {
-                transform.parent.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-                Vector2 pos = transform.position;
-                RaycastHit2D ray = Physics2D.Raycast(pos, new Vector2(0, -1));
-                
+                transform.parent.GetComponent<Rigidbody2D>().simulated = false;
             }
         }
 
@@ -512,9 +497,12 @@ public class MoveController : MonoBehaviour
         }
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
         {
+            if (status.state == Status.State.ONLADDER && !_isJump)
+            {
+                transform.parent.GetComponent<Rigidbody2D>().simulated = false;
+            }
+
             rig.velocity = new Vector2(0, rig.velocity.y);
-            //_onLeft = false;
-            //_onRight = false;
         }
         if (Input.GetAxis("Horizontal_ps4") >= 0.15f || Input.GetKey(KeyCode.W))
         {
@@ -631,17 +619,22 @@ public class MoveController : MonoBehaviour
     /// <summary>
     /// はしごの上下処理
     /// </summary>
-    /// <param name="player"></param>
     /// <param name="speed"></param>
     /// <param name="dir"></param>
     public void Ladder(float speed, float dir)
     {
-        transform.parent.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        transform.parent.GetComponent<Rigidbody2D>().simulated = true;
+        var children = transform.parent.transform;
+        foreach(Transform child in children)
+        {
+            if (child.GetComponent<Collider2D>())
+            {
+                child.gameObject.layer = LayerMask.NameToLayer("LadderPlayer");
+            }
+        }
         Debug.Log("Ladder");
-        gameObject.layer = LayerMask.NameToLayer("LadderPlayer");
+        gameObject.transform.parent.gameObject.layer = LayerMask.NameToLayer("LadderPlayer");
         transform.parent.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed * dir);
-        Vector2 pos = transform.position;
-        Debug.DrawRay(pos, new Vector2(0, -1),Color.red,10f);
     }
 
     private void HitRayWall()
@@ -667,11 +660,20 @@ public class MoveController : MonoBehaviour
         {
             switch (col.GetComponent<GimmickInfo>().type)
             {
-                case GimmickInfo.GimmickType.LADDER:
-                    status.state = Status.State.ONLADDER;
-                    break;
                 case GimmickInfo.GimmickType.GROWTREE:
                     status.state = Status.State.ONTREE;
+                    break;
+                case GimmickInfo.GimmickType.LADDERTOP:
+                    if (!IsLadderTop)
+                    {
+                        IsLadderTop = true;
+                        status.state = Status.State.ONLADDER;
+                    }
+                    else
+                    {
+                        status.state = Status.State.NORMAL;
+                        ChangeLayer();
+                    }
                     break;
             }
         }
@@ -681,14 +683,30 @@ public class MoveController : MonoBehaviour
     {
         if (col.GetComponent<GimmickInfo>())
         {
-            if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
+            if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER && _isJump)
             {
                 status.state = Status.State.NORMAL;
             }
-            if (gameObject.layer != LayerMask.NameToLayer("Player"))
+            ChangeLayer();
+        }
+    }
+
+    /// <summary>
+    /// レイヤー変更
+    /// </summary>
+    public void ChangeLayer()
+    {
+        if (gameObject.layer != LayerMask.NameToLayer("Player"))
+        {
+            var children = transform.parent.transform;
+            foreach (Transform child in children)
             {
-                gameObject.layer = LayerMask.NameToLayer("Player");
+                if (child.GetComponent<Collider2D>())
+                {
+                    child.gameObject.layer = LayerMask.NameToLayer("Player");
+                }
             }
+            gameObject.transform.parent.gameObject.layer = LayerMask.NameToLayer("Player");
         }
     }
 }
