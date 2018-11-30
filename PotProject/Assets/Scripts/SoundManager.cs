@@ -47,7 +47,7 @@ public class SoundManager : MonoBehaviour {
     AudioClip[] BGMList = new AudioClip[3];
 
     [SerializeField]
-    AudioClip[] SeList = new AudioClip[3];
+    AudioClip[] SEList = new AudioClip[3];
 
     private AudioSource audioSource;
 
@@ -77,11 +77,11 @@ public class SoundManager : MonoBehaviour {
 
     public void PlaySe(int SEnum)
     {
-        audioSource.PlayOneShot(SeList[SEnum]);
+        audioSource.PlayOneShot(SEList[SEnum]);
     }
     public void PlaySe(int SEnum, float vol = 1.0f)
     {
-        audioSource.PlayOneShot(SeList[SEnum], vol);
+        audioSource.PlayOneShot(SEList[SEnum], vol);
     }
 
     public void FadeOutBGM()

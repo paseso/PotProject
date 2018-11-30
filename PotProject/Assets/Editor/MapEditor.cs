@@ -21,8 +21,6 @@ public class MapEditor : EditorWindow {
     private Rect rect;
     private Rect[,] gridRect;
     private Color gridColor;
-    private Color gridColorRed = new Color(1,0,0,0.25f);
-    private Color gridColorGreen = new Color(0,1,0,0.5f);
 
     //  選択中のボタンの種類
     private int SelectNum = 0;
@@ -264,7 +262,7 @@ public class MapEditor : EditorWindow {
     private void DrawGrig(Rect _rect)
     {
         //  グリッドの色を設定
-        Handles.color = (toolberInt == 0) ? new Color(1,1,1,0.25f) : (toolberInt == 1) ? gridColorRed : new Color(0,1,0,0.25f);
+        Handles.color = (toolberInt == 0) ? new Color(1,1,1,0.25f) : (toolberInt == 1) ? new Color(1, 0, 0, 0.25f) : new Color(0,1,0,0.25f);
         // upper line
         Handles.DrawLine(
             new Vector2(_rect.position.x, _rect.position.y),
