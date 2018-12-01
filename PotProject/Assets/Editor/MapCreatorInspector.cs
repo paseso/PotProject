@@ -109,30 +109,33 @@ public class MapCreatorInspector : Editor
         {
             for(int x = 0; x < xLength; x++)
             {
-                if (mapCreator.Map.mapDate[y].mapNum[x] != 0)
+                int tilenum = mapCreator.Map.mapDate[y].mapNum[x];
+                int gimmickNum = mapCreator.Map.gimmickDate[y].mapNum[x];
+                int enemyNum = mapCreator.Map.enemyDate[y].mapNum[x];
+                if (tilenum != 0)
                 {
-                    var tileObj = Instantiate(mapCreator.GetTile(mapCreator.Map.mapDate[y].mapNum[x]).TileObj);
+                    var tileObj = Instantiate(mapCreator.GetTile(tilenum).TileObj);
                     tileObj.transform.parent = rootObj.transform;
                     tileObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
                     //  周りにはしごギミックがあったらレイヤーを変更
-                    if (mapCreator.Map.gimmickDate[y].mapNum[x] != 0 && mapCreator.GetGimmick(mapCreator.Map.gimmickDate[y].mapNum[x]).GimmickObj.GetComponent<GimmickInfo>() != null)
+                    if ((gimmickNum != 0 && mapCreator.GetGimmick(gimmickNum).GimmickObj.GetComponent<GimmickInfo>() != null) || (gimmickNum != 0 && mapCreator.GetGimmick(mapCreator.Map.gimmickDate[y].mapNum[x + 1]).GimmickObj.GetComponent<GimmickInfo>() != null) || (mapCreator.Map.gimmickDate[y].mapNum[x] != 0 && mapCreator.GetGimmick(mapCreator.Map.gimmickDate[y].mapNum[x - 1]).GimmickObj.GetComponent<GimmickInfo>() != null))
                     {
-                        if (mapCreator.GetGimmick(mapCreator.Map.gimmickDate[y].mapNum[x]).GimmickObj.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
+                        if (mapCreator.GetGimmick(gimmickNum).GimmickObj.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
                         {
                             Debug.Log("レイヤー変更");
                             tileObj.layer = LayerMask.NameToLayer("LadderBrock");
                         }
                     }
                 }
-                if (mapCreator.Map.gimmickDate[y].mapNum[x] != 0)
+                if (gimmickNum != 0)
                 {
-                    var gimmickObj = Instantiate(mapCreator.GetGimmick(mapCreator.Map.gimmickDate[y].mapNum[x]).GimmickObj);
+                    var gimmickObj = Instantiate(mapCreator.GetGimmick(gimmickNum).GimmickObj);
                     gimmickObj.transform.parent = rootObj.transform;
                     gimmickObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
                 }
-                if (mapCreator.Map.enemyDate[y].mapNum[x] != 0)
+                if (enemyNum != 0)
                 {
-                    var enemyObj = Instantiate(mapCreator.GetEnemy(mapCreator.Map.enemyDate[y].mapNum[x]).EnemyObj);
+                    var enemyObj = Instantiate(mapCreator.GetEnemy(enemyNum).EnemyObj);
                     enemyObj.transform.parent = rootObj.transform;
                     enemyObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
                 }
