@@ -25,6 +25,8 @@ public class AlchemyUIController : MonoBehaviour {
     //-----------------------------------
     private int nowBox = 0;
     private GameObject[] Box_item;
+    private List<ItemStatus.ITEM> items = new List<ItemStatus.ITEM>();
+    private List<ItemStatus.ITEM> Materials_item = new List<ItemStatus.ITEM>();
     private bool _boxRight = true;
 
     private MoveController move_ctr;
@@ -50,6 +52,7 @@ public class AlchemyUIController : MonoBehaviour {
         _boxRight = true;
         Box_item = new GameObject[Itembox.Length];
         ClearJoystickRotation();
+        Materials_item.Clear();
     }
 	
 	// Update is called once per frame
@@ -72,6 +75,7 @@ public class AlchemyUIController : MonoBehaviour {
             Sprite img = Box_item[nowBox].GetComponent<Image>().sprite;
             if (img == null)
                 return;
+            
             Image mtr_0_img = mtr_0.GetComponent<Image>();
             Image mtr_1_img = mtr_1.GetComponent<Image>();
             if (mtr_0_img.sprite == null)
@@ -82,10 +86,13 @@ public class AlchemyUIController : MonoBehaviour {
             {
                 mtr_1_img.sprite = img;
             }
+
+            Materials_item.Add(items[nowBox]);
         }
         else
         {
             Box_item[nowBox].GetComponent<Image>().sprite = null;
+            Materials_item.RemoveAt(nowBox);
         }
     }
 
@@ -190,7 +197,7 @@ public class AlchemyUIController : MonoBehaviour {
             }
             else
             {
-                player_ctr.ItemAlchemy(ItemStatus.ITEM.GOLEM);
+                //player_ctr.ItemAlchemy(Materials_item);
                 ClearJoystickRotation();
             }
         }
@@ -212,7 +219,7 @@ public class AlchemyUIController : MonoBehaviour {
     /// </summary>
     public void setItemboxImage()
     {
-        List<ItemStatus.ITEM> items = player_ctr.getItemList();
+        items = player_ctr.getItemList();
         for (int i = 0; i < items.Count; i++)
         {
             Image item_img = Itembox[i].GetComponent<Image>();
