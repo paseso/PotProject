@@ -39,23 +39,31 @@ public class CrossAxisDown : MonoBehaviour {
     private int CrossLeftKeep   = 0x0002;
     //-------------------------------------
 
+    public bool getKeepDown
+    {
+        get { return _keepDown; }
+    }
+
     // Use this for initialization
     void Start () {
         move_ctr = GetComponent<MoveController>();
         _crossFlag = new bool[4] { false, false, false, false };
         Bit_flag_cross = 0x0000;
+        _keepDown = false;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        //_crossFlag = new bool[4] { move_ctr.OnCrossUp, move_ctr.OnCrossRigtht, move_ctr.OnCrossDown, move_ctr.OnCrossLeft };
+        if (move_ctr.OnCrossUp || move_ctr.OnCrossDown || move_ctr.OnCrossRigtht || move_ctr.OnCrossLeft)
+        {
+            afterValue = 1;
+        }
+        else
+        {
+            afterValue = 0;
+            beforeValue = 0;
+        }
         CrossDown();
-    }
-
-    private void LateUpdate()
-    {
-        CrossKeep();
-
     }
 
     /// <summary>
@@ -64,13 +72,16 @@ public class CrossAxisDown : MonoBehaviour {
     private void CrossDown()
     {
         //今回の値を取得
-        afterValue = move_ctr.CrossAxisValue;
+
         //前回の値と今回の値が異なっていて、かつ押されたフラグがtrueだったら
         if (afterValue == beforeValue)
         {
+            _keepDown = true;
             return;
         }
-            
+
+        _keepDown = false;
+
         if (move_ctr.OnCrossUp)
         {
             Bit_flag_cross = CrossUpInput;
@@ -90,7 +101,7 @@ public class CrossAxisDown : MonoBehaviour {
 
         //今回の値を前回の値変数に入れる
         beforeValue = afterValue;
-        Debug.Log("Bit_flag_cross: " + Bit_flag_cross);
+        CrossKeep();
     }
 
     /// <summary>
@@ -102,6 +113,8 @@ public class CrossAxisDown : MonoBehaviour {
         if (afterValue != beforeValue)
         {
             Bit_flag_cross = 0x0000;
+            beforeValue = 0;
+            _keepDown = false;
         }
         else
         {

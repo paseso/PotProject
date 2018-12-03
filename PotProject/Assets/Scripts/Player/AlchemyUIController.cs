@@ -28,6 +28,7 @@ public class AlchemyUIController : MonoBehaviour {
     private bool _boxRight = true;
 
     private MoveController move_ctr;
+    private CrossAxisDown crossAxisdown;
 
     //---ジョイスティックを回す時に使う変数-----
     private bool _one = false;
@@ -42,6 +43,8 @@ public class AlchemyUIController : MonoBehaviour {
         player_ctr.setItemList(ItemStatus.ITEM.SNAKE);
         nowBox = 0;
         move_ctr = GameObject.Find("Brother/Body").GetComponent<MoveController>();
+        crossAxisdown = move_ctr.gameObject.GetComponent<CrossAxisDown>();
+
         mtr_0 = IntoPot.transform.GetChild(0).GetChild(0).gameObject;
         mtr_1 = IntoPot.transform.GetChild(0).GetChild(1).gameObject;
         _boxRight = true;
@@ -102,6 +105,12 @@ public class AlchemyUIController : MonoBehaviour {
     /// </summary>
     private void ItemFrameMove()
     {
+        if (crossAxisdown.getKeepDown)
+        {
+            Debug.Log("KeepDown: " + crossAxisdown.getKeepDown);
+            return;
+        }
+            
         //上下押した時
         while (move_ctr.OnCrossUp || move_ctr.OnCrossDown)
         {
