@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212459998275877722}
   - component: {fileID: 50155233871850762}
   - component: {fileID: 61623216280089796}
+  - component: {fileID: 114374333368176786}
   m_Layer: 0
   m_Name: HarbPrefab
   m_TagString: Untagged
@@ -87,6 +88,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.38, y: 1.7}
   m_EdgeRadius: 0
+--- !u!114 &114374333368176786
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1612088441867594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a645bff2f9392364a9d7268cfe98560d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212459998275877722
 SpriteRenderer:
   m_ObjectHideFlags: 1
