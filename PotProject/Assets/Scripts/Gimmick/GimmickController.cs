@@ -45,9 +45,14 @@ public class GimmickController :MonoBehaviour {
                     mInfo.rock.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
                     mInfo.UpRockFlag = true;
                     break;
-                //case GimmickInfo.GimmickType.GRASS:
-                //    DropHarb();
-                //    break;
+                case GimmickInfo.GimmickType.BAKETREE:
+                    BakeTree(gameObject);
+                    break;
+                case GimmickInfo.GimmickType.GRASS:
+                    DropHarb();
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -66,6 +71,8 @@ public class GimmickController :MonoBehaviour {
             case GimmickInfo.GimmickType.LADDER:
                 
                 break;
+            default:
+                break;
         }
     }
 
@@ -82,6 +89,8 @@ public class GimmickController :MonoBehaviour {
 
             case GimmickInfo.GimmickType.LADDER:
                 
+                break;
+            default:
                 break;
         }
     }
@@ -118,17 +127,16 @@ public class GimmickController :MonoBehaviour {
     {
         for (int i = 2; i >= 0; i--)
         {
+            Debug.Log("bake" + i);
+            Sprite sp_tree = Resources.Load<Sprite>("Textures/Gimmicks/fire" + i);
+            gameObject.GetComponent<SpriteRenderer>().sprite = sp_tree;
+            yield return new WaitForSeconds(1f);
             if (i == 2)
             {
                 // 燃えるエフェクト
-                yield return new WaitForSeconds(1f);
-                continue;
             }
-            // 画像変更処理
-            yield return new WaitForSeconds(1f);
-            
-            Debug.Log("bake" + i);
         }
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
         yield return new WaitForSeconds(1f);
         // Destroy
     }
@@ -150,10 +158,9 @@ public class GimmickController :MonoBehaviour {
     public void DropHarb()
     {
         // ドロップする薬草をResourcesから生成
-        GameObject harb = Instantiate(Resources.Load("Prefabs/HarbPrefab"),transform.root.transform) as GameObject;
+        GameObject harb = Instantiate(Resources.Load<GameObject>("Prefabs/HarbPrefab"),transform.parent.transform);
         harb.transform.localPosition = transform.localPosition;
         Destroy(gameObject);
-        harb.GetComponent<Rigidbody2D>().AddForce(new Vector2(0,100));
     }
 
     /// <summary>
