@@ -671,9 +671,13 @@ public class MoveController : MonoBehaviour
                     }
                     else
                     {
+                        IsLadderTop = false;
                         status.state = Status.State.NORMAL;
                         ChangeLayer();
                     }
+                    break;
+                case GimmickInfo.GimmickType.LADDER:
+                    status.state = Status.State.ONLADDER;
                     break;
             }
         }
@@ -681,13 +685,17 @@ public class MoveController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        if (col.GetComponent<GimmickInfo>())
+        if (col.GetComponent<GimmickInfo>() && _isJump)
         {
-            if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER && _isJump)
-            {
-                status.state = Status.State.NORMAL;
+            switch (col.GetComponent<GimmickInfo>().type) {
+                case GimmickInfo.GimmickType.LADDER:
+                    status.state = Status.State.NORMAL;
+                    ChangeLayer();
+                    break;
+                case GimmickInfo.GimmickType.LADDERTOP:
+                    status.state = Status.State.NORMAL;
+                    break;
             }
-            ChangeLayer();
         }
     }
 
