@@ -45,6 +45,9 @@ public class GimmickController :MonoBehaviour {
                     mInfo.rock.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
                     mInfo.UpRockFlag = true;
                     break;
+                //case GimmickInfo.GimmickType.GRASS:
+                //    DropHarb();
+                //    break;
             }
         }
     }
@@ -61,7 +64,7 @@ public class GimmickController :MonoBehaviour {
                 break;
 
             case GimmickInfo.GimmickType.LADDER:
-                mInfo.LadderFlag = true;
+                
                 break;
         }
     }
@@ -78,7 +81,7 @@ public class GimmickController :MonoBehaviour {
                 break;
 
             case GimmickInfo.GimmickType.LADDER:
-                mInfo.LadderFlag = false;
+                
                 break;
         }
     }
@@ -138,7 +141,29 @@ public class GimmickController :MonoBehaviour {
     /// </summary>
     public void FloatingTile(GameObject obj)
     {
-        obj.transform.DOLocalMoveX(endPos,1f);
+        
     }
 
+    /// <summary>
+    /// 薬草ドロップ
+    /// </summary>
+    public void DropHarb()
+    {
+        // ドロップする薬草をResourcesから生成
+        GameObject harb = Instantiate(Resources.Load("Prefabs/HarbPrefab"),transform.root.transform) as GameObject;
+        harb.transform.localPosition = transform.localPosition;
+        Destroy(gameObject);
+        harb.GetComponent<Rigidbody2D>().AddForce(new Vector2(0,100));
+    }
+
+    /// <summary>
+    /// 鍵付き扉
+    /// </summary>
+    public void UnlockKeyDoor()
+    {
+        // 扉（仮）
+        GameObject door = new GameObject();
+        door.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
+
+    }
 }
