@@ -12,7 +12,8 @@ public struct Status
     {
         FIRE = 0,
         WATER,
-        EARTH
+        EARTH,
+        KEY,
     }
 
     // 兄がどの状態か
