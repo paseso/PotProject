@@ -374,7 +374,7 @@ public class MoveController : MonoBehaviour
                     target.GetComponent<Rigidbody2D>().simulated = false;
                     bringctr._bring = true;
                 }
-                else if (bringctr._bring)
+                else
                 {//アイテムを離す
                     if (OnRight)
                     {

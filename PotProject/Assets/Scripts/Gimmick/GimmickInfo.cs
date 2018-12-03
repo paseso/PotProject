@@ -19,6 +19,7 @@ public class GimmickInfo : MonoBehaviour {
         LADDERTOP,
         GROWTREE,
         BAKETREE,
+        GRASS,
     }
 
     public GimmickType type;
