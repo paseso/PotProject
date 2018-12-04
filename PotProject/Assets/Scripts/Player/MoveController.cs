@@ -6,8 +6,8 @@ using UnityEngine;
 [DefaultExecutionOrder(-1)]
 public class MoveController : MonoBehaviour
 {
-    [SerializeField]
-    private float speed = 0f;
+    [HideInInspector]
+    public float speed = 0f;
 
     [SerializeField]
     private float ladderSpeed;
