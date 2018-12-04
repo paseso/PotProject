@@ -309,7 +309,7 @@ public class MoveController : MonoBehaviour
 
                 _onUp = true;
 
-                if (status.state == Status.State.ONLADDER) {
+                if (status.state == Status.GimmickState.ONLADDER) {
                     Ladder(ladderSpeed, 1);
                 }
                 _onUp = false;
@@ -320,7 +320,7 @@ public class MoveController : MonoBehaviour
                 Debug.Log("DOWN");
 
                 _onDown = true;
-                if (status.state == Status.State.ONLADDER) {
+                if (status.state == Status.GimmickState.ONLADDER) {
                     Ladder(ladderSpeed, -1);
                 }
                 break;
@@ -477,7 +477,7 @@ public class MoveController : MonoBehaviour
         // はしご内で昇降ボタンを離したとき
         if(Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.W))
         {
-            if (status.state == Status.State.ONLADDER && !_isJump)
+            if (status.state == Status.GimmickState.ONLADDER && !_isJump)
             {
                 transform.parent.GetComponent<Rigidbody2D>().simulated = false;
             }
@@ -497,7 +497,7 @@ public class MoveController : MonoBehaviour
         }
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
         {
-            if (status.state == Status.State.ONLADDER && !_isJump)
+            if (status.state == Status.GimmickState.ONLADDER && !_isJump)
             {
                 transform.parent.GetComponent<Rigidbody2D>().simulated = false;
             }
@@ -661,23 +661,23 @@ public class MoveController : MonoBehaviour
             switch (col.GetComponent<GimmickInfo>().type)
             {
                 case GimmickInfo.GimmickType.GROWTREE:
-                    status.state = Status.State.ONTREE;
+                    status.state = Status.GimmickState.ONTREE;
                     break;
                 case GimmickInfo.GimmickType.LADDERTOP:
                     if (!IsLadderTop)
                     {
                         IsLadderTop = true;
-                        status.state = Status.State.ONLADDER;
+                        status.state = Status.GimmickState.ONLADDER;
                     }
                     else
                     {
                         IsLadderTop = false;
-                        status.state = Status.State.NORMAL;
+                        status.state = Status.GimmickState.NORMAL;
                         ChangeLayer();
                     }
                     break;
                 case GimmickInfo.GimmickType.LADDER:
-                    status.state = Status.State.ONLADDER;
+                    status.state = Status.GimmickState.ONLADDER;
                     break;
             }
         }
@@ -689,11 +689,11 @@ public class MoveController : MonoBehaviour
         {
             switch (col.GetComponent<GimmickInfo>().type) {
                 case GimmickInfo.GimmickType.LADDER:
-                    status.state = Status.State.NORMAL;
+                    status.state = Status.GimmickState.NORMAL;
                     ChangeLayer();
                     break;
                 case GimmickInfo.GimmickType.LADDERTOP:
-                    status.state = Status.State.NORMAL;
+                    status.state = Status.GimmickState.NORMAL;
                     break;
             }
         }
