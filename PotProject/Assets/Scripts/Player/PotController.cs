@@ -10,34 +10,31 @@ public class PotController : MonoBehaviour {
     private BringCollider bring_col;
     [SerializeField]
     private MoveController move_ctr;
-
-    private Rigidbody2D rig;
     
 
 	// Use this for initialization
 	void Start () {
-        rig = gameObject.GetComponent<Rigidbody2D>();
+        
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        PotJump();
+        MoveCollider();
 	}
 
     /// <summary>
-    /// プレイヤーがジャンプした時に壺も一緒にジャンプする処理
+    /// 持つ範囲コライダーを左右に合わせて移動
     /// </summary>
-    private void PotJump()
+    private void MoveCollider()
     {
-        if (!move_ctr._isJump)
-        {
-            rig.velocity = new Vector2(0, 1f * (move_ctr.speed - 4));
-        }
+        //if (move_ctr._onLeft || move_ctr._onRight)
+        //{
+        //    gameObject.transform.position = new Vector2(gameObject.transform.position.x * -1, gameObject.transform.position.y);
+        //}
     }
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        //壺にアイテムを投げたら入る処理
         if (col.gameObject.GetComponent<MonsterInfo>())
         {
             Debug.Log("きてる！");
@@ -63,6 +60,9 @@ public class PotController : MonoBehaviour {
             Debug.Log("Type: " + monInfo.type);
         }
 
-        
+        if (col.gameObject.GetComponent<GimmickInfo>())
+        {
+
+        }
     }
 }
