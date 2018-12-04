@@ -112,27 +112,29 @@ public class MapCreatorInspector : Editor
                 int tilenum = mapCreator.Map.mapDate[y].mapNum[x];
                 int gimmickNum = mapCreator.Map.gimmickDate[y].mapNum[x];
                 int enemyNum = mapCreator.Map.enemyDate[y].mapNum[x];
+                //  通常タイルの生成
                 if (tilenum != 0)
                 {
                     var tileObj = Instantiate(mapCreator.GetTile(tilenum).TileObj);
                     tileObj.transform.parent = rootObj.transform;
                     tileObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
                     //  周りにはしごギミックがあったらレイヤーを変更
-                    if ((gimmickNum != 0 && mapCreator.GetGimmick(gimmickNum).GimmickObj.GetComponent<GimmickInfo>() != null) || (gimmickNum != 0 && mapCreator.GetGimmick(mapCreator.Map.gimmickDate[y].mapNum[x + 1]).GimmickObj.GetComponent<GimmickInfo>() != null) || (mapCreator.Map.gimmickDate[y].mapNum[x] != 0 && mapCreator.GetGimmick(mapCreator.Map.gimmickDate[y].mapNum[x - 1]).GimmickObj.GetComponent<GimmickInfo>() != null))
+                    if ((gimmickNum != 0 && mapCreator.GetGimmick(gimmickNum).GimmickObj.GetComponent<GimmickInfo>() != null) || (mapCreator.Map.gimmickDate[y].mapNum[x + 1] != 0 && mapCreator.GetGimmick(mapCreator.Map.gimmickDate[y].mapNum[x + 1]).GimmickObj.GetComponent<GimmickInfo>() != null) || (mapCreator.Map.gimmickDate[y].mapNum[x - 1] != 0 && mapCreator.GetGimmick(mapCreator.Map.gimmickDate[y].mapNum[x - 1]).GimmickObj.GetComponent<GimmickInfo>() != null))
                     {
                         if (mapCreator.GetGimmick(gimmickNum).GimmickObj.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
                         {
-                            Debug.Log("レイヤー変更");
                             tileObj.layer = LayerMask.NameToLayer("LadderBrock");
                         }
                     }
                 }
+                //  ギミックの生成
                 if (gimmickNum != 0)
                 {
                     var gimmickObj = Instantiate(mapCreator.GetGimmick(gimmickNum).GimmickObj);
                     gimmickObj.transform.parent = rootObj.transform;
                     gimmickObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
                 }
+                //  エネミーやポジションの生成
                 if (enemyNum != 0)
                 {
                     var enemyObj = Instantiate(mapCreator.GetEnemy(enemyNum).EnemyObj);
