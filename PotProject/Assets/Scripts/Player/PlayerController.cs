@@ -6,7 +6,13 @@ using DG.Tweening;
 public struct Status
 {
     //兄のHP
-    public int PlayerHP;
+    private int playerHP;
+    public int PlayerHP
+    {
+        get { return playerHP; }
+        set { value = playerHP; }
+    }
+
     //剣のタイプ
     public enum SWORDTYPE
     {
@@ -17,7 +23,7 @@ public struct Status
     }
 
     // 兄がどの状態か
-    public enum State
+    public enum GimmickState
     {
         NORMAL,
         ONLADDER,
@@ -36,7 +42,7 @@ public struct Status
     public SWORDTYPE swordtype;
 
     // 状態
-    public State state;
+    public GimmickState state;
 
     public EventState event_state;
 
@@ -158,6 +164,9 @@ public class PlayerController : MonoBehaviour {
                 Debug.Log("土属性");
                 sword.sprite = swordSpriteList[(int)Status.SWORDTYPE.EARTH];
                 break;
+            case Status.SWORDTYPE.KEY:
+                Debug.Log("鍵");
+                break;
         }
     }
 
@@ -201,19 +210,19 @@ public class PlayerController : MonoBehaviour {
     }
 
     /// <summary>
-    /// プレイヤーのHPが1減る処理
+    /// プレイヤーのHP処理
     /// </summary>
-    public void HpMinus()
+    public void ApplyHp(int point)
     {
-        if(status.PlayerHP <= 0)
+        if(status.PlayerHP < point)
         {
             status.PlayerHP = 0;
-            Debug.Log("もう体力がありません");
+            Debug.Log("HPが0になりました");
+            return;
         }
-        else
-        {
-            status.PlayerHP--;
-        }
-        Debug.Log("Player HP: " + status.PlayerHP);
+        status.PlayerHP += point;
+
+        // HPのUIに反映させる処理
+
     }
 }
