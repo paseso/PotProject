@@ -22,10 +22,10 @@ public class LadderTest : MonoBehaviour {
             switch (col.GetComponent<GimmickInfo>().type)
             {
                 case GimmickInfo.GimmickType.LADDER:
-                    status.state = Status.State.ONLADDER;
+                    status.state = Status.GimmickState.ONLADDER;
                     break;
                 case GimmickInfo.GimmickType.GROWTREE:
-                    status.state = Status.State.ONTREE;
+                    status.state = Status.GimmickState.ONTREE;
                     break;
             }
         }
@@ -37,7 +37,7 @@ public class LadderTest : MonoBehaviour {
         {
             if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
             {
-                status.state = Status.State.NORMAL;
+                status.state = Status.GimmickState.NORMAL;
             }
             if (gameObject.layer != LayerMask.NameToLayer("Player"))
             {
