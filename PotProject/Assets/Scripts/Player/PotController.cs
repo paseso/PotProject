@@ -10,27 +10,28 @@ public class PotController : MonoBehaviour {
     private BringCollider bring_col;
     [SerializeField]
     private MoveController move_ctr;
-    
+
+    private Rigidbody2D rig;
 
 	// Use this for initialization
 	void Start () {
-        
+        rig = gameObject.GetComponent<Rigidbody2D>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        MoveCollider();
+        PotJump();
 	}
-
+    
     /// <summary>
-    /// 持つ範囲コライダーを左右に合わせて移動
+    /// プレイヤーがジャンプした時壺も一緒にジャンプする処理
     /// </summary>
-    private void MoveCollider()
+    private void PotJump()
     {
-        //if (move_ctr._onLeft || move_ctr._onRight)
-        //{
-        //    gameObject.transform.position = new Vector2(gameObject.transform.position.x * -1, gameObject.transform.position.y);
-        //}
+        if (move_ctr.Jumping)
+        {
+            rig.velocity = new Vector2(0, 1f * move_ctr.speed);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D col)

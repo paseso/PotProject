@@ -6,8 +6,10 @@ using UnityEngine;
 [DefaultExecutionOrder(-1)]
 public class MoveController : MonoBehaviour
 {
-    [SerializeField]
-    private float speed = 0f;
+    [HideInInspector]
+    public float speed = 0f;
+
+    private bool _jumping = false;
 
     [SerializeField]
     private float ladderSpeed;
@@ -68,6 +70,11 @@ public class MoveController : MonoBehaviour
     private MapInfo mInfo;
     private Status status;
     //----------ボタンFlagのget---------------------
+    public bool Jumping
+    {
+        get { return _jumping; }
+    }
+
     public bool OnRight
     {
         get { return _onRight; }
@@ -183,6 +190,7 @@ public class MoveController : MonoBehaviour
         _ActiveRightLeft = true;
         _InGimmick = false;
         _activeLadder = false;
+        _jumping = false;
         ClearBtnFlg();
     }
 
@@ -253,6 +261,7 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void ClearBtnFlg()
     {
+        _jumping = false;
         _onUp = false;
         _onDown = false;
         _onRight = false;
@@ -283,6 +292,7 @@ public class MoveController : MonoBehaviour
                 if (!_isJump)
                     return;
                 rig.velocity = new Vector2(0, 1f * speed);
+                _jumping = true;
                 break;
 
             case ButtonType.LEFTJOYSTICK_LEFT:
