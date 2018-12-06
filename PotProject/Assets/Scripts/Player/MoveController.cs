@@ -25,7 +25,6 @@ public class MoveController : MonoBehaviour
         set { value = isLadderTop; }
     }
 
-
     //ジャンプできるかどうか
     [HideInInspector]
     public bool _isJump = false;
@@ -183,6 +182,13 @@ public class MoveController : MonoBehaviour
         CROSSY_DOWN,
     };
 
+    private enum Direction
+    {
+        RIGHT = 0,
+        LEFT
+    }
+    private Direction direc;
+
     private void Awake()
     {
         target = null;
@@ -229,16 +235,13 @@ public class MoveController : MonoBehaviour
         switch (manager.status.event_state)
         {
             case Status.EventState.NORMAL:
-                Debug.Log("Normal");
                 BtnCheck();
                 break;
 
             case Status.EventState.CAMERA:
-                Debug.Log("Camera");
                 break;
 
             case Status.EventState.ALCHEMYUI:
-                Debug.Log("AlchemyUI");
                 UIControll();
                 break;
         }
@@ -303,6 +306,7 @@ public class MoveController : MonoBehaviour
 
                 obj_sprite.sprite = BrotherSprites[0];
                 rig.velocity = new Vector2(-5f, rig.velocity.y);
+                direc = Direction.LEFT;
                 break;
 
             case ButtonType.LEFTJOYSTICK_RIGHT:
@@ -313,6 +317,7 @@ public class MoveController : MonoBehaviour
 
                 obj_sprite.sprite = BrotherSprites[1];
                 rig.velocity = new Vector2(5f, rig.velocity.y);
+                direc = Direction.RIGHT;
                 break;
 
             case ButtonType.LEFTJOYSTICK_UP:
@@ -386,7 +391,7 @@ public class MoveController : MonoBehaviour
                 }
                 else
                 {//アイテムを離す
-                    if (OnRight)
+                    if (direc == Direction.RIGHT)
                     {
                         target.gameObject.transform.position = new Vector2(bringctr.gameObject.transform.position.x + 2f, bringctr.gameObject.transform.position.y + 1.5f);
                     }
@@ -394,8 +399,6 @@ public class MoveController : MonoBehaviour
                     {
                         target.gameObject.transform.position = new Vector2(bringctr.gameObject.transform.position.x - 2f, bringctr.gameObject.transform.position.y + 1.5f);
                     }
-                    Debug.Log("Right：" + OnRight);
-                    Debug.Log("Left：" + OnLeft);
                     target.gameObject.transform.parent = null;
                     target.GetComponent<Rigidbody2D>().simulated = true;
                     bringctr._bring = false;

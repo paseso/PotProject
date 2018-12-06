@@ -21,6 +21,7 @@ public class PotController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         PotJump();
+        ChangeLayer();
 	}
     
     /// <summary>
@@ -34,6 +35,24 @@ public class PotController : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// お兄ちゃんが物を持っている時レイヤーを変更する処理
+    /// </summary>
+    private void ChangeLayer()
+    {
+        if (bring_col._bring)
+        {
+            gameObject.layer = LayerMask.NameToLayer("Default");
+        }
+        else
+        {
+            if (gameObject.layer != LayerMask.NameToLayer("Default"))
+                return;
+            gameObject.layer = LayerMask.NameToLayer("Pot");
+        }
+        
+    }
+
     private void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.GetComponent<MonsterInfo>())
@@ -43,6 +62,7 @@ public class PotController : MonoBehaviour {
                 return;
 
             Destroy(col.gameObject);
+            gameObject.layer = LayerMask.NameToLayer("Pot");
             MonsterInfo monInfo = col.gameObject.GetComponent<MonsterInfo>();
             switch (monInfo.type)
             {
@@ -59,11 +79,6 @@ public class PotController : MonoBehaviour {
                     break;
             }
             Debug.Log("Type: " + monInfo.type);
-        }
-
-        if (col.gameObject.GetComponent<GimmickInfo>())
-        {
-
         }
     }
 }

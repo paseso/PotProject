@@ -145,7 +145,6 @@ public class AlchemyUIController : MonoBehaviour {
     {
         if (crossAxisdown.getKeepDown)
         {
-            Debug.Log("KeepDown: " + crossAxisdown.getKeepDown);
             return;
         }
             
