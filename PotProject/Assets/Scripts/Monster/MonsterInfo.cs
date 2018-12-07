@@ -6,7 +6,7 @@ using UnityEngine;
 /// モンスターステータス
 /// </summary>
 [System.Serializable]
-struct MonsterStatus
+public struct MonsterStatus
 {
     [SerializeField]
     private int HP, ATK;
@@ -31,7 +31,6 @@ struct MonsterStatus
         THUNDER,
         DARK,
     }
-
     public MonsterAttribute attribute;
 }
 
@@ -42,4 +41,8 @@ public class MonsterInfo : MonoBehaviour {
     [SerializeField]
     private MonsterStatus status;
 
+    public MonsterStatus GetMStatus
+    {
+        get { return status; }
+    }
 }

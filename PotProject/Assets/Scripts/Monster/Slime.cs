@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Slime : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
+    
+    // Use this for initialization
+    void Start () {
 		
 	}
 	

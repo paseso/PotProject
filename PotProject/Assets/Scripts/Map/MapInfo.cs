@@ -25,10 +25,6 @@ public class MapInfo : MonoBehaviour {
     private bool _upRock;
     public bool UpRockFlag { get; set; }
 
-    // はしごギミック判定
-    private bool ladderFlag;
-    public bool LadderFlag { get; set; }
-
     //public int LadderCount
     //{
     //    get { return this.ladderCount; }

@@ -63,22 +63,22 @@ public class PotController : MonoBehaviour {
 
             Destroy(col.gameObject);
             gameObject.layer = LayerMask.NameToLayer("Pot");
-            MonsterInfo monInfo = col.gameObject.GetComponent<MonsterInfo>();
-            switch (monInfo.type)
+            MonsterInfo mInfo = col.gameObject.GetComponent<MonsterInfo>();
+            switch (mInfo.GetMStatus.type)
             {
-                case MonsterInfo.MonsterType.WATER:
+                case MonsterStatus.MonsterType.WATER:
                     manager.setItemList(ItemStatus.ITEM.SLIME);
                     break;
 
-                case MonsterInfo.MonsterType.SNAKE:
+                case MonsterStatus.MonsterType.SNAKE:
                     manager.setItemList(ItemStatus.ITEM.SNAKE);
                     break;
 
                 default:
-                    Debug.Log("Type: " + monInfo.type);
+                    Debug.Log("Type: " + mInfo.GetMStatus.type);
                     break;
             }
-            Debug.Log("Type: " + monInfo.type);
+            Debug.Log("Type: " + mInfo.GetMStatus.type);
         }
     }
 }

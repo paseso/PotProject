@@ -36,6 +36,7 @@ public class GimmickController :MonoBehaviour {
         if (col.gameObject.tag == "Player") {
             switch (gInfo.type) {
                 case GimmickInfo.GimmickType.UP:
+                    sController.MapExchange(sController.GetMaps[0][0], sController.GetMaps[1][2]);
                     break;
                 case GimmickInfo.GimmickType.DOWN:
                     sController.SrideStage(1, StageController.Direction.DOWN);
