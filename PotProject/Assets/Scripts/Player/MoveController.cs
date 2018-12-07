@@ -6,13 +6,25 @@ using UnityEngine;
 [DefaultExecutionOrder(-1)]
 public class MoveController : MonoBehaviour
 {
-    [SerializeField]
-    private float speed = 0f;
+    [HideInInspector]
+    public float speed = 0f;
+
+    private bool _jumping = false;
 
     [SerializeField]
     private float ladderSpeed;
 
+    private float axisValue = 0f;
+
     private Rigidbody2D rig;
+
+    private bool isLadderTop = false;
+    // はしごの上に足がついているか
+    public bool IsLadderTop {
+        get { return isLadderTop; }
+        set { value = isLadderTop; }
+    }
+
     //ジャンプできるかどうか
     [HideInInspector]
     public bool _isJump = false;
@@ -57,6 +69,11 @@ public class MoveController : MonoBehaviour
     private MapInfo mInfo;
     private Status status;
     //----------ボタンFlagのget---------------------
+    public bool Jumping
+    {
+        get { return _jumping; }
+    }
+
     public bool OnRight
     {
         get { return _onRight; }
@@ -132,6 +149,11 @@ public class MoveController : MonoBehaviour
         get { return _onR2; }
     }
     //------------------------------------------
+    //CrossX,YのAixsの値
+    public float CrossAxisValue
+    {
+        get { return axisValue; }
+    }
 
     private enum ButtonType
     {
@@ -160,6 +182,13 @@ public class MoveController : MonoBehaviour
         CROSSY_DOWN,
     };
 
+    private enum Direction
+    {
+        RIGHT = 0,
+        LEFT
+    }
+    private Direction direc;
+
     private void Awake()
     {
         target = null;
@@ -167,6 +196,7 @@ public class MoveController : MonoBehaviour
         _ActiveRightLeft = true;
         _InGimmick = false;
         _activeLadder = false;
+        _jumping = false;
         ClearBtnFlg();
     }
 
@@ -181,6 +211,7 @@ public class MoveController : MonoBehaviour
         obj_sprite = gameObject.transform.parent.GetComponent<SpriteRenderer>();
         _isJump = false;
         _onCrossYTrigger = false;
+        axisValue = 0f;
     }
 
     // Update is called once per frame
@@ -204,16 +235,13 @@ public class MoveController : MonoBehaviour
         switch (manager.status.event_state)
         {
             case Status.EventState.NORMAL:
-                Debug.Log("Normal");
                 BtnCheck();
                 break;
 
             case Status.EventState.CAMERA:
-                Debug.Log("Camera");
                 break;
 
             case Status.EventState.ALCHEMYUI:
-                Debug.Log("AlchemyUI");
                 UIControll();
                 break;
         }
@@ -236,6 +264,7 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void ClearBtnFlg()
     {
+        _jumping = false;
         _onUp = false;
         _onDown = false;
         _onRight = false;
@@ -263,14 +292,13 @@ public class MoveController : MonoBehaviour
         switch (btn)
         {
             case ButtonType.JUMP:
-                //Debug.Log("×");
                 if (!_isJump)
                     return;
                 rig.velocity = new Vector2(0, 1f * speed);
+                _jumping = true;
                 break;
 
             case ButtonType.LEFTJOYSTICK_LEFT:
-                //Debug.Log("LEFT");
                 _onLeft = true;
                 _onRight = false;
                 if (!_ActiveRightLeft)
@@ -278,10 +306,10 @@ public class MoveController : MonoBehaviour
 
                 obj_sprite.sprite = BrotherSprites[0];
                 rig.velocity = new Vector2(-5f, rig.velocity.y);
+                direc = Direction.LEFT;
                 break;
 
             case ButtonType.LEFTJOYSTICK_RIGHT:
-                //Debug.Log("RIGHT");
                 _onRight = true;
                 _onLeft = false;
                 if (!_ActiveRightLeft)
@@ -289,18 +317,16 @@ public class MoveController : MonoBehaviour
 
                 obj_sprite.sprite = BrotherSprites[1];
                 rig.velocity = new Vector2(5f, rig.velocity.y);
+                direc = Direction.RIGHT;
                 break;
 
             case ButtonType.LEFTJOYSTICK_UP:
 
                 _onUp = true;
 
-                if (status.state == Status.State.ONLADDER) {
+                if (status.state == Status.GimmickState.ONLADDER) {
                     Ladder(ladderSpeed, 1);
                 }
-
-                //rig.bodyType = RigidbodyType2D.Kinematic;
-                //rig.velocity = new Vector2(rig.velocity.x, 5f);
                 _onUp = false;
                 break;
 
@@ -309,17 +335,9 @@ public class MoveController : MonoBehaviour
                 Debug.Log("DOWN");
 
                 _onDown = true;
-                if (status.state == Status.State.ONLADDER) {
+                if (status.state == Status.GimmickState.ONLADDER) {
                     Ladder(ladderSpeed, -1);
                 }
-
-                //_onDown = true;
-                //if (_ActiveRightLeft)
-                //    return;
-                
-                //rig.bodyType = RigidbodyType2D.Kinematic;
-                //rig.velocity = new Vector2(rig.velocity.x, -5f);
-                //_onDown = false;
                 break;
 
             case ButtonType.RIGHTJOYSTICK_LEFT:
@@ -355,12 +373,6 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.CIRCLE:
-                //Debug.Log("〇");
-                //if (atc_ctr.AttackMonster)
-                //{
-                //    atc_ctr.AttackObject();
-                //}
-                //else 
                 if (manager.AlchemyWindow)
                 {
                     _onCircle = true;
@@ -368,7 +380,6 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.SQUARE:
-                //Debug.Log("□");
                 if (!bringctr._Brotherhit)
                     return;
 
@@ -378,9 +389,9 @@ public class MoveController : MonoBehaviour
                     target.GetComponent<Rigidbody2D>().simulated = false;
                     bringctr._bring = true;
                 }
-                else if (bringctr._bring)
+                else
                 {//アイテムを離す
-                    if (OnRight)
+                    if (direc == Direction.RIGHT)
                     {
                         target.gameObject.transform.position = new Vector2(bringctr.gameObject.transform.position.x + 2f, bringctr.gameObject.transform.position.y + 1.5f);
                     }
@@ -388,9 +399,6 @@ public class MoveController : MonoBehaviour
                     {
                         target.gameObject.transform.position = new Vector2(bringctr.gameObject.transform.position.x - 2f, bringctr.gameObject.transform.position.y + 1.5f);
                     }
-                    Debug.Log("Right：" + OnRight);
-                    Debug.Log("Left：" + OnLeft);
-                    //target.gameObject.transform.position = new Vector2(gameObject.transform.position.x + 2f, gameObject.transform.position.y + 1);
                     target.gameObject.transform.parent = null;
                     target.GetComponent<Rigidbody2D>().simulated = true;
                     bringctr._bring = false;
@@ -435,14 +443,16 @@ public class MoveController : MonoBehaviour
             case ButtonType.CROSSX_RIGTH:
                 if (!manager.AlchemyWindow)
                     return;
-                
+
+                axisValue = Input.GetAxis("CrossX");
                 _onCrossRight = true;
                 break;
 
             case ButtonType.CROSSX_LEFT:
                 if (!manager.AlchemyWindow)
                     return;
-                
+
+                axisValue = Input.GetAxis("CrossX");
                 _onCrossLeft = true;
                 break;
 
@@ -450,7 +460,8 @@ public class MoveController : MonoBehaviour
                 Debug.Log("Cross_Up");
                 if (!manager.AlchemyWindow)
                     return;
-                
+
+                axisValue = Input.GetAxis("CrossY");
                 _onCrossUp = true;
                 break;
 
@@ -458,7 +469,8 @@ public class MoveController : MonoBehaviour
                 Debug.Log("Cross_Down");
                 if (!manager.AlchemyWindow)
                     return;
-                
+
+                axisValue = Input.GetAxis("CrossY");
                 _onCrossDown = true;
                 break;
         }
@@ -475,14 +487,12 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void BtnCheck()
     {
+        // はしご内で昇降ボタンを離したとき
         if(Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.W))
         {
-            if (status.state == Status.State.ONLADDER)
+            if (status.state == Status.GimmickState.ONLADDER && !_isJump)
             {
-                transform.parent.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-                Vector2 pos = transform.position;
-                RaycastHit2D ray = Physics2D.Raycast(pos, new Vector2(0, -1));
-                
+                transform.parent.GetComponent<Rigidbody2D>().simulated = false;
             }
         }
 
@@ -500,9 +510,12 @@ public class MoveController : MonoBehaviour
         }
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
         {
+            if (status.state == Status.GimmickState.ONLADDER && !_isJump)
+            {
+                transform.parent.GetComponent<Rigidbody2D>().simulated = false;
+            }
+
             rig.velocity = new Vector2(0, rig.velocity.y);
-            //_onLeft = false;
-            //_onRight = false;
         }
         if (Input.GetAxis("Horizontal_ps4") >= 0.15f || Input.GetKey(KeyCode.W))
         {
@@ -619,17 +632,22 @@ public class MoveController : MonoBehaviour
     /// <summary>
     /// はしごの上下処理
     /// </summary>
-    /// <param name="player"></param>
     /// <param name="speed"></param>
     /// <param name="dir"></param>
     public void Ladder(float speed, float dir)
     {
-        transform.parent.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        transform.parent.GetComponent<Rigidbody2D>().simulated = true;
+        var children = transform.parent.transform;
+        foreach(Transform child in children)
+        {
+            if (child.GetComponent<Collider2D>())
+            {
+                child.gameObject.layer = LayerMask.NameToLayer("LadderPlayer");
+            }
+        }
         Debug.Log("Ladder");
-        gameObject.layer = LayerMask.NameToLayer("LadderPlayer");
+        gameObject.transform.parent.gameObject.layer = LayerMask.NameToLayer("LadderPlayer");
         transform.parent.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed * dir);
-        Vector2 pos = transform.position;
-        Debug.DrawRay(pos, new Vector2(0, -1),Color.red,10f);
     }
 
     private void HitRayWall()
@@ -655,11 +673,24 @@ public class MoveController : MonoBehaviour
         {
             switch (col.GetComponent<GimmickInfo>().type)
             {
-                case GimmickInfo.GimmickType.LADDER:
-                    status.state = Status.State.ONLADDER;
-                    break;
                 case GimmickInfo.GimmickType.GROWTREE:
-                    status.state = Status.State.ONTREE;
+                    status.state = Status.GimmickState.ONTREE;
+                    break;
+                case GimmickInfo.GimmickType.LADDERTOP:
+                    if (!IsLadderTop)
+                    {
+                        IsLadderTop = true;
+                        status.state = Status.GimmickState.ONLADDER;
+                    }
+                    else
+                    {
+                        IsLadderTop = false;
+                        status.state = Status.GimmickState.NORMAL;
+                        ChangeLayer();
+                    }
+                    break;
+                case GimmickInfo.GimmickType.LADDER:
+                    status.state = Status.GimmickState.ONLADDER;
                     break;
             }
         }
@@ -667,16 +698,36 @@ public class MoveController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        if (col.GetComponent<GimmickInfo>())
+        if (col.GetComponent<GimmickInfo>() && _isJump)
         {
-            if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
-            {
-                status.state = Status.State.NORMAL;
+            switch (col.GetComponent<GimmickInfo>().type) {
+                case GimmickInfo.GimmickType.LADDER:
+                    status.state = Status.GimmickState.NORMAL;
+                    ChangeLayer();
+                    break;
+                case GimmickInfo.GimmickType.LADDERTOP:
+                    status.state = Status.GimmickState.NORMAL;
+                    break;
             }
-            if (gameObject.layer != LayerMask.NameToLayer("Player"))
+        }
+    }
+
+    /// <summary>
+    /// レイヤー変更
+    /// </summary>
+    public void ChangeLayer()
+    {
+        if (gameObject.layer != LayerMask.NameToLayer("Player"))
+        {
+            var children = transform.parent.transform;
+            foreach (Transform child in children)
             {
-                gameObject.layer = LayerMask.NameToLayer("Player");
+                if (child.GetComponent<Collider2D>())
+                {
+                    child.gameObject.layer = LayerMask.NameToLayer("Player");
+                }
             }
+            gameObject.transform.parent.gameObject.layer = LayerMask.NameToLayer("Player");
         }
     }
 }

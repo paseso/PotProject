@@ -6,17 +6,24 @@ using DG.Tweening;
 public struct Status
 {
     //兄のHP
-    public int PlayerHP;
+    private int playerHP;
+    public int PlayerHP
+    {
+        get { return playerHP; }
+        set { value = playerHP; }
+    }
+
     //剣のタイプ
     public enum SWORDTYPE
     {
         FIRE = 0,
         WATER,
-        EARTH
+        EARTH,
+        KEY,
     }
 
     // 兄がどの状態か
-    public enum State
+    public enum GimmickState
     {
         NORMAL,
         ONLADDER,
@@ -35,7 +42,7 @@ public struct Status
     public SWORDTYPE swordtype;
 
     // 状態
-    public State state;
+    public GimmickState state;
 
     public EventState event_state;
 
@@ -126,6 +133,18 @@ public class PlayerController : MonoBehaviour {
     }
 
     /// <summary>
+    /// 持ち物リストのアイテムを削除
+    /// </summary>
+    public void deleteItemList(List<ItemStatus.ITEM> items)
+    {
+        foreach (var _item in items)
+        {
+            status.ItemList.Remove(_item);
+        }
+        Debug.Log("ItemList: " + status.ItemList.GetType());
+    }
+
+    /// <summary>
     /// 剣の属性を変える処理
     /// </summary>
     /// <param name="s_type">FIRE=火、WATER=水、EARTH=土</param>
@@ -145,6 +164,9 @@ public class PlayerController : MonoBehaviour {
                 Debug.Log("土属性");
                 sword.sprite = swordSpriteList[(int)Status.SWORDTYPE.EARTH];
                 break;
+            case Status.SWORDTYPE.KEY:
+                Debug.Log("鍵");
+                break;
         }
     }
 
@@ -152,9 +174,20 @@ public class PlayerController : MonoBehaviour {
     /// アイテムを錬金する処理
     /// </summary>
     /// <param name="item"></param>
-    public void ItemAlchemy(ItemStatus.ITEM item)
+    public void ItemAlchemy(List<ItemStatus.ITEM> item)
     {
-        alchemy_ctr.MadeItem(item);
+        if (item == null)
+            return;
+
+        if(item.Count == 1)
+        {
+            alchemy_ctr.MadeItem(item[0]);
+        }
+        else if(item.Count == 2)
+        {
+            alchemy_ctr.MadeItem(item[0], item[1]);
+        }
+        
     }
 
     /// <summary>
@@ -177,19 +210,19 @@ public class PlayerController : MonoBehaviour {
     }
 
     /// <summary>
-    /// プレイヤーのHPが1減る処理
+    /// プレイヤーのHP処理
     /// </summary>
-    public void HpMinus()
+    public void ApplyHp(int point)
     {
-        if(status.PlayerHP <= 0)
+        if(status.PlayerHP < point)
         {
             status.PlayerHP = 0;
-            Debug.Log("もう体力がありません");
+            Debug.Log("HPが0になりました");
+            return;
         }
-        else
-        {
-            status.PlayerHP--;
-        }
-        Debug.Log("Player HP: " + status.PlayerHP);
+        status.PlayerHP += point;
+
+        // HPのUIに反映させる処理
+
     }
 }

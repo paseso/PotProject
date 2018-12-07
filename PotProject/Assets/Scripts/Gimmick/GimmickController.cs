@@ -12,8 +12,6 @@ public class GimmickController :MonoBehaviour {
     private StageController sManager;
     private MapInfo mInfo;
     private GimmickInfo gInfo;
-    
-    
 
     // Use this for initialization
     void Start() {
@@ -47,6 +45,14 @@ public class GimmickController :MonoBehaviour {
                     mInfo.rock.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
                     mInfo.UpRockFlag = true;
                     break;
+                case GimmickInfo.GimmickType.BAKETREE:
+                    BakeTree(gameObject);
+                    break;
+                case GimmickInfo.GimmickType.GRASS:
+                    DropHarb();
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -63,7 +69,9 @@ public class GimmickController :MonoBehaviour {
                 break;
 
             case GimmickInfo.GimmickType.LADDER:
-                mInfo.LadderFlag = true;
+                
+                break;
+            default:
                 break;
         }
     }
@@ -80,7 +88,9 @@ public class GimmickController :MonoBehaviour {
                 break;
 
             case GimmickInfo.GimmickType.LADDER:
-                mInfo.LadderFlag = false;
+                
+                break;
+            default:
                 break;
         }
     }
@@ -89,7 +99,14 @@ public class GimmickController :MonoBehaviour {
     /// 木(ツル)を成長させる
     /// </summary>
     public void Grow() {
+        Vector2 defaultScale = mInfo.tree.transform.localScale;
         mInfo.tree.transform.DOScaleY(1f, 1f).SetEase(Ease.Linear);
+        float time = 0;
+        while(time < 3)
+        {
+            time += 1 * Time.deltaTime;
+        }
+        mInfo.tree.transform.DOScaleY(defaultScale.y, 1f).SetEase(Ease.Linear);
     }
 
     /// <summary>
@@ -99,7 +116,6 @@ public class GimmickController :MonoBehaviour {
     public void BakeTree(GameObject obj)
     {
         StartCoroutine(Bake(obj));
-        StartCoroutine(DelayMethod(1f, Grow));
     }
 
     /// <summary>
@@ -111,25 +127,50 @@ public class GimmickController :MonoBehaviour {
     {
         for (int i = 2; i >= 0; i--)
         {
+            Debug.Log("bake" + i);
+            Sprite sp_tree = Resources.Load<Sprite>("Textures/Gimmicks/fire" + i);
+            gameObject.GetComponent<SpriteRenderer>().sprite = sp_tree;
+            yield return new WaitForSeconds(1f);
             if (i == 2)
             {
                 // 燃えるエフェクト
-                yield return new WaitForSeconds(1f);
-                continue;
             }
-            // 画像変更処理
-            yield return new WaitForSeconds(1f);
-            
-            Debug.Log("bake" + i);
         }
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
         yield return new WaitForSeconds(1f);
         // Destroy
     }
 
-    public IEnumerator DelayMethod(float time,Action action)
+    // 浮く座標(仮)
+    private float endPos;
+
+    /// <summary>
+    /// 水でタイルを浮かせる
+    /// </summary>
+    public void FloatingTile(GameObject obj)
     {
-        yield return new WaitForSeconds(time);
-        action();
+        
     }
-    
+
+    /// <summary>
+    /// 薬草ドロップ
+    /// </summary>
+    public void DropHarb()
+    {
+        // ドロップする薬草をResourcesから生成
+        GameObject harb = Instantiate(Resources.Load<GameObject>("Prefabs/HarbPrefab"),transform.parent.transform);
+        harb.transform.localPosition = transform.localPosition;
+        Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// 鍵付き扉
+    /// </summary>
+    public void UnlockKeyDoor()
+    {
+        // 扉（仮）
+        GameObject door = new GameObject();
+        door.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
+
+    }
 }

@@ -25,9 +25,12 @@ public class AlchemyUIController : MonoBehaviour {
     //-----------------------------------
     private int nowBox = 0;
     private GameObject[] Box_item;
+    private List<ItemStatus.ITEM> items = new List<ItemStatus.ITEM>();
+    private List<ItemStatus.ITEM> Materials_item = new List<ItemStatus.ITEM>();
     private bool _boxRight = true;
 
     private MoveController move_ctr;
+    private CrossAxisDown crossAxisdown;
 
     //---ジョイスティックを回す時に使う変数-----
     private bool _one = false;
@@ -42,11 +45,14 @@ public class AlchemyUIController : MonoBehaviour {
         player_ctr.setItemList(ItemStatus.ITEM.SNAKE);
         nowBox = 0;
         move_ctr = GameObject.Find("Brother/Body").GetComponent<MoveController>();
+        crossAxisdown = move_ctr.gameObject.GetComponent<CrossAxisDown>();
+
         mtr_0 = IntoPot.transform.GetChild(0).GetChild(0).gameObject;
         mtr_1 = IntoPot.transform.GetChild(0).GetChild(1).gameObject;
         _boxRight = true;
         Box_item = new GameObject[Itembox.Length];
         ClearJoystickRotation();
+        Materials_item.Clear();
     }
 	
 	// Update is called once per frame
@@ -66,24 +72,59 @@ public class AlchemyUIController : MonoBehaviour {
 
         if (_boxRight)
         {
-            Sprite img = Box_item[nowBox].GetComponent<Image>().sprite;
-            if (img == null)
-                return;
-            Image mtr_0_img = mtr_0.GetComponent<Image>();
-            Image mtr_1_img = mtr_1.GetComponent<Image>();
-            if (mtr_0_img.sprite == null)
-            {
-                mtr_0_img.sprite = img;
-            }
-            else if (mtr_1_img.sprite == null)
-            {
-                mtr_1_img.sprite = img;
-            }
+            setMaterialsBox();
         }
         else
         {
-            Box_item[nowBox].GetComponent<Image>().sprite = null;
+            ReSetMaterialsBox(nowBox);
         }
+    }
+
+    /// <summary>
+    /// 素材アイテムボックス欄のセット
+    /// </summary>
+    private void setMaterialsBox()
+    {
+        Sprite img = Box_item[nowBox].GetComponent<Image>().sprite;
+        if (img == null)
+            return;
+
+        Image mtr_0_img = mtr_0.GetComponent<Image>();
+        Image mtr_1_img = mtr_1.GetComponent<Image>();
+        if (mtr_0_img.sprite == null)
+        {
+            mtr_0_img.sprite = img;
+        }
+        else if (mtr_1_img.sprite == null)
+        {
+            mtr_1_img.sprite = img;
+        }
+
+        Materials_item.Add(items[nowBox]);
+        Debug.Log("MaterialsList: " + Materials_item.Count);
+    }
+
+    /// <summary>
+    /// 素材アイテム欄のリセット
+    /// </summary>
+    /// <param name="num">一個だけリセット</param>
+    private void ReSetMaterialsBox(int num)
+    {
+        Box_item[num].GetComponent<Image>().sprite = null;
+        Materials_item.RemoveAt(num);
+    }
+
+    /// <summary>
+    /// 素材アイテム欄のリセット
+    /// </summary>
+    /// <param name="items">二つリセット</param>
+    private void ReSetMaterialsBox(List<ItemStatus.ITEM> items)
+    {
+        mtr_0.GetComponent<Image>().sprite = null;
+        mtr_1.GetComponent<Image>().sprite = null;
+        if (Materials_item.Count == 0)
+            return;
+        Materials_item.RemoveRange(0, Materials_item.Count - 1);
     }
 
     /// <summary>
@@ -102,6 +143,11 @@ public class AlchemyUIController : MonoBehaviour {
     /// </summary>
     private void ItemFrameMove()
     {
+        if (crossAxisdown.getKeepDown)
+        {
+            return;
+        }
+            
         //上下押した時
         while (move_ctr.OnCrossUp || move_ctr.OnCrossDown)
         {
@@ -160,6 +206,8 @@ public class AlchemyUIController : MonoBehaviour {
         {
             ClearJoystickRotation();
         }
+        if (Materials_item == null)
+            return;
 
         if (move_ctr.OnRJoystickUp)
             _one = true;
@@ -181,8 +229,16 @@ public class AlchemyUIController : MonoBehaviour {
             }
             else
             {
-                player_ctr.ItemAlchemy(ItemStatus.ITEM.GOLEM);
+                //アイテムを生成し、ジョイスティックの回した回数をリセット
+                player_ctr.ItemAlchemy(Materials_item);
                 ClearJoystickRotation();
+                //錬金に使った素材を持ち物リストから削除
+                player_ctr.deleteItemList(Materials_item);
+                //それに伴って錬金UIの持ち物リストの更新
+                setItemboxImage();
+                //錬金に使いたいアイテム欄の画像とそのリストをリセット
+                ReSetMaterialsBox(Materials_item);
+                Materials_item.Clear();
             }
         }
     }
@@ -203,10 +259,22 @@ public class AlchemyUIController : MonoBehaviour {
     /// </summary>
     public void setItemboxImage()
     {
-        List<ItemStatus.ITEM> items = player_ctr.getItemList();
+        items = player_ctr.getItemList();
+
+        if (items.Count < 3)
+        {
+            int num = 3 - items.Count;
+            for(int j = 2; items.Count <= j; j--)
+            {
+                Image item_img = Itembox[j].GetComponent<Image>();
+                item_img.sprite = null;
+            }
+        }
+
         for (int i = 0; i < items.Count; i++)
         {
             Image item_img = Itembox[i].GetComponent<Image>();
+
             switch (items[i])
             {
                 case ItemStatus.ITEM.SLIME:

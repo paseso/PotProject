@@ -12,15 +12,21 @@ public class LegCollider : MonoBehaviour {
         move_ctr = transform.parent.GetComponentInChildren<MoveController>();
         _legFloor = false;
 	}
-    
+
     private void OnTriggerStay2D(Collider2D col)
     {
-        move_ctr._isJump = true;
+        if (!col.GetComponent<GimmickInfo>() || col.GetComponent<GimmickInfo>().type != GimmickInfo.GimmickType.LADDER)
+        {
+            move_ctr._isJump = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        move_ctr._isJump = false;
+        if (!col.GetComponent<GimmickInfo>() || col.GetComponent<GimmickInfo>().type != GimmickInfo.GimmickType.LADDER)
+        {
+            move_ctr._isJump = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D col)

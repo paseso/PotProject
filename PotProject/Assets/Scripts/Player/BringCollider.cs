@@ -11,6 +11,7 @@ public class BringCollider : MonoBehaviour {
     [HideInInspector]
     public bool _bring = false;
     private MoveController move_controll;
+    private GameObject Joints;
 
     // Use this for initialization
     void Start ()
@@ -19,6 +20,7 @@ public class BringCollider : MonoBehaviour {
         _Tubohit = false;
         _bring = false;
         move_controll = gameObject.transform.parent.GetComponentInChildren<MoveController>();
+        Joints = GameObject.Find("Joint/joint_0");
     }
 	
 	// Update is called once per frame
@@ -34,13 +36,15 @@ public class BringCollider : MonoBehaviour {
         if (move_controll.OnLeft)
         {
             gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
+            //Joints.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y);
         }
         if (move_controll.OnRight)
         {
             gameObject.transform.rotation = new Quaternion(0, 180, 0, 0);
+            //Joints.transform.position = new Vector2(gameObject.transform.position.x - 2, gameObject.transform.position.y);
         }
+        
     }
-
 
     /// <summary>
     /// 持てる範囲で□ボタンを押した時の処理
