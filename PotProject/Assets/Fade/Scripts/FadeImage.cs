@@ -32,8 +32,6 @@ public class FadeImage : UnityEngine.UI.Graphic , IFade
         {
             StartCoroutine(test(1));
         }
-
-        gameObject.transform.Find("test");
     }
 
     IEnumerator test(float interval)
@@ -47,7 +45,7 @@ public class FadeImage : UnityEngine.UI.Graphic , IFade
             yield return 0;
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.0f);
 
         //だんだん明るく .
         time = 0;
