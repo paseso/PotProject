@@ -10,7 +10,7 @@ public struct Status
     public int PlayerHP
     {
         get { return playerHP; }
-        set { value = playerHP; }
+        set { playerHP = value; }
     }
 
     //剣のタイプ
@@ -214,14 +214,14 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     public void ApplyHp(int point)
     {
-        if(status.PlayerHP < point)
+        if(status.PlayerHP <= point || status.PlayerHP <= 0)
         {
             status.PlayerHP = 0;
             Debug.Log("HPが0になりました");
             return;
         }
-        status.PlayerHP += point;
-
+        status.PlayerHP -= point;
+        Debug.Log("HP: " + status.PlayerHP);
         // HPのUIに反映させる処理
 
     }

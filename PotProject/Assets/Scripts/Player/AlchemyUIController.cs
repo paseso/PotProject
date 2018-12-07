@@ -59,17 +59,13 @@ public class AlchemyUIController : MonoBehaviour {
 	void Update () {
         RightJoyStickRotation();
         ItemFrameMove();
-        PickItem();
     }
     
     /// <summary>
     /// アイテムの決定
     /// </summary>
-    private void PickItem()
+    public void PickItem()
     {
-        if (!move_ctr.OnCircle)
-            return;
-
         if (_boxRight)
         {
             setMaterialsBox();
@@ -101,7 +97,6 @@ public class AlchemyUIController : MonoBehaviour {
         }
 
         Materials_item.Add(items[nowBox]);
-        Debug.Log("MaterialsList: " + Materials_item.Count);
     }
 
     /// <summary>

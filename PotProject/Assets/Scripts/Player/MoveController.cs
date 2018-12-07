@@ -29,7 +29,8 @@ public class MoveController : MonoBehaviour
     [HideInInspector]
     public bool _isJump = false;
     //左右動かしてもいいかどうか
-    private bool _ActiveRightLeft = false;
+    [HideInInspector]
+    public bool _ActiveRightLeft = false;
     //ギミックの中いるかどうか
     [HideInInspector]
     public bool _InGimmick = false;
@@ -40,6 +41,9 @@ public class MoveController : MonoBehaviour
     private bool _activeLadder = false;
     //CrossYが一回押されたかどうか
     private bool _onCrossYTrigger = false;
+    //モンスターに当たったかどうか
+    [HideInInspector]
+    public bool _hitmonster = false;
     //-------アクションボタンを押してるかどうか----------
     private bool _onRight = false;
     private bool _onLeft = false;
@@ -66,6 +70,7 @@ public class MoveController : MonoBehaviour
     private PlayerController manager;
     private BringCollider bringctr;
     private AttackZoonController atc_ctr;
+    private AlchemyUIController alchemyUI_ctr;
     private MapInfo mInfo;
     private Status status;
     //----------ボタンFlagのget---------------------
@@ -197,6 +202,7 @@ public class MoveController : MonoBehaviour
         _InGimmick = false;
         _activeLadder = false;
         _jumping = false;
+        _hitmonster = false;
         ClearBtnFlg();
     }
 
@@ -207,7 +213,8 @@ public class MoveController : MonoBehaviour
         manager = GameObject.Find("Controller").GetComponent<PlayerController>();
         bringctr = gameObject.transform.parent.GetChild(0).GetComponent<BringCollider>();
         mInfo = transform.root.GetComponent<MapInfo>();
-        atc_ctr = gameObject.GetComponentInChildren<AttackZoonController>();
+        atc_ctr = GameObject.Find("AttackRange").GetComponentInChildren<AttackZoonController>();
+        alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
         obj_sprite = gameObject.transform.parent.GetComponent<SpriteRenderer>();
         _isJump = false;
         _onCrossYTrigger = false;
@@ -373,9 +380,15 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.CIRCLE:
+                _onCircle = true;
+                
                 if (manager.AlchemyWindow)
                 {
-                    _onCircle = true;
+                    alchemyUI_ctr.PickItem();
+                }
+                else
+                {
+                    atc_ctr.AttackObject();
                 }
                 break;
 
@@ -709,6 +722,24 @@ public class MoveController : MonoBehaviour
                     status.state = Status.GimmickState.NORMAL;
                     break;
             }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if(col.gameObject.tag == "Monster")
+        {
+            _hitmonster = true;
+            manager.ApplyHp(1);
+            atc_ctr.AttackObject();
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Monster")
+        {
+            _hitmonster = false;
         }
     }
 
