@@ -42,14 +42,13 @@ public class AlchemyUIController : MonoBehaviour {
     private void Awake()
     {
         try {
-
+            setItembox();
+            setItemImage();
         }
-        catch (Exception )
+        catch (Exception e)
         {
-
+            Debug.Log(e + "がないよ！");
         }
-        setItembox();
-        setItemImage();
     }
 
     void Start () {
