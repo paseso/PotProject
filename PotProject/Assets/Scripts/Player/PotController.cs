@@ -13,17 +13,45 @@ public class PotController : MonoBehaviour {
 
     private Rigidbody2D rig;
 
-	// Use this for initialization
-	void Start () {
+    [SerializeField, Header("1.左, 2.右")]
+    private Sprite[] PotImages;
+
+    private enum Direction
+    {
+        RIGHT = 0,
+        LEFT
+    }
+    private Direction direction;
+
+    // Use this for initialization
+    void Start () {
         rig = gameObject.GetComponent<Rigidbody2D>();
-	}
+        direction = Direction.LEFT;
+    }
 	
 	// Update is called once per frame
 	void Update () {
         PotJump();
         ChangeLayer();
 	}
-    
+
+    /// <summary>
+    /// 壺の画像変更処理
+    /// </summary>
+    private void ChangePotImage()
+    {
+        if (move_ctr.OnLeft || direction == Direction.RIGHT)
+        {
+
+            direction = Direction.LEFT;
+        }
+        else if (move_ctr.OnLeft || direction == Direction.LEFT)
+        {
+
+            direction = Direction.RIGHT;
+        }
+    }
+
     /// <summary>
     /// プレイヤーがジャンプした時壺も一緒にジャンプする処理
     /// </summary>

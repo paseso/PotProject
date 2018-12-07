@@ -12,7 +12,6 @@ public class BringCollider : MonoBehaviour {
     public bool _bring = false;
     private MoveController move_controll;
     private GameObject Joints;
-    private GameObject PotObject;
 
     private enum Direction
     {
@@ -46,13 +45,11 @@ public class BringCollider : MonoBehaviour {
         {
             gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
             Joints.transform.rotation = Quaternion.Euler(0, 0, 0);
-
             direction = Direction.LEFT;
         }
         if (move_controll.OnRight || direction == Direction.LEFT)
         {
-            gameObject.transform.rotation = new Quaternion(0, 180, 0, 0);
-            Joints.transform.rotation = Quaternion.Euler(0, 180, 0);
+            gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
             direction = Direction.RIGHT;
         }
     }

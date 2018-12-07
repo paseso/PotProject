@@ -6,10 +6,10 @@ using UnityEngine.UI;
 
 public class AlchemyUIController : MonoBehaviour {
 
-    [SerializeField,Header("アイテム欄のボックス")]
+    //錬金UIにある持っている素材一覧の欄オブジェクト
     private GameObject[] Itembox;
 
-    [SerializeField, Header("アイテムの画像")]
+    //アイテムの画像
     private Sprite[] ItemImage;
 
     [SerializeField]
@@ -38,7 +38,20 @@ public class AlchemyUIController : MonoBehaviour {
     private bool _three = false;
     private int RotationCount = 0;
     //------------------------------------------
-    
+
+    private void Awake()
+    {
+        try {
+
+        }
+        catch (Exception )
+        {
+
+        }
+        setItembox();
+        setItemImage();
+    }
+
     void Start () {
         //デバッグ
         player_ctr.setItemList(ItemStatus.ITEM.SLIME);
@@ -247,6 +260,33 @@ public class AlchemyUIController : MonoBehaviour {
         _two = false;
         _three = false;
         RotationCount = 0;
+    }
+
+    /// <summary>
+    /// Itemboxに子オブジェクトをセット
+    /// </summary>
+    private void setItembox()
+    {
+        Itembox = new GameObject[3];
+        GameObject Items = gameObject.transform.GetChild(0).gameObject;
+        for(int i = 0; i < Items.transform.childCount; i++)
+        {
+            Itembox[i] = Items.transform.GetChild(i).gameObject;
+        }
+    }
+
+    /// <summary>
+    /// アイテムの画像をセット
+    /// </summary>
+    private void setItemImage()
+    {
+        ItemImage = new Sprite[3];
+        for(int i = 0; i < ItemImage.Length; i++)
+        {
+            ItemImage[i] = Resources.Load("Textures/background_normal" + i) as Sprite;
+            Debug.Log("ItemImage[" + i + "]" + ItemImage[i]);
+        }
+        
     }
 
     /// <summary>
