@@ -200,8 +200,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ebc9622867d5d54791e55160a7cf0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapNumX: 0
-  mapNumY: 0
   rock: {fileID: 0}
   tree: {fileID: 0}
 --- !u!1 &7856877
@@ -3152,8 +3150,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ebc9622867d5d54791e55160a7cf0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapNumX: 0
-  mapNumY: 0
   rock: {fileID: 0}
   tree: {fileID: 0}
 --- !u!1 &266276068
@@ -3570,8 +3566,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ebc9622867d5d54791e55160a7cf0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapNumX: 0
-  mapNumY: 0
   rock: {fileID: 0}
   tree: {fileID: 0}
 --- !u!1 &296823209
@@ -5908,8 +5902,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ebc9622867d5d54791e55160a7cf0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapNumX: 0
-  mapNumY: 0
   rock: {fileID: 0}
   tree: {fileID: 0}
 --- !u!1 &521358252
@@ -6210,8 +6202,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ebc9622867d5d54791e55160a7cf0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapNumX: 0
-  mapNumY: 0
   rock: {fileID: 0}
   tree: {fileID: 0}
 --- !u!1 &534578587
@@ -6826,7 +6816,7 @@ SpriteRenderer:
   m_Size: {x: 2, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
 --- !u!61 &588884578
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8847,8 +8837,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ebc9622867d5d54791e55160a7cf0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapNumX: 0
-  mapNumY: 0
   rock: {fileID: 0}
   tree: {fileID: 0}
 --- !u!1 &789820215
@@ -11543,8 +11531,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ebc9622867d5d54791e55160a7cf0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapNumX: 0
-  mapNumY: 0
   rock: {fileID: 626528942}
   tree: {fileID: 368577536}
 --- !u!1 &1052723217
@@ -15616,7 +15602,7 @@ SpriteRenderer:
   m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
 --- !u!1 &1516955371
 GameObject:
   m_ObjectHideFlags: 0
@@ -15804,8 +15790,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ebc9622867d5d54791e55160a7cf0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapNumX: 0
-  mapNumY: 0
   rock: {fileID: 0}
   tree: {fileID: 0}
 --- !u!1 &1535139218
@@ -15996,8 +15980,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ebc9622867d5d54791e55160a7cf0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapNumX: 0
-  mapNumY: 0
   rock: {fileID: 0}
   tree: {fileID: 0}
 --- !u!1 &1558779264
@@ -19852,8 +19834,8 @@ GameObject:
   - component: {fileID: 1960131915}
   - component: {fileID: 1960131918}
   - component: {fileID: 1960131917}
-  - component: {fileID: 1960131916}
   - component: {fileID: 1960131919}
+  - component: {fileID: 1960131916}
   m_Layer: 0
   m_Name: WaterMonster
   m_TagString: Monster
@@ -19882,10 +19864,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1960131914}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccb62d7c26706244e85525a82b6801f7, type: 3}
+  m_Script: {fileID: 11500000, guid: fd229fd54d0c8d241846c6b53edd4566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 8
+  barrier: 0
+  type: 0
 --- !u!61 &1960131917
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -20231,7 +20214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c487676677cc884e97ca0d67ded1107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Potion: {fileID: 1182792322803684, guid: 4cdee985d18b87c4faa352f348d73c79, type: 2}
+  CreateItem: []
 --- !u!50 &2016768458
 Rigidbody2D:
   serializedVersion: 4

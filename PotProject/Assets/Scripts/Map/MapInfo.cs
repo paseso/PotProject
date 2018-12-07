@@ -2,17 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// マップ情報
+/// </summary>
 public class MapInfo : MonoBehaviour {
 
     // どの場所にあるマップか
-    public int mapNumX;
-    public int mapNumY;
+    private int mapNumX;
+    private int mapNumY;
 
     public GameObject rock;
     public GameObject tree;
     // 伸びる木
     private bool _tree;
     public bool GrowTreeFlag { get; set; }
+
+    public int MapNumX{ get; set; }
+
+    public int MapNumY { get; set; }
 
     // スイッチ岩
     private bool _upRock;
