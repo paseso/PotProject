@@ -38,6 +38,9 @@ public class FadeManager : MonoBehaviour
     /// <summary>フェード色</summary>
     public Color fadeColor = Color.black;
 
+    [SerializeField]
+    private Texture ruleImage;
+
 
     public void Awake()
     {
