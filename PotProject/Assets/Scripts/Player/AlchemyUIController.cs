@@ -43,6 +43,8 @@ public class AlchemyUIController : MonoBehaviour {
             setItemImageList();
             ItemFrame = gameObject.transform.GetChild(gameObject.transform.childCount - 1).gameObject;
             IntoPot = gameObject.transform.GetChild(gameObject.transform.childCount - 2).gameObject;
+            move_ctr = GameObject.Find("Map1/Brother/Body").GetComponent<MoveController>();
+            crossAxisdown = move_ctr.gameObject.GetComponent<CrossAxisDown>();
             player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         }
         catch (Exception e)
@@ -51,14 +53,13 @@ public class AlchemyUIController : MonoBehaviour {
         }
     }
 
-    void Start () {
+    void Start ()
+    {
         //デバッグ
-        player_ctr.setItemList(ItemStatus.ITEM.SLIME);
-        player_ctr.setItemList(ItemStatus.ITEM.SNAKE);
+        //player_ctr.setItemList(ItemStatus.ITEM.SLIME);
+        //player_ctr.setItemList(ItemStatus.ITEM.SNAKE);
         nowBox = 0;
 
-        move_ctr = GameObject.Find("Brother/Body").GetComponent<MoveController>();
-        crossAxisdown = move_ctr.gameObject.GetComponent<CrossAxisDown>();
         mtr_0 = IntoPot.transform.GetChild(0).GetChild(0).gameObject;
         mtr_1 = IntoPot.transform.GetChild(0).GetChild(1).gameObject;
         _boxRight = true;
