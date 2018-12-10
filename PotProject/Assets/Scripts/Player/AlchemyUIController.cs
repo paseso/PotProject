@@ -12,12 +12,9 @@ public class AlchemyUIController : MonoBehaviour {
     //アイテムの画像
     private Sprite[] ItemImage;
 
-    [SerializeField]
     private PlayerController player_ctr;
 
-    [SerializeField]
     private GameObject ItemFrame;
-    [SerializeField]
     private GameObject IntoPot;
     //---IntoPotの子オブジェクト---------
     private GameObject mtr_0;
@@ -43,7 +40,10 @@ public class AlchemyUIController : MonoBehaviour {
     {
         try {
             setItembox();
-            setItemImage();
+            setItemImageList();
+            ItemFrame = gameObject.transform.GetChild(gameObject.transform.childCount - 1).gameObject;
+            IntoPot = gameObject.transform.GetChild(gameObject.transform.childCount - 2).gameObject;
+            player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         }
         catch (Exception e)
         {
@@ -56,9 +56,9 @@ public class AlchemyUIController : MonoBehaviour {
         player_ctr.setItemList(ItemStatus.ITEM.SLIME);
         player_ctr.setItemList(ItemStatus.ITEM.SNAKE);
         nowBox = 0;
+
         move_ctr = GameObject.Find("Brother/Body").GetComponent<MoveController>();
         crossAxisdown = move_ctr.gameObject.GetComponent<CrossAxisDown>();
-
         mtr_0 = IntoPot.transform.GetChild(0).GetChild(0).gameObject;
         mtr_1 = IntoPot.transform.GetChild(0).GetChild(1).gameObject;
         _boxRight = true;
@@ -79,13 +79,9 @@ public class AlchemyUIController : MonoBehaviour {
     public void PickItem()
     {
         if (_boxRight)
-        {
             setMaterialsBox();
-        }
         else
-        {
-            ReSetMaterialsBox(nowBox);
-        }
+            ReSetMaterials(nowBox);
     }
 
     /// <summary>
@@ -103,9 +99,12 @@ public class AlchemyUIController : MonoBehaviour {
         {
             mtr_0_img.sprite = img;
         }
-        else if (mtr_1_img.sprite == null)
+        else if (mtr_0_img.sprite != img)
         {
-            mtr_1_img.sprite = img;
+            if(mtr_1_img.sprite == null)
+            {
+                mtr_1_img.sprite = img;
+            }
         }
 
         Materials_item.Add(items[nowBox]);
@@ -115,9 +114,21 @@ public class AlchemyUIController : MonoBehaviour {
     /// 素材アイテム欄のリセット
     /// </summary>
     /// <param name="num">一個だけリセット</param>
-    private void ReSetMaterialsBox(int num)
+    private void ReSetMaterials(int num)
     {
+        //押したボックスの画像に何か入っていれば通る
+        if (Box_item[num].GetComponent<Image>().sprite == null)
+            return;
+
         Box_item[num].GetComponent<Image>().sprite = null;
+
+        //もし素材ボックスに2個アイテムを入れてた場合2個目の画像を1個目のボックスに移す
+        //Materials_itemがリストなので1個目をRemoveして2個目もRemoveしようとした場合エラーが起きるため
+        if (Materials_item.Count == 2 || num == 0)
+        {
+            mtr_0.GetComponent<Image>().sprite = mtr_1.GetComponent<Image>().sprite;
+            mtr_1.GetComponent<Image>().sprite = null;
+        }
         Materials_item.RemoveAt(num);
     }
 
@@ -197,7 +208,7 @@ public class AlchemyUIController : MonoBehaviour {
                 Array.Copy(Itembox, Box_item, Itembox.Length);
                 _boxRight = true;
             }
-            
+            nowBox = 0;
             ItemFrame.transform.position = Box_item[0].transform.position;
             break;
         }
@@ -277,15 +288,14 @@ public class AlchemyUIController : MonoBehaviour {
     /// <summary>
     /// アイテムの画像をセット
     /// </summary>
-    private void setItemImage()
+    private void setItemImageList()
     {
         ItemImage = new Sprite[3];
         for(int i = 0; i < ItemImage.Length; i++)
         {
-            ItemImage[i] = Resources.Load("Textures/background_normal" + i) as Sprite;
-            Debug.Log("ItemImage[" + i + "]" + ItemImage[i]);
+            Sprite img = Resources.Load<Sprite>("Textures/background_normal" + i);
+            ItemImage[i] = img;
         }
-        
     }
 
     /// <summary>

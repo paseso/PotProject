@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 public class AttackZoonController : MonoBehaviour {
 
@@ -9,13 +8,9 @@ public class AttackZoonController : MonoBehaviour {
     [HideInInspector]
     public GameObject Attack_Target;
     [SerializeField, Header("殴れるオブジェクトがx方向に飛ぶ距離")]
-    private float Impalce_x = 50;
+    private float Impalce_x = 3;
     [SerializeField, Header("殴れるオブジェクトがy方向に飛ぶ距離")]
-    private float Impalce_y = 50;
-    [SerializeField]
-    private PlayerController manager;
-    [SerializeField]
-    private GameObject Sword;
+    private float Impalce_y = 6;
     private GameObject PlayerObject;
     //モンスターをアタックできるかどうか
     private bool _attackMonster = false;
@@ -46,13 +41,13 @@ public class AttackZoonController : MonoBehaviour {
         if (move_ctr.OnLeft)
         {
             //Sword.transform.position = new Vector2(Sword.transform.position.x - 0.9f, Sword.transform.position.y);
-            Sword.transform.rotation = Quaternion.Euler(0, 0, 51);
+            //Sword.transform.rotation = Quaternion.Euler(0, 0, 51);
             gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
         }
         if (move_ctr.OnRight)
         {
             //Sword.transform.position = new Vector2(Sword.transform.position.x + 0.9f, Sword.transform.position.y);
-            Sword.transform.rotation = Quaternion.Euler(0, 0, -51);
+            //Sword.transform.rotation = Quaternion.Euler(0, 0, -51);
             gameObject.transform.rotation = new Quaternion(0, 180, 0, 0);
         }
     }

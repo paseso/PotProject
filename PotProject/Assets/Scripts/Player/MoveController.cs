@@ -31,14 +31,9 @@ public class MoveController : MonoBehaviour
     //左右動かしてもいいかどうか
     [HideInInspector]
     public bool _ActiveRightLeft = false;
-    //ギミックの中いるかどうか
-    [HideInInspector]
-    public bool _InGimmick = false;
     //アイテムを落としたかどうか
     [HideInInspector]
     public bool _itemFall = false;
-    //はしごの処理を行えるかどうか
-    private bool _activeLadder = false;
     //CrossYが一回押されたかどうか
     private bool _onCrossYTrigger = false;
     //モンスターに当たったかどうか
@@ -63,15 +58,13 @@ public class MoveController : MonoBehaviour
     //---------------------------------------------
     [HideInInspector]
     public GameObject target;
-    [SerializeField, Header("兄のSprite 0.左 1.右 2.後ろ")]
     private List<Sprite> BrotherSprites;
     private SpriteRenderer obj_sprite;
 
-    private PlayerController manager;
+    private PlayerController player_ctr;
     private BringCollider bringctr;
     private AttackZoonController atc_ctr;
     private AlchemyUIController alchemyUI_ctr;
-    private MapInfo mInfo;
     private Status status;
     //----------ボタンFlagのget---------------------
     public bool Jumping
@@ -199,8 +192,6 @@ public class MoveController : MonoBehaviour
         target = null;
         _itemFall = false;
         _ActiveRightLeft = true;
-        _InGimmick = false;
-        _activeLadder = false;
         _jumping = false;
         _hitmonster = false;
         ClearBtnFlg();
@@ -210,9 +201,8 @@ public class MoveController : MonoBehaviour
     void Start()
     {
         rig = gameObject.transform.parent.GetComponent<Rigidbody2D>();
-        manager = GameObject.Find("Controller").GetComponent<PlayerController>();
+        player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         bringctr = gameObject.transform.parent.GetChild(0).GetComponent<BringCollider>();
-        mInfo = transform.root.GetComponent<MapInfo>();
         atc_ctr = GameObject.Find("AttackRange").GetComponentInChildren<AttackZoonController>();
         alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
         obj_sprite = gameObject.transform.parent.GetComponent<SpriteRenderer>();
@@ -239,7 +229,7 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void EventStateCheck()
     {
-        switch (manager.status.event_state)
+        switch (player_ctr.status.event_state)
         {
             case Status.EventState.NORMAL:
                 BtnCheck();
@@ -311,7 +301,7 @@ public class MoveController : MonoBehaviour
                 if (!_ActiveRightLeft)
                     return;
 
-                obj_sprite.sprite = BrotherSprites[0];
+                //obj_sprite.sprite = BrotherSprites[0];
                 rig.velocity = new Vector2(-5f, rig.velocity.y);
                 direc = Direction.LEFT;
                 break;
@@ -322,7 +312,7 @@ public class MoveController : MonoBehaviour
                 if (!_ActiveRightLeft)
                     return;
 
-                obj_sprite.sprite = BrotherSprites[1];
+                //obj_sprite.sprite = BrotherSprites[1];
                 rig.velocity = new Vector2(5f, rig.velocity.y);
                 direc = Direction.RIGHT;
                 break;
@@ -349,7 +339,7 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.RIGHTJOYSTICK_LEFT:
                 Debug.Log("Right Joystick Left");
-                if (!manager.AlchemyWindow)
+                if (!player_ctr.AlchemyWindow)
                     return;
                 _onRJoystickLeft = true;
 
@@ -357,7 +347,7 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.RIGHTJOYSTICK_RIGHT:
                 Debug.Log("Right Joystick Right");
-                if (!manager.AlchemyWindow)
+                if (!player_ctr.AlchemyWindow)
                     return;
                 _onRJoystickRight = true;
 
@@ -365,7 +355,7 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.RIGHTJOYSTICK_UP:
                 Debug.Log("Right Joystick Up");
-                if (!manager.AlchemyWindow)
+                if (!player_ctr.AlchemyWindow)
                     return;
                 _onRJoystickUp = true;
 
@@ -373,7 +363,7 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.RIGHTJOYSTICK_DOWN:
                 Debug.Log("Right Joystick Down");
-                if (!manager.AlchemyWindow)
+                if (!player_ctr.AlchemyWindow)
                     return;
                 _onRJoystickDown = true;
 
@@ -382,7 +372,7 @@ public class MoveController : MonoBehaviour
             case ButtonType.CIRCLE:
                 _onCircle = true;
                 
-                if (manager.AlchemyWindow)
+                if (player_ctr.AlchemyWindow)
                 {
                     alchemyUI_ctr.PickItem();
                 }
@@ -438,7 +428,7 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.R2:
                 Debug.Log("R2");
-                manager.OpenAlchemy();
+                player_ctr.OpenAlchemy();
                 break;
 
             case ButtonType.OPTION:
@@ -454,7 +444,7 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.CROSSX_RIGTH:
-                if (!manager.AlchemyWindow)
+                if (!player_ctr.AlchemyWindow)
                     return;
 
                 axisValue = Input.GetAxis("CrossX");
@@ -462,7 +452,7 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.CROSSX_LEFT:
-                if (!manager.AlchemyWindow)
+                if (!player_ctr.AlchemyWindow)
                     return;
 
                 axisValue = Input.GetAxis("CrossX");
@@ -471,7 +461,7 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.CROSSY_UP:
                 Debug.Log("Cross_Up");
-                if (!manager.AlchemyWindow)
+                if (!player_ctr.AlchemyWindow)
                     return;
 
                 axisValue = Input.GetAxis("CrossY");
@@ -480,7 +470,7 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.CROSSY_DOWN:
                 Debug.Log("Cross_Down");
-                if (!manager.AlchemyWindow)
+                if (!player_ctr.AlchemyWindow)
                     return;
 
                 axisValue = Input.GetAxis("CrossY");
@@ -730,7 +720,7 @@ public class MoveController : MonoBehaviour
         if(col.gameObject.tag == "Monster")
         {
             _hitmonster = true;
-            manager.ApplyHp(1);
+            player_ctr.ApplyHp(1);
             atc_ctr.AttackObject();
         }
     }

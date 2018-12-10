@@ -1,19 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PotController : MonoBehaviour {
 
-    [SerializeField]
-    private PlayerController manager;
-    [SerializeField]
+    private PlayerController player_ctr;
     private BringCollider bring_col;
-    [SerializeField]
     private MoveController move_ctr;
 
     private Rigidbody2D rig;
 
-    [SerializeField, Header("1.左, 2.右")]
     private Sprite[] PotImages;
 
     private enum Direction
@@ -25,6 +19,9 @@ public class PotController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        player_ctr = GameObject.FindObjectOfType<PlayerController>();
+        bring_col = GameObject.Find("Brother/BringCollider").GetComponent<BringCollider>();
+        move_ctr = GameObject.Find("Brother/Body").GetComponent<MoveController>();
         rig = gameObject.GetComponent<Rigidbody2D>();
         direction = Direction.LEFT;
     }
@@ -95,11 +92,11 @@ public class PotController : MonoBehaviour {
             switch (mInfo.GetMStatus.type)
             {
                 case MonsterStatus.MonsterType.WATER:
-                    manager.setItemList(ItemStatus.ITEM.SLIME);
+                    player_ctr.setItemList(ItemStatus.ITEM.SLIME);
                     break;
 
                 case MonsterStatus.MonsterType.SNAKE:
-                    manager.setItemList(ItemStatus.ITEM.SNAKE);
+                    player_ctr.setItemList(ItemStatus.ITEM.SNAKE);
                     break;
 
                 default:

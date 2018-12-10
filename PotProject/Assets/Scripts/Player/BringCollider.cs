@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BringCollider : MonoBehaviour {
 
@@ -27,7 +25,7 @@ public class BringCollider : MonoBehaviour {
         _Tubohit = false;
         _bring = false;
         move_controll = gameObject.transform.parent.GetComponentInChildren<MoveController>();
-        Joints = GameObject.Find("Joint");
+        //Joints = GameObject.Find("Joint");
         direction = Direction.LEFT;
     }
 	
@@ -41,13 +39,13 @@ public class BringCollider : MonoBehaviour {
     /// </summary>
     private void MoveCollider()
     {
-        if (move_controll.OnLeft || direction == Direction.RIGHT)
+        if (move_controll.OnLeft) // || direction == Direction.RIGHT
         {
             gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
-            Joints.transform.rotation = Quaternion.Euler(0, 0, 0);
+            //Joints.transform.rotation = Quaternion.Euler(0, 0, 0);
             direction = Direction.LEFT;
         }
-        if (move_controll.OnRight || direction == Direction.LEFT)
+        if (move_controll.OnRight) // || direction == Direction.LEFT
         {
             gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
             direction = Direction.RIGHT;
