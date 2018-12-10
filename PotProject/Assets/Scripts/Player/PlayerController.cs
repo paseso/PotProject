@@ -6,7 +6,18 @@ using DG.Tweening;
 public struct Status
 {
     //兄のHP
+    [SerializeField]
     private int playerHP;
+
+    // バリアの制限時間
+    [SerializeField]
+    private float barrierTime;
+
+    public float GetBarrierTime
+    {
+        get { return barrierTime; }
+    }
+
     public int PlayerHP
     {
         get { return playerHP; }
