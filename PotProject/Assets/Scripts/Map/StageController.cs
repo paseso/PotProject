@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class StageController : MonoBehaviour {
     
@@ -77,11 +78,11 @@ public class StageController : MonoBehaviour {
                 {
                     tempPos = Maps[i - 1][num].transform.position;
                     tempPos.z = 90;
-                    Maps[i][num].transform.position = tempPos;
+                    StartCoroutine(SrideAnimation(Maps[i][num],tempPos));
                 }
 
                 // 折り返し
-                Maps[0][num].transform.position = turnPos;
+                StartCoroutine(SrideAnimation(Maps[0][num],turnPos));
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[0][num];
@@ -107,10 +108,10 @@ public class StageController : MonoBehaviour {
                     tempPos = Maps[i + 1][num].transform.position;
                     tempPos.z = 90;
 
-                    Maps[i][num].transform.position = tempPos;
+                    StartCoroutine(SrideAnimation(Maps[i][num],tempPos));
                 }
                 // 折り返し
-                Maps[stageLength - 1][num].transform.position = turnPos;
+                StartCoroutine(SrideAnimation(Maps[stageLength - 1][num],turnPos));
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[stageLength - 1][num];
@@ -133,9 +134,9 @@ public class StageController : MonoBehaviour {
                 {
                     tempPos = Maps[num][i + 1].transform.position;
                     tempPos.z = 90;
-                    Maps[num][i].transform.position = tempPos;
+                    StartCoroutine(SrideAnimation(Maps[num][i],tempPos));
                 }
-                Maps[num][stageLength - 1].transform.position = turnPos;
+                StartCoroutine(SrideAnimation(Maps[num][stageLength - 1],turnPos));
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[num][stageLength - 1];
@@ -157,9 +158,9 @@ public class StageController : MonoBehaviour {
                 {
                     tempPos = Maps[num][i - 1].transform.position;
                     tempPos.z = 90;
-                    Maps[num][i].transform.position = tempPos;
+                    StartCoroutine(SrideAnimation(Maps[num][i],tempPos));
                 }
-                Maps[num][0].transform.position = turnPos;
+                StartCoroutine(SrideAnimation(Maps[num][0],turnPos));
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[num][0];
@@ -239,5 +240,17 @@ public class StageController : MonoBehaviour {
         tenpPosY = map1.GetComponent<MapInfo>().MapNumY;
         map1.GetComponent<MapInfo>().MapNumY = map2.GetComponent<MapInfo>().MapNumY;
         map2.GetComponent<MapInfo>().MapNumY = tenpPosY;
+    }
+
+    /// <summary>
+    /// スライドアニメーション
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="pos"></param>
+    /// <returns></returns>
+    public IEnumerator SrideAnimation(GameObject obj, Vector2 pos)
+    {
+        obj.transform.DOLocalMove(pos, 1f);
+        yield return null;
     }
 }
