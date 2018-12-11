@@ -9,13 +9,17 @@ using DG.Tweening;
 /// </summary>
 [RequireComponent(typeof(GimmickInfo))]
 public class GimmickController :MonoBehaviour {
-    private StageController sManager;
+    private StageController sController;
     private MapInfo mInfo;
     private GimmickInfo gInfo;
 
     // Use this for initialization
     void Start() {
-        sManager = GameObject.Find("Controller").GetComponent<StageController>();
+        if (GameObject.Find("Controller") != null)
+        {
+            sController = GameObject.Find("Controller").GetComponent<StageController>();
+        }
+
         mInfo = transform.root.GetComponent<MapInfo>();
         gInfo = GetComponent<GimmickInfo>();
     }
@@ -32,14 +36,15 @@ public class GimmickController :MonoBehaviour {
         if (col.gameObject.tag == "Player") {
             switch (gInfo.type) {
                 case GimmickInfo.GimmickType.UP:
+                    sController.MapExchange(sController.GetMaps[0][0], sController.GetMaps[1][2]);
                     break;
                 case GimmickInfo.GimmickType.DOWN:
-                    sManager.SrideStage(1, StageController.Direction.DOWN);
+                    sController.SrideStage(1, StageController.Direction.DOWN);
                     break;
                 case GimmickInfo.GimmickType.LEFT:
                     break;
                 case GimmickInfo.GimmickType.RIGHT:
-                    sManager.SrideStage(0, StageController.Direction.RIGHT);
+                    sController.SrideStage(0, StageController.Direction.RIGHT);
                     break;
                 case GimmickInfo.GimmickType.ROCK:
                     mInfo.rock.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);

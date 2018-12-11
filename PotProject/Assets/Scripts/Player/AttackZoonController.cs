@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 public class AttackZoonController : MonoBehaviour {
 
@@ -9,13 +8,10 @@ public class AttackZoonController : MonoBehaviour {
     [HideInInspector]
     public GameObject Attack_Target;
     [SerializeField, Header("殴れるオブジェクトがx方向に飛ぶ距離")]
-    private float Impalce_x = 50;
+    private float Impalce_x = 3;
     [SerializeField, Header("殴れるオブジェクトがy方向に飛ぶ距離")]
-    private float Impalce_y = 50;
-    [SerializeField]
-    private PlayerController manager;
-    [SerializeField]
-    private GameObject Sword;
+    private float Impalce_y = 6;
+    private GameObject PlayerObject;
     //モンスターをアタックできるかどうか
     private bool _attackMonster = false;
 
@@ -27,6 +23,7 @@ public class AttackZoonController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         move_ctr = gameObject.transform.parent.GetComponentInChildren<MoveController>();
+        PlayerObject = gameObject.transform.parent.gameObject;
         Attack_Target = null;
         _attackMonster = false;
 	}
@@ -44,13 +41,13 @@ public class AttackZoonController : MonoBehaviour {
         if (move_ctr.OnLeft)
         {
             //Sword.transform.position = new Vector2(Sword.transform.position.x - 0.9f, Sword.transform.position.y);
-            Sword.transform.rotation = Quaternion.Euler(0, 0, 51);
+            //Sword.transform.rotation = Quaternion.Euler(0, 0, 51);
             gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
         }
         if (move_ctr.OnRight)
         {
             //Sword.transform.position = new Vector2(Sword.transform.position.x + 0.9f, Sword.transform.position.y);
-            Sword.transform.rotation = Quaternion.Euler(0, 0, -51);
+            //Sword.transform.rotation = Quaternion.Euler(0, 0, -51);
             gameObject.transform.rotation = new Quaternion(0, 180, 0, 0);
         }
     }
@@ -61,12 +58,29 @@ public class AttackZoonController : MonoBehaviour {
     /// <param name="obj">殴るオブジェクト</param>
     public void AttackObject()
     {
-        if (!move_ctr.OnCircle || Attack_Target == null)
-            return;
+        if (move_ctr._hitmonster)
+        {
+            move_ctr._ActiveRightLeft = false;
+            Attack_Target = PlayerObject;
+            Rigidbody2D target_rig = Attack_Target.GetComponent<Rigidbody2D>();
+            target_rig.AddForce(new Vector2(-Impalce_x * -1 + 5, target_rig.velocity.y + Impalce_y), ForceMode2D.Impulse);
+            StartCoroutine(WaitObject());
+        }
+        else if (move_ctr.OnCircle && Attack_Target != null)
+        {
+            Rigidbody2D target_rig = Attack_Target.GetComponent<Rigidbody2D>();
+            target_rig.AddForce(new Vector2(-Impalce_x, target_rig.velocity.y + Impalce_y), ForceMode2D.Impulse);
+        }
+    }
 
-        Rigidbody2D target_rig = Attack_Target.GetComponent<Rigidbody2D>();
-        target_rig.AddForce(new Vector2(-Impalce_x, target_rig.velocity.y + Impalce_y), ForceMode2D.Impulse);
-        Attack_Target = null;
+    /// <summary>
+    /// オブジェクトが待つ処理
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator WaitObject()
+    {
+        yield return new WaitForSeconds(0.5f);
+        move_ctr._ActiveRightLeft = true;
     }
 
     private void OnTriggerStay2D(Collider2D col)
@@ -74,7 +88,6 @@ public class AttackZoonController : MonoBehaviour {
         if(col.gameObject.tag == "Monster")
         {
             _attackMonster = true;
-            Debug.Log("殴れるよ");
             Attack_Target = col.gameObject;
         }
     }
@@ -82,5 +95,9 @@ public class AttackZoonController : MonoBehaviour {
     private void OnTriggerExit2D(Collider2D col)
     {
         _attackMonster = false;
+        if(col.gameObject.tag == "Monster")
+        {
+            Attack_Target = null;
+        }
     }
 }

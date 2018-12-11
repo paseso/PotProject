@@ -3,15 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// モンスター情報
+/// モンスターステータス
 /// </summary>
-public class MonsterInfo : MonoBehaviour {
+[System.Serializable]
+public struct MonsterStatus
+{
+    [SerializeField]
+    private int HP, ATK;
 
-    public enum MonsterType {
+    [SerializeField]
+    private bool barrier;
+
+    // どのモンスターか
+    public enum MonsterType
+    {
         WATER,
         SNAKE,
     }
-
     public MonsterType type;
-	
+
+    // 属性
+    public enum MonsterAttribute
+    {
+        NORMAL,
+        FIRE,
+        ICE,
+        THUNDER,
+        DARK,
+    }
+    public MonsterAttribute attribute;
+}
+
+/// <summary>
+/// モンスター情報
+/// </summary>
+public class MonsterInfo : MonoBehaviour {
+    [SerializeField]
+    private MonsterStatus status;
+
+    public MonsterStatus GetMStatus
+    {
+        get { return status; }
+    }
 }

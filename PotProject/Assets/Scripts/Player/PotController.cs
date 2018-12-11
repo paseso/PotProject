@@ -1,29 +1,54 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PotController : MonoBehaviour {
 
-    [SerializeField]
-    private PlayerController manager;
-    [SerializeField]
+    private PlayerController player_ctr;
     private BringCollider bring_col;
-    [SerializeField]
     private MoveController move_ctr;
 
     private Rigidbody2D rig;
 
-	// Use this for initialization
-	void Start () {
+    private Sprite[] PotImages;
+
+    private enum Direction
+    {
+        RIGHT = 0,
+        LEFT
+    }
+    private Direction direction;
+
+    // Use this for initialization
+    void Start () {
+        player_ctr = GameObject.FindObjectOfType<PlayerController>();
+        bring_col = GameObject.Find("Brother/BringCollider").GetComponent<BringCollider>();
+        move_ctr = GameObject.Find("Brother/Body").GetComponent<MoveController>();
         rig = gameObject.GetComponent<Rigidbody2D>();
-	}
+        direction = Direction.LEFT;
+    }
 	
 	// Update is called once per frame
 	void Update () {
         PotJump();
         ChangeLayer();
 	}
-    
+
+    /// <summary>
+    /// 壺の画像変更処理
+    /// </summary>
+    private void ChangePotImage()
+    {
+        if (move_ctr.OnLeft || direction == Direction.RIGHT)
+        {
+
+            direction = Direction.LEFT;
+        }
+        else if (move_ctr.OnLeft || direction == Direction.LEFT)
+        {
+
+            direction = Direction.RIGHT;
+        }
+    }
+
     /// <summary>
     /// プレイヤーがジャンプした時壺も一緒にジャンプする処理
     /// </summary>
@@ -63,22 +88,22 @@ public class PotController : MonoBehaviour {
 
             Destroy(col.gameObject);
             gameObject.layer = LayerMask.NameToLayer("Pot");
-            MonsterInfo monInfo = col.gameObject.GetComponent<MonsterInfo>();
-            switch (monInfo.type)
+            MonsterInfo mInfo = col.gameObject.GetComponent<MonsterInfo>();
+            switch (mInfo.GetMStatus.type)
             {
-                case MonsterInfo.MonsterType.WATER:
-                    manager.setItemList(ItemStatus.ITEM.SLIME);
+                case MonsterStatus.MonsterType.WATER:
+                    player_ctr.setItemList(ItemStatus.ITEM.SLIME);
                     break;
 
-                case MonsterInfo.MonsterType.SNAKE:
-                    manager.setItemList(ItemStatus.ITEM.SNAKE);
+                case MonsterStatus.MonsterType.SNAKE:
+                    player_ctr.setItemList(ItemStatus.ITEM.SNAKE);
                     break;
 
                 default:
-                    Debug.Log("Type: " + monInfo.type);
+                    Debug.Log("Type: " + mInfo.GetMStatus.type);
                     break;
             }
-            Debug.Log("Type: " + monInfo.type);
+            Debug.Log("Type: " + mInfo.GetMStatus.type);
         }
     }
 }

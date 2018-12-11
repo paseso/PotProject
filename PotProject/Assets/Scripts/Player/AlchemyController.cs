@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AlchemyController : MonoBehaviour {
 
-    [SerializeField, Header("生成アイテム")]
+    //生成アイテム
     private GameObject[] CreateItem;
     private TextAsset csvFile;
     private GimmickController gimmick_ctr;
@@ -12,6 +10,7 @@ public class AlchemyController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        setCreateItem();
         mInfo = transform.root.GetComponent<MapInfo>();
 	}
 	
@@ -19,6 +18,18 @@ public class AlchemyController : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    /// <summary>
+    /// 生成できるアイテム配列CreateItemにセット
+    /// </summary>
+    private void setCreateItem()
+    {
+        CreateItem = new GameObject[3];
+        for(int i = 0; i < CreateItem.Length; i++)
+        {
+            CreateItem[i] = Resources.Load<GameObject>("Prefabs/CreateItem_" + i);
+        }
+    }
 
     /// <summary>
     /// 錬成csv読み込み

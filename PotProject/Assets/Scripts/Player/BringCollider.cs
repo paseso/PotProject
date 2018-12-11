@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BringCollider : MonoBehaviour {
 
@@ -13,6 +11,13 @@ public class BringCollider : MonoBehaviour {
     private MoveController move_controll;
     private GameObject Joints;
 
+    private enum Direction
+    {
+        RIGHT = 0,
+        LEFT
+    }
+    private Direction direction;
+
     // Use this for initialization
     void Start ()
     {
@@ -20,7 +25,8 @@ public class BringCollider : MonoBehaviour {
         _Tubohit = false;
         _bring = false;
         move_controll = gameObject.transform.parent.GetComponentInChildren<MoveController>();
-        Joints = GameObject.Find("Joint/joint_0");
+        //Joints = GameObject.Find("Joint");
+        direction = Direction.LEFT;
     }
 	
 	// Update is called once per frame
@@ -33,17 +39,17 @@ public class BringCollider : MonoBehaviour {
     /// </summary>
     private void MoveCollider()
     {
-        if (move_controll.OnLeft)
+        if (move_controll.OnLeft) // || direction == Direction.RIGHT
         {
             gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
-            //Joints.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y);
+            //Joints.transform.rotation = Quaternion.Euler(0, 0, 0);
+            direction = Direction.LEFT;
         }
-        if (move_controll.OnRight)
+        if (move_controll.OnRight) // || direction == Direction.LEFT
         {
-            gameObject.transform.rotation = new Quaternion(0, 180, 0, 0);
-            //Joints.transform.position = new Vector2(gameObject.transform.position.x - 2, gameObject.transform.position.y);
+            gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
+            direction = Direction.RIGHT;
         }
-        
     }
 
     /// <summary>
@@ -68,7 +74,7 @@ public class BringCollider : MonoBehaviour {
             _Brotherhit = false;
         }
     }
-    
+
     private void OnTriggerStay2D(Collider2D col)
     {
         if (col.gameObject.tag == "Monster")
@@ -79,6 +85,8 @@ public class BringCollider : MonoBehaviour {
                 _Brotherhit = true;
             }
         }
+
+        //壺に当たってたらアイテムを入れれる合図を出す（UI表示）
         if (col.gameObject.tag == "Tubo")
         {
             _Tubohit = true;
