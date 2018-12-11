@@ -27,7 +27,7 @@ public class StageController : MonoBehaviour {
     private GameObject[] mapLists;
 
     [SerializeField]
-    private int stageLength;
+    private int stageLength;    
 
     void Awake() {
         SetList();
@@ -64,6 +64,7 @@ public class StageController : MonoBehaviour {
         Vector3 turnPos = new Vector3();
         int turnPosX = 0;
         int turnPosY = 0;
+        int mapCount = 0;
 
         switch (dir)
         {
@@ -76,13 +77,14 @@ public class StageController : MonoBehaviour {
                 // 折り返しMap以外をスライド
                 for (int i = stageLength - 1; i > 0; i--)
                 {
+                    mapCount++;
                     tempPos = Maps[i - 1][num].transform.position;
                     tempPos.z = 90;
-                    StartCoroutine(SrideAnimation(Maps[i][num],tempPos));
+                    StartCoroutine(SrideAnimation(Maps[i][num],tempPos,mapCount));
+                    //Maps[i][num].transform.localPosition = tempPos;
                 }
-
                 // 折り返し
-                StartCoroutine(SrideAnimation(Maps[0][num],turnPos));
+                Maps[0][num].transform.localPosition = turnPos;
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[0][num];
@@ -105,13 +107,15 @@ public class StageController : MonoBehaviour {
                 // 折り返しMap以外をスライド
                 for (int i = 0; i < stageLength - 1; i++)
                 {
+                    mapCount++;
                     tempPos = Maps[i + 1][num].transform.position;
                     tempPos.z = 90;
 
-                    StartCoroutine(SrideAnimation(Maps[i][num],tempPos));
+                    StartCoroutine(SrideAnimation(Maps[i][num],tempPos,mapCount));
+                    //Maps[i][num].transform.localPosition = tempPos;
                 }
                 // 折り返し
-                StartCoroutine(SrideAnimation(Maps[stageLength - 1][num],turnPos));
+                Maps[stageLength - 1][num].transform.localPosition = turnPos;
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[stageLength - 1][num];
@@ -132,11 +136,13 @@ public class StageController : MonoBehaviour {
 
                 for (int i = 0; i < stageLength - 1; i++)
                 {
+                    mapCount++;
                     tempPos = Maps[num][i + 1].transform.position;
                     tempPos.z = 90;
-                    StartCoroutine(SrideAnimation(Maps[num][i],tempPos));
+                    StartCoroutine(SrideAnimation(Maps[num][i],tempPos,mapCount));
+                    //Maps[num][i].transform.localPosition = tempPos;
                 }
-                StartCoroutine(SrideAnimation(Maps[num][stageLength - 1],turnPos));
+                Maps[num][stageLength - 1].transform.localPosition = turnPos;
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[num][stageLength - 1];
@@ -156,11 +162,13 @@ public class StageController : MonoBehaviour {
                 turnPos.z = 90;
                 for (int i = stageLength - 1; i > 0; i--)
                 {
+                    mapCount++;
                     tempPos = Maps[num][i - 1].transform.position;
                     tempPos.z = 90;
-                    StartCoroutine(SrideAnimation(Maps[num][i],tempPos));
+                    //Maps[num][i].transform.localPosition = tempPos;
+                    StartCoroutine(SrideAnimation(Maps[num][i],tempPos,mapCount));
                 }
-                StartCoroutine(SrideAnimation(Maps[num][0],turnPos));
+                Maps[num][0].transform.localPosition = turnPos;
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[num][0];
@@ -172,7 +180,6 @@ public class StageController : MonoBehaviour {
                 }
                 Maps[num][stageLength - 1] = temp;
                 Maps[num][stageLength - 1].GetComponent<MapInfo>().MapNumX = turnPosX;
-
                 break;
             default:
                 break;
@@ -180,52 +187,10 @@ public class StageController : MonoBehaviour {
     }
 
     /// <summary>
-    /// ステージシャッフル
-    /// </summary>
-    //public void StageShuffle() {
-    //    GameObject[] tempMap = new GameObject[Maps.Count * 3];
-    //    Vector2[] mapPos = new Vector2[Maps.Count * 3];
-    //    Vector2 standardPos = Maps[0][0].transform.localPosition;
-    //    int count = 0;
-    //    for (int i = 0; i < Maps.Count; i++) {
-
-    //        for(int j = 0; j < Maps[i].Count; i++) {
-    //            tempMap[count] = Maps[i][j];
-    //            mapPos[count] = tempMap[count].transform.localPosition;
-    //            count++;
-    //        }
-    //    }
-
-    //    // シャッフル
-    //    for(int i = 0; i <= count; i++) {
-    //        int rand = Random.Range(0, count + 1);
-    //        GameObject temp = tempMap[rand];
-    //        tempMap[rand] = tempMap[i];
-    //        tempMap[i] = temp;
-    //    }
-
-    //    // 再配置
-    //    int num = 0;
-    //    for(int i = 0; i < stageLength; i++)
-    //    {
-    //        for (int j = 0; j < stageLength; j++)
-    //        {
-    //            tempMap[num].transform.localPosition = mapPos[num];
-    //            tempMap[num].GetComponent<MapInfo>().mapNumX = j;
-    //            tempMap[num].GetComponent<MapInfo>().mapNumY = i;
-    //            Maps[i][j] = tempMap[num];
-    //            num++;
-    //        }
-    //    }
-    //}
-
-    /// <summary>
     /// マップ入れ替え
     /// </summary>
     public void MapExchange(GameObject map1,GameObject map2)
-    {
-        int count = 0;
-        
+    {   
         int tenpPosX = 0;
         int tenpPosY = 0;
 
@@ -242,15 +207,21 @@ public class StageController : MonoBehaviour {
         map2.GetComponent<MapInfo>().MapNumY = tenpPosY;
     }
 
+    private bool isMove = false;
+
     /// <summary>
     /// スライドアニメーション
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="pos"></param>
     /// <returns></returns>
-    public IEnumerator SrideAnimation(GameObject obj, Vector2 pos)
+    public IEnumerator SrideAnimation(GameObject obj, Vector2 pos, int count)
     {
-        obj.transform.DOLocalMove(pos, 1f);
-        yield return null;
+        if (!isMove)
+        {
+            if (count == 2) { isMove = true; }
+            obj.transform.DOLocalMove(pos, 3f).SetEase(Ease.Linear).OnComplete(() => isMove = false);
+            yield return null;
+        }
     }
 }
