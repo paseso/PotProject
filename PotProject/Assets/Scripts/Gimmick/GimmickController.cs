@@ -25,7 +25,7 @@ public class GimmickController :MonoBehaviour {
     }
 
     void Update() {
-        
+
     }
 
     /// <summary>
@@ -33,13 +33,13 @@ public class GimmickController :MonoBehaviour {
     /// </summary>
     /// <param name="col"></param>
     public void OnCollisionEnter2D(Collision2D col) {
-        if (col.gameObject.tag == "Player") {
+        if (col.gameObject.layer == LayerMask.NameToLayer("Player")) {
             switch (gInfo.type) {
                 case GimmickInfo.GimmickType.UP:
                     sController.MapExchange(sController.GetMaps[0][0], sController.GetMaps[1][2]);
                     break;
                 case GimmickInfo.GimmickType.DOWN:
-                    sController.SrideStage(1, StageController.Direction.DOWN);
+                    sController.SrideStage(1, StageController.Direction.UP);
                     break;
                 case GimmickInfo.GimmickType.LEFT:
                     break;
@@ -74,7 +74,7 @@ public class GimmickController :MonoBehaviour {
                 break;
 
             case GimmickInfo.GimmickType.LADDER:
-                
+
                 break;
             default:
                 break;
@@ -93,7 +93,7 @@ public class GimmickController :MonoBehaviour {
                 break;
 
             case GimmickInfo.GimmickType.LADDER:
-                
+
                 break;
             default:
                 break;
@@ -154,7 +154,7 @@ public class GimmickController :MonoBehaviour {
     /// </summary>
     public void FloatingTile(GameObject obj)
     {
-        
+
     }
 
     /// <summary>

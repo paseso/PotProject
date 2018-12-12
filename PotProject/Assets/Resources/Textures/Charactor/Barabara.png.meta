@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 953e7baa1a2862c44ba2befbbb9a6bb3
-timeCreated: 1542912122
-licenseType: Free
+timeCreated: 1544522284
+licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
     21300000: Barabara_0
@@ -33,7 +33,7 @@ TextureImporter:
   textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -1
     wrapMode: 1
@@ -72,6 +72,22 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+  - buildTarget: iPhone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -80,11 +96,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 173
+        y: 173.00002
         width: 161
-        height: 193
+        height: 192.99998
       alignment: 9
-      pivot: {x: 0.48447207, y: 0.51295334}
+      pivot: {x: 0.51943755, y: 0.5629558}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -93,11 +109,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 189.00002
-        y: 198.00002
+        y: 198
         width: 82.999985
-        height: 145.99998
+        height: 146
       alignment: 9
-      pivot: {x: 0.4999999, y: 0.50342464}
+      pivot: {x: 0.48481798, y: 0.814904}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -105,12 +121,12 @@ TextureImporter:
       name: Barabara_2
       rect:
         serializedVersion: 2
-        x: 278
-        y: 181
-        width: 46
-        height: 156
+        x: 278.85617
+        y: 177.79008
+        width: 45.14383
+        height: 159.00002
       alignment: 9
-      pivot: {x: 0.57608694, y: 0.46794873}
+      pivot: {x: 0.54765886, y: 0.87485933}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -149,12 +165,12 @@ TextureImporter:
         width: 84.999985
         height: 151
       alignment: 9
-      pivot: {x: 0.5411764, y: 0.47682118}
+      pivot: {x: 0.72395986, y: 0.47682115}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     outline: []
   spritePackingTag: 
-  userData: 101116284206382
+  userData: 101221812183758
   assetBundleName: 
   assetBundleVariant: 
