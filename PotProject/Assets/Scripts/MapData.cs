@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class MapDate : ScriptableObject
+public class MapData : ScriptableObject
 {
     public MapArray[] mapDate =     new MapArray[20];
     public MapArray[] gimmickDate = new MapArray[20];

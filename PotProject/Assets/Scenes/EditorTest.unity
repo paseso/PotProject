@@ -4417,7 +4417,7 @@ GameObject:
   - component: {fileID: 1592522730}
   - component: {fileID: 1592522731}
   m_Layer: 0
-  m_Name: StageController
+  m_Name: StageManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4577,15 +4577,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageLength: {x: 3, y: 3}
   stageDate:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 171fbe7b5c0b4464b85c96d4a629a823, type: 2}
+  - {fileID: 11400000, guid: 171fbe7b5c0b4464b85c96d4a629a823, type: 2}
+  - {fileID: 11400000, guid: b0ffd9d4be1ef734fa176643930019d1, type: 2}
+  - {fileID: 11400000, guid: b0ffd9d4be1ef734fa176643930019d1, type: 2}
+  - {fileID: 11400000, guid: b0ffd9d4be1ef734fa176643930019d1, type: 2}
+  - {fileID: 11400000, guid: 23b49453809e57847a66434495e9499b, type: 2}
+  - {fileID: 11400000, guid: 23b49453809e57847a66434495e9499b, type: 2}
+  - {fileID: 11400000, guid: 23b49453809e57847a66434495e9499b, type: 2}
+  - {fileID: 11400000, guid: 23b49453809e57847a66434495e9499b, type: 2}
 --- !u!1 &1628436407
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,11 +4,25 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour {
 
-
+    [SerializeField]
+    private bool isInstance = true;
     [SerializeField]
     private Vector2 stageLength = new Vector2(3, 3);
     [SerializeField]
-    private MapDate[] stageDate = new MapDate[9];
+    private MapData[] stageDate = new MapData[9];
+
+    private void Start()
+    {
+        
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            
+        }
+    }
 
     private void OnValidate()
     {
@@ -17,7 +31,7 @@ public class StageManager : MonoBehaviour {
 
         if (stageDate.Length != stageLength.x * stageLength.y)
         {
-            stageDate = new MapDate[((int)stageLength.x * (int)stageLength.y)];
+            stageDate = new MapData[((int)stageLength.x * (int)stageLength.y)];
         }
     }
 }

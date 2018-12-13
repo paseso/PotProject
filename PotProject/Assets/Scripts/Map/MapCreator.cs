@@ -12,9 +12,7 @@ public class MapCreator : MonoBehaviour
     [SerializeField]
     private Enemy[] enemies;
     [SerializeField]
-    private MapDate map;
-    [HideInInspector]
-    public GameObject tilePrefab;
+    private MapData map;
 
     public Tile[] GetTiles() { return tiles; }
     public Tile GetTile(int index) { return tiles[index]; }
@@ -23,7 +21,7 @@ public class MapCreator : MonoBehaviour
     public Enemy[] GetEnemies() { return enemies; }
     public Enemy GetEnemy(int index) { return enemies[index]; }
 
-    public MapDate Map
+    public MapData Map
     {
         get{ return map; }
         set{ map = value; }

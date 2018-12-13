@@ -201,7 +201,7 @@ public class MapEditor : EditorWindow {
             //  フルパスから相対パスへ
             string path = "Assets" + fullPath.Substring(Application.dataPath.Length);
             //  保存処理
-            MapDate tmp = ScriptableObject.CreateInstance<MapDate>();
+            MapData tmp = ScriptableObject.CreateInstance<MapData>();
             //  配列を動的に確保　※そうしないと確保されない
             for (int i = 0; i < tmp.mapDate.Length; i++)
             {
@@ -243,15 +243,13 @@ public class MapEditor : EditorWindow {
         {
             //  フルパスから相対パスへ
             string path = "Assets" + fullPath.Substring(Application.dataPath.Length);
-            Debug.Log("Path :" + path);
             //  パスからデータを取得
-            MapDate date = AssetDatabase.LoadAssetAtPath<MapDate>(path);
+            MapData date = AssetDatabase.LoadAssetAtPath<MapData>(path);
 
             if (date == null)
             {
-                Debug.Log("Date is Null");
+                Debug.Log("Dataの読み込みエラー");
             }
-            //Debug.Log("データの名前 :" + date.name);
 
             //  値の代入
             for (int i = 0; i < date.mapDate.Length; i++)
@@ -276,7 +274,7 @@ public class MapEditor : EditorWindow {
 
 
         //  グリッドのサイズを設定
-        private Rect[,] CreateGrid()
+    private Rect[,] CreateGrid()
     {
         //  EditorGUILayout.GetControlRectを呼ぶとSpace()が勝手に入るようでfor文で回したときバグの原因だった
         rect = EditorGUILayout.GetControlRect();
