@@ -24,8 +24,6 @@ GameObject:
   - component: {fileID: 114599392896457662}
   - component: {fileID: 114532970096744290}
   - component: {fileID: 50472867578324066}
-  - component: {fileID: 232628766321565638}
-  - component: {fileID: 233591483629036134}
   m_Layer: 9
   m_Name: Pot
   m_TagString: Tubo
@@ -69,7 +67,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1266365615057778}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.956, y: 5.385, z: 0}
+  m_LocalPosition: {x: 0.681, y: 5.385, z: 0}
   m_LocalScale: {x: 0.21155177, y: 0.21155177, z: 1}
   m_Children:
   - {fileID: 4109913191555874}
@@ -132,9 +130,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71acbb92d74d18b4fa875fe96273a105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 0}
-  bring_col: {fileID: 0}
-  move_ctr: {fileID: 0}
 --- !u!114 &114599392896457662
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -146,10 +141,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c487676677cc884e97ca0d67ded1107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CreateItem:
-  - {fileID: 1182792322803684, guid: 4cdee985d18b87c4faa352f348d73c79, type: 2}
-  - {fileID: 1889090223995956, guid: 922938687497f734d91e6e0daea1f3c0, type: 2}
-  - {fileID: 1678919345131264, guid: bc43374c9cf9f9547833896e7b258032, type: 2}
 --- !u!212 &212123087918677624
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -232,44 +223,3 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
---- !u!232 &232628766321565638
-DistanceJoint2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1266365615057778}
-  m_Enabled: 0
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 8.939421, y: -0.107024446}
-  m_AutoConfigureDistance: 1
-  m_Distance: 0.005
-  m_MaxDistanceOnly: 0
---- !u!233 &233591483629036134
-HingeJoint2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1266365615057778}
-  m_Enabled: 1
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 8.939421, y: -0.107024446}
-  m_UseMotor: 0
-  m_Motor:
-    m_MotorSpeed: 0
-    m_MaximumMotorForce: 10000
-  m_UseLimits: 0
-  m_AngleLimits:
-    m_LowerAngle: 0
-    m_UpperAngle: 359
