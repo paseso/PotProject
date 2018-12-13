@@ -14,9 +14,14 @@ public class CameraManager : MonoBehaviour {
 
     void Awake()
     {
+        //  カメラの検索
         mainCamera = Camera.main;
         subCamera = Camera.allCameras[0];
+        //  サブカメラの非アクティブ化
         subCamera.gameObject.SetActive(false);
+        //  コルーチンが複数回呼ばれないように
+        isSwitchingMain = true;
+        //  画面のマスク処理をしているクラスの参照
         fade = FindObjectOfType<FadeImage>();
     }
 
@@ -25,6 +30,7 @@ public class CameraManager : MonoBehaviour {
 	}
 	
 	void Update () {
+        //  デバッグ用----------------
         if (Input.GetKeyDown(KeyCode.RightShift))
         {
             FadeInOutCamera(new Vector2(16, 0));
@@ -38,6 +44,7 @@ public class CameraManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.M)){
             SwitchingCameraMain();
         }
+        //  --------------------------
 	}
 
     /// <summary>
@@ -79,7 +86,6 @@ public class CameraManager : MonoBehaviour {
     IEnumerator SwitchSub(Vector2 cameraPos, float cameraSize){
         //  黒いテクスチャーで画面を隠す
         isSwitchingSub = true;
-        isSwitchingMain = false;
         float time = 0;
         float interval = 0.5f;
         while (time <= interval)
@@ -106,13 +112,13 @@ public class CameraManager : MonoBehaviour {
             yield return 0;
         }
         fade.Range = 0;
+        isSwitchingMain = false;
         yield return null;
     }
 
     IEnumerator SwitchMain(){
         //  黒いテクスチャーで画面を隠す
         isSwitchingMain = true;
-        isSwitchingSub = false;
         float time = 0;
         float interval = 0.5f;
         while (time <= interval)
@@ -126,6 +132,7 @@ public class CameraManager : MonoBehaviour {
         //  カメラの変更処理
         mainCamera.gameObject.SetActive(true);
         subCamera.gameObject.SetActive(false);
+
         yield return new WaitForSeconds(0.1f);
 
         //  黒のテクスチャを取りのぞく
@@ -137,6 +144,7 @@ public class CameraManager : MonoBehaviour {
             yield return 0;
         }
         fade.Range = 0;
+        isSwitchingSub = false;
         yield return null;
     }
 

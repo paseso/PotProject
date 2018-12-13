@@ -15,12 +15,12 @@ public class MapEditor : EditorWindow {
     private Gimmick[] gimmicks;
     private Enemy[] enemies;
     private int toolberInt;
-    private int[,] mapDate;
-    private int[,] gimmickDate;
-    private int[,] enemyDate;
+    private int[,] mapData;
+    private int[,] gimmickData;
+    private int[,] enemyData;
     private Rect rect;
     private Rect[,] gridRect;
-    private Color gridColor;
+    //private Color gridColor;
 
     //  選択中のボタンの種類
     private int SelectNum = 0;
@@ -44,11 +44,11 @@ public class MapEditor : EditorWindow {
         tiles = mapCreator.GetTiles();
         gimmicks = mapCreator.GetGimmicks();
         enemies = mapCreator.GetEnemies();
-        mapDate = new int[gridNum, gridNum];
-        gimmickDate = new int[gridNum, gridNum];
-        enemyDate = new int[gridNum, gridNum];
+        mapData = new int[gridNum, gridNum];
+        gimmickData = new int[gridNum, gridNum];
+        enemyData = new int[gridNum, gridNum];
         gridRect = new Rect[gridNum, gridNum];
-        gridColor = Color.white;
+        //gridColor = Color.white;
     }
 
     private void OnEnable()
@@ -60,16 +60,18 @@ public class MapEditor : EditorWindow {
     private void OnGUI()
     {
         //  グリッド以外のフィールドの表示
-        EditorGUILayout.BeginHorizontal();
-        GUILayout.Label("グリッドの色", GUILayout.Width(150));
-        gridColor = EditorGUILayout.ColorField(gridColor);
-        EditorGUILayout.EndHorizontal();
+        //EditorGUILayout.BeginHorizontal();
+        //GUILayout.Label("グリッドの色", GUILayout.Width(150));
+        //gridColor = EditorGUILayout.ColorField(gridColor);
+        //EditorGUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
         //  マップデータを書き出し
-        if (GUILayout.Button("ファイル出力")) { ExportMapDate(); }
+        if (GUILayout.Button("ファイル出力")) { ExportMapData(); }
+        //  マップの読み込み
+        if (GUILayout.Button("ファイル入力")) { ImportMapData(); }
         //  グリッドをリセットをする
-        if (GUILayout.Button("リセット")) { mapDate = new int[gridNum, gridNum]; }
+        if (GUILayout.Button("リセット")) { mapData = new int[gridNum, gridNum]; ResetMapData(); }
         GUILayout.EndHorizontal();
 
         //  グリッドのサイズを設定
@@ -95,18 +97,18 @@ public class MapEditor : EditorWindow {
                 {
                     case 0:
                         //  ノーマルタイルだけ表示
-                        if (mapDate[y, x] != 0) { GUI.DrawTexture(gridRect[y, x], tiles[mapDate[y, x]].TileImage); }
+                        if (mapData[y, x] != 0) { GUI.DrawTexture(gridRect[y, x], tiles[mapData[y, x]].TileImage); }
                         break;
                     case 1:
                         //  ノーマルタイルとギミックタイルを表示
                         //  GUI.DrawTextureではアルファ値がいじれなかったので、こちらはGraphics.DrawTextureを使用
-                        if (mapDate[y, x] != 0) { Graphics.DrawTexture(gridRect[y, x], tiles[mapDate[y, x]].TileImage, new Rect(0, 0, 1, 1), 0, 0, 0, 0, new Color(0.5f, 0.5f, 0.5f, 0.25f)); }
-                        if (gimmickDate[y, x] != 0) { GUI.DrawTexture(gridRect[y, x], gimmicks[gimmickDate[y, x]].GimmickImage); }
+                        if (mapData[y, x] != 0) { Graphics.DrawTexture(gridRect[y, x], tiles[mapData[y, x]].TileImage, new Rect(0, 0, 1, 1), 0, 0, 0, 0, new Color(0.5f, 0.5f, 0.5f, 0.25f)); }
+                        if (gimmickData[y, x] != 0) { GUI.DrawTexture(gridRect[y, x], gimmicks[gimmickData[y, x]].GimmickImage); }
                         break;
                     case 2:
                         //  ノーマルタイルとポジションタイルを表示
-                        if (mapDate[y, x] != 0) { Graphics.DrawTexture(gridRect[y, x], tiles[mapDate[y, x]].TileImage, new Rect(0, 0, 1, 1), 0, 0, 0, 0, new Color(0.5f, 0.5f, 0.5f, 0.25f)); }
-                        if (enemyDate[y, x] != 0) { Graphics.DrawTexture(gridRect[y, x], enemies[enemyDate[y, x]].EnemyImage, new Rect(0, 0, 1, 1), 0, 0, 0, 0, new Color(0.5f, 0.5f, 0.5f, 0.25f)); }                        
+                        if (mapData[y, x] != 0) { Graphics.DrawTexture(gridRect[y, x], tiles[mapData[y, x]].TileImage, new Rect(0, 0, 1, 1), 0, 0, 0, 0, new Color(0.5f, 0.5f, 0.5f, 0.25f)); }
+                        if (enemyData[y, x] != 0) { Graphics.DrawTexture(gridRect[y, x], enemies[enemyData[y, x]].EnemyImage, new Rect(0, 0, 1, 1), 0, 0, 0, 0, new Color(0.5f, 0.5f, 0.5f, 0.25f)); }                        
                         break;
                     default:
                         Debug.Log("ツールバーの値が不正です");
@@ -161,18 +163,18 @@ public class MapEditor : EditorWindow {
                         switch (toolberInt)
                         {
                             case 0:
-                                mapDate[yy, xx] = SelectNum;
+                                mapData[yy, xx] = SelectNum;
                                 break;
                             case 1:
                                 if (SelectNum < gimmicks.Length)
                                 {
-                                    gimmickDate[yy, xx] = SelectNum;
+                                    gimmickData[yy, xx] = SelectNum;
                                 }                                
                                 break;
                             case 2:
                                 if (SelectNum < enemies.Length)
                                 {
-                                    enemyDate[yy, xx] = SelectNum;
+                                    enemyData[yy, xx] = SelectNum;
                                 }
                                 break;
                             default:
@@ -188,7 +190,7 @@ public class MapEditor : EditorWindow {
     }
 
     //  ScriptableObjectにデータの書き出し
-    private void ExportMapDate()
+    private void ExportMapData()
     {
         // 保存先のファイルパスを取得する
         var fullPath = EditorUtility.SaveFilePanel("マップデータの保存", ASSET_PATH, "default_name", "asset");
@@ -215,9 +217,9 @@ public class MapEditor : EditorWindow {
             {
                 for (int j = 0; j < tmp.mapDate[i].mapNum.Length; j++)
                 {
-                    tmp.mapDate[i].mapNum[j] = mapDate[i, j];
-                    tmp.gimmickDate[i].mapNum[j] = gimmickDate[i, j];
-                    tmp.enemyDate[i].mapNum[j] = enemyDate[i, j];
+                    tmp.mapDate[i].mapNum[j] = mapData[i, j];
+                    tmp.gimmickDate[i].mapNum[j] = gimmickData[i, j];
+                    tmp.enemyDate[i].mapNum[j] = enemyData[i, j];
                 }
             }
             AssetDatabase.CreateAsset(tmp, path);
@@ -232,9 +234,49 @@ public class MapEditor : EditorWindow {
         }
     }
 
+    //  ScriptableObjectのマップデータの読み込み
+    private void ImportMapData()
+    {
+        string fullPath = EditorUtility.OpenFilePanel("マップデータの選択", ASSET_PATH, "asset");
+        // パスが入っていれば選択されたということ（キャンセルされたら入ってこない）
+        if (!string.IsNullOrEmpty(fullPath))
+        {
+            //  フルパスから相対パスへ
+            string path = "Assets" + fullPath.Substring(Application.dataPath.Length);
+            Debug.Log("Path :" + path);
+            //  パスからデータを取得
+            MapDate date = AssetDatabase.LoadAssetAtPath<MapDate>(path);
 
-    //  グリッドのサイズを設定
-    private Rect[,] CreateGrid()
+            if (date == null)
+            {
+                Debug.Log("Date is Null");
+            }
+            //Debug.Log("データの名前 :" + date.name);
+
+            //  値の代入
+            for (int i = 0; i < date.mapDate.Length; i++)
+            {
+                for (int j = 0; j < date.mapDate.Length; j++)
+                {
+                    mapData[i,j] = date.mapDate[i].mapNum[j];
+                    gimmickData[i,j] = date.gimmickDate[i].mapNum[j];
+                    enemyData[i,j] = date.enemyDate[i].mapNum[j];
+                }
+            }
+        }
+    }
+
+    //  グリッドの初期化
+    private void ResetMapData()
+    {
+        mapData = new int[gridNum, gridNum];
+        gimmickData = new int[gridNum, gridNum];
+        enemyData = new int[gridNum, gridNum];
+    }
+
+
+        //  グリッドのサイズを設定
+        private Rect[,] CreateGrid()
     {
         //  EditorGUILayout.GetControlRectを呼ぶとSpace()が勝手に入るようでfor文で回したときバグの原因だった
         rect = EditorGUILayout.GetControlRect();
