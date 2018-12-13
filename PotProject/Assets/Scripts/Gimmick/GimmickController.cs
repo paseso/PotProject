@@ -15,7 +15,7 @@ public class GimmickController :MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        if (GameObject.Find("Controller").GetComponent<StageController>() != null)
+        if (GameObject.Find("Controller") != null)
         {
             sController = GameObject.Find("Controller").GetComponent<StageController>();
         }
@@ -25,7 +25,7 @@ public class GimmickController :MonoBehaviour {
     }
 
     void Update() {
-        
+
     }
 
     /// <summary>
@@ -74,7 +74,7 @@ public class GimmickController :MonoBehaviour {
                 break;
 
             case GimmickInfo.GimmickType.LADDER:
-                
+
                 break;
             default:
                 break;
@@ -93,7 +93,7 @@ public class GimmickController :MonoBehaviour {
                 break;
 
             case GimmickInfo.GimmickType.LADDER:
-                
+
                 break;
             default:
                 break;
@@ -154,7 +154,7 @@ public class GimmickController :MonoBehaviour {
     /// </summary>
     public void FloatingTile(GameObject obj)
     {
-        
+
     }
 
     /// <summary>

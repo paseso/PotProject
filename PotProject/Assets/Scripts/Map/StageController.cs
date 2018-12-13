@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 
 public class StageController : MonoBehaviour {
-    
+
     /// <summary>
     /// スライドの方向
     /// </summary>
@@ -27,7 +27,7 @@ public class StageController : MonoBehaviour {
     private GameObject[] mapLists;
 
     [SerializeField]
-    private int stageLength;    
+    private int stageLength;
 
     void Awake() {
         SetList();
@@ -39,7 +39,7 @@ public class StageController : MonoBehaviour {
     public void SetList()
     {
         int count = 0;
-        
+
         for(int i = 0; i < 3; i++)
         {
             List<GameObject> varMap = new List<GameObject>();
@@ -190,7 +190,7 @@ public class StageController : MonoBehaviour {
     /// マップ入れ替え
     /// </summary>
     public void MapExchange(GameObject map1,GameObject map2)
-    {   
+    {
         int tenpPosX = 0;
         int tenpPosY = 0;
 
