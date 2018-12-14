@@ -11,16 +11,18 @@ public class StageManager : MonoBehaviour {
     [SerializeField]
     private MapData[] stageDate = new MapData[9];
 
+    private MapCreator mapCreator;
+
     private void Start()
     {
-        
+        mapCreator = FindObjectOfType<MapCreator>();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            
+            mapCreator.CreateMap(stageDate[0]);
         }
     }
 
