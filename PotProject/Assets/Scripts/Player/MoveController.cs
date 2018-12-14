@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 //優先度アップ
 [DefaultExecutionOrder(-1)]
@@ -11,12 +12,19 @@ public class MoveController : MonoBehaviour
 
     private bool _jumping = false;
 
+    public bool IsLadder
+    {
+        get; set;
+    }
+
     [SerializeField]
     private float ladderSpeed;
 
     private float axisValue = 0f;
 
     private Rigidbody2D rig;
+    //はしご中かどうか
+    private bool _laddernow = false;
 
     private bool isLadderTop = false;
     // はしごの上に足がついているか
@@ -195,6 +203,7 @@ public class MoveController : MonoBehaviour
         _ActiveRightLeft = true;
         _jumping = false;
         _hitmonster = false;
+        _laddernow = false;
         ClearBtnFlg();
     }
 
@@ -220,6 +229,11 @@ public class MoveController : MonoBehaviour
         {
             target.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 2.5f);
         }
+        if(_laddernow)
+        {
+            PotObject.transform.DOMove(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), 0.5f).SetEase(Ease.Linear);
+        }
+        
 
         ClearBtnFlg();
         EventStateCheck();
@@ -325,7 +339,6 @@ public class MoveController : MonoBehaviour
 
                 if (status.state == Status.GimmickState.ONLADDER) {
                     Ladder(ladderSpeed, 1);
-                    PotObject.transform.position = gameObject.transform.position;
                 }
                 _onUp = false;
                 break;
@@ -337,7 +350,6 @@ public class MoveController : MonoBehaviour
                 _onDown = true;
                 if (status.state == Status.GimmickState.ONLADDER) {
                     Ladder(ladderSpeed, -1);
-                    PotObject.transform.position = gameObject.transform.position;
                 }
                 break;
 
@@ -497,7 +509,7 @@ public class MoveController : MonoBehaviour
         // はしご内で昇降ボタンを離したとき
         if(Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.W))
         {
-            if (status.state == Status.GimmickState.ONLADDER && !_isJump)
+            if (status.state == Status.GimmickState.ONLADDER && !_isJump && IsLadder)
             {
                 transform.parent.GetComponent<Rigidbody2D>().simulated = false;
             }
@@ -517,8 +529,9 @@ public class MoveController : MonoBehaviour
         }
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
         {
-            if (status.state == Status.GimmickState.ONLADDER && !_isJump)
+            if (status.state == Status.GimmickState.ONLADDER && !_isJump && IsLadder)
             {
+
                 transform.parent.GetComponent<Rigidbody2D>().simulated = false;
             }
 
@@ -656,6 +669,7 @@ public class MoveController : MonoBehaviour
         gameObject.transform.parent.gameObject.layer = LayerMask.NameToLayer("LadderPlayer");
         PotObject.layer = LayerMask.NameToLayer("Trans");
         transform.parent.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed * dir);
+        _laddernow = true;
     }
 
     private void HitRayWall()
@@ -696,10 +710,9 @@ public class MoveController : MonoBehaviour
                         status.state = Status.GimmickState.NORMAL;
                         ChangeLayer();
                         PotObject.layer = LayerMask.NameToLayer("Pot");
+                        _laddernow = false;
+                        PotObject.transform.position = new Vector2(PotObject.transform.position.x, PotObject.transform.position.y);
                     }
-                    break;
-                case GimmickInfo.GimmickType.LADDER:
-                    status.state = Status.GimmickState.ONLADDER;
                     break;
             }
         }
@@ -707,13 +720,14 @@ public class MoveController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        if (col.GetComponent<GimmickInfo>() && _isJump)
+        if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER && _isJump)
         {
+            PotObject.transform.position = new Vector2(PotObject.transform.position.x, PotObject.transform.position.y);
             switch (col.GetComponent<GimmickInfo>().type) {
                 case GimmickInfo.GimmickType.LADDER:
                     status.state = Status.GimmickState.NORMAL;
-                    ChangeLayer();
                     PotObject.layer = LayerMask.NameToLayer("Pot");
+                    _laddernow = false;
                     break;
                 case GimmickInfo.GimmickType.LADDERTOP:
                     status.state = Status.GimmickState.NORMAL;

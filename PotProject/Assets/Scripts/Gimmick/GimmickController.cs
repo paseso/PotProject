@@ -39,7 +39,7 @@ public class GimmickController :MonoBehaviour {
                     sController.MapExchange(sController.GetMaps[0][0], sController.GetMaps[1][2]);
                     break;
                 case GimmickInfo.GimmickType.DOWN:
-                    sController.SrideStage(1, StageController.Direction.UP);
+                    sController.SrideStage(1, StageController.Direction.DOWN);
                     break;
                 case GimmickInfo.GimmickType.LEFT:
                     break;
