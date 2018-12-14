@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public struct ItemStatus
 {
     public enum ITEM
@@ -10,13 +11,15 @@ public struct ItemStatus
         GOLEM,
         SNAKE,
     };
+
+    public ITEM item;
 };
 
 public class ItemManager : MonoBehaviour {
 
     
-
-    public ItemStatus item_status;
+    [SerializeField]
+    private ItemStatus item_status;
     
 
 }
