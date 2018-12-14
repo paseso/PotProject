@@ -28,13 +28,18 @@ public class StageController : MonoBehaviour {
 
     public GameObject[] SetMapList
     {
-        set { mapLists = value; }
+        set
+        {
+            mapLists = value;
+            SetList();
+        }
+        
     }
 
     [SerializeField]
     private int stageLength;
 
-    void Awake() {
+    void Start() {
         SetList();
     }
 

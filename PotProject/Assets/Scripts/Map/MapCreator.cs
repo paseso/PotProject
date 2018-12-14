@@ -212,7 +212,7 @@ public class MapCreator : MonoBehaviour
                     if (enemyNum != 0)
                     {
                         var enemyObj = Instantiate(GetEnemy(enemyNum).EnemyObj);
-                        enemyObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
+                        enemyObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y) + new Vector2(tileSize * xLength * rem, -tileSize * yLength * quo);
                         enemyObj.transform.parent = rootObj.transform;
                     }
                 }
