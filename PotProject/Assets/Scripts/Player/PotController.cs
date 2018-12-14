@@ -80,7 +80,7 @@ public class PotController : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.GetComponent<MonsterInfo>())
+        if (col.gameObject.GetComponent<MonsterController>())
         {
             Debug.Log("きてる！");
             if (!bring_col._Tubohit || !move_ctr._itemFall)
@@ -88,7 +88,7 @@ public class PotController : MonoBehaviour {
 
             Destroy(col.gameObject);
             gameObject.layer = LayerMask.NameToLayer("Pot");
-            MonsterInfo mInfo = col.gameObject.GetComponent<MonsterInfo>();
+            MonsterController mInfo = col.gameObject.GetComponent<MonsterController>();
             switch (mInfo.GetMStatus.type)
             {
                 case MonsterStatus.MonsterType.WATER:

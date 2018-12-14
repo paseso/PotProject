@@ -20,7 +20,7 @@ public struct MonsterStatus
     {
         get { return ATK; }
     }
-    
+
     public bool barrier;
 
     // どのモンスターか
@@ -59,12 +59,30 @@ public struct MonsterStatus
 /// <summary>
 /// モンスター情報
 /// </summary>
-public class MonsterInfo : MonoBehaviour {
+public class MonsterController : MonoBehaviour
+{
     [SerializeField]
     private MonsterStatus status;
 
     public MonsterStatus GetMStatus
     {
         get { return status; }
+    }
+
+    public void OnDestroy()
+    {
+        DropItem(GetMStatus);
+    }
+
+    public void DropItem(MonsterStatus status)
+    {
+        GameObject item = new GameObject();
+        switch (status.type)
+        {
+            case MonsterStatus.MonsterType.WOOD:
+                item = Instantiate(Resources.Load<GameObject>("Prefabs/HarbPrefab"));
+                break;
+        }
+        item.transform.localPosition = transform.localPosition;
     }
 }
