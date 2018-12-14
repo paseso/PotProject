@@ -81,6 +81,7 @@ public class MonsterController : MonoBehaviour
         {
             case MonsterStatus.MonsterType.WOOD:
                 item = Instantiate(Resources.Load<GameObject>("Prefabs/HarbPrefab"));
+                item.transform.SetParent(transform.parent.transform);
                 break;
         }
         item.transform.localPosition = transform.localPosition;
