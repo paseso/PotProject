@@ -57,6 +57,16 @@ public class StageController : MonoBehaviour {
         }
     }
 
+    public IEnumerator Sride(int num,Direction dir,Vector2 pos,float size)
+    {
+        CameraManager cManager = GetComponent<CameraManager>();
+        cManager.SwitchingCameraSub(pos,size);
+        yield return new WaitForSeconds(1f);
+        SrideStage(num, dir);
+        cManager.SwitchingCameraMain();
+        yield return new WaitForSeconds(1f);
+    }
+
     /// <summary>
     /// ステージスライド処理
     /// </summary>

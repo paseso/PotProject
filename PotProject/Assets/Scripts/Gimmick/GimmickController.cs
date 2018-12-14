@@ -39,16 +39,12 @@ public class GimmickController :MonoBehaviour {
                     sController.MapExchange(sController.GetMaps[0][0], sController.GetMaps[1][2]);
                     break;
                 case GimmickInfo.GimmickType.DOWN:
-                    sController.SrideStage(1, StageController.Direction.UP);
+                    sController.SrideStage(1, StageController.Direction.DOWN);
                     break;
                 case GimmickInfo.GimmickType.LEFT:
                     break;
                 case GimmickInfo.GimmickType.RIGHT:
                     sController.SrideStage(0, StageController.Direction.RIGHT);
-                    break;
-                case GimmickInfo.GimmickType.ROCK:
-                    mInfo.rock.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
-                    mInfo.UpRockFlag = true;
                     break;
                 case GimmickInfo.GimmickType.BAKETREE:
                     BakeTree(gameObject);
@@ -75,6 +71,10 @@ public class GimmickController :MonoBehaviour {
 
             case GimmickInfo.GimmickType.LADDER:
 
+                break;
+            case GimmickInfo.GimmickType.ROCK:
+                mInfo.rock.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
+                mInfo.UpRockFlag = true;
                 break;
             default:
                 break;
