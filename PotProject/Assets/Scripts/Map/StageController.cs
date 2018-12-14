@@ -93,8 +93,8 @@ public class StageController : MonoBehaviour {
                     mapCount++;
                     tempPos = Maps[i - 1][num].transform.position;
                     tempPos.z = 90;
-                    StartCoroutine(SrideAnimation(Maps[i][num],tempPos,mapCount));
-                    //Maps[i][num].transform.localPosition = tempPos;
+                    //StartCoroutine(SrideAnimation(Maps[i][num],tempPos,mapCount));
+                    Maps[i][num].transform.localPosition = tempPos;
                 }
                 // 折り返し
                 Maps[0][num].transform.localPosition = turnPos;
@@ -124,8 +124,8 @@ public class StageController : MonoBehaviour {
                     tempPos = Maps[i + 1][num].transform.position;
                     tempPos.z = 90;
 
-                    StartCoroutine(SrideAnimation(Maps[i][num],tempPos,mapCount));
-                    //Maps[i][num].transform.localPosition = tempPos;
+                    //StartCoroutine(SrideAnimation(Maps[i][num],tempPos,mapCount));
+                    Maps[i][num].transform.localPosition = tempPos;
                 }
                 // 折り返し
                 Maps[stageLength - 1][num].transform.localPosition = turnPos;
@@ -152,8 +152,8 @@ public class StageController : MonoBehaviour {
                     mapCount++;
                     tempPos = Maps[num][i + 1].transform.position;
                     tempPos.z = 90;
-                    StartCoroutine(SrideAnimation(Maps[num][i],tempPos,mapCount));
-                    //Maps[num][i].transform.localPosition = tempPos;
+                    //StartCoroutine(SrideAnimation(Maps[num][i],tempPos,mapCount));
+                    Maps[num][i].transform.localPosition = tempPos;
                 }
                 Maps[num][stageLength - 1].transform.localPosition = turnPos;
 
@@ -178,8 +178,9 @@ public class StageController : MonoBehaviour {
                     mapCount++;
                     tempPos = Maps[num][i - 1].transform.position;
                     tempPos.z = 90;
-                    //Maps[num][i].transform.localPosition = tempPos;
-                    StartCoroutine(SrideAnimation(Maps[num][i],tempPos,mapCount));
+                    //StartCoroutine(SrideAnimation(Maps[num][i], tempPos, mapCount));
+                    Maps[num][i].transform.localPosition = tempPos;
+
                 }
                 Maps[num][0].transform.localPosition = turnPos;
 

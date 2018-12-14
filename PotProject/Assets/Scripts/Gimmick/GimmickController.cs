@@ -36,12 +36,13 @@ public class GimmickController :MonoBehaviour {
         if (col.gameObject.layer == LayerMask.NameToLayer("Player")) {
             switch (gInfo.type) {
                 case GimmickInfo.GimmickType.UP:
-                    sController.MapExchange(sController.GetMaps[0][0], sController.GetMaps[1][2]);
+                    sController.SrideStage(1, StageController.Direction.UP);
                     break;
                 case GimmickInfo.GimmickType.DOWN:
                     sController.SrideStage(1, StageController.Direction.DOWN);
                     break;
                 case GimmickInfo.GimmickType.LEFT:
+                    sController.SrideStage(0, StageController.Direction.LEFT);
                     break;
                 case GimmickInfo.GimmickType.RIGHT:
                     sController.SrideStage(0, StageController.Direction.RIGHT);
