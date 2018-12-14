@@ -11,8 +11,17 @@ public struct MonsterStatus
     [SerializeField]
     private int HP, ATK;
 
-    [SerializeField]
-    private bool barrier;
+    public int SetHP
+    {
+        set { value = HP; }
+    }
+
+    public int GetAttack
+    {
+        get { return ATK; }
+    }
+    
+    public bool barrier;
 
     // どのモンスターか
     public enum MonsterType

@@ -46,10 +46,6 @@ public class GimmickController :MonoBehaviour {
                 case GimmickInfo.GimmickType.RIGHT:
                     sController.SrideStage(0, StageController.Direction.RIGHT);
                     break;
-                case GimmickInfo.GimmickType.ROCK:
-                    mInfo.rock.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
-                    mInfo.UpRockFlag = true;
-                    break;
                 case GimmickInfo.GimmickType.BAKETREE:
                     BakeTree(gameObject);
                     break;
@@ -75,6 +71,10 @@ public class GimmickController :MonoBehaviour {
 
             case GimmickInfo.GimmickType.LADDER:
 
+                break;
+            case GimmickInfo.GimmickType.ROCK:
+                mInfo.rock.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
+                mInfo.UpRockFlag = true;
                 break;
             default:
                 break;
