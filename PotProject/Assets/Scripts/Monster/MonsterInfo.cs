@@ -18,7 +18,19 @@ public struct MonsterStatus
     public enum MonsterType
     {
         WATER,
+        LION,
+        BAT,
+        LAMP,
+        ROBOT,
+        SLIME,
         SNAKE,
+        LUKEWARM,
+        WOOD,
+        HAMSTAR,
+        SHADOW,
+        CLOUD,
+        TURTLE,
+        FAIRY,
     }
     public MonsterType type;
 
@@ -32,6 +44,7 @@ public struct MonsterStatus
         DARK,
     }
     public MonsterAttribute attribute;
+
 }
 
 /// <summary>
