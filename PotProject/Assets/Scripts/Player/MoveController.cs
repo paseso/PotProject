@@ -60,6 +60,7 @@ public class MoveController : MonoBehaviour
     public GameObject target;
     private List<Sprite> BrotherSprites;
     private SpriteRenderer obj_sprite;
+    private GameObject PotObject;
 
     private PlayerController player_ctr;
     private BringCollider bringctr;
@@ -200,6 +201,7 @@ public class MoveController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        PotObject = GameObject.Find("Pot");
         rig = gameObject.transform.parent.GetComponent<Rigidbody2D>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         bringctr = gameObject.transform.parent.GetChild(0).GetComponent<BringCollider>();
@@ -323,6 +325,7 @@ public class MoveController : MonoBehaviour
 
                 if (status.state == Status.GimmickState.ONLADDER) {
                     Ladder(ladderSpeed, 1);
+                    PotObject.transform.position = gameObject.transform.position;
                 }
                 _onUp = false;
                 break;
@@ -334,6 +337,7 @@ public class MoveController : MonoBehaviour
                 _onDown = true;
                 if (status.state == Status.GimmickState.ONLADDER) {
                     Ladder(ladderSpeed, -1);
+                    PotObject.transform.position = gameObject.transform.position;
                 }
                 break;
 
@@ -650,6 +654,7 @@ public class MoveController : MonoBehaviour
         }
         Debug.Log("Ladder");
         gameObject.transform.parent.gameObject.layer = LayerMask.NameToLayer("LadderPlayer");
+        PotObject.layer = LayerMask.NameToLayer("Trans");
         transform.parent.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed * dir);
     }
 
@@ -690,6 +695,7 @@ public class MoveController : MonoBehaviour
                         IsLadderTop = false;
                         status.state = Status.GimmickState.NORMAL;
                         ChangeLayer();
+                        PotObject.layer = LayerMask.NameToLayer("Pot");
                     }
                     break;
                 case GimmickInfo.GimmickType.LADDER:
@@ -707,6 +713,7 @@ public class MoveController : MonoBehaviour
                 case GimmickInfo.GimmickType.LADDER:
                     status.state = Status.GimmickState.NORMAL;
                     ChangeLayer();
+                    PotObject.layer = LayerMask.NameToLayer("Pot");
                     break;
                 case GimmickInfo.GimmickType.LADDERTOP:
                     status.state = Status.GimmickState.NORMAL;
