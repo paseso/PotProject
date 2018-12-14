@@ -58,6 +58,7 @@ public class AttackZoonController : MonoBehaviour {
     /// <param name="obj">殴るオブジェクト</param>
     public void AttackObject()
     {
+
         if (move_ctr._hitmonster)
         {
             move_ctr._ActiveRightLeft = false;
@@ -68,6 +69,8 @@ public class AttackZoonController : MonoBehaviour {
         }
         else if (move_ctr.OnCircle && Attack_Target != null)
         {
+            Destroy(Attack_Target);
+            return;
             Rigidbody2D target_rig = Attack_Target.GetComponent<Rigidbody2D>();
             target_rig.AddForce(new Vector2(-Impalce_x, target_rig.velocity.y + Impalce_y), ForceMode2D.Impulse);
         }
