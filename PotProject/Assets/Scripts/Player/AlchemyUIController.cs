@@ -38,7 +38,15 @@ public class AlchemyUIController : MonoBehaviour {
 
     private void Awake()
     {
-        try {
+    }
+
+    void Start ()
+    {
+        //デバッグ
+        //player_ctr.setItemList(ItemStatus.ITEM.SLIME);
+        //player_ctr.setItemList(ItemStatus.ITEM.SNAKE);
+        try
+        {
             setItembox();
             setItemImageList();
             ItemFrame = gameObject.transform.GetChild(gameObject.transform.childCount - 1).gameObject;
@@ -51,13 +59,8 @@ public class AlchemyUIController : MonoBehaviour {
         {
             Debug.Log(e + "がないよ！");
         }
-    }
 
-    void Start ()
-    {
-        //デバッグ
-        //player_ctr.setItemList(ItemStatus.ITEM.SLIME);
-        //player_ctr.setItemList(ItemStatus.ITEM.SNAKE);
+
         nowBox = 0;
 
         mtr_0 = IntoPot.transform.GetChild(0).GetChild(0).gameObject;

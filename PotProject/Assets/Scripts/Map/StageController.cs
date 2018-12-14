@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class StageController : MonoBehaviour {
+public class StageController : MonoBehaviour
+{
 
     /// <summary>
     /// スライドの方向
@@ -23,21 +24,17 @@ public class StageController : MonoBehaviour {
         get { return Maps; }
     }
 
-    private GameObject[] mapLists;
+    private GameObject[] mapLists = new GameObject[9];
 
     public GameObject[] SetMapList
     {
-        set
-        {
-            mapLists = value;
-            SetList();
-        }
-        
+        set { mapLists = value; }
     }
 
     private int stageLength = 3;
 
-    void Start() {
+    void Start()
+    {
         SetList();
     }
 
@@ -48,7 +45,7 @@ public class StageController : MonoBehaviour {
     {
         int count = 0;
 
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
             List<GameObject> varMap = new List<GameObject>();
             for (int j = 0; j < 3; j++)
@@ -60,10 +57,10 @@ public class StageController : MonoBehaviour {
         }
     }
 
-    public IEnumerator Sride(int num,Direction dir,Vector2 pos,float size)
+    public IEnumerator Sride(int num, Direction dir, Vector2 pos, float size)
     {
         CameraManager cManager = GetComponent<CameraManager>();
-        cManager.SwitchingCameraSub(pos,size);
+        cManager.SwitchingCameraSub(pos, size);
         yield return new WaitForSeconds(1f);
         SrideStage(num, dir);
         cManager.SwitchingCameraMain();
@@ -137,7 +134,7 @@ public class StageController : MonoBehaviour {
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[stageLength - 1][num];
-                turnPosY= Maps[stageLength - 1][num].GetComponent<MapInfo>().MapNumY;
+                turnPosY = Maps[stageLength - 1][num].GetComponent<MapInfo>().MapNumY;
                 for (int i = 0; i < stageLength - 1; i++)
                 {
                     Maps[stageLength - 1 - i][num] = Maps[stageLength - 2 - i][num];
@@ -208,7 +205,7 @@ public class StageController : MonoBehaviour {
     /// <summary>
     /// マップ入れ替え
     /// </summary>
-    public void MapExchange(GameObject map1,GameObject map2)
+    public void MapExchange(GameObject map1, GameObject map2)
     {
         int tenpPosX = 0;
         int tenpPosY = 0;

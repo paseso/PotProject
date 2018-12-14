@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4317403914716936}
   - component: {fileID: 114477684173658472}
+  - component: {fileID: 114882833881507694}
   m_Layer: 0
   m_Name: MapCreator 1
   m_TagString: Untagged
@@ -55,7 +56,7 @@ MonoBehaviour:
   - tileImage: {fileID: 2800000, guid: d1a5bda456b103e4c858f26fbc740877, type: 3}
     tileObj: {fileID: 0}
   - tileImage: {fileID: 2800000, guid: a1c9904cd922e3d4eb545d696a9adb20, type: 3}
-    tileObj: {fileID: 1238842296989262, guid: 002afe221bea8fc47ae0d42456d207c5, type: 2}
+    tileObj: {fileID: 1641198093906112, guid: 38d2ea1b586168245b371420000d5e62, type: 2}
   - tileImage: {fileID: 2800000, guid: 75dbf2d5ab4750944b44a1e2a9a57c05, type: 3}
     tileObj: {fileID: 1238842296989262, guid: d04a12059859b8c47b152267ba9793da, type: 2}
   - tileImage: {fileID: 2800000, guid: d5e0ea9567a3680449192aafe2cbb338, type: 3}
@@ -74,13 +75,19 @@ MonoBehaviour:
     tileObj: {fileID: 1238842296989262, guid: 68cfbeb9e9de75a49a9535e5ecbbf70b, type: 2}
   - tileImage: {fileID: 2800000, guid: 76f9d78a1f8bc1d46b890c3e2a2cd24c, type: 3}
     tileObj: {fileID: 1238842296989262, guid: 68cfbeb9e9de75a49a9535e5ecbbf70b, type: 2}
+  - tileImage: {fileID: 2800000, guid: 3cfaee6c33be5d742a3b104e65eff684, type: 3}
+    tileObj: {fileID: 1547875337690938, guid: beba8964046e942488a970cd0d192358, type: 2}
   gimmicks:
   - gimmickImage: {fileID: 2800000, guid: d1a5bda456b103e4c858f26fbc740877, type: 3}
     gimmickSize: {x: 1, y: 1}
     gimmickObj: {fileID: 0}
   - gimmickImage: {fileID: 2800000, guid: 39cdedf6643e2dd4fa2227fc244acddd, type: 3}
     gimmickSize: {x: 1, y: 1}
-    gimmickObj: {fileID: 1238842296989262, guid: 9337766a85c0b3247a508226ae27e128,
+    gimmickObj: {fileID: 1673226149664986, guid: 8469840eede262344b3e23219b4ffb23,
+      type: 2}
+  - gimmickImage: {fileID: 2800000, guid: a28dfa1d174ab854f86dd670e6b3d88b, type: 3}
+    gimmickSize: {x: 1, y: 1}
+    gimmickObj: {fileID: 1985465897498282, guid: 6b28ddde82745f34db1cb6236dc82a62,
       type: 2}
   - gimmickImage: {fileID: 2800000, guid: abc9d554ca8d7124fb18f7b898cf2b8b, type: 3}
     gimmickSize: {x: 1, y: 1}
@@ -98,9 +105,17 @@ MonoBehaviour:
     gimmickSize: {x: 1, y: 1}
     gimmickObj: {fileID: 1367588890223330, guid: 7dff9af08e2ae9c44b8d2e5c959a92b9,
       type: 2}
-  - gimmickImage: {fileID: 2800000, guid: abc9d554ca8d7124fb18f7b898cf2b8b, type: 3}
+  - gimmickImage: {fileID: 2800000, guid: aceadb682c3793842a1deca6aef2ccd6, type: 3}
     gimmickSize: {x: 1, y: 1}
-    gimmickObj: {fileID: 1367588890223330, guid: 7dff9af08e2ae9c44b8d2e5c959a92b9,
+    gimmickObj: {fileID: 1839983062673806, guid: c8e4f2fc3a4115445a01a316bfe10eb8,
+      type: 2}
+  - gimmickImage: {fileID: 2800000, guid: 3cfaee6c33be5d742a3b104e65eff684, type: 3}
+    gimmickSize: {x: 1, y: 1}
+    gimmickObj: {fileID: 1378440253810690, guid: 4a23496b696209546961aefb2358b59e,
+      type: 2}
+  - gimmickImage: {fileID: 2800000, guid: bd397a0826105954e94da2419fbbd5f9, type: 3}
+    gimmickSize: {x: 1, y: 1}
+    gimmickObj: {fileID: 1667552765188618, guid: 6def4946aa6f5ba4fa32d1f76002c130,
       type: 2}
   enemies:
   - enemyImage: {fileID: 2800000, guid: d1a5bda456b103e4c858f26fbc740877, type: 3}
@@ -133,4 +148,21 @@ MonoBehaviour:
     enemyObj: {fileID: 1418510313325326, guid: 2df3e98af0318f64dac9bb30397f8df7, type: 2}
   - enemyImage: {fileID: 2800000, guid: 305ed1156df206f4ebdcef55a9a7e4a7, type: 3}
     enemyObj: {fileID: 1310451025465950, guid: 18486c49a3d9ce24fa4d09bef663172d, type: 2}
+  - enemyImage: {fileID: 2800000, guid: 475ec41a3b9831d4ebd31c7c772991be, type: 3}
+    enemyObj: {fileID: 1147350200905694, guid: bb895f1f76b0a7d4a95286dba8d00f8a, type: 2}
   map: {fileID: 0}
+  player: {fileID: 0}
+  pot: {fileID: 0}
+--- !u!114 &114882833881507694
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1239466112595404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69cfaf32981b42948aa4c4618ace8fee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1799728638154852, guid: 1bd617ce126ed4d49bbb472ce68d1d29, type: 2}
+  pot: {fileID: 1266365615057778, guid: 31540ee08190b3e468c23fd2ea13c394, type: 2}
