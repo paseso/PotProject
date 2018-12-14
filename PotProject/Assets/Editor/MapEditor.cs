@@ -21,6 +21,7 @@ public class MapEditor : EditorWindow {
     private Rect rect;
     private Rect[,] gridRect;
     //private Color gridColor;
+    private Vector2 scrollPos = Vector2.zero;
 
     //  選択中のボタンの種類
     private int SelectNum = 0;
@@ -33,7 +34,7 @@ public class MapEditor : EditorWindow {
         MapEditor window = GetWindow<MapEditor>("MapEditor");
         //  最小サイズ設定
         window.minSize = new Vector2(320, 500);
-        window.maxSize = new Vector2(320, 500);
+        window.maxSize = new Vector2(320, 501);
         //  マップクリエイター側からデータを拾う
         window.Init();
     }
@@ -122,7 +123,9 @@ public class MapEditor : EditorWindow {
         //  タイルの種類を分ける
         toolberInt = GUILayout.Toolbar(toolberInt, new string[] { "地面", "ギミック", "エネミー" });
         //  タイルのボタンを描画
+        scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
         DrawTileButtons();
+        EditorGUILayout.EndScrollView();
     }
 
     private void SetMapDate()

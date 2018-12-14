@@ -24,6 +24,12 @@ public class StageManager : MonoBehaviour {
         {
             mapCreator.CreateMap(stageDate[0]);
         }
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            mapCreator.CreateMap(stageDate);
+        }
+
     }
 
     private void OnValidate()

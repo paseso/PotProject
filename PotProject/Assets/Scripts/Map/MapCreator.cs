@@ -15,7 +15,7 @@ public class MapCreator : MonoBehaviour
     [SerializeField]
     private MapData map;
 
-    private GameObject[] mapObjects;
+    private GameObject[] mapObjects = new GameObject[9];
 
     public Tile[] GetTiles() { return tiles; }
     public Tile GetTile(int index) { return tiles[index]; }
@@ -156,7 +156,71 @@ public class MapCreator : MonoBehaviour
 
     public void CreateMap(MapData[] datas)
     {
+        //  配列の長さを取得 再編集
+        int xLength = datas[0].mapDate.Length;
+        int yLength = datas[0].mapDate.Length;
+        //  タイルのサイズを取得
+        float tileSize = 2;
+        float oneSide = tileSize * xLength;
+        for (int i = 0; i < datas.Length; i++)
+        {
+            int quo = i / 3;
+            int rem = i % 3;
+            //  ルートオブジェクトの作成
+            string rootName = datas[i].name;
+            Vector2 startPos = new Vector2(0, oneSide * 3);
+            var rootObj = new GameObject(rootName);
+            rootObj.transform.position = startPos + new Vector2(oneSide / 2, -oneSide / 2) + new Vector2(rem * oneSide, -quo * oneSide);
+            //Vector2 startPos = rootObj.transform.position + new Vector3(-tileSize * xLength / 2, tileSize * yLength / 2) + new Vector3(0, tileSize * yLength * 2);
 
+            //  オブジェクトの生成
+            for (int y = 0; y < yLength; y++)
+            {
+                for (int x = 0; x < xLength; x++)
+                {
+                    int tilenum = datas[i].mapDate[y].mapNum[x];
+                    int gimmickNum = datas[i].gimmickDate[y].mapNum[x];
+                    int enemyNum = datas[i].enemyDate[y].mapNum[x];
+                    //  通常タイルの生成
+                    if (tilenum != 0)
+                    {
+                        var tileObj = Instantiate(GetTile(tilenum).TileObj);
+                        tileObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y) + new Vector2(tileSize * xLength * rem, -tileSize * yLength * quo);
+                        tileObj.transform.parent = rootObj.transform;
+                        //周りにはしごギミックがあったらレイヤーを変更
+                        if (gimmickNum != 0 && GetGimmick(gimmickNum).GimmickObj.GetComponent<GimmickInfo>() != null)
+                        {
+                            ////  1つ先のブロックも検索する
+                            //if (x <= xLength && datas[i].gimmickDate[y].mapNum[x + 1] != 0 && GetGimmick(datas[i].gimmickDate[y].mapNum[x + 1]).GimmickObj.GetComponent<GimmickInfo>() != null)
+                            //{
+                                if (GetGimmick(gimmickNum).GimmickObj.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
+                                {
+                                    //  レイヤー変更
+                                    tileObj.layer = LayerMask.NameToLayer("LadderBrock");
+                                }
+                            //}
+                        }
+                    }
+                    //  ギミックの生成
+                    if (gimmickNum != 0)
+                    {
+                        var gimmickObj = Instantiate(GetGimmick(gimmickNum).GimmickObj);
+                        gimmickObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y) + new Vector2(tileSize * xLength * rem, -tileSize * yLength * quo);
+                        gimmickObj.transform.parent = rootObj.transform;
+                    }
+                    //  エネミーやポジションの生成
+                    if (enemyNum != 0)
+                    {
+                        var enemyObj = Instantiate(GetEnemy(enemyNum).EnemyObj);
+                        enemyObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
+                        enemyObj.transform.parent = rootObj.transform;
+                    }
+                }
+            }
+            mapObjects[i] = rootObj;
+        }
+        StageController stageController = FindObjectOfType<StageController>();
+        stageController.SetMapList = mapObjects;
     }
 }
 
