@@ -16,6 +16,10 @@ public class StageManager : MonoBehaviour {
     private void Start()
     {
         mapCreator = FindObjectOfType<MapCreator>();
+        if (isInstance)
+        {
+            mapCreator.CreateMap(stageDate);
+        }
     }
 
     private void Update()

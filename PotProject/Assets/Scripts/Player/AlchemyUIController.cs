@@ -43,7 +43,7 @@ public class AlchemyUIController : MonoBehaviour {
             setItemImageList();
             ItemFrame = gameObject.transform.GetChild(gameObject.transform.childCount - 1).gameObject;
             IntoPot = gameObject.transform.GetChild(gameObject.transform.childCount - 2).gameObject;
-            move_ctr = GameObject.Find("Map1/Brother/Body").GetComponent<MoveController>();
+            move_ctr = GameObject.FindObjectOfType<MoveController>();
             crossAxisdown = move_ctr.gameObject.GetComponent<CrossAxisDown>();
             player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         }
