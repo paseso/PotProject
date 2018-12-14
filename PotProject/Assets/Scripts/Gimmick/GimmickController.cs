@@ -89,8 +89,8 @@ public class GimmickController :MonoBehaviour {
     public void OnTriggerExit2D(Collider2D col) {
         switch (gInfo.type) {
             case GimmickInfo.GimmickType.GROWTREE:
-                mInfo.GrowTreeFlag = false;
-                Debug.Log("TreeFlag: " + mInfo.GrowTreeFlag);
+                //mInfo.GrowTreeFlag = true;
+                //Debug.Log("TreeFlag: " + mInfo.GrowTreeFlag);
                 break;
 
             case GimmickInfo.GimmickType.LADDER:
@@ -105,14 +105,14 @@ public class GimmickController :MonoBehaviour {
     /// 木(ツル)を成長させる
     /// </summary>
     public void Grow() {
-        Vector2 defaultScale = mInfo.tree.transform.localScale;
-        mInfo.tree.transform.DOScaleY(1f, 1f).SetEase(Ease.Linear);
+        Vector2 defaultScale = transform.parent.transform.localScale;
+        transform.parent.transform.DOScaleY(3f, 1f).SetEase(Ease.Linear);
         float time = 0;
         while(time < 3)
         {
-            time += 1 * Time.deltaTime;
+            time += Time.deltaTime;
         }
-        mInfo.tree.transform.DOScaleY(defaultScale.y, 1f).SetEase(Ease.Linear);
+        transform.parent.transform.DOScaleY(defaultScale.y, 1f).SetEase(Ease.Linear);
     }
 
     /// <summary>

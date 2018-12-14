@@ -12,7 +12,6 @@ public class MapInfo : MonoBehaviour {
     private int mapNumY;
 
     public GameObject rock;
-    public GameObject tree;
     // 伸びる木
     private bool _tree;
     public bool GrowTreeFlag { get; set; }
