@@ -26,6 +26,11 @@ public class StageController : MonoBehaviour {
     [SerializeField]
     private GameObject[] mapLists;
 
+    public GameObject[] SetMapList
+    {
+        set { value = mapLists; }
+    }
+
     [SerializeField]
     private int stageLength;
 

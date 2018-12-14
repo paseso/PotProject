@@ -18,7 +18,17 @@ public struct MonsterStatus
     public enum MonsterType
     {
         WATER,
+        LION,
+        BAT,
+        LAMP,
+        ROBOT,
+        SLIME,
         SNAKE,
+        LUKEWARM,
+        WOOD,
+        HAMSTAR,
+        SHADOW,
+
     }
     public MonsterType type;
 
