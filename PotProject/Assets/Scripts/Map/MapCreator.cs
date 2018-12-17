@@ -211,17 +211,24 @@ public class MapCreator : MonoBehaviour
                         tileObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y) + new Vector2(tileSize * xLength * rem, -tileSize * yLength * quo);
                         tileObj.transform.parent = rootObj.transform;
                         //周りにはしごギミックがあったらレイヤーを変更
-                        if (gimmickNum != 0 && GetGimmick(gimmickNum).GimmickObj.GetComponent<GimmickInfo>() != null)
+                        if (gimmickNum != 0)
                         {
-                            ////  1つ先のブロックも検索する
+                            if (GetGimmick(gimmickNum).GimmickObj.GetComponent<GimmickInfo>() != null && GetGimmick(gimmickNum).GimmickObj.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDERTOP)
+                            {
+                                //  レイヤー変更
+                                Debug.Log("aaa");
+                                tileObj.layer = LayerMask.NameToLayer("LadderBrock");
+                            }
+
+                            //////  1つ先のブロックも検索する
                             //if (x <= xLength && datas[i].gimmickDate[y].mapNum[x + 1] != 0 && GetGimmick(datas[i].gimmickDate[y].mapNum[x + 1]).GimmickObj.GetComponent<GimmickInfo>() != null)
-                            //{
-                                if (GetGimmick(gimmickNum).GimmickObj.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDERTOP)
-                                {
-                                    //  レイヤー変更
-                                    tileObj.layer = LayerMask.NameToLayer("LadderBrock");
-                                }
-                            //}
+
+                            if (GetGimmick(gimmickNum).GimmickObj.transform.childCount != 0  && GetGimmick(gimmickNum).GimmickObj.transform.GetChild(0).GetComponent<GimmickInfo>() != null && GetGimmick(gimmickNum).GimmickObj.transform.GetChild(0).GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDERTOP)
+                            {
+                                Debug.Log("aaa");
+                                tileObj.layer = LayerMask.NameToLayer("LadderBrock");
+                            }
+
                         }
                     }
                     //  ギミックの生成
