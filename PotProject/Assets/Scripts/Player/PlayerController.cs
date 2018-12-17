@@ -215,7 +215,7 @@ public class PlayerController : MonoBehaviour {
         }
         else
         {
-            Pot_UI.DOLocalMoveX(1745, 0.3f).SetEase(Ease.Linear);
+            Pot_UI.DOLocalMoveX(800, 0.3f).SetEase(Ease.Linear);   //1745
             _alchemyUi = false;
         }
     }

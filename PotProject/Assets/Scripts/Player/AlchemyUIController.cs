@@ -47,11 +47,13 @@ public class AlchemyUIController : MonoBehaviour {
         //player_ctr.setItemList(ItemStatus.ITEM.SNAKE);
         try
         {
+            move_ctr = GameObject.FindObjectOfType<MoveController>();
             setItembox();
             setItemImageList();
             ItemFrame = gameObject.transform.GetChild(gameObject.transform.childCount - 1).gameObject;
             IntoPot = gameObject.transform.GetChild(gameObject.transform.childCount - 2).gameObject;
-            move_ctr = GameObject.FindObjectOfType<MoveController>();
+            mtr_0 = IntoPot.transform.GetChild(0).GetChild(0).gameObject;
+            mtr_1 = IntoPot.transform.GetChild(0).GetChild(1).gameObject;
             crossAxisdown = move_ctr.gameObject.GetComponent<CrossAxisDown>();
             player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         }
@@ -63,8 +65,6 @@ public class AlchemyUIController : MonoBehaviour {
 
         nowBox = 0;
 
-        mtr_0 = IntoPot.transform.GetChild(0).GetChild(0).gameObject;
-        mtr_1 = IntoPot.transform.GetChild(0).GetChild(1).gameObject;
         _boxRight = true;
         Box_item = new GameObject[Itembox.Length];
         ClearJoystickRotation();
