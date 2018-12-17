@@ -70,9 +70,7 @@ public class PlayerController : MonoBehaviour {
     private List<Sprite> swordSpriteList;
 
     public Status status;
-    [SerializeField]
     private AlchemyController alchemy_ctr;
-    [SerializeField]
     private AlchemyUIController alchemyUI_ctr;
 
     [SerializeField]
@@ -91,6 +89,8 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
         status.PlayerHP = 5;
         status.ItemList = new List<ItemStatus.ITEM>();
+        alchemy_ctr = GameObject.FindObjectOfType<AlchemyController>();
+        alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
         _itemMax = false;
         _alchemyUi = false;
 	}
