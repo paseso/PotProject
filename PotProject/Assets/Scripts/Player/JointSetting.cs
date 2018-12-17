@@ -5,11 +5,8 @@ using UnityEngine;
 public class JointSetting : MonoBehaviour
 {
 
-    [SerializeField]
     private GameObject Brother;
-    [SerializeField]
-    private GameObject[] Joints;
-    [SerializeField]
+    //private GameObject[] Joints;
     private GameObject Pot;
 
     private DistanceJoint2D Brother_Distance;
@@ -26,6 +23,8 @@ public class JointSetting : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Brother = GameObject.FindObjectOfType<MoveController>().gameObject.transform.parent.gameObject;
+        Pot = GameObject.FindObjectOfType<PotController>().gameObject;
         AddPlayerJoint();
         AddJointsJoint();
         Brother_Distance = Brother.GetComponent<DistanceJoint2D>();
@@ -49,8 +48,8 @@ public class JointSetting : MonoBehaviour
     /// </summary>
     private void AddPlayerJoint()
     {
-        Brother.AddComponent<HingeJoint2D>();
-        Pot.AddComponent<HingeJoint2D>();
+        //Brother.AddComponent<HingeJoint2D>();
+        //Pot.AddComponent<HingeJoint2D>();
         Brother.AddComponent<DistanceJoint2D>();
         Pot.AddComponent<DistanceJoint2D>();
     }
@@ -60,11 +59,11 @@ public class JointSetting : MonoBehaviour
     /// </summary>
     private void AddJointsJoint()
     {
-        for (int i = 0; i < Joints.Length; i++)
-        {
-            Joints[i].AddComponent<HingeJoint2D>();
-            Joints[i].AddComponent<DistanceJoint2D>();
-        }
+        //for (int i = 0; i < Joints.Length; i++)
+        //{
+        //    Joints[i].AddComponent<HingeJoint2D>();
+        //    Joints[i].AddComponent<DistanceJoint2D>();
+        //}
     }
 
     /// <summary>
@@ -74,7 +73,7 @@ public class JointSetting : MonoBehaviour
     {
         //Hinge Joint2Dのconnect Rigidbody2DとDistance Joint2Dのconnect Rigidbody2Dをセット
         //Brother.GetComponent<HingeJoint2D>().connectedBody = Joints[0].GetComponent<Rigidbody2D>();
-        Pot.GetComponent<HingeJoint2D>().connectedBody = Joints[2].GetComponent<Rigidbody2D>();
+        //Pot.GetComponent<HingeJoint2D>().connectedBody = Joints[2].GetComponent<Rigidbody2D>();
         //Brother.GetComponent<HingeJoint2D>().autoConfigureConnectedAnchor = true;
         //Pot.GetComponent<HingeJoint2D>().autoConfigureConnectedAnchor = true;
         Brother_Distance.connectedBody = Pot.GetComponent<Rigidbody2D>();
@@ -91,18 +90,18 @@ public class JointSetting : MonoBehaviour
     /// </summary>
     private void setJointsChild()
     {
-        for(int i = 0; i < Joints.Length; i++)
-        {
+        //for(int i = 0; i < Joints.Length; i++)
+        //{
             
-            Joints[i].GetComponent<DistanceJoint2D>().maxDistanceOnly = true;
-            Joints[i].GetComponent<DistanceJoint2D>().autoConfigureConnectedAnchor = true;
-        }
-        Joints[0].GetComponent<DistanceJoint2D>().connectedBody = Brother.GetComponent<Rigidbody2D>();
-        Joints[1].GetComponent<DistanceJoint2D>().connectedBody = Joints[0].GetComponent<Rigidbody2D>();
-        Joints[2].GetComponent<DistanceJoint2D>().connectedBody = Joints[1].GetComponent<Rigidbody2D>();
-        Joints[0].GetComponent<HingeJoint2D>().connectedBody = Brother.GetComponent<Rigidbody2D>();
-        Joints[1].GetComponent<HingeJoint2D>().connectedBody = Joints[0].GetComponent<Rigidbody2D>();
-        Joints[2].GetComponent<HingeJoint2D>().connectedBody = Joints[1].GetComponent<Rigidbody2D>();
+        //    Joints[i].GetComponent<DistanceJoint2D>().maxDistanceOnly = true;
+        //    Joints[i].GetComponent<DistanceJoint2D>().autoConfigureConnectedAnchor = true;
+        //}
+        //Joints[0].GetComponent<DistanceJoint2D>().connectedBody = Brother.GetComponent<Rigidbody2D>();
+        //Joints[1].GetComponent<DistanceJoint2D>().connectedBody = Joints[0].GetComponent<Rigidbody2D>();
+        //Joints[2].GetComponent<DistanceJoint2D>().connectedBody = Joints[1].GetComponent<Rigidbody2D>();
+        //Joints[0].GetComponent<HingeJoint2D>().connectedBody = Brother.GetComponent<Rigidbody2D>();
+        //Joints[1].GetComponent<HingeJoint2D>().connectedBody = Joints[0].GetComponent<Rigidbody2D>();
+        //Joints[2].GetComponent<HingeJoint2D>().connectedBody = Joints[1].GetComponent<Rigidbody2D>();
     }
 
 }

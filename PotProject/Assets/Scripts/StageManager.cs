@@ -13,7 +13,7 @@ public class StageManager : MonoBehaviour {
 
     private MapCreator mapCreator;
 
-    private void Start()
+    private void Awake()
     {
         mapCreator = FindObjectOfType<MapCreator>();
         if (isInstance)
@@ -24,15 +24,15 @@ public class StageManager : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            mapCreator.CreateMap(stageDate[0]);
-        }
+        //if (Input.GetKeyDown(KeyCode.F1))
+        //{
+        //    mapCreator.CreateMap(stageDate[0]);
+        //}
 
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            mapCreator.CreateMap(stageDate);
-        }
+        //if (Input.GetKeyDown(KeyCode.F2))
+        //{
+        //    mapCreator.CreateMap(stageDate);
+        //}
 
     }
 

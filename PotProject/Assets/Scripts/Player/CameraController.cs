@@ -5,12 +5,11 @@ using DG.Tweening;
 
 public class CameraController : MonoBehaviour {
 
-    [SerializeField]
     private GameObject AniObject;
 
 	// Use this for initialization
 	void Start () {
-        
+        AniObject = FindObjectOfType<MoveController>().gameObject;
 	}
 	
 	// Update is called once per frame

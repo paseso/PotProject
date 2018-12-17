@@ -210,7 +210,7 @@ public class MoveController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        PotObject = GameObject.Find("Pot");
+        PotObject = GameObject.FindObjectOfType<PotController>().gameObject;
         rig = gameObject.transform.parent.GetComponent<Rigidbody2D>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         bringctr = gameObject.transform.parent.GetChild(0).GetComponent<BringCollider>();
