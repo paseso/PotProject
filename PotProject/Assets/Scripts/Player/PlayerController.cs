@@ -69,6 +69,10 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private List<Sprite> swordSpriteList;
 
+    private GameObject HeartObject;
+    private GameObject[] HeartChild = new GameObject[maxHP];
+    private const int maxHP = 3;
+
     public Status status;
     private AlchemyController alchemy_ctr;
     private AlchemyUIController alchemyUI_ctr;
@@ -87,13 +91,28 @@ public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        status.PlayerHP = 5;
+        status.PlayerHP = maxHP;
         status.ItemList = new List<ItemStatus.ITEM>();
         alchemy_ctr = GameObject.FindObjectOfType<AlchemyController>();
         alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
+        HeartObject = GameObject.Find("Canvas/Heart");
+        getHeartChildren();
         _itemMax = false;
         _alchemyUi = false;
 	}
+
+    /// <summary>
+    /// HaertChildに子供を入れる処理
+    /// </summary>
+    private void getHeartChildren()
+    {
+       HeartChild = new GameObject[maxHP];
+        int num = maxHP - 1;
+       for(int i = 0; i < maxHP; i++)
+        {
+            HeartChild[num - i] = HeartObject.transform.GetChild(i).gameObject;
+        }
+    }
 
     /// <summary>
     /// EventStateの設定
@@ -225,15 +244,44 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     public void ApplyHp(int point)
     {
-        if(status.PlayerHP <= point || status.PlayerHP <= 0)
+        if((status.PlayerHP - point) <= 0)
         {
+            DownHpUI(point);
             status.PlayerHP = 0;
             Debug.Log("HPが0になりました");
             return;
         }
+        DownHpUI(point);
         status.PlayerHP -= point;
         Debug.Log("HP: " + status.PlayerHP);
         // HPのUIに反映させる処理
 
     }
+
+    /// <summary>
+    /// ハートの数を減らす処理
+    /// </summary>
+    /// <param name="point"></param>
+    private void DownHpUI(int point)
+    {
+        if (status.PlayerHP <= 0)
+            return;
+        for (int i = status.PlayerHP; i < status.PlayerHP + point; i++)
+        {
+            HeartChild[maxHP - i].SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// ハートの数増やす処理
+    /// </summary>
+    /// <param name="point"></param>
+    private void UpHpUI(int point)
+    {
+        for (int i = status.PlayerHP - 1; i < maxHP; i++)
+        {
+            HeartChild[i].SetActive(true);
+        }
+    }
+
 }
