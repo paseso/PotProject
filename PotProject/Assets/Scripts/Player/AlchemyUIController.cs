@@ -53,8 +53,8 @@ public class AlchemyUIController : MonoBehaviour {
 
             ItemFrame = gameObject.transform.GetChild(gameObject.transform.childCount - 2).gameObject;
             IntoPot = gameObject.transform.GetChild(gameObject.transform.childCount - 3).gameObject;
-            mtr_0 = IntoPot.transform.transform.GetChild(0).gameObject;
-            mtr_1 = IntoPot.transform.transform.GetChild(1).gameObject;
+            mtr_0 = IntoPot.transform.GetChild(0).GetChild(0).gameObject;
+            mtr_1 = IntoPot.transform.GetChild(0).GetChild(1).gameObject;
             
         }
         catch (Exception e)
