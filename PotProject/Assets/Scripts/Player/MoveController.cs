@@ -233,7 +233,8 @@ public class MoveController : MonoBehaviour
         {
             PotObject.transform.DOMove(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), 0.5f).SetEase(Ease.Linear);
         }
-        
+
+        Debug.Log(status.state);
 
         ClearBtnFlg();
         EventStateCheck();
@@ -507,13 +508,13 @@ public class MoveController : MonoBehaviour
     private void BtnCheck()
     {
         // はしご内で昇降ボタンを離したとき
-        if(Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.W))
-        {
-            if (status.state == Status.GimmickState.ONLADDER && !_isJump && IsLadder)
-            {
-                transform.parent.GetComponent<Rigidbody2D>().simulated = false;
-            }
-        }
+        //if(Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.W))
+        //{
+        //    if (status.state == Status.GimmickState.ONLADDER && !_isJump && IsLadder)
+        //    {
+        //        transform.parent.GetComponent<Rigidbody2D>().simulated = false;
+        //    }
+        //}
 
         if (Input.GetButton("Jump") || Input.GetKeyDown(KeyCode.Space))
         {//×ボタン or キーボードの「W」
@@ -533,6 +534,8 @@ public class MoveController : MonoBehaviour
             {
 
                 transform.parent.GetComponent<Rigidbody2D>().simulated = false;
+                Debug.Log("name = " + PotObject.name);
+                PotObject.GetComponent<Rigidbody2D>().simulated = false;
             }
 
             rig.velocity = new Vector2(0, rig.velocity.y);
@@ -656,7 +659,10 @@ public class MoveController : MonoBehaviour
     /// <param name="dir"></param>
     public void Ladder(float speed, float dir)
     {
+        Debug.Log("valocity=" + speed * dir);
+        if (status.state != Status.GimmickState.ONLADDER) { return; }
         transform.parent.GetComponent<Rigidbody2D>().simulated = true;
+        
         var children = transform.parent.transform;
         foreach(Transform child in children)
         {
@@ -699,41 +705,50 @@ public class MoveController : MonoBehaviour
                     status.state = Status.GimmickState.ONTREE;
                     break;
                 case GimmickInfo.GimmickType.LADDERTOP:
-                    if (!IsLadderTop)
-                    {
-                        IsLadderTop = true;
-                        status.state = Status.GimmickState.ONLADDER;
-                    }
-                    else
-                    {
-                        IsLadderTop = false;
-                        status.state = Status.GimmickState.NORMAL;
-                        ChangeLayer();
-                        PotObject.layer = LayerMask.NameToLayer("Pot");
-                        _laddernow = false;
-                        PotObject.transform.position = new Vector2(PotObject.transform.position.x, PotObject.transform.position.y);
-                    }
+                    status.state = Status.GimmickState.ONLADDER;
                     break;
             }
         }
     }
 
+    private void OnTriggerStay2D(Collider2D col)
+    {
+        if(!col.GetComponent<GimmickInfo>()){ return; }
+
+        switch (col.GetComponent<GimmickInfo>().type)
+        {
+            
+            case GimmickInfo.GimmickType.LADDER:
+                status.state = Status.GimmickState.ONLADDER;
+                break;
+            default:
+
+                break;
+        }
+
+    }
+
     private void OnTriggerExit2D(Collider2D col)
     {
-        if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER && _isJump)
-        {
-            PotObject.transform.position = new Vector2(PotObject.transform.position.x, PotObject.transform.position.y);
-            switch (col.GetComponent<GimmickInfo>().type) {
-                case GimmickInfo.GimmickType.LADDER:
-                    status.state = Status.GimmickState.NORMAL;
-                    PotObject.layer = LayerMask.NameToLayer("Pot");
-                    _laddernow = false;
-                    break;
-                case GimmickInfo.GimmickType.LADDERTOP:
-                    status.state = Status.GimmickState.NORMAL;
-                    break;
-            }
-        }
+        if (!_isJump) return;
+        PotObject.transform.position = new Vector2(PotObject.transform.position.x, PotObject.transform.position.y);
+        if(!col.GetComponent<GimmickInfo>()) { return; }
+
+        switch (col.GetComponent<GimmickInfo>().type) {
+            case GimmickInfo.GimmickType.LADDER:
+                status.state = Status.GimmickState.NORMAL;
+                ChangeLayer();
+                PotObject.layer = LayerMask.NameToLayer("Pot");
+                _laddernow = false;
+                break;
+            case GimmickInfo.GimmickType.LADDERTOP:
+                status.state = Status.GimmickState.NORMAL;
+                ChangeLayer();
+                PotObject.layer = LayerMask.NameToLayer("Pot");
+                _laddernow = false;
+                PotObject.transform.position = new Vector2(PotObject.transform.position.x, PotObject.transform.position.y);
+                break;
+        } 
     }
 
     private void OnCollisionEnter2D(Collision2D col)
@@ -761,6 +776,7 @@ public class MoveController : MonoBehaviour
     {
         if (gameObject.layer != LayerMask.NameToLayer("Player"))
         {
+            PotObject.GetComponent<Rigidbody2D>().simulated = true;
             var children = transform.parent.transform;
             foreach (Transform child in children)
             {

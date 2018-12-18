@@ -213,7 +213,7 @@ public class MapCreator : MonoBehaviour
                         //周りにはしごギミックがあったらレイヤーを変更
                         if (gimmickNum != 0)
                         {
-                            if (GetGimmick(gimmickNum).GimmickObj.GetComponent<GimmickInfo>() != null && GetGimmick(gimmickNum).GimmickObj.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDERTOP)
+                            if (GetGimmick(gimmickNum).GimmickObj.GetComponent<GimmickInfo>() != null && GetGimmick(gimmickNum).GimmickObj.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
                             {
                                 //  レイヤー変更
                                 Debug.Log("aaa");
@@ -223,7 +223,7 @@ public class MapCreator : MonoBehaviour
                             //////  1つ先のブロックも検索する
                             //if (x <= xLength && datas[i].gimmickDate[y].mapNum[x + 1] != 0 && GetGimmick(datas[i].gimmickDate[y].mapNum[x + 1]).GimmickObj.GetComponent<GimmickInfo>() != null)
 
-                            if (GetGimmick(gimmickNum).GimmickObj.transform.childCount != 0  && GetGimmick(gimmickNum).GimmickObj.transform.GetChild(0).GetComponent<GimmickInfo>() != null && GetGimmick(gimmickNum).GimmickObj.transform.GetChild(0).GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDERTOP)
+                            if (GetGimmick(gimmickNum).GimmickObj.transform.childCount != 0  && GetGimmick(gimmickNum).GimmickObj.transform.GetChild(0).GetComponent<GimmickInfo>() != null && GetGimmick(gimmickNum).GimmickObj.transform.GetChild(0).GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
                             {
                                 Debug.Log("aaa");
                                 tileObj.layer = LayerMask.NameToLayer("LadderBrock");

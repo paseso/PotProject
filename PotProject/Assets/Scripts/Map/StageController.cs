@@ -88,7 +88,7 @@ public class StageController : MonoBehaviour
         GameObject temp;
         Vector3 tempPos = new Vector3();
         Vector3 turnPos = new Vector3();
-        float mapSize = 0;
+        float mapSize = mapSize = Maps[stageLength - 1][num].transform.GetChild(0).GetComponent<SpriteRenderer>().bounds.size.x * 20;
         int turnPosX = 0;
         int turnPosY = 0;
         int mapCount = 0;
@@ -101,9 +101,6 @@ public class StageController : MonoBehaviour
                 turnPos = Maps[stageLength - 1][num].transform.position;
                 turnPos.z = 90;
 
-                mapSize = Maps[stageLength - 1][num].GetComponent<SpriteRenderer>().bounds.size.y;
-                Maps[0][num].transform.localPosition = new Vector2(turnPos.x, turnPos.y - mapSize);
-
                 // 折り返しMap以外をスライド
                 for (int i = stageLength - 1; i > 0; i--)
                 {
@@ -114,6 +111,8 @@ public class StageController : MonoBehaviour
 
                     mapCount++;
                 }
+
+                Maps[0][num].transform.localPosition = new Vector2(turnPos.x, turnPos.y - mapSize);
 
                 // 折り返し
                 //Maps[0][num].transform.localPosition = turnPos;
@@ -137,9 +136,6 @@ public class StageController : MonoBehaviour
                 turnPos = Maps[0][num].transform.position;
                 turnPos.z = 90;
 
-                mapSize = Maps[stageLength - 1][num].GetComponent<SpriteRenderer>().bounds.size.y;
-                Maps[stageLength - 1][num].transform.localPosition = new Vector2(turnPos.x, turnPos.y + mapSize);
-
                 // 折り返しMap以外をスライド
                 for (int i = 0; i < stageLength - 1; i++)
                 {
@@ -151,6 +147,8 @@ public class StageController : MonoBehaviour
 
                     mapCount++;
                 }
+
+                Maps[stageLength - 1][num].transform.localPosition = new Vector2(turnPos.x, turnPos.y + mapSize);
 
                 // 折り返し
                 //Maps[stageLength - 1][num].transform.localPosition = turnPos;
@@ -184,7 +182,6 @@ public class StageController : MonoBehaviour
                     mapCount++;
                 }
 
-                mapSize = Maps[stageLength - 1][num].transform.GetChild(0).GetComponent<SpriteRenderer>().bounds.size.y;
                 Maps[num][stageLength - 1].transform.localPosition = new Vector2(turnPos.x - mapSize, turnPos.y);
 
                 // 折り返し
@@ -207,9 +204,6 @@ public class StageController : MonoBehaviour
                 turnPos = Maps[num][stageLength - 1].transform.position;
                 turnPos.z = 90;
 
-                //　折り返し座標からマップサイズ分ずれた場所に移動
-                mapSize = Maps[stageLength - 1][num].GetComponent<SpriteRenderer>().bounds.size.y;
-                Maps[num][0].transform.localPosition = new Vector2(turnPos.x + mapSize, turnPos.y);
 
                 // 折り返しMap以外をスライド
                 for (int i = stageLength - 1; i > 0; i--)
@@ -221,6 +215,9 @@ public class StageController : MonoBehaviour
 
                     mapCount++;
                 }
+
+                //　折り返し座標からマップサイズ分ずれた場所に移動
+                Maps[num][0].transform.localPosition = new Vector2(turnPos.x + mapSize, turnPos.y);
 
                 // 折り返し
                 //Maps[num][0].transform.localPosition = turnPos;
