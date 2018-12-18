@@ -19,10 +19,16 @@ public class PotController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        player_ctr = GameObject.FindObjectOfType<PlayerController>();
-        bring_col = GameObject.Find("Brother(Clone)/BringCollider").GetComponent<BringCollider>();
-        move_ctr = GameObject.Find("Brother(Clone)/Body").GetComponent<MoveController>();
-        rig = gameObject.GetComponent<Rigidbody2D>();
+        try
+        {
+            player_ctr = GameObject.FindObjectOfType<PlayerController>();
+            bring_col = GameObject.FindObjectOfType<BringCollider>();
+            move_ctr = GameObject.FindObjectOfType<MoveController>();
+            rig = gameObject.GetComponent<Rigidbody2D>();
+        }catch(UnityException e)
+        {
+            Debug.Log("お兄ちゃんが見当たらない");
+        }
         direction = Direction.LEFT;
     }
 	

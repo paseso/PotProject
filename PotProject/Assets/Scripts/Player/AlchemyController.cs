@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class AlchemyController : MonoBehaviour {
 
@@ -7,9 +8,13 @@ public class AlchemyController : MonoBehaviour {
     private TextAsset csvFile;
     private GimmickController gimmick_ctr;
     private MapInfo mInfo;
+    //フレームの右下のImage
+    private Image GeneratedImg;
 
     // Use this for initialization
     void Start () {
+        GeneratedImg = GameObject.Find("Canvas/Panel/Image").GetComponent<Image>();
+        ReSetGeneratedImg();
         setCreateItem();
         mInfo = transform.root.GetComponent<MapInfo>();
 	}
@@ -45,6 +50,24 @@ public class AlchemyController : MonoBehaviour {
     }
 
     /// <summary>
+    /// 右下のフレームにある生成したアイテム画像をnullにする処理
+    /// </summary>
+    public void ReSetGeneratedImg()
+    {
+        GeneratedImg.sprite = null;
+    }
+
+    /// <summary>
+    /// 右下のフレームにある生成したアイテム画像をセットする処理
+    /// </summary>
+    private void setGeneratedImg(int img_num)
+    {
+        if (GeneratedImg.sprite != null)
+            return;
+        GeneratedImg.sprite = CreateItem[img_num].GetComponent<Image>().sprite;
+    }
+
+    /// <summary>
     /// アイテム錬金
     /// </summary>
     /// <param name="item">錬金したいアイテム</param>
@@ -61,11 +84,12 @@ public class AlchemyController : MonoBehaviour {
                 
                 break;
             case ItemStatus.ITEM.GOLEM:
-                GameObject obj = Instantiate(CreateItem[1], null);
-                obj.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y + 1);
+                setGeneratedImg(1);
+                //GameObject obj = Instantiate(CreateItem[1], null);
+                //obj.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y + 1);
                 break;
             case ItemStatus.ITEM.SNAKE:
-
+                setGeneratedImg(1);
                 break;
         }
         Debug.Log(item.GetType());
@@ -85,16 +109,13 @@ public class AlchemyController : MonoBehaviour {
                 switch (item_1)
                 {
                     case ItemStatus.ITEM.SLIME:
-                        obj = Instantiate(CreateItem[0], null);
-                        obj.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y + 1);
+                        setGeneratedImg(0);
                         break;
                     case ItemStatus.ITEM.GOLEM:
-                        obj = Instantiate(CreateItem[0], null);
-                        obj.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y + 1);
+                        setGeneratedImg(0);
                         break;
                     case ItemStatus.ITEM.SNAKE:
-                        obj = Instantiate(CreateItem[0], null);
-                        obj.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y + 1);
+                        setGeneratedImg(0);
                         break;
                 }
                 break;
@@ -102,16 +123,13 @@ public class AlchemyController : MonoBehaviour {
                 switch (item_1)
                 {
                     case ItemStatus.ITEM.SLIME:
-                        obj = Instantiate(CreateItem[1], null);
-                        obj.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y + 1);
+                        setGeneratedImg(1);
                         break;
                     case ItemStatus.ITEM.GOLEM:
-                        obj = Instantiate(CreateItem[1], null);
-                        obj.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y + 1);
+                        setGeneratedImg(1);
                         break;
                     case ItemStatus.ITEM.SNAKE:
-                        obj = Instantiate(CreateItem[1], null);
-                        obj.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y + 1);
+                        setGeneratedImg(1);
                         break;
                 }
                 break;
@@ -120,16 +138,13 @@ public class AlchemyController : MonoBehaviour {
                 switch (item_1)
                 {
                     case ItemStatus.ITEM.SLIME:
-                        obj = Instantiate(CreateItem[2], null);
-                        obj.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y + 1);
+                        setGeneratedImg(2);
                         break;
                     case ItemStatus.ITEM.GOLEM:
-                        obj = Instantiate(CreateItem[2], null);
-                        obj.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y + 1);
+                        setGeneratedImg(2);
                         break;
                     case ItemStatus.ITEM.SNAKE:
-                        obj = Instantiate(CreateItem[2], null);
-                        obj.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y + 1);
+                        setGeneratedImg(2);
                         break;
                 }
                 break;
