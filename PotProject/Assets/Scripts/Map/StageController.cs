@@ -59,6 +59,18 @@ public class StageController : MonoBehaviour
     }
 
     /// <summary>
+    /// スライド処理呼び出し
+    /// </summary>
+    /// <param name="num"></param>
+    /// <param name="dir"></param>
+    /// <param name="pos"></param>
+    /// <param name="size"></param>
+    public void Sride(int num, Direction dir) {
+        if (isMove) { return; }
+        StartCoroutine(SrideInFade(num,dir, GetMaps[1][1].transform.localPosition, 2));
+    }
+
+    /// <summary>
     /// カメラ切り替えとスライド関数呼び出し
     /// </summary>
     /// <param name="num"></param>
@@ -66,7 +78,7 @@ public class StageController : MonoBehaviour
     /// <param name="pos"></param>
     /// <param name="size"></param>
     /// <returns></returns>
-    public IEnumerator Sride(int num, Direction dir, Vector2 pos, float size)
+    public IEnumerator SrideInFade(int num, Direction dir, Vector2 pos, float size)
     {
         CameraManager cManager = GetComponent<CameraManager>();
         cManager.SwitchingCameraSub(pos, size);
