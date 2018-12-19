@@ -47,6 +47,7 @@ public class MoveController : MonoBehaviour
     //モンスターに当たったかどうか
     [HideInInspector]
     public bool _hitmonster = false;
+
     //-------アクションボタンを押してるかどうか----------
     private bool _onRight = false;
     private bool _onLeft = false;
@@ -207,6 +208,8 @@ public class MoveController : MonoBehaviour
         ClearBtnFlg();
     }
 
+    
+
     // Use this for initialization
     void Start()
     {
@@ -225,6 +228,8 @@ public class MoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!player_ctr.IsCommandActive) { return; }
+
         if (bringctr._bring)
         {
             target.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 2.5f);
@@ -233,8 +238,6 @@ public class MoveController : MonoBehaviour
         {
             PotObject.transform.DOMove(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), 0.5f).SetEase(Ease.Linear);
         }
-
-        Debug.Log(status.state);
 
         ClearBtnFlg();
         EventStateCheck();

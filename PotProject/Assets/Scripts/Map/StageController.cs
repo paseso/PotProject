@@ -19,10 +19,14 @@ public class StageController : MonoBehaviour
 
     private List<List<GameObject>> Maps = new List<List<GameObject>>();
 
+    private PlayerController pController;
+
     public List<List<GameObject>> GetMaps
     {
         get { return Maps; }
     }
+
+    private float srideTine = 3;
 
     [SerializeField]
     private GameObject[] mapLists = new GameObject[9];
@@ -37,6 +41,7 @@ public class StageController : MonoBehaviour
     void Start()
     {
         SetList();
+        pController = FindObjectOfType<PlayerController>();
     }
 
     /// <summary>
@@ -80,12 +85,14 @@ public class StageController : MonoBehaviour
     /// <returns></returns>
     public IEnumerator SrideInFade(int num, Direction dir, Vector2 pos, float size)
     {
-        CameraManager cManager = GetComponent<CameraManager>();
+        CameraManager cManager = FindObjectOfType<CameraManager>();
         cManager.SwitchingCameraSub(pos, size);
         yield return new WaitForSeconds(1f);
         SrideStage(num, dir);
+        yield return new WaitForSeconds(srideTine);
         cManager.SwitchingCameraMain();
         yield return new WaitForSeconds(1f);
+        pController.SetCommandActive = true;
     }
 
     /// <summary>
@@ -286,7 +293,7 @@ public class StageController : MonoBehaviour
     {   
         if (count == 2) { isMove = true; }
         obj.layer = LayerMask.NameToLayer("MoveMap");
-        obj.transform.DOLocalMove(pos, 3f).SetEase(Ease.Linear).OnComplete(() => MoveComplete(obj));
+        obj.transform.DOLocalMove(pos, srideTine).SetEase(Ease.Linear).OnComplete(() => MoveComplete(obj));
         yield return null;
            
     }

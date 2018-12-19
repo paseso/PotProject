@@ -89,8 +89,15 @@ public class PlayerController : MonoBehaviour {
         get { return _alchemyUi; }
     }
 
-	// Use this for initialization
-	void Start () {
+    // 操作可能か
+    public bool IsCommandActive = true;
+
+    public bool SetCommandActive {
+        set { IsCommandActive = value; }
+    }
+
+    // Use this for initialization
+    void Start () {
         status.PlayerHP = maxHP;
         status.ItemList = new List<ItemStatus.ITEM>();
         alchemy_ctr = GameObject.FindObjectOfType<AlchemyController>();

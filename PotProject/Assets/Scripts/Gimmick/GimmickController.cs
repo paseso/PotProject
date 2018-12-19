@@ -12,6 +12,7 @@ public class GimmickController :MonoBehaviour {
     private StageController sController;
     private MapInfo mInfo;
     private GimmickInfo gInfo;
+    private PlayerController pController;
 
     // Use this for initialization
     void Start() {
@@ -20,6 +21,7 @@ public class GimmickController :MonoBehaviour {
             sController = GameObject.Find("Controller").GetComponent<StageController>();
         }
 
+        pController = FindObjectOfType<PlayerController>();
         mInfo = transform.root.GetComponent<MapInfo>();
         gInfo = GetComponent<GimmickInfo>();
     }
@@ -35,22 +37,23 @@ public class GimmickController :MonoBehaviour {
     public void OnCollisionEnter2D(Collision2D col) {
         MapInfo objInfo = col.transform.root.gameObject.GetComponent<MapInfo>();
         if (col.gameObject.layer == LayerMask.NameToLayer("Player")) {
+            pController.SetCommandActive = false;
             switch (gInfo.type) {
                 case GimmickInfo.GimmickType.UP:
-                    //sController.Sride(objInfo.MapNumY, StageController.Direction.UP);
-                    sController.SrideStage(1, StageController.Direction.UP);
+                    sController.Sride(objInfo.MapNumY, StageController.Direction.UP);
+                    //sController.SrideStage(1, StageController.Direction.UP);
                     break;
                 case GimmickInfo.GimmickType.DOWN:
-                    //sController.Sride(objInfo.MapNumY, StageController.Direction.DOWN);
-                    sController.SrideStage(1, StageController.Direction.DOWN);
+                    sController.Sride(objInfo.MapNumY, StageController.Direction.DOWN);
+                    //sController.SrideStage(1, StageController.Direction.DOWN);
                     break;
                 case GimmickInfo.GimmickType.LEFT:
-                    //sController.Sride(objInfo.MapNumX, StageController.Direction.LEFT);
-                    sController.SrideStage(0, StageController.Direction.LEFT);
+                    sController.Sride(objInfo.MapNumX, StageController.Direction.LEFT);
+                    //sController.SrideStage(0, StageController.Direction.LEFT);
                     break;
                 case GimmickInfo.GimmickType.RIGHT:
-                    //sController.Sride(objInfo.MapNumX, StageController.Direction.RIGHT);
-                    sController.SrideStage(0, StageController.Direction.RIGHT);
+                    sController.Sride(objInfo.MapNumX, StageController.Direction.RIGHT);
+                    //sController.SrideStage(0, StageController.Direction.RIGHT);
                     break;
                 case GimmickInfo.GimmickType.BAKETREE:
                     BakeTree(gameObject);
