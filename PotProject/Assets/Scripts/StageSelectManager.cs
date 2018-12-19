@@ -44,7 +44,9 @@ public class StageSelectManager : MonoBehaviour {
 
     public void TapNextButton()
     {
-        Debug.Log("ステージ" + stageSelectNum + "にシーン遷移(いまはログだけ)");
+        Debug.Log("ステージ" + stageSelectNum + "にシーン遷移(いまは全部チュートリアルに移動)");
+        FadeManager fade_m = GameObject.Find("FadeManager").GetComponent<FadeManager>();
+        fade_m.LoadScene(2, 0.5f);
     }
 
 }
