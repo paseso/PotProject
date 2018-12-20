@@ -12,6 +12,15 @@ public class AttackZoonController : MonoBehaviour {
     [SerializeField, Header("殴れるオブジェクトがy方向に飛ぶ距離")]
     private float Impalce_y = 6;
     private GameObject PlayerObject;
+
+    private enum Direction
+    {
+        LEFT,
+        RIGHT,
+    }
+
+    private Direction dir;
+
     //モンスターをアタックできるかどうか
     private bool _attackMonster = false;
 
@@ -30,24 +39,34 @@ public class AttackZoonController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        MoveCollider();
+        DirecControl();
     }
 
     /// <summary>
     /// 持つ範囲コライダーと剣を左右に合わせて移動
     /// </summary>
-    private void MoveCollider()
+    private void DirecControl()
     {
         if (move_ctr.OnLeft)
         {
-            //Sword.transform.position = new Vector2(Sword.transform.position.x - 0.9f, Sword.transform.position.y);
-            //Sword.transform.rotation = Quaternion.Euler(0, 0, 51);
+            dir = Direction.LEFT;
             gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
         }
         if (move_ctr.OnRight)
         {
-            //Sword.transform.position = new Vector2(Sword.transform.position.x + 0.9f, Sword.transform.position.y);
-            //Sword.transform.rotation = Quaternion.Euler(0, 0, -51);
+            dir = Direction.RIGHT;
+            gameObject.transform.rotation = new Quaternion(0, 180, 0, 0);
+        }
+        //MoveCollider();
+    }
+
+    private void MoveCollider()
+    {
+        if(dir == Direction.LEFT)
+        {
+            gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
+        }else if(dir == Direction.RIGHT)
+        {
             gameObject.transform.rotation = new Quaternion(0, 180, 0, 0);
         }
     }

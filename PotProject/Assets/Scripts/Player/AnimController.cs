@@ -45,6 +45,8 @@ public class AnimController : MonoBehaviour {
 
             case AnimState.AnimType.LEFTIDLE:
             case AnimState.AnimType.LEFT_WALK:
+                //剣
+                gameObject.transform.GetChild(4).GetComponent<SpriteRenderer>().sortingOrder = 6;
                 //LeftArm
                 gameObject.transform.GetChild(7).GetChild(0).GetComponent<Anima2D.SpriteMeshInstance>().sortingOrder = 0;
                 gameObject.transform.GetChild(7).GetChild(0).GetChild(0).GetComponent<Anima2D.SpriteMeshInstance>().sortingOrder = 0;
@@ -69,6 +71,8 @@ public class AnimController : MonoBehaviour {
 
             case AnimState.AnimType.RIGHTIDLE:
             case AnimState.AnimType.RIGHT_WALK:
+                //剣
+                gameObject.transform.GetChild(4).GetComponent<SpriteRenderer>().sortingOrder = 1;
                 //LeftArm
                 gameObject.transform.GetChild(7).GetChild(0).GetComponent<Anima2D.SpriteMeshInstance>().sortingOrder = 6;
                 gameObject.transform.GetChild(7).GetChild(0).GetChild(0).GetComponent<Anima2D.SpriteMeshInstance>().sortingOrder = 6;
