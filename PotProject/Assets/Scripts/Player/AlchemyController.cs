@@ -102,7 +102,6 @@ public class AlchemyController : MonoBehaviour {
     /// <param name="item_1">素材_1</param>
     public void MadeItem(ItemStatus.ITEM item_0, ItemStatus.ITEM item_1)
     {
-        GameObject obj;
         switch (item_0)
         {
             case ItemStatus.ITEM.SLIME:
