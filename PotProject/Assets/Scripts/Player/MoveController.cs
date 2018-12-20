@@ -218,7 +218,7 @@ public class MoveController : MonoBehaviour
         rig = gameObject.transform.parent.GetComponent<Rigidbody2D>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         bringctr = gameObject.transform.parent.GetChild(0).GetComponent<BringCollider>();
-        atc_ctr = GameObject.Find("AttackRange").GetComponentInChildren<AttackZoonController>();
+        atc_ctr = gameObject.transform.parent.GetComponentInChildren<AttackZoonController>();
         alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
         obj_sprite = gameObject.transform.parent.GetComponent<SpriteRenderer>();
         anim_ctr = gameObject.transform.parent.GetComponent<AnimController>();
