@@ -771,7 +771,7 @@ public class MoveController : MonoBehaviour
         if(col.gameObject.tag == "Monster")
         {
             _hitmonster = true;
-            player_ctr.ApplyHp(1);
+            player_ctr.DownHp(1);
             atc_ctr.AttackObject();
         }
     }

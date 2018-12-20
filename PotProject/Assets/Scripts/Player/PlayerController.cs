@@ -76,6 +76,7 @@ public class PlayerController : MonoBehaviour {
     public Status status;
     private AlchemyController alchemy_ctr;
     private AlchemyUIController alchemyUI_ctr;
+    private GameObject BrotherObj;
 
     [SerializeField]
     private RectTransform Pot_UI;
@@ -102,6 +103,7 @@ public class PlayerController : MonoBehaviour {
         status.ItemList = new List<ItemStatus.ITEM>();
         alchemy_ctr = GameObject.FindObjectOfType<AlchemyController>();
         alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
+        BrotherObj = GameObject.FindObjectOfType<AnimController>().gameObject;
         HeartObject = GameObject.Find("Canvas/Heart");
         getHeartChildren();
         _itemMax = false;
@@ -247,22 +249,38 @@ public class PlayerController : MonoBehaviour {
     }
 
     /// <summary>
-    /// プレイヤーのHP処理
+    /// プレイヤーのHP減らす処理
     /// </summary>
-    public void ApplyHp(int point)
+    public void DownHp(int point)
     {
         if((status.PlayerHP - point) <= 0)
         {
             DownHpUI(point);
             status.PlayerHP = 0;
+            BrotherObj.transform.position = GameObject.Find(BrotherObj.transform.root.name + "/RespornPoint(Clone)").transform.position;
+            UpHp(3);
             Debug.Log("HPが0になりました");
             return;
         }
         DownHpUI(point);
         status.PlayerHP -= point;
         Debug.Log("HP: " + status.PlayerHP);
-        // HPのUIに反映させる処理
+    }
 
+    /// <summary>
+    /// プレイヤーのHP増やす処理
+    /// </summary>
+    public void UpHp(int point)
+    {
+        if ((status.PlayerHP + point) >= 3)
+        {
+            status.PlayerHP = 3;
+            UpHpUI(3);
+            Debug.Log("HPがmaxになりました");
+            return;
+        }
+        UpHpUI(point);
+        status.PlayerHP += point;
     }
 
     /// <summary>
@@ -276,6 +294,8 @@ public class PlayerController : MonoBehaviour {
         for (int i = status.PlayerHP; i < status.PlayerHP + point; i++)
         {
             HeartChild[maxHP - i].SetActive(false);
+            if (status.PlayerHP == 3)
+                break;
         }
     }
 
@@ -285,9 +305,11 @@ public class PlayerController : MonoBehaviour {
     /// <param name="point"></param>
     private void UpHpUI(int point)
     {
-        for (int i = status.PlayerHP - 1; i < maxHP; i++)
+        for (int i = 1; i < maxHP + 1; i++)
         {
-            HeartChild[i].SetActive(true);
+
+            HeartChild[maxHP - i].SetActive(true);
+            
         }
     }
 
