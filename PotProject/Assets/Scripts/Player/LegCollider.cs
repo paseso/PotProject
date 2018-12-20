@@ -7,55 +7,28 @@ public class LegCollider : MonoBehaviour {
     //足の部分にfloorがあったってるかどうか
     [HideInInspector]
     public bool _legFloor = false;
-
+    private float now = 0f;
     private float falldistance = 0f;
 
 	// Use this for initialization
 	void Start () {
-        falldistance = gameObject.transform.localPosition.y;
+        falldistance = gameObject.transform.position.y;
         move_ctr = transform.parent.GetComponentInChildren<MoveController>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         _legFloor = false;
 	}
-
-    private void Update()
-    {
-        FallCheck();
-    }
     
     /// <summary>
-    /// 落ちた時にHPを減らすかどうかのチェック
+    /// 落ちた時にHPを減らすかどうかの処理
     /// </summary>
     private void FallCheck()
     {
-        Debug.Log("Jumping: " + move_ctr.Jumping);
-        if (move_ctr.Jumping)
+        now = gameObject.transform.position.y;
+        if ((falldistance - now) >= 2f)
         {
-            falldistance = gameObject.transform.localPosition.y;
-        }
-        else
-        {
-
-        }
-        //if (player_ctr.status.state != Status.GimmickState.ONLADDER)
-        //    return;
-        if (gameObject.transform.localPosition.y == falldistance)
-        {
-            return;
-        }
-    }
-
-    private void check()
-    {
-        float now = gameObject.transform.localPosition.y;
-        Debug.Log("falldistance: " + falldistance);
-        if ((now - falldistance) >= -2f)
-        {
-            Debug.Log("dir: " + (now - falldistance));
-            
-            Debug.Log("y = " + now);
+            Debug.Log("dir = " + (falldistance - now));
             player_ctr.ApplyHp(1);
-            falldistance = gameObject.transform.localPosition.y;
+            falldistance = gameObject.transform.position.y;
         }
     }
 
@@ -80,6 +53,7 @@ public class LegCollider : MonoBehaviour {
             move_ctr.IsLadder = false;
             move_ctr.ChangeLayer();
         }
+        falldistance = gameObject.transform.position.y;
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -88,6 +62,13 @@ public class LegCollider : MonoBehaviour {
         {
             _legFloor = true;
         }
-        check();
+        
+        if (gameObject.transform.localPosition.y != falldistance)
+        {
+            if(col.gameObject.tag == "floor" || col.gameObject.tag == "Untagged")
+            {
+                FallCheck();
+            }
+        }
     }
 }
