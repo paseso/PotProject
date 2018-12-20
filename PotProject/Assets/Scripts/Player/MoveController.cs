@@ -538,7 +538,14 @@ public class MoveController : MonoBehaviour
         }
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
         {
-            anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.IDLE);
+            if(direc == Direction.LEFT)
+            {
+                anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTIDLE);
+            }
+            else
+            {
+                anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTIDLE);
+            }
             if (status.state == Status.GimmickState.ONLADDER && !_isJump && IsLadder)
             {
                 transform.parent.GetComponent<Rigidbody2D>().simulated = false;
