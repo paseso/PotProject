@@ -940,6 +940,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3691c51628418e74092ea6a6c7f2ef87, type: 3}
   - {fileID: 21300000, guid: c0deddb703dce2642b0cc39c47710f46, type: 3}
   Pot_UI: {fileID: 327374387}
+  IsCommandActive: 1
 --- !u!114 &154302733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8458,13 +8459,12 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1138314341}
-  - component: {fileID: 1138314342}
   - component: {fileID: 1138314343}
   - component: {fileID: 1138314345}
   - component: {fileID: 1138314344}
   m_Layer: 0
   m_Name: Brother
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8499,21 +8499,6 @@ Transform:
   m_Father: {fileID: 1095159490}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!111 &1138314342
-Animation:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1138314340}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: e4860644ad353d44d858b79cb22b8f7b, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: e4860644ad353d44d858b79cb22b8f7b, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 1
 --- !u!95 &1138314343
 Animator:
   serializedVersion: 3
@@ -8521,12 +8506,12 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1138314340}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 937d7f3ddda50fa4c84bf4682df2f9d5, type: 2}
-  m_CullingMode: 2
+  m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1

@@ -70,6 +70,7 @@ public class MoveController : MonoBehaviour
     private List<Sprite> BrotherSprites;
     private SpriteRenderer obj_sprite;
     private GameObject PotObject;
+    private Animator anim;
 
     private PlayerController player_ctr;
     private BringCollider bringctr;
@@ -220,6 +221,7 @@ public class MoveController : MonoBehaviour
         atc_ctr = GameObject.Find("AttackRange").GetComponentInChildren<AttackZoonController>();
         alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
         obj_sprite = gameObject.transform.parent.GetComponent<SpriteRenderer>();
+        anim = gameObject.transform.parent.GetComponent<Animator>();
         _isJump = false;
         _onCrossYTrigger = false;
         axisValue = 0f;
@@ -321,7 +323,7 @@ public class MoveController : MonoBehaviour
                 if (!_ActiveRightLeft)
                     return;
 
-                //obj_sprite.sprite = BrotherSprites[0];
+                anim.SetBool("isLeftWalk", true);
                 rig.velocity = new Vector2(-5f, rig.velocity.y);
                 direc = Direction.LEFT;
                 break;
@@ -332,7 +334,7 @@ public class MoveController : MonoBehaviour
                 if (!_ActiveRightLeft)
                     return;
 
-                //obj_sprite.sprite = BrotherSprites[1];
+                anim.SetBool("isLeftWalk", false);
                 rig.velocity = new Vector2(5f, rig.velocity.y);
                 direc = Direction.RIGHT;
                 break;
@@ -533,9 +535,9 @@ public class MoveController : MonoBehaviour
         }
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
         {
+            anim.SetBool("isLeftWalk", false);
             if (status.state == Status.GimmickState.ONLADDER && !_isJump && IsLadder)
             {
-
                 transform.parent.GetComponent<Rigidbody2D>().simulated = false;
                 Debug.Log("name = " + PotObject.name);
                 PotObject.GetComponent<Rigidbody2D>().simulated = false;
