@@ -117,7 +117,8 @@ public class StageController : MonoBehaviour
         Vector3 tempPos = new Vector3();
         Vector3 turnPos = new Vector3();
         
-        float mapSize = mapSize = Maps[stageLength - 1][num].transform.GetChild(0).GetComponent<SpriteRenderer>().bounds.size.x * 20;
+        float mapSize = 40;
+        Debug.Log(mapSize);
         int mapCount = 0;
 
         switch (dir)
@@ -143,24 +144,18 @@ public class StageController : MonoBehaviour
                 Maps[0][num].transform.localPosition = new Vector2(turnPos.x, turnPos.y - mapSize);
 
                 // 折り返し
-                //Maps[0][num].transform.localPosition = turnPos;
                 StartCoroutine(SrideAnimation(Maps[0][num], turnPos, mapCount));
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[0][num];
-                int turnMInfoUp = Maps[0][num].GetComponent<MapInfo>().MapNumX;
-                for (int i = 0; i < stageLength - 1; i++)
-                {
-                    MapInfo mInfo1 = Maps[i][num].GetComponent<MapInfo>();
-                    MapInfo mInfo2 = Maps[i + 1][num].GetComponent<MapInfo>();
 
+                for (int i = 0; i < stageLength - 1; i++) {
                     Maps[i][num] = Maps[i + 1][num];
-
-                    mInfo1.MapNumY = mInfo2.MapNumY;
+                    Maps[i][num].GetComponent<MapInfo>().MapNumY = i;
                 }
                 Maps[stageLength - 1][num] = temp;
-                MapInfo minfo3Up = Maps[num][0].GetComponent<MapInfo>();
-                minfo3Up.MapNumY = turnMInfoUp;
+
+                Maps[stageLength - 1][num].GetComponent<MapInfo>().MapNumY = 2;
                 break;
 
             // 上-------------------------------------------------------------------＊
@@ -179,7 +174,6 @@ public class StageController : MonoBehaviour
                     tempPos.z = 90;
 
                     StartCoroutine(SrideAnimation(Maps[i][num],tempPos,mapCount));
-                    //Maps[i][num].transform.localPosition = tempPos;
 
                     mapCount++;
                 }
@@ -187,24 +181,19 @@ public class StageController : MonoBehaviour
                 Maps[stageLength - 1][num].transform.localPosition = new Vector2(turnPos.x, turnPos.y + mapSize);
 
                 // 折り返し
-                //Maps[stageLength - 1][num].transform.localPosition = turnPos;
                 StartCoroutine(SrideAnimation(Maps[stageLength - 1][num], turnPos, mapCount));
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[stageLength - 1][num];
-                int turnMInfoDown = Maps[stageLength - 1][num].GetComponent<MapInfo>().MapNumX;
-                for (int i = 0; i < stageLength - 1; i++)
-                {
-                    MapInfo mInfo1 = Maps[stageLength - 1][num].GetComponent<MapInfo>();
-                    MapInfo mInfo2 = Maps[stageLength - 2][num].GetComponent<MapInfo>();
-
+                
+                for (int i = 0; i < stageLength - 1; i++) {
                     Maps[stageLength - 1 - i][num] = Maps[stageLength - 2 - i][num];
-
-                    mInfo1.MapNumY = mInfo2.MapNumY;
+                    Maps[stageLength -  1 - i][num].GetComponent<MapInfo>().MapNumY = stageLength - 1 - i;
                 }
                 Maps[0][num] = temp;
-                MapInfo minfo3Down = Maps[num][0].GetComponent<MapInfo>();
-                minfo3Down.MapNumY = turnMInfoDown;
+
+                Maps[0][num].GetComponent<MapInfo>().MapNumY = 0;
+
                 break;
 
             // 下-------------------------------------------------------------------＊
@@ -221,7 +210,6 @@ public class StageController : MonoBehaviour
                     tempPos = Maps[num][i + 1].transform.position;
                     tempPos.z = 90;
                     StartCoroutine(SrideAnimation(Maps[num][i],tempPos,mapCount));
-                    //Maps[num][i].transform.localPosition = tempPos;
 
                     mapCount++;
                 }
@@ -229,25 +217,18 @@ public class StageController : MonoBehaviour
                 Maps[num][stageLength - 1].transform.localPosition = new Vector2(turnPos.x - mapSize, turnPos.y);
 
                 // 折り返し
-                //Maps[num][stageLength - 1].transform.localPosition = turnPos;
                 StartCoroutine(SrideAnimation(Maps[num][stageLength - 1], turnPos, mapCount));
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[num][stageLength - 1];
-                int turnMInfoRight = Maps[num][stageLength - 1].GetComponent<MapInfo>().MapNumX;
-
-                for (int i = 0; i < stageLength - 1; i++)
-                {
-                    MapInfo mInfo1 = Maps[num][i].GetComponent<MapInfo>();
-                    MapInfo mInfo2 = Maps[num][i + 1].GetComponent<MapInfo>();
-
-                    Maps[num][i] = Maps[num][i + 1];
-
-                   mInfo1.MapNumX = mInfo2.MapNumX;
+                for (int i = 0; i < stageLength - 1; i++) {
+                    Maps[num][stageLength - 1 - i] = Maps[num][stageLength - 2 - i];
+                    Maps[num][stageLength - 1 - i].GetComponent<MapInfo>().MapNumX = stageLength - 1 - i;
                 }
-                Maps[num][stageLength - 1] = temp;
-                MapInfo minfo3Right = Maps[num][0].GetComponent<MapInfo>();
-                minfo3Right.MapNumX = turnMInfoRight;
+                Maps[num][0] = temp;
+
+                Maps[num][0].GetComponent<MapInfo>().MapNumX = 0;
+
                 break;
 
             // 右-------------------------------------------------------------------＊
@@ -263,7 +244,6 @@ public class StageController : MonoBehaviour
                     tempPos = Maps[num][i - 1].transform.position;
                     tempPos.z = 90;
                     StartCoroutine(SrideAnimation(Maps[num][i], tempPos, mapCount));
-                    //Maps[num][i].transform.localPosition = tempPos;
 
                     mapCount++;
                 }
@@ -272,33 +252,20 @@ public class StageController : MonoBehaviour
                 Maps[num][0].transform.localPosition = new Vector2(turnPos.x + mapSize, turnPos.y);
 
                 // 折り返し
-                //Maps[num][0].transform.localPosition = turnPos;
                 StartCoroutine(SrideAnimation(Maps[num][0], turnPos, mapCount));
 
-                MapInfo a = Maps[num][0].GetComponent<MapInfo>();
-                MapInfo b = Maps[num][1].GetComponent<MapInfo>();
-                MapInfo c = Maps[num][2].GetComponent<MapInfo>();
                 // スライド終了時の配列内入れ替え
-                temp = Maps[num][stageLength - 1];
-                int turnMInfoLeft = Maps[num][0].GetComponent<MapInfo>().MapNumX;
+                temp = Maps[num][0];
+                
                 for (int i = 0; i < stageLength - 1; i++)
                 {
-                    MapInfo mInfo1 = Maps[num][i].GetComponent<MapInfo>();
-                    MapInfo mInfo2 = Maps[num][i + 1].GetComponent<MapInfo>();
-
                     Maps[num][i] = Maps[num][i + 1];
-                    
-                    mInfo1.MapNumX = mInfo2.MapNumX;
+                    Maps[num][i].GetComponent<MapInfo>().MapNumX = i;
                 }
-                MapInfo minfo3Left = Maps[num][0].GetComponent<MapInfo>();
+                Maps[num][stageLength - 1] = temp;
 
-                Maps[num][0] = temp;
+                Maps[num][stageLength - 1].GetComponent<MapInfo>().MapNumX = 2;
 
-                minfo3Left.MapNumX = turnMInfoLeft;
-
-                a = Maps[num][0].GetComponent<MapInfo>();
-                b = Maps[num][1].GetComponent<MapInfo>();
-                c = Maps[num][2].GetComponent<MapInfo>();
                 break;
             // 左-------------------------------------------------------------------＊
             default:
