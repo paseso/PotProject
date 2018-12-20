@@ -17,6 +17,9 @@ public class StageController : MonoBehaviour
         RIGHT,
     }
 
+    // サブカメラの描画幅
+    private float subCameraSize = 70;
+
     private List<List<GameObject>> Maps = new List<List<GameObject>>();
 
     private PlayerController pController;
@@ -56,6 +59,12 @@ public class StageController : MonoBehaviour
             List<GameObject> varMap = new List<GameObject>();
             for (int j = 0; j < 3; j++)
             {
+                MapInfo info1 = mapLists[count].GetComponent<MapInfo>();
+
+                info1.MapNumX = j;
+                info1.MapNumY = i;
+                //mapLists[count].GetComponent<MapInfo>().MapNumX = j;
+                //mapLists[count].GetComponent<MapInfo>().MapNumY = i;
                 varMap.Add(mapLists[count]);
                 count++;
             }
@@ -72,7 +81,7 @@ public class StageController : MonoBehaviour
     /// <param name="size"></param>
     public void Sride(int num, Direction dir) {
         if (isMove) { return; }
-        StartCoroutine(SrideInFade(num,dir, GetMaps[1][1].transform.localPosition, 2));
+        StartCoroutine(SrideInFade(num,dir, GetMaps[1][1].transform.localPosition));
     }
 
     /// <summary>
@@ -83,15 +92,15 @@ public class StageController : MonoBehaviour
     /// <param name="pos"></param>
     /// <param name="size"></param>
     /// <returns></returns>
-    public IEnumerator SrideInFade(int num, Direction dir, Vector2 pos, float size)
+    public IEnumerator SrideInFade(int num, Direction dir, Vector2 pos)
     {
         CameraManager cManager = FindObjectOfType<CameraManager>();
-        cManager.SwitchingCameraSub(pos, size);
-        yield return new WaitForSeconds(1f);
+        cManager.SwitchingCameraSub(pos, subCameraSize);
+        yield return new WaitForSeconds(1.5f);
         SrideStage(num, dir);
         yield return new WaitForSeconds(srideTine);
         cManager.SwitchingCameraMain();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         pController.SetCommandActive = true;
     }
 
@@ -107,9 +116,8 @@ public class StageController : MonoBehaviour
         GameObject temp;
         Vector3 tempPos = new Vector3();
         Vector3 turnPos = new Vector3();
+        
         float mapSize = mapSize = Maps[stageLength - 1][num].transform.GetChild(0).GetComponent<SpriteRenderer>().bounds.size.x * 20;
-        int turnPosX = 0;
-        int turnPosY = 0;
         int mapCount = 0;
 
         switch (dir)
@@ -139,14 +147,19 @@ public class StageController : MonoBehaviour
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[0][num];
-                turnPosY = Maps[0][num].GetComponent<MapInfo>().MapNumY;
+                MapInfo turnMInfoUp = Maps[0][num].GetComponent<MapInfo>();
                 for (int i = 0; i < stageLength - 1; i++)
                 {
                     Maps[i][num] = Maps[i + 1][num];
-                    Maps[i][num].GetComponent<MapInfo>().MapNumY = Maps[i + 1][num].GetComponent<MapInfo>().MapNumY;
+
+                    MapInfo mInfo1 = Maps[i][num].GetComponent<MapInfo>();
+                    MapInfo mInfo2 = Maps[i + 1][num].GetComponent<MapInfo>();
+
+                    mInfo1.MapNumY = mInfo2.MapNumY;
                 }
                 Maps[stageLength - 1][num] = temp;
-                Maps[stageLength - 1][num].GetComponent<MapInfo>().MapNumY = turnPosY;
+                MapInfo minfo3Up = Maps[num][0].GetComponent<MapInfo>();
+                minfo3Up.MapNumY = turnMInfoUp.MapNumY;
                 break;
 
             case Direction.DOWN: // 下
@@ -175,14 +188,19 @@ public class StageController : MonoBehaviour
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[stageLength - 1][num];
-                turnPosY = Maps[stageLength - 1][num].GetComponent<MapInfo>().MapNumY;
+                MapInfo turnMInfoDown = Maps[stageLength - 1][num].GetComponent<MapInfo>();
                 for (int i = 0; i < stageLength - 1; i++)
                 {
                     Maps[stageLength - 1 - i][num] = Maps[stageLength - 2 - i][num];
-                    Maps[stageLength - 1][num].GetComponent<MapInfo>().MapNumY = Maps[stageLength - 2][num].GetComponent<MapInfo>().MapNumY;
+
+                    MapInfo mInfo1 = Maps[stageLength - 1][num].GetComponent<MapInfo>();
+                    MapInfo mInfo2 = Maps[stageLength - 2][num].GetComponent<MapInfo>();
+
+                    mInfo1.MapNumY = mInfo2.MapNumY;
                 }
                 Maps[0][num] = temp;
-                Maps[0][num].GetComponent<MapInfo>().MapNumY = turnPosY;
+                MapInfo minfo3Down = Maps[num][0].GetComponent<MapInfo>();
+                minfo3Down.MapNumY = turnMInfoDown.MapNumY;
                 break;
 
             case Direction.RIGHT:// 右
@@ -209,14 +227,20 @@ public class StageController : MonoBehaviour
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[num][stageLength - 1];
-                turnPosX = Maps[num][stageLength - 1].GetComponent<MapInfo>().MapNumX;
+                MapInfo turnMInfoLeft = Maps[num][stageLength - 1].GetComponent<MapInfo>();
+
                 for (int i = 0; i < stageLength - 1; i++)
                 {
                     Maps[num][stageLength - 1 - i] = Maps[num][stageLength - 2 - i];
-                    Maps[num][stageLength - 1 - i].GetComponent<MapInfo>().MapNumX = Maps[num][stageLength - 2 - i].GetComponent<MapInfo>().MapNumX;
+
+                   MapInfo mInfo1 = Maps[num][stageLength - 1 - i].GetComponent<MapInfo>();
+                   MapInfo mInfo2 = Maps[num][stageLength - 2 - i].GetComponent<MapInfo>();
+
+                   mInfo1.MapNumX = mInfo2.MapNumX;
                 }
                 Maps[num][0] = temp;
-                Maps[num][0].GetComponent<MapInfo>().MapNumX = turnPosX;
+                MapInfo minfo3 = Maps[num][0].GetComponent<MapInfo>();
+                minfo3.MapNumX = turnMInfoLeft.MapNumX;
                 break;
 
             case Direction.LEFT: // 左
@@ -244,14 +268,19 @@ public class StageController : MonoBehaviour
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[num][0];
-                turnPosX = Maps[num][0].GetComponent<MapInfo>().MapNumX;
+                MapInfo turnMInfoRight = Maps[num][0].GetComponent<MapInfo>();
                 for (int i = 0; i < stageLength - 1; i++)
                 {
                     Maps[num][i] = Maps[num][i + 1];
-                    Maps[num][i].GetComponent<MapInfo>().MapNumX = Maps[num][i + 1].GetComponent<MapInfo>().MapNumX;
+                    MapInfo mInfo1 = Maps[num][i].GetComponent<MapInfo>();
+                    MapInfo mInfo2 = Maps[num][i + 1].GetComponent<MapInfo>();
+
+                    mInfo1.MapNumX = mInfo2.MapNumX;
                 }
                 Maps[num][stageLength - 1] = temp;
-                Maps[num][stageLength - 1].GetComponent<MapInfo>().MapNumX = turnPosX;
+
+                MapInfo minfo3Right = Maps[num][stageLength - 1].GetComponent<MapInfo>();
+                minfo3Right.MapNumX = turnMInfoRight.MapNumX;
                 break;
             default:
                 break;
