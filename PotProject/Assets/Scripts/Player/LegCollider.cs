@@ -35,12 +35,14 @@ public class LegCollider : MonoBehaviour {
     private void OnTriggerStay2D(Collider2D col)
     {
         GimmickInfo info = col.GetComponent<GimmickInfo>();
-        if (!info || info.type != GimmickInfo.GimmickType.LADDER)
+        if (!info && col.gameObject.layer == LayerMask.NameToLayer("Block") || info.type != GimmickInfo.GimmickType.LADDER && info.type != GimmickInfo.GimmickType.MAPCHANGE)
         {
             move_ctr._isJump = true;
         }else if(info.type == GimmickInfo.GimmickType.LADDER)
         {
             move_ctr.IsLadder = true;
+        }else {
+            return;
         }
     }
 

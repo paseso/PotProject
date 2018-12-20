@@ -679,7 +679,7 @@ public class MoveController : MonoBehaviour
                 child.gameObject.layer = LayerMask.NameToLayer("LadderPlayer");
             }
         }
-        Debug.Log("Ladder");
+
         gameObject.transform.parent.gameObject.layer = LayerMask.NameToLayer("LadderPlayer");
         PotObject.layer = LayerMask.NameToLayer("Trans");
         transform.parent.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed * dir);

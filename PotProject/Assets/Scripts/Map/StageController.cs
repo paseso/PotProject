@@ -116,17 +116,10 @@ public class StageController : MonoBehaviour
         GameObject temp;
         Vector3 tempPos = new Vector3();
         Vector3 turnPos = new Vector3();
-        //MapInfo mInfo1 = new MapInfo();
-        //MapInfo mInfo2 = new MapInfo();
-        //MapInfo minfo3 = new MapInfo();
-        //MapInfo turnMInfo = new MapInfo();
         
         float mapSize = mapSize = Maps[stageLength - 1][num].transform.GetChild(0).GetComponent<SpriteRenderer>().bounds.size.x * 20;
-        int turnPosX = 0;
-        int turnPosY = 0;
         int mapCount = 0;
 
-        Debug.Log("num = " + num);
         switch (dir)
         {
             case Direction.UP: // 上

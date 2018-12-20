@@ -36,29 +36,24 @@ public class GimmickController :MonoBehaviour {
     /// <param name="col"></param>
     public void OnCollisionEnter2D(Collision2D col) {
         MapInfo objInfo = col.transform.root.gameObject.GetComponent<MapInfo>();
-        Debug.Log("ObjX=" + objInfo.MapNumX);
-        Debug.Log("ObjY=" + objInfo.MapNumY);
+
         if (col.gameObject.tag == "Player") {
             switch (gInfo.type) {
                 case GimmickInfo.GimmickType.UP:
                     pController.SetCommandActive = false;
                     sController.Sride(objInfo.MapNumY, StageController.Direction.UP);
-                    //sController.SrideStage(1, StageController.Direction.UP);
                     break;
                 case GimmickInfo.GimmickType.DOWN:
                     pController.SetCommandActive = false;
                     sController.Sride(objInfo.MapNumY, StageController.Direction.DOWN);
-                    //sController.SrideStage(1, StageController.Direction.DOWN);
                     break;
                 case GimmickInfo.GimmickType.LEFT:
                     pController.SetCommandActive = false;
                     sController.Sride(objInfo.MapNumX, StageController.Direction.LEFT);
-                    //sController.SrideStage(0, StageController.Direction.LEFT);
                     break;
                 case GimmickInfo.GimmickType.RIGHT:
                     pController.SetCommandActive = false;
                     sController.Sride(objInfo.MapNumX, StageController.Direction.RIGHT);
-                    //sController.SrideStage(0, StageController.Direction.RIGHT);
                     break;
                 case GimmickInfo.GimmickType.BAKETREE:
                     BakeTree(gameObject);

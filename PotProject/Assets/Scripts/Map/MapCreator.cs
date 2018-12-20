@@ -225,7 +225,6 @@ public class MapCreator : MonoBehaviour
 
                             if (GetGimmick(gimmickNum).GimmickObj.transform.childCount != 0  && GetGimmick(gimmickNum).GimmickObj.transform.GetChild(0).GetComponent<GimmickInfo>() != null && GetGimmick(gimmickNum).GimmickObj.transform.GetChild(0).GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
                             {
-                                Debug.Log("aaa");
                                 tileObj.layer = LayerMask.NameToLayer("LadderBrock");
                             }
 
@@ -244,7 +243,6 @@ public class MapCreator : MonoBehaviour
                         var enemyObj = Instantiate(GetEnemy(enemyNum).EnemyObj);
                         if (enemyObj.tag == "StartPos")
                         {
-                            Debug.Log("通った");
                             startPositionObject = enemyObj;
                             testtest test = FindObjectOfType<testtest>();
                             test.setParent(startPositionObject);
