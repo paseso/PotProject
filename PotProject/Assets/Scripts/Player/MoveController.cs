@@ -70,12 +70,12 @@ public class MoveController : MonoBehaviour
     private List<Sprite> BrotherSprites;
     private SpriteRenderer obj_sprite;
     private GameObject PotObject;
-    private Animator anim;
 
     private PlayerController player_ctr;
     private BringCollider bringctr;
     private AttackZoonController atc_ctr;
     private AlchemyUIController alchemyUI_ctr;
+    private AnimController anim_ctr;
     private Status status;
     //----------ボタンFlagのget---------------------
     public bool Jumping
@@ -221,7 +221,7 @@ public class MoveController : MonoBehaviour
         atc_ctr = GameObject.Find("AttackRange").GetComponentInChildren<AttackZoonController>();
         alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
         obj_sprite = gameObject.transform.parent.GetComponent<SpriteRenderer>();
-        anim = gameObject.transform.parent.GetComponent<Animator>();
+        anim_ctr = gameObject.transform.parent.GetComponent<AnimController>();
         _isJump = false;
         _onCrossYTrigger = false;
         axisValue = 0f;
@@ -313,6 +313,7 @@ public class MoveController : MonoBehaviour
             case ButtonType.JUMP:
                 if (!_isJump)
                     return;
+                anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.JUMP);
                 rig.velocity = new Vector2(0, 1f * speed);
                 _jumping = true;
                 break;
@@ -323,7 +324,7 @@ public class MoveController : MonoBehaviour
                 if (!_ActiveRightLeft)
                     return;
 
-                anim.SetBool("isLeftWalk", true);
+                anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
                 rig.velocity = new Vector2(-5f, rig.velocity.y);
                 direc = Direction.LEFT;
                 break;
@@ -334,7 +335,7 @@ public class MoveController : MonoBehaviour
                 if (!_ActiveRightLeft)
                     return;
 
-                anim.SetBool("isLeftWalk", false);
+                anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_WALK);
                 rig.velocity = new Vector2(5f, rig.velocity.y);
                 direc = Direction.RIGHT;
                 break;
@@ -345,6 +346,7 @@ public class MoveController : MonoBehaviour
 
                 if (status.state == Status.GimmickState.ONLADDER) {
                     Ladder(ladderSpeed, 1);
+                    anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LADDER_UP);
                 }
                 _onUp = false;
                 break;
@@ -356,6 +358,7 @@ public class MoveController : MonoBehaviour
                 _onDown = true;
                 if (status.state == Status.GimmickState.ONLADDER) {
                     Ladder(ladderSpeed, -1);
+                    anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LADDER_DOWN);
                 }
                 break;
 
@@ -535,7 +538,7 @@ public class MoveController : MonoBehaviour
         }
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
         {
-            anim.SetBool("isLeftWalk", false);
+            anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.IDLE);
             if (status.state == Status.GimmickState.ONLADDER && !_isJump && IsLadder)
             {
                 transform.parent.GetComponent<Rigidbody2D>().simulated = false;
