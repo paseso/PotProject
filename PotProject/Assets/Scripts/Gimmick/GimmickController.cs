@@ -36,22 +36,27 @@ public class GimmickController :MonoBehaviour {
     /// <param name="col"></param>
     public void OnCollisionEnter2D(Collision2D col) {
         MapInfo objInfo = col.transform.root.gameObject.GetComponent<MapInfo>();
-        if (col.gameObject.layer == LayerMask.NameToLayer("Player")) {
-            pController.SetCommandActive = false;
+        Debug.Log("ObjX=" + objInfo.MapNumX);
+        Debug.Log("ObjY=" + objInfo.MapNumY);
+        if (col.gameObject.tag == "Player") {
             switch (gInfo.type) {
                 case GimmickInfo.GimmickType.UP:
+                    pController.SetCommandActive = false;
                     sController.Sride(objInfo.MapNumY, StageController.Direction.UP);
                     //sController.SrideStage(1, StageController.Direction.UP);
                     break;
                 case GimmickInfo.GimmickType.DOWN:
+                    pController.SetCommandActive = false;
                     sController.Sride(objInfo.MapNumY, StageController.Direction.DOWN);
                     //sController.SrideStage(1, StageController.Direction.DOWN);
                     break;
                 case GimmickInfo.GimmickType.LEFT:
+                    pController.SetCommandActive = false;
                     sController.Sride(objInfo.MapNumX, StageController.Direction.LEFT);
                     //sController.SrideStage(0, StageController.Direction.LEFT);
                     break;
                 case GimmickInfo.GimmickType.RIGHT:
+                    pController.SetCommandActive = false;
                     sController.Sride(objInfo.MapNumX, StageController.Direction.RIGHT);
                     //sController.SrideStage(0, StageController.Direction.RIGHT);
                     break;
@@ -61,9 +66,7 @@ public class GimmickController :MonoBehaviour {
                 case GimmickInfo.GimmickType.GRASS:
                     DropHarb();
                     break;
-                case GimmickInfo.GimmickType.ROCK:
-                    RockDoorOpen();
-                    break;
+                
                 default:
                     break;
             }
@@ -85,8 +88,10 @@ public class GimmickController :MonoBehaviour {
 
                 break;
             case GimmickInfo.GimmickType.ROCK:
-                mInfo.rock.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
-                mInfo.UpRockFlag = true;
+                RockDoorOpen();
+                break;
+            case GimmickInfo.GimmickType.MAPCHANGE:
+                col.transform.parent.transform.parent.transform.SetParent(transform.root.gameObject.transform);
                 break;
             default:
                 break;
@@ -100,7 +105,7 @@ public class GimmickController :MonoBehaviour {
     public void OnTriggerExit2D(Collider2D col) {
         switch (gInfo.type) {
             case GimmickInfo.GimmickType.GROWTREE:
-                //mInfo.GrowTreeFlag = true;
+                mInfo.GrowTreeFlag = true;
                 //Debug.Log("TreeFlag: " + mInfo.GrowTreeFlag);
                 break;
 
@@ -113,8 +118,8 @@ public class GimmickController :MonoBehaviour {
     }
 
     public void RockDoorOpen() {
-        GameObject rock = new GameObject();
-
+        GameObject rock = GameObject.FindGameObjectWithTag("Rock");
+        rock.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
     }
 
     /// <summary>
@@ -123,12 +128,12 @@ public class GimmickController :MonoBehaviour {
     public void Grow() {
         Vector2 defaultScale = transform.parent.transform.localScale;
         transform.parent.transform.DOScaleY(3f, 1f).SetEase(Ease.Linear);
-        float time = 0;
-        while(time < 3)
-        {
-            time += Time.deltaTime;
-        }
-        transform.parent.transform.DOScaleY(defaultScale.y, 1f).SetEase(Ease.Linear);
+        //float time = 0;
+        //while(time < 3)
+        //{
+        //    time += Time.deltaTime;
+        //}
+        //transform.parent.transform.DOScaleY(defaultScale.y, 1f).SetEase(Ease.Linear);
     }
 
     /// <summary>

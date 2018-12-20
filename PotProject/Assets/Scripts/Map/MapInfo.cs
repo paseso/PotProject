@@ -16,9 +16,15 @@ public class MapInfo : MonoBehaviour {
     private bool _tree;
     public bool GrowTreeFlag { get; set; }
 
-    public int MapNumX{ get; set; }
+    public int MapNumX{
+        get { return mapNumX; }
+        set { mapNumX = value; }
+    }
 
-    public int MapNumY { get; set; }
+    public int MapNumY {
+        get { return mapNumY; }
+        set { mapNumY = value; }
+    }
 
     // スイッチ岩
     private bool _upRock;
@@ -36,4 +42,5 @@ public class MapInfo : MonoBehaviour {
     //    set {value = this._upRock;}
     //}
 
+    
 }

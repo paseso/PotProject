@@ -20,6 +20,7 @@ public class GimmickInfo : MonoBehaviour {
         GROWTREE,
         BAKETREE,
         GRASS,
+        MAPCHANGE,
     }
 
     public GimmickType type;
