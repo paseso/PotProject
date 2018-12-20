@@ -77,6 +77,8 @@ MonoBehaviour:
     tileObj: {fileID: 1238842296989262, guid: 68cfbeb9e9de75a49a9535e5ecbbf70b, type: 2}
   - tileImage: {fileID: 2800000, guid: 3cfaee6c33be5d742a3b104e65eff684, type: 3}
     tileObj: {fileID: 1547875337690938, guid: beba8964046e942488a970cd0d192358, type: 2}
+  - tileImage: {fileID: 2800000, guid: fd21fea2cf17dac4c8cb46d032acf977, type: 3}
+    tileObj: {fileID: 1484047775898816, guid: b761f346f27f27a45981a8b2dd7331c6, type: 2}
   gimmicks:
   - gimmickImage: {fileID: 2800000, guid: d1a5bda456b103e4c858f26fbc740877, type: 3}
     gimmickSize: {x: 1, y: 1}
@@ -116,6 +118,10 @@ MonoBehaviour:
   - gimmickImage: {fileID: 2800000, guid: bd397a0826105954e94da2419fbbd5f9, type: 3}
     gimmickSize: {x: 1, y: 1}
     gimmickObj: {fileID: 1667552765188618, guid: 6def4946aa6f5ba4fa32d1f76002c130,
+      type: 2}
+  - gimmickImage: {fileID: 2800000, guid: 7c312b56e2857b24bba33ed4e5386843, type: 3}
+    gimmickSize: {x: 1, y: 1}
+    gimmickObj: {fileID: 1752128078412662, guid: 14ead344de08f3c43b4d5c6b13e5d204,
       type: 2}
   enemies:
   - enemyImage: {fileID: 2800000, guid: d1a5bda456b103e4c858f26fbc740877, type: 3}

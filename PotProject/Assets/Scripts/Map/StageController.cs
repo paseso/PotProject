@@ -122,9 +122,10 @@ public class StageController : MonoBehaviour
 
         switch (dir)
         {
-            case Direction.UP: // 上
+            // 上-------------------------------------------------------------------
+            case Direction.UP:
 
-                // 折り返し座標を保持
+                // 一番上を保持
                 turnPos = Maps[stageLength - 1][num].transform.position;
                 turnPos.z = 90;
 
@@ -147,22 +148,25 @@ public class StageController : MonoBehaviour
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[0][num];
-                MapInfo turnMInfoUp = Maps[0][num].GetComponent<MapInfo>();
+                int turnMInfoUp = Maps[0][num].GetComponent<MapInfo>().MapNumX;
                 for (int i = 0; i < stageLength - 1; i++)
                 {
-                    Maps[i][num] = Maps[i + 1][num];
-
                     MapInfo mInfo1 = Maps[i][num].GetComponent<MapInfo>();
                     MapInfo mInfo2 = Maps[i + 1][num].GetComponent<MapInfo>();
+
+                    Maps[i][num] = Maps[i + 1][num];
 
                     mInfo1.MapNumY = mInfo2.MapNumY;
                 }
                 Maps[stageLength - 1][num] = temp;
                 MapInfo minfo3Up = Maps[num][0].GetComponent<MapInfo>();
-                minfo3Up.MapNumY = turnMInfoUp.MapNumY;
+                minfo3Up.MapNumY = turnMInfoUp;
                 break;
 
-            case Direction.DOWN: // 下
+            // 上-------------------------------------------------------------------＊
+
+            // 下-------------------------------------------------------------------
+            case Direction.DOWN:
 
                 // 折り返し座標を保持
                 turnPos = Maps[0][num].transform.position;
@@ -188,22 +192,25 @@ public class StageController : MonoBehaviour
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[stageLength - 1][num];
-                MapInfo turnMInfoDown = Maps[stageLength - 1][num].GetComponent<MapInfo>();
+                int turnMInfoDown = Maps[stageLength - 1][num].GetComponent<MapInfo>().MapNumX;
                 for (int i = 0; i < stageLength - 1; i++)
                 {
-                    Maps[stageLength - 1 - i][num] = Maps[stageLength - 2 - i][num];
-
                     MapInfo mInfo1 = Maps[stageLength - 1][num].GetComponent<MapInfo>();
                     MapInfo mInfo2 = Maps[stageLength - 2][num].GetComponent<MapInfo>();
+
+                    Maps[stageLength - 1 - i][num] = Maps[stageLength - 2 - i][num];
 
                     mInfo1.MapNumY = mInfo2.MapNumY;
                 }
                 Maps[0][num] = temp;
                 MapInfo minfo3Down = Maps[num][0].GetComponent<MapInfo>();
-                minfo3Down.MapNumY = turnMInfoDown.MapNumY;
+                minfo3Down.MapNumY = turnMInfoDown;
                 break;
 
-            case Direction.RIGHT:// 右
+            // 下-------------------------------------------------------------------＊
+
+            // 右-------------------------------------------------------------------
+            case Direction.RIGHT:
                 // 折り返し座標を保持
                 turnPos = Maps[num][0].transform.position;
                 turnPos.z = 90;
@@ -227,26 +234,28 @@ public class StageController : MonoBehaviour
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[num][stageLength - 1];
-                MapInfo turnMInfoLeft = Maps[num][stageLength - 1].GetComponent<MapInfo>();
+                int turnMInfoRight = Maps[num][stageLength - 1].GetComponent<MapInfo>().MapNumX;
 
                 for (int i = 0; i < stageLength - 1; i++)
                 {
-                    Maps[num][stageLength - 1 - i] = Maps[num][stageLength - 2 - i];
+                    MapInfo mInfo1 = Maps[num][i].GetComponent<MapInfo>();
+                    MapInfo mInfo2 = Maps[num][i + 1].GetComponent<MapInfo>();
 
-                   MapInfo mInfo1 = Maps[num][stageLength - 1 - i].GetComponent<MapInfo>();
-                   MapInfo mInfo2 = Maps[num][stageLength - 2 - i].GetComponent<MapInfo>();
+                    Maps[num][i] = Maps[num][i + 1];
 
                    mInfo1.MapNumX = mInfo2.MapNumX;
                 }
-                Maps[num][0] = temp;
-                MapInfo minfo3 = Maps[num][0].GetComponent<MapInfo>();
-                minfo3.MapNumX = turnMInfoLeft.MapNumX;
+                Maps[num][stageLength - 1] = temp;
+                MapInfo minfo3Right = Maps[num][0].GetComponent<MapInfo>();
+                minfo3Right.MapNumX = turnMInfoRight;
                 break;
 
-            case Direction.LEFT: // 左
+            // 右-------------------------------------------------------------------＊
+
+            // 左-------------------------------------------------------------------
+            case Direction.LEFT: 
                 turnPos = Maps[num][stageLength - 1].transform.position;
                 turnPos.z = 90;
-
 
                 // 折り返しMap以外をスライド
                 for (int i = stageLength - 1; i > 0; i--)
@@ -266,22 +275,32 @@ public class StageController : MonoBehaviour
                 //Maps[num][0].transform.localPosition = turnPos;
                 StartCoroutine(SrideAnimation(Maps[num][0], turnPos, mapCount));
 
+                MapInfo a = Maps[num][0].GetComponent<MapInfo>();
+                MapInfo b = Maps[num][1].GetComponent<MapInfo>();
+                MapInfo c = Maps[num][2].GetComponent<MapInfo>();
                 // スライド終了時の配列内入れ替え
-                temp = Maps[num][0];
-                MapInfo turnMInfoRight = Maps[num][0].GetComponent<MapInfo>();
+                temp = Maps[num][stageLength - 1];
+                int turnMInfoLeft = Maps[num][0].GetComponent<MapInfo>().MapNumX;
                 for (int i = 0; i < stageLength - 1; i++)
                 {
-                    Maps[num][i] = Maps[num][i + 1];
                     MapInfo mInfo1 = Maps[num][i].GetComponent<MapInfo>();
                     MapInfo mInfo2 = Maps[num][i + 1].GetComponent<MapInfo>();
 
+                    Maps[num][i] = Maps[num][i + 1];
+                    
                     mInfo1.MapNumX = mInfo2.MapNumX;
                 }
-                Maps[num][stageLength - 1] = temp;
+                MapInfo minfo3Left = Maps[num][0].GetComponent<MapInfo>();
 
-                MapInfo minfo3Right = Maps[num][stageLength - 1].GetComponent<MapInfo>();
-                minfo3Right.MapNumX = turnMInfoRight.MapNumX;
+                Maps[num][0] = temp;
+
+                minfo3Left.MapNumX = turnMInfoLeft;
+
+                a = Maps[num][0].GetComponent<MapInfo>();
+                b = Maps[num][1].GetComponent<MapInfo>();
+                c = Maps[num][2].GetComponent<MapInfo>();
                 break;
+            // 左-------------------------------------------------------------------＊
             default:
                 break;
         }

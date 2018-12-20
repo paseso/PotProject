@@ -36,27 +36,29 @@ public class GimmickController :MonoBehaviour {
     /// <param name="col"></param>
     public void OnCollisionEnter2D(Collision2D col) {
         MapInfo objInfo = col.transform.root.gameObject.GetComponent<MapInfo>();
-
         if (col.gameObject.tag == "Player") {
             switch (gInfo.type) {
                 case GimmickInfo.GimmickType.UP:
                     pController.SetCommandActive = false;
-                    sController.Sride(objInfo.MapNumY, StageController.Direction.UP);
+                    sController.Sride(objInfo.MapNumX, StageController.Direction.UP);
                     break;
                 case GimmickInfo.GimmickType.DOWN:
                     pController.SetCommandActive = false;
-                    sController.Sride(objInfo.MapNumY, StageController.Direction.DOWN);
+                    sController.Sride(objInfo.MapNumX, StageController.Direction.DOWN);
                     break;
                 case GimmickInfo.GimmickType.LEFT:
                     pController.SetCommandActive = false;
-                    sController.Sride(objInfo.MapNumX, StageController.Direction.LEFT);
+                    sController.Sride(objInfo.MapNumY, StageController.Direction.LEFT);
                     break;
                 case GimmickInfo.GimmickType.RIGHT:
                     pController.SetCommandActive = false;
-                    sController.Sride(objInfo.MapNumX, StageController.Direction.RIGHT);
+                    sController.Sride(objInfo.MapNumY, StageController.Direction.RIGHT);
                     break;
                 case GimmickInfo.GimmickType.BAKETREE:
                     BakeTree(gameObject);
+                    break;
+                case GimmickInfo.GimmickType.ROCK:
+                    RockDoorOpen();
                     break;
                 case GimmickInfo.GimmickType.GRASS:
                     DropHarb();
@@ -81,9 +83,6 @@ public class GimmickController :MonoBehaviour {
 
             case GimmickInfo.GimmickType.LADDER:
 
-                break;
-            case GimmickInfo.GimmickType.ROCK:
-                RockDoorOpen();
                 break;
             case GimmickInfo.GimmickType.MAPCHANGE:
                 col.transform.parent.transform.parent.transform.SetParent(transform.root.gameObject.transform);
@@ -115,6 +114,13 @@ public class GimmickController :MonoBehaviour {
     public void RockDoorOpen() {
         GameObject rock = GameObject.FindGameObjectWithTag("Rock");
         rock.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
+    }
+
+    public void IsWater() {
+        var waters = FindObjectsOfType<BuoyancyEffector2D>();
+        foreach(var i in waters) {
+            i.gameObject.SetActive(true);
+        }
     }
 
     /// <summary>
