@@ -98,6 +98,10 @@ public class MonsterController : MonoBehaviour
                 item = Instantiate(Resources.Load<GameObject>("Prefabs/HarbPrefab"));
                 item.transform.SetParent(transform.parent.transform);
                 break;
+            case MonsterStatus.MonsterType.SNAKE:
+                item = Instantiate(Resources.Load<GameObject>("Prefabs/Rope"));
+                item.transform.SetParent(transform.parent.transform);
+                break;
         }
         item.transform.localPosition = transform.localPosition;
     }
