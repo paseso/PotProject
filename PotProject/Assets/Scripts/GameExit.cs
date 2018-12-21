@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
+//using UnityEditor;
 using UnityEngine;
 
 public class GameExit : MonoBehaviour {
@@ -10,13 +10,13 @@ public class GameExit : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Escape))
-        {
-        #if UNITY_EDITOR
-            EditorApplication.isPlaying = false;
-        #elif UNITY_STANDALONE
-            Application.Quit();
-        #endif
-        }
+		//if (Input.GetKeyDown(KeyCode.Escape))
+  //      {
+  //      #if UNITY_EDITOR
+  //          EditorApplication.isPlaying = false;
+  //      #elif UNITY_STANDALONE
+  //          Application.Quit();
+  //      #endif
+  //      }
     }
 }

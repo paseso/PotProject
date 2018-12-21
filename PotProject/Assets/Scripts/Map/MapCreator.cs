@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 
 [DisallowMultipleComponent,DefaultExecutionOrder(-1)]
 public class MapCreator : MonoBehaviour
