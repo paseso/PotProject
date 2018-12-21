@@ -313,7 +313,15 @@ public class MoveController : MonoBehaviour
             case ButtonType.JUMP:
                 if (!_isJump)
                     return;
-                anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.JUMP);
+                if(direc == Direction.RIGHT)
+                {
+                    anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTJUMP);
+                }
+                else
+                {
+
+                }
+                
                 rig.velocity = new Vector2(0, 1f * speed);
                 _jumping = true;
                 break;
@@ -416,6 +424,7 @@ public class MoveController : MonoBehaviour
                 {//アイテムを持つ
                     target.GetComponent<Rigidbody2D>().simulated = false;
                     bringctr._bring = true;
+                    PotObject.GetComponent<PotController>().ChangeLayer();
                 }
                 else
                 {//アイテムを離す
@@ -429,6 +438,7 @@ public class MoveController : MonoBehaviour
                     }
                     target.gameObject.transform.parent = target.transform.parent;
                     target.GetComponent<Rigidbody2D>().simulated = true;
+                    PotObject.GetComponent<PotController>().ChangeLayer();
                     bringctr._bring = false;
                     _itemFall = true;
                 }

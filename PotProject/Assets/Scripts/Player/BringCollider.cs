@@ -9,6 +9,7 @@ public class BringCollider : MonoBehaviour {
     [HideInInspector]
     public bool _bring = false;
     private MoveController move_controll;
+    private PotController pot_ctr;
     private GameObject Joints;
 
     private enum Direction
@@ -25,6 +26,7 @@ public class BringCollider : MonoBehaviour {
         _Tubohit = false;
         _bring = false;
         move_controll = gameObject.transform.parent.GetComponentInChildren<MoveController>();
+        pot_ctr = GameObject.FindObjectOfType<PotController>();
         direction = Direction.LEFT;
     }
 	
@@ -80,6 +82,7 @@ public class BringCollider : MonoBehaviour {
         {
             if (!_bring)
             {
+                pot_ctr.ChangeLayer();
                 move_controll.target = col.gameObject;
                 _Brotherhit = true;
             }

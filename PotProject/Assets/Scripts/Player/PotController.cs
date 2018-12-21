@@ -35,7 +35,7 @@ public class PotController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         PotJump();
-        ChangeLayer();
+        //ChangeLayer();
 	}
 
     /// <summary>
@@ -69,30 +69,68 @@ public class PotController : MonoBehaviour {
     /// <summary>
     /// お兄ちゃんが物を持っている時レイヤーを変更する処理
     /// </summary>
-    private void ChangeLayer()
+    public void ChangeLayer()
     {
+        gameObject.layer = LayerMask.NameToLayer("Default");
         if (bring_col._bring)
         {
-            gameObject.layer = LayerMask.NameToLayer("Default");
+            gameObject.GetComponent<DistanceJoint2D>().enabled = false;
+            move_ctr.transform.parent.GetComponent<DistanceJoint2D>().enabled = false;
         }
         else
         {
-            if (gameObject.layer != LayerMask.NameToLayer("Default"))
-                return;
-            gameObject.layer = LayerMask.NameToLayer("Pot");
+            gameObject.GetComponent<DistanceJoint2D>().enabled = true;
+            move_ctr.transform.parent.GetComponent<DistanceJoint2D>().enabled = false;
         }
+        
+        //if (gameObject.layer == LayerMask.NameToLayer("Pot"))
+        //{
+        //    gameObject.layer = LayerMask.NameToLayer("Default");
+        //}
+        //else
+        //{
+        //    gameObject.layer = LayerMask.NameToLayer("Pot");
+        //}
         
     }
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.GetComponent<MonsterController>())
+        if (col.gameObject.tag == "Item")
         {
-            if (!bring_col._Tubohit || !move_ctr._itemFall)
+            if (!bring_col._Tubohit)
                 return;
 
             Destroy(col.gameObject);
-            gameObject.layer = LayerMask.NameToLayer("Pot");
+            ItemStatus.ITEM type = col.gameObject.GetComponent<ItemStatus.ITEM>();
+            switch (type)
+            {
+                case ItemStatus.ITEM.SLIME:
+                    player_ctr.setItemList(ItemStatus.ITEM.SLIME);
+                    break;
+
+                case ItemStatus.ITEM.GOLEM:
+                    player_ctr.setItemList(ItemStatus.ITEM.GOLEM);
+                    break;
+
+                case ItemStatus.ITEM.SNAKE:
+                    player_ctr.setItemList(ItemStatus.ITEM.SNAKE);
+                    break;
+
+                default:
+                    Debug.Log("ItemType: " + type);
+                    break;
+            }
+        }
+        if (col.gameObject.GetComponent<MonsterController>())
+        {
+            //if (!bring_col._Tubohit || !move_ctr._itemFall)
+            //    return;
+            if (!bring_col._Tubohit)
+                return;
+
+            Destroy(col.gameObject);
+            //gameObject.layer = LayerMask.NameToLayer("Pot");
             MonsterController mInfo = col.gameObject.GetComponent<MonsterController>();
             switch (mInfo.GetMStatus.type)
             {
