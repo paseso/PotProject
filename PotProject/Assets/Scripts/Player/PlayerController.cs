@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour {
         status.ItemList = new List<ItemStatus.ITEM>();
         alchemy_ctr = GameObject.FindObjectOfType<AlchemyController>();
         alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
-        BrotherObj = GameObject.FindObjectOfType<AnimController>().gameObject;
+        BrotherObj = GameObject.FindGameObjectWithTag("Player");
         HeartObject = GameObject.Find("Canvas/Heart");
         getHeartChildren();
         _itemMax = false;
@@ -257,7 +257,7 @@ public class PlayerController : MonoBehaviour {
         {
             DownHpUI(point);
             status.PlayerHP = 0;
-            BrotherObj.transform.position = GameObject.Find(BrotherObj.transform.root.name + "/RespornPoint(Clone)").transform.position;
+            BrotherObj.transform.localPosition = GameObject.Find(BrotherObj.transform.root.name + "/RespornPoint(Clone)").transform.localPosition;
             UpHp(3);
             Debug.Log("HPが0になりました");
             return;

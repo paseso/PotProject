@@ -84,6 +84,8 @@ public class StageController : MonoBehaviour
         StartCoroutine(SrideInFade(num,dir, GetMaps[1][1].transform.localPosition));
     }
 
+
+    CameraManager cManager;
     /// <summary>
     /// カメラ切り替えとスライド関数呼び出し
     /// </summary>
@@ -94,12 +96,10 @@ public class StageController : MonoBehaviour
     /// <returns></returns>
     public IEnumerator SrideInFade(int num, Direction dir, Vector2 pos)
     {
-        CameraManager cManager = FindObjectOfType<CameraManager>();
+        cManager = FindObjectOfType<CameraManager>();
         cManager.SwitchingCameraSub(pos, subCameraSize);
         yield return new WaitForSeconds(1.5f);
         SrideStage(num, dir);
-        yield return new WaitForSeconds(srideTine);
-        cManager.SwitchingCameraMain();
         yield return new WaitForSeconds(1.5f);
         pController.SetCommandActive = true;
     }
@@ -131,20 +131,20 @@ public class StageController : MonoBehaviour
                 turnPos.z = 90;
 
                 // 折り返しMap以外をスライド
-                for (int i = stageLength - 1; i > 0; i--)
+                for (int i = stageLength - 1; i >= 0; i--)
                 {
-                    tempPos = Maps[i - 1][num].transform.position;
+                    tempPos = Maps[i][num].transform.position;
                     tempPos.z = 90;
-                    StartCoroutine(SrideAnimation(Maps[i][num],tempPos,mapCount));
+                    StartCoroutine(SrideAnimation(Maps[i][num], turnPos,new Vector2(tempPos.x,tempPos.y + mapSize),mapCount));
                     //Maps[i][num].transform.localPosition = tempPos;
 
                     mapCount++;
                 }
 
-                Maps[0][num].transform.localPosition = new Vector2(turnPos.x, turnPos.y - mapSize);
+                //Maps[0][num].transform.localPosition = new Vector2(turnPos.x, turnPos.y - mapSize);
 
                 // 折り返し
-                StartCoroutine(SrideAnimation(Maps[0][num], turnPos, mapCount));
+                //StartCoroutine(SrideAnimation(Maps[0][num], turnPos, turnPos, mapCount));
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[0][num];
@@ -168,20 +168,20 @@ public class StageController : MonoBehaviour
                 turnPos.z = 90;
 
                 // 折り返しMap以外をスライド
-                for (int i = 0; i < stageLength - 1; i++)
+                for (int i = 0; i <= stageLength - 1; i++)
                 {
-                    tempPos = Maps[i + 1][num].transform.position;
+                    tempPos = Maps[i][num].transform.position;
                     tempPos.z = 90;
 
-                    StartCoroutine(SrideAnimation(Maps[i][num],tempPos,mapCount));
+                    StartCoroutine(SrideAnimation(Maps[i][num], turnPos, new Vector2(tempPos.x,tempPos.y - mapSize),mapCount));
 
                     mapCount++;
                 }
 
-                Maps[stageLength - 1][num].transform.localPosition = new Vector2(turnPos.x, turnPos.y + mapSize);
+                //Maps[stageLength - 1][num].transform.localPosition = new Vector2(turnPos.x, turnPos.y + mapSize);
 
                 // 折り返し
-                StartCoroutine(SrideAnimation(Maps[stageLength - 1][num], turnPos, mapCount));
+                //StartCoroutine(SrideAnimation(Maps[stageLength - 1][num], turnPos, turnPos, mapCount));
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[stageLength - 1][num];
@@ -205,19 +205,19 @@ public class StageController : MonoBehaviour
                 turnPos.z = 90;
 
                 // 折り返しMap以外をスライド
-                for (int i = 0; i < stageLength - 1; i++)
+                for (int i = 0; i <= stageLength - 1; i++)
                 {
-                    tempPos = Maps[num][i + 1].transform.position;
+                    tempPos = Maps[num][i].transform.position;
                     tempPos.z = 90;
-                    StartCoroutine(SrideAnimation(Maps[num][i],tempPos,mapCount));
+                    StartCoroutine(SrideAnimation(Maps[num][i], turnPos,new Vector2(tempPos.x + mapSize,tempPos.y),mapCount));
 
                     mapCount++;
                 }
 
-                Maps[num][stageLength - 1].transform.localPosition = new Vector2(turnPos.x - mapSize, turnPos.y);
+                //Maps[num][stageLength - 1].transform.localPosition = new Vector2(turnPos.x - mapSize, turnPos.y);
 
                 // 折り返し
-                StartCoroutine(SrideAnimation(Maps[num][stageLength - 1], turnPos, mapCount));
+                //StartCoroutine(SrideAnimation(Maps[num][stageLength - 1], turnPos, turnPos, mapCount));
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[num][stageLength - 1];
@@ -239,20 +239,21 @@ public class StageController : MonoBehaviour
                 turnPos.z = 90;
 
                 // 折り返しMap以外をスライド
-                for (int i = stageLength - 1; i > 0; i--)
+                for (int i = stageLength - 1; i >= 0; i--)
                 {
-                    tempPos = Maps[num][i - 1].transform.position;
+                    tempPos = Maps[num][i].transform.position;
                     tempPos.z = 90;
-                    StartCoroutine(SrideAnimation(Maps[num][i], tempPos, mapCount));
+                    StartCoroutine(SrideAnimation(Maps[num][i], turnPos,new Vector2(tempPos.x - mapSize,tempPos.y), mapCount));
 
                     mapCount++;
                 }
 
                 //　折り返し座標からマップサイズ分ずれた場所に移動
-                Maps[num][0].transform.localPosition = new Vector2(turnPos.x + mapSize, turnPos.y);
+                //Maps[num][0].transform.localPosition = new Vector2(turnPos.x + mapSize, turnPos.y);
 
                 // 折り返し
-                StartCoroutine(SrideAnimation(Maps[num][0], turnPos, mapCount));
+                //StartCoroutine(SrideAnimation(Maps[num][0],turnPos, turnPos, mapCount));
+                Maps[num][0].transform.localPosition = turnPos;
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[num][0];
@@ -304,13 +305,19 @@ public class StageController : MonoBehaviour
     /// <param name="obj"></param>
     /// <param name="pos"></param>
     /// <returns></returns>
-    public IEnumerator SrideAnimation(GameObject obj, Vector2 pos, int count)
+    public IEnumerator SrideAnimation(GameObject obj,Vector2 turn, Vector2 pos, int count)
     {   
         if (count == 2) { isMove = true; }
         obj.layer = LayerMask.NameToLayer("MoveMap");
         obj.transform.DOLocalMove(pos, srideTine).SetEase(Ease.Linear).OnComplete(() => MoveComplete(obj));
-        yield return null;
-           
+        yield return new WaitForSeconds(srideTine);
+        if (count == 2)
+        {
+            cManager.SwitchingCameraMain();
+            yield return new WaitForSeconds(0.5f);
+            obj.transform.localPosition = turn;
+        }
+
     }
 
     public void MoveComplete(GameObject obj)
