@@ -8,14 +8,13 @@ public class StageSelectManager : MonoBehaviour {
     [SerializeField]
     private GameObject[] buttons;
     private int stageSelectNum;
-
-
-	void Start () {
+    
+    void Start () {
         Init();
     }
 	
 	void Update () {
-		
+
 	}
 
     private void Init()

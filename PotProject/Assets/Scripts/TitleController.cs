@@ -27,6 +27,7 @@ public class TitleController : MonoBehaviour
         if (Input.GetButtonDown("Circle") || Input.GetKeyDown(KeyCode.E))
         {
             fade_m.LoadScene(1, 0.3f);
+            Debug.Log("押してる");
         }
     }
 }
