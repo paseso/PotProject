@@ -64,14 +64,29 @@ public class MonsterController : MonoBehaviour
     [SerializeField]
     private MonsterStatus status;
 
+    private GameObject clearPanel;
+
     public MonsterStatus GetMStatus
     {
         get { return status; }
     }
 
+    void Start()
+    {
+        if(status.type == MonsterStatus.MonsterType.HAMSTAR)
+        {
+            clearPanel = GameObject.FindGameObjectWithTag("ClearPanel");
+            clearPanel.SetActive(false);
+        }
+    }
+
     public void OnDestroy()
     {
         DropItem(GetMStatus);
+        if(status.type == MonsterStatus.MonsterType.HAMSTAR)
+        {
+            GameClear();
+        }
     }
 
     public void DropItem(MonsterStatus status)
@@ -85,5 +100,10 @@ public class MonsterController : MonoBehaviour
                 break;
         }
         item.transform.localPosition = transform.localPosition;
+    }
+
+    public void GameClear()
+    {
+        clearPanel.SetActive(true);
     }
 }
