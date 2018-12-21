@@ -25,7 +25,6 @@ public class BringCollider : MonoBehaviour {
         _Tubohit = false;
         _bring = false;
         move_controll = gameObject.transform.parent.GetComponentInChildren<MoveController>();
-        //Joints = GameObject.Find("Joint");
         direction = Direction.LEFT;
     }
 	
@@ -77,7 +76,7 @@ public class BringCollider : MonoBehaviour {
 
     private void OnTriggerStay2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Monster")
+        if (col.gameObject.tag == "Item")
         {
             if (!_bring)
             {

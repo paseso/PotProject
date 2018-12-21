@@ -88,7 +88,6 @@ public class PotController : MonoBehaviour {
     {
         if (col.gameObject.GetComponent<MonsterController>())
         {
-            Debug.Log("きてる！");
             if (!bring_col._Tubohit || !move_ctr._itemFall)
                 return;
 
