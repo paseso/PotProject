@@ -427,7 +427,7 @@ public class MoveController : MonoBehaviour
                     {
                         target.gameObject.transform.position = new Vector2(bringctr.gameObject.transform.position.x - 2f, bringctr.gameObject.transform.position.y + 1.5f);
                     }
-                    target.gameObject.transform.parent = null;
+                    target.gameObject.transform.parent = target.transform.parent;
                     target.GetComponent<Rigidbody2D>().simulated = true;
                     bringctr._bring = false;
                     _itemFall = true;
