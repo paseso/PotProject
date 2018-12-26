@@ -214,6 +214,7 @@ public class MoveController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        direc = Direction.LEFT;
         PotObject = GameObject.FindObjectOfType<PotController>().gameObject;
         rig = gameObject.transform.parent.GetComponent<Rigidbody2D>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
@@ -319,7 +320,7 @@ public class MoveController : MonoBehaviour
                 }
                 else
                 {
-
+                    anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTJUMP);
                 }
                 
                 rig.velocity = new Vector2(0, 1f * speed);
@@ -329,23 +330,23 @@ public class MoveController : MonoBehaviour
             case ButtonType.LEFTJOYSTICK_LEFT:
                 _onLeft = true;
                 _onRight = false;
+                direc = Direction.LEFT;
                 if (!_ActiveRightLeft)
                     return;
 
                 anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
                 rig.velocity = new Vector2(-5f, rig.velocity.y);
-                direc = Direction.LEFT;
                 break;
 
             case ButtonType.LEFTJOYSTICK_RIGHT:
                 _onRight = true;
                 _onLeft = false;
+                direc = Direction.RIGHT;
                 if (!_ActiveRightLeft)
                     return;
 
                 anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_WALK);
                 rig.velocity = new Vector2(5f, rig.velocity.y);
-                direc = Direction.RIGHT;
                 break;
 
             case ButtonType.LEFTJOYSTICK_UP:
