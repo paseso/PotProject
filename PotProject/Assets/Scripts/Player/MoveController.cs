@@ -423,6 +423,8 @@ public class MoveController : MonoBehaviour
                 _onSquare = true;
                 if (!bringctr._bring)
                 {//アイテムを持つ
+                    if (target.gameObject.tag != "Item")
+                        return;
                     target.GetComponent<Rigidbody2D>().simulated = false;
                     bringctr._bring = true;
                     PotObject.GetComponent<PotController>().ChangeLayer();

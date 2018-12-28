@@ -300,7 +300,7 @@ public class AlchemyUIController : MonoBehaviour {
         ItemImage = new Sprite[3];
         for(int i = 0; i < ItemImage.Length; i++)
         {
-            Sprite img = Resources.Load<Sprite>("Textures/background_normal" + i);
+            Sprite img = Resources.Load<Sprite>("Textures/AlchemyUI_item" + i);
             ItemImage[i] = img;
         }
     }
