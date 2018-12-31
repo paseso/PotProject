@@ -83,10 +83,6 @@ public class MonsterController : MonoBehaviour
     public void OnDestroy()
     {
         DropItem(GetMStatus);
-        if(status.type == MonsterStatus.MonsterType.HAMSTAR)
-        {
-            GameClear();
-        }
     }
 
     public void DropItem(MonsterStatus status)
@@ -104,10 +100,5 @@ public class MonsterController : MonoBehaviour
                 break;
         }
         item.transform.localPosition = transform.localPosition;
-    }
-
-    public void GameClear()
-    {
-        clearPanel.SetActive(true);
     }
 }

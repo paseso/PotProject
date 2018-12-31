@@ -63,8 +63,7 @@ public class StageController : MonoBehaviour
 
                 info1.MapNumX = j;
                 info1.MapNumY = i;
-                //mapLists[count].GetComponent<MapInfo>().MapNumX = j;
-                //mapLists[count].GetComponent<MapInfo>().MapNumY = i;
+                
                 varMap.Add(mapLists[count]);
                 count++;
             }
@@ -100,8 +99,9 @@ public class StageController : MonoBehaviour
         cManager.SwitchingCameraSub(pos, subCameraSize);
         yield return new WaitForSeconds(1.5f);
         SrideStage(num, dir);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(4.5f);
         pController.SetCommandActive = true;
+
     }
 
     /// <summary>
