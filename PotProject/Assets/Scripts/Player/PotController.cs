@@ -102,8 +102,8 @@ public class PotController : MonoBehaviour {
                 return;
 
             Destroy(col.gameObject);
-            ItemStatus.ITEM type = col.gameObject.GetComponent<ItemStatus.ITEM>();
-            switch (type)
+            var type = col.gameObject.GetComponent<ItemManager>().getItemStatus();
+            switch (type.item)
             {
                 case ItemStatus.ITEM.SLIME:
                     player_ctr.setItemList(ItemStatus.ITEM.SLIME);
@@ -121,6 +121,7 @@ public class PotController : MonoBehaviour {
                     Debug.Log("ItemType: " + type);
                     break;
             }
+
         }
         if (col.gameObject.GetComponent<MonsterController>())
         {

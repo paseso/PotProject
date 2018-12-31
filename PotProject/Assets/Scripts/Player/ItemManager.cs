@@ -21,5 +21,12 @@ public class ItemManager : MonoBehaviour {
     [SerializeField]
     private ItemStatus item_status;
     
+    /// <summary>
+    /// Item Status取得
+    /// </summary>
+    public ItemStatus getItemStatus()
+    {
+        return item_status;
+    }
 
 }

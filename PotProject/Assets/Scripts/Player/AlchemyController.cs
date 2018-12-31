@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class AlchemyController : MonoBehaviour {
 
     //生成アイテム
-    private GameObject[] CreateItem;
+    private Sprite[] CreateItem;
     private TextAsset csvFile;
     private GimmickController gimmick_ctr;
     private MapInfo mInfo;
@@ -29,10 +29,10 @@ public class AlchemyController : MonoBehaviour {
     /// </summary>
     private void setCreateItem()
     {
-        CreateItem = new GameObject[3];
+        CreateItem = new Sprite[3];
         for(int i = 0; i < CreateItem.Length; i++)
         {
-            CreateItem[i] = Resources.Load<GameObject>("Prefabs/CreateItem_" + i);
+            CreateItem[i] = Resources.Load<Sprite>("Textures/CreateItem_" + i);
         }
     }
 
@@ -64,7 +64,7 @@ public class AlchemyController : MonoBehaviour {
     {
         if (GeneratedImg.sprite != null)
             return;
-        GeneratedImg.sprite = CreateItem[img_num].GetComponent<Image>().sprite;
+        GeneratedImg.sprite = CreateItem[img_num];
     }
 
     /// <summary>
