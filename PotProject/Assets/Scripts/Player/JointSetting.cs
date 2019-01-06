@@ -30,7 +30,6 @@ public class JointSetting : MonoBehaviour
         Brother_Distance = Brother.GetComponent<DistanceJoint2D>();
         Pot_Distance = Pot.GetComponent<DistanceJoint2D>();
         setPlayerJoint();
-        setJointsChild();
     }
 
     // Update is called once per frame
@@ -39,7 +38,6 @@ public class JointSetting : MonoBehaviour
         if (_reSetJoint)
         {
             setPlayerJoint();
-            setJointsChild();
         }
     }
 
@@ -67,41 +65,16 @@ public class JointSetting : MonoBehaviour
     }
 
     /// <summary>
-    /// お兄ちゃんと弟のJointのセット
+    /// お兄ちゃんと弟のDistanceJointのセット
     /// </summary>
     private void setPlayerJoint()
     {
-        //Hinge Joint2Dのconnect Rigidbody2DとDistance Joint2Dのconnect Rigidbody2Dをセット
-        //Brother.GetComponent<HingeJoint2D>().connectedBody = Joints[0].GetComponent<Rigidbody2D>();
-        //Pot.GetComponent<HingeJoint2D>().connectedBody = Joints[2].GetComponent<Rigidbody2D>();
-        //Brother.GetComponent<HingeJoint2D>().autoConfigureConnectedAnchor = true;
-        //Pot.GetComponent<HingeJoint2D>().autoConfigureConnectedAnchor = true;
         Brother_Distance.connectedBody = Pot.GetComponent<Rigidbody2D>();
         Pot_Distance.connectedBody = Brother.GetComponent<Rigidbody2D>();
-        //Brother_Distance.autoConfigureConnectedAnchor = true;
-        //Pot_Distance.autoConfigureConnectedAnchor = true;
+        Brother_Distance.autoConfigureDistance = false;
+        Pot_Distance.autoConfigureDistance = false;
         //Distance Joint2DのMax Distance Onlyにチェックをいれる
         Brother_Distance.maxDistanceOnly = true;
         Pot_Distance.maxDistanceOnly = true;
     }
-
-    /// <summary>
-    /// Jointsオブジェクトの子供のJointをセット
-    /// </summary>
-    private void setJointsChild()
-    {
-        //for(int i = 0; i < Joints.Length; i++)
-        //{
-            
-        //    Joints[i].GetComponent<DistanceJoint2D>().maxDistanceOnly = true;
-        //    Joints[i].GetComponent<DistanceJoint2D>().autoConfigureConnectedAnchor = true;
-        //}
-        //Joints[0].GetComponent<DistanceJoint2D>().connectedBody = Brother.GetComponent<Rigidbody2D>();
-        //Joints[1].GetComponent<DistanceJoint2D>().connectedBody = Joints[0].GetComponent<Rigidbody2D>();
-        //Joints[2].GetComponent<DistanceJoint2D>().connectedBody = Joints[1].GetComponent<Rigidbody2D>();
-        //Joints[0].GetComponent<HingeJoint2D>().connectedBody = Brother.GetComponent<Rigidbody2D>();
-        //Joints[1].GetComponent<HingeJoint2D>().connectedBody = Joints[0].GetComponent<Rigidbody2D>();
-        //Joints[2].GetComponent<HingeJoint2D>().connectedBody = Joints[1].GetComponent<Rigidbody2D>();
-    }
-
 }

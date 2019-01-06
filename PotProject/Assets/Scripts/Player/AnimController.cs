@@ -95,9 +95,9 @@ public class AnimController : MonoBehaviour {
                 gameObject.transform.GetChild(6).GetComponent<Anima2D.SpriteMeshAnimation>().frame = 1;
                 //LeftArm
                 gameObject.transform.GetChild(7).GetChild(0).GetComponent<Anima2D.SpriteMeshInstance>().sortingOrder = 6;
-                gameObject.transform.GetChild(7).GetChild(0).GetChild(0).GetComponent<Anima2D.SpriteMeshInstance>().sortingOrder = 6;
                 gameObject.transform.GetChild(7).GetChild(0).GetChild(0).GetComponent<Anima2D.SpriteMeshAnimation>().frame = 1;
-                gameObject.transform.GetChild(7).GetChild(0).GetChild(0).GetComponent<Anima2D.SpriteMeshInstance>().sortingOrder = 1;
+                gameObject.transform.GetChild(7).GetChild(0).GetChild(0).GetComponent<Anima2D.SpriteMeshAnimation>().frame = 1;
+                gameObject.transform.GetChild(7).GetChild(0).GetChild(0).GetComponent<Anima2D.SpriteMeshInstance>().sortingOrder = 6;
                 //Stomach
                 gameObject.transform.GetChild(8).GetComponent<Anima2D.SpriteMeshInstance>().sortingOrder = 1;
                 gameObject.transform.GetChild(8).GetComponent<Anima2D.SpriteMeshAnimation>().frame = 1;

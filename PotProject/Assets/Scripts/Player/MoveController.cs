@@ -235,15 +235,15 @@ public class MoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Up=" + ladderUp);
-        Debug.Log("Down=" + ladderDown);
+        //Debug.Log("Up=" + ladderUp);
+        //Debug.Log("Down=" + ladderDown);
         if (!player_ctr.IsCommandActive) { return; }
 
         if (bringctr._bring)
         {
             target.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 2.5f);
         }
-        if(_laddernow)
+        if (_laddernow)
         {
             PotObject.transform.DOMove(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), 0.5f).SetEase(Ease.Linear);
         }
@@ -772,13 +772,9 @@ public class MoveController : MonoBehaviour
                 status.state = Status.GimmickState.ONLADDER;
                 break;
             default:
-
                 break;
         }
-
     }
-
-
 
     private void OnTriggerExit2D(Collider2D col)
     {
