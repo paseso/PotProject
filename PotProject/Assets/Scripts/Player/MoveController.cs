@@ -34,8 +34,12 @@ public class MoveController : MonoBehaviour
     }
 
     //ジャンプできるかどうか
-    [HideInInspector]
-    public bool _isJump = false;
+    private bool IsJump = false;
+
+    public bool _isJump {
+        get { return IsJump; }
+        set { IsJump = value; }
+    }
     //左右動かしてもいいかどうか
     [HideInInspector]
     public bool _ActiveRightLeft = false;
@@ -231,6 +235,8 @@ public class MoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Up=" + ladderUp);
+        Debug.Log("Down=" + ladderDown);
         if (!player_ctr.IsCommandActive) { return; }
 
         if (bringctr._bring)
@@ -330,9 +336,14 @@ public class MoveController : MonoBehaviour
             case ButtonType.LEFTJOYSTICK_LEFT:
                 _onLeft = true;
                 _onRight = false;
+                
+                if (status.state == Status.GimmickState.ONLADDER && !_isJump) {
+                    return;
+                }
                 direc = Direction.LEFT;
                 if (!_ActiveRightLeft)
                     return;
+                
 
                 anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
                 rig.velocity = new Vector2(-5f, rig.velocity.y);
@@ -341,6 +352,10 @@ public class MoveController : MonoBehaviour
             case ButtonType.LEFTJOYSTICK_RIGHT:
                 _onRight = true;
                 _onLeft = false;
+               
+                if (status.state == Status.GimmickState.ONLADDER && !_isJump) {
+                    return;
+                }
                 direc = Direction.RIGHT;
                 if (!_ActiveRightLeft)
                     return;
@@ -375,6 +390,7 @@ public class MoveController : MonoBehaviour
                 Debug.Log("Right Joystick Left");
                 if (!player_ctr.AlchemyWindow)
                     return;
+
                 _onRJoystickLeft = true;
 
                 break;
@@ -528,14 +544,6 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void BtnCheck()
     {
-        // はしご内で昇降ボタンを離したとき
-        //if(Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.W))
-        //{
-        //    if (status.state == Status.GimmickState.ONLADDER && !_isJump && IsLadder)
-        //    {
-        //        transform.parent.GetComponent<Rigidbody2D>().simulated = false;
-        //    }
-        //}
 
         if (Input.GetButton("Jump") || Input.GetKeyDown(KeyCode.Space))
         {//×ボタン or キーボードの「W」
@@ -551,7 +559,11 @@ public class MoveController : MonoBehaviour
         }
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
         {
-            if(direc == Direction.LEFT)
+            if (_isJump) {
+                _laddernow = false;
+            }
+
+            if (direc == Direction.LEFT)
             {
                 anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTIDLE);
             }
@@ -680,6 +692,9 @@ public class MoveController : MonoBehaviour
 
     #endregion
 
+    private bool ladderUp = false;
+    private bool ladderDown = false;
+
     /// <summary>
     /// はしごの上下処理
     /// </summary>
@@ -687,7 +702,14 @@ public class MoveController : MonoBehaviour
     /// <param name="dir"></param>
     public void Ladder(float speed, float dir)
     {
-        Debug.Log("valocity=" + speed * dir);
+        if(dir < 0) {
+            ladderUp = false;
+            ladderDown = true;
+        }else if(dir > 0) {
+            ladderUp = true;
+            ladderDown = false;
+        }
+
         if (status.state != Status.GimmickState.ONLADDER) { return; }
         transform.parent.GetComponent<Rigidbody2D>().simulated = true;
         
@@ -723,6 +745,7 @@ public class MoveController : MonoBehaviour
         }
     }
 
+    private bool onLadder = false;
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.GetComponent<GimmickInfo>())
@@ -733,19 +756,18 @@ public class MoveController : MonoBehaviour
                     status.state = Status.GimmickState.ONTREE;
                     break;
                 case GimmickInfo.GimmickType.LADDERTOP:
+                    onLadder = true;
                     status.state = Status.GimmickState.ONLADDER;
                     break;
             }
         }
     }
 
-    private void OnTriggerStay2D(Collider2D col)
-    {
-        if(!col.GetComponent<GimmickInfo>()){ return; }
+    private void OnTriggerStay2D(Collider2D col) {
+        if (!col.GetComponent<GimmickInfo>()) { return; }
 
-        switch (col.GetComponent<GimmickInfo>().type)
-        {
-            
+        switch (col.GetComponent<GimmickInfo>().type) {
+
             case GimmickInfo.GimmickType.LADDER:
                 status.state = Status.GimmickState.ONLADDER;
                 break;
@@ -756,20 +778,24 @@ public class MoveController : MonoBehaviour
 
     }
 
+
+
     private void OnTriggerExit2D(Collider2D col)
     {
-        if (!_isJump) return;
+        //if (!_isJump) return;
         PotObject.transform.position = new Vector2(PotObject.transform.position.x, PotObject.transform.position.y);
         if(!col.GetComponent<GimmickInfo>()) { return; }
 
         switch (col.GetComponent<GimmickInfo>().type) {
             case GimmickInfo.GimmickType.LADDER:
-                status.state = Status.GimmickState.NORMAL;
-                ChangeLayer();
+            //    status.state = Status.GimmickState.NORMAL;
+            //    ChangeLayer();
                 PotObject.layer = LayerMask.NameToLayer("Pot");
                 _laddernow = false;
                 break;
             case GimmickInfo.GimmickType.LADDERTOP:
+                if (!ladderUp) { break; }
+                onLadder = false;
                 status.state = Status.GimmickState.NORMAL;
                 ChangeLayer();
                 PotObject.layer = LayerMask.NameToLayer("Pot");

@@ -26,10 +26,6 @@ public class GimmickController :MonoBehaviour {
         gInfo = GetComponent<GimmickInfo>();
     }
 
-    void Update() {
-
-    }
-
     /// <summary>
     /// あたり判定(OnCollisionEnter)
     /// </summary>
@@ -39,19 +35,19 @@ public class GimmickController :MonoBehaviour {
         if (col.gameObject.tag == "Player") {
             switch (gInfo.type) {
                 case GimmickInfo.GimmickType.UP:
-                    pController.SetCommandActive = false;
+                    
                     sController.Sride(objInfo.MapNumX, StageController.Direction.UP);
                     break;
                 case GimmickInfo.GimmickType.DOWN:
-                    pController.SetCommandActive = false;
+                    
                     sController.Sride(objInfo.MapNumX, StageController.Direction.DOWN);
                     break;
                 case GimmickInfo.GimmickType.LEFT:
-                    pController.SetCommandActive = false;
+                    
                     sController.Sride(objInfo.MapNumY, StageController.Direction.LEFT);
                     break;
                 case GimmickInfo.GimmickType.RIGHT:
-                    pController.SetCommandActive = false;
+                    
                     sController.Sride(objInfo.MapNumY, StageController.Direction.RIGHT);
                     break;
                 case GimmickInfo.GimmickType.BAKETREE:

@@ -24,6 +24,8 @@ public class StageController : MonoBehaviour
 
     private PlayerController pController;
 
+    private MiniMapController mMapController;
+
     public List<List<GameObject>> GetMaps
     {
         get { return Maps; }
@@ -45,6 +47,7 @@ public class StageController : MonoBehaviour
     {
         SetList();
         pController = FindObjectOfType<PlayerController>();
+        mMapController = FindObjectOfType<MiniMapController>();
     }
 
     /// <summary>
@@ -80,6 +83,7 @@ public class StageController : MonoBehaviour
     /// <param name="size"></param>
     public void Sride(int num, Direction dir) {
         if (isMove) { return; }
+        pController.IsCommandActive = false;
         StartCoroutine(SrideInFade(num,dir, GetMaps[1][1].transform.localPosition));
     }
 
@@ -99,8 +103,9 @@ public class StageController : MonoBehaviour
         cManager.SwitchingCameraSub(pos, subCameraSize);
         yield return new WaitForSeconds(1.5f);
         SrideStage(num, dir);
+        mMapController.NowMap();
         yield return new WaitForSeconds(4.5f);
-        pController.SetCommandActive = true;
+        pController.IsCommandActive = true;
 
     }
 

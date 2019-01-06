@@ -5,14 +5,19 @@ using UnityEngine;
 public class SubCameraShake : MonoBehaviour {
 
     private Vector3 pos;
-	// Use this for initialization
-	void Start () {
+    private PlayerController pController;
+
+    void Start() {
         
-	}
+    }
 
     public void OnEnable() {
+        
         pos = transform.position;
-        StartCoroutine(Shake());
+        pController = FindObjectOfType<PlayerController>();
+        if (pController.status.event_state != Status.EventState.MINIMAP) {
+            StartCoroutine(Shake());
+        }
     }
 
     public IEnumerator Shake() {

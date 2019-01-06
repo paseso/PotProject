@@ -47,6 +47,7 @@ public struct Status
         NORMAL = 0,
         CAMERA,
         ALCHEMYUI,
+        MINIMAP,
     }
 
     //アイテム
@@ -91,11 +92,21 @@ public class PlayerController : MonoBehaviour {
     }
 
     // 操作可能か
-    public bool IsCommandActive = true;
+    private bool isCommandActive = true;
 
-    public bool SetCommandActive {
-        set { IsCommandActive = value; }
+    public bool IsCommandActive {
+        get { return isCommandActive; }
+        set { isCommandActive = value; }
     }
+
+    private bool isMiniMap = false;
+
+    public bool IsMiniMap {
+        get { return isMiniMap; }
+        set { isMiniMap = value; }
+    }
+
+
 
     // Use this for initialization
     void Start () {
