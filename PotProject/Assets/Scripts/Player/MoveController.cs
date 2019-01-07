@@ -81,6 +81,13 @@ public class MoveController : MonoBehaviour
     private AlchemyUIController alchemyUI_ctr;
     private AnimController anim_ctr;
     private Status status;
+    private CameraManager cManager;
+    private StageController sController;
+
+    private bool isMiniMap;
+    public bool getIsMiniMap {
+        get { return isMiniMap; }
+    }
     //----------ボタンFlagのget---------------------
     public bool Jumping
     {
@@ -225,6 +232,8 @@ public class MoveController : MonoBehaviour
         bringctr = gameObject.transform.parent.GetChild(0).GetComponent<BringCollider>();
         atc_ctr = gameObject.transform.parent.GetComponentInChildren<AttackZoonController>();
         alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
+        cManager = FindObjectOfType<CameraManager>();
+        sController = FindObjectOfType<StageController>();
         obj_sprite = gameObject.transform.parent.GetComponent<SpriteRenderer>();
         anim_ctr = gameObject.transform.parent.GetComponent<AnimController>();
         _isJump = false;
@@ -237,8 +246,6 @@ public class MoveController : MonoBehaviour
     {
         Debug.Log(onLadder);
         
-        if (!player_ctr.IsCommandActive) { return; }
-
         if (bringctr._bring)
         {
             target.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 2.5f);
@@ -544,6 +551,24 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void BtnCheck()
     {
+        Status tempStatus = new Status();
+        if (Input.GetButtonDown("L2") || Input.GetKeyDown(KeyCode.P)) {// L2ボタン or キーボードの「P」
+            Move(ButtonType.L2);
+            if (status.event_state != Status.EventState.MINIMAP) {
+                player_ctr.IsCommandActive = false;
+                isMiniMap = true;
+                tempStatus = status;
+                status.event_state = Status.EventState.MINIMAP;
+                cManager.SwitchingCameraSub(sController.GetMaps[1][1].transform.localPosition, 70);
+            } else {
+                cManager.SwitchingCameraMain();
+                status.event_state = tempStatus.event_state;
+                isMiniMap = false;
+                player_ctr.IsCommandActive = true;
+            }
+        }
+
+        if (!player_ctr.IsCommandActive) { return; }
 
         if (Input.GetButton("Jump") || Input.GetKeyDown(KeyCode.Space))
         {//×ボタン or キーボードの「W」
@@ -621,10 +646,20 @@ public class MoveController : MonoBehaviour
         {// R1ボタン or キーボードの「K」
             Move(ButtonType.R1);
         }
-        if (Input.GetButtonDown("L2") || Input.GetKeyDown(KeyCode.P))
-        {// L2ボタン or キーボードの「P」
-            Move(ButtonType.L2);
-        }
+        //Status tempStatus = new Status();
+        //if (Input.GetButtonDown("L2") || Input.GetKeyDown(KeyCode.P)) {// L2ボタン or キーボードの「P」
+        //    Move(ButtonType.L2);
+        //    if (status.event_state != Status.EventState.MINIMAP) {
+        //        isMiniMap = true;
+        //        tempStatus = status;
+        //        status.event_state = Status.EventState.MINIMAP;
+        //        cManager.SwitchingCameraSub(sController.GetMaps[1][1].transform.localPosition, 70);
+        //    } else {
+        //        cManager.SwitchingCameraMain();
+        //        status.event_state = tempStatus.event_state;
+        //        isMiniMap = false;
+        //    }
+        //}
         if (Input.GetButtonDown("R2") || Input.GetKeyDown(KeyCode.O))
         {// R2ボタン or キーボードの「O」英語のオーです「o」
             Move(ButtonType.R2);
