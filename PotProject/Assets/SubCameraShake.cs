@@ -5,17 +5,12 @@ using UnityEngine;
 public class SubCameraShake : MonoBehaviour {
 
     private Vector3 pos;
-    private PlayerController pController;
-
-    void Start() {
-        
-    }
+    private MoveController mController;
 
     public void OnEnable() {
-        
-        pos = transform.position;
-        pController = FindObjectOfType<PlayerController>();
-        if (pController.status.event_state != Status.EventState.MINIMAP) {
+        mController = FindObjectOfType<MoveController>();
+        if (!mController.getIsMiniMap) {
+            pos = transform.position;
             StartCoroutine(Shake());
         }
     }

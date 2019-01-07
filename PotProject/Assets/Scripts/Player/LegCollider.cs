@@ -61,8 +61,9 @@ public class LegCollider : MonoBehaviour {
         }
 
         if (info && info.type == GimmickInfo.GimmickType.LADDERTOP) {
-            if(!move_ctr.GetLadderDown)
+            if (move_ctr.GetLadderDown) { return; }
             move_ctr.ChangeLayer();
+            move_ctr.IsLadder = false;
         }
             falldistance = gameObject.transform.position.y;
     }

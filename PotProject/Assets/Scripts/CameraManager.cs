@@ -25,28 +25,6 @@ public class CameraManager : MonoBehaviour {
         fade = FindObjectOfType<FadeImage>();
     }
 
-    void Start () {
-		
-	}
-	
-	void Update () {
-        //  デバッグ用----------------
-        if (Input.GetKeyDown(KeyCode.RightShift))
-        {
-            FadeInOutCamera(new Vector2(16, 0));
-        }
-        if (Input.GetKeyDown(KeyCode.N)){
-            SwitchingCameraSub(new Vector2(16, 0), 7);
-        }
-        if (Input.GetKeyDown(KeyCode.H)){
-            SwitchingCameraSub(new Vector2(16, 0), 30);
-        }
-        if (Input.GetKeyDown(KeyCode.M)){
-            SwitchingCameraMain();
-        }
-        //  --------------------------
-	}
-
     /// <summary>
     /// 暗転して指定座標を写すカメラ
     /// </summary>

@@ -43,11 +43,14 @@ public class StageController : MonoBehaviour
 
     private int stageLength = 3;
 
+    private CameraManager cManager;
+
     void Start()
     {
         SetList();
         pController = FindObjectOfType<PlayerController>();
         mMapController = FindObjectOfType<MiniMapController>();
+        cManager = FindObjectOfType<CameraManager>();
     }
 
     /// <summary>
@@ -88,7 +91,7 @@ public class StageController : MonoBehaviour
     }
 
 
-    CameraManager cManager;
+    
     /// <summary>
     /// カメラ切り替えとスライド関数呼び出し
     /// </summary>
@@ -99,7 +102,6 @@ public class StageController : MonoBehaviour
     /// <returns></returns>
     public IEnumerator SrideInFade(int num, Direction dir, Vector2 pos)
     {
-        cManager = FindObjectOfType<CameraManager>();
         cManager.SwitchingCameraSub(pos, subCameraSize);
         yield return new WaitForSeconds(1.5f);
         SrideStage(num, dir);
