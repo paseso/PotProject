@@ -73,11 +73,14 @@ public class PlayerController : MonoBehaviour {
     private GameObject HeartObject;
     private GameObject[] HeartChild = new GameObject[maxHP];
     private const int maxHP = 3;
+    private const int maxItemBox = 3;
 
     public Status status;
     private AlchemyController alchemy_ctr;
     private AlchemyUIController alchemyUI_ctr;
+    private MoveController move_ctr;
     private GameObject BrotherObj;
+    private GameObject PotObject;
 
     [SerializeField]
     private RectTransform Pot_UI;
@@ -106,15 +109,15 @@ public class PlayerController : MonoBehaviour {
         set { isMiniMap = value; }
     }
 
-
-
     // Use this for initialization
     void Start () {
         status.PlayerHP = maxHP;
         status.ItemList = new List<ItemStatus.ITEM>();
-        alchemy_ctr = GameObject.FindObjectOfType<AlchemyController>();
+        alchemy_ctr = FindObjectOfType<AlchemyController>();
         alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
-        BrotherObj = GameObject.FindGameObjectWithTag("Player");
+        BrotherObj = FindObjectOfType<AnimController>().gameObject;
+        move_ctr = BrotherObj.transform.GetChild(3).GetComponent<MoveController>();
+        PotObject = FindObjectOfType<PotController>().gameObject;
         HeartObject = GameObject.Find("Canvas/Heart");
         getHeartChildren();
         _itemMax = false;
@@ -170,7 +173,7 @@ public class PlayerController : MonoBehaviour {
     /// <param name="name"></param>
     public void setItemList(ItemStatus.ITEM Item_Id)
     {
-        if(status.ItemList.Count == 3)
+        if(status.ItemList.Count == maxItemBox)
         {
             _itemMax = true;
             Debug.Log("アイテムボックスは最大です！");
@@ -237,7 +240,6 @@ public class PlayerController : MonoBehaviour {
         {
             alchemy_ctr.MadeItem(item[0], item[1]);
         }
-        
     }
 
     /// <summary>
@@ -269,7 +271,7 @@ public class PlayerController : MonoBehaviour {
             DownHpUI(point);
             status.PlayerHP = 0;
             BrotherObj.transform.localPosition = GameObject.Find(BrotherObj.transform.root.name + "/RespornPoint(Clone)").transform.localPosition;
-            UpHp(3);
+            UpHp(maxHP);
             Debug.Log("HPが0になりました");
             return;
         }
@@ -305,7 +307,7 @@ public class PlayerController : MonoBehaviour {
         for (int i = status.PlayerHP; i < status.PlayerHP + point; i++)
         {
             HeartChild[maxHP - i].SetActive(false);
-            if (status.PlayerHP == 3)
+            if (status.PlayerHP == maxHP)
                 break;
         }
     }
@@ -318,10 +320,29 @@ public class PlayerController : MonoBehaviour {
     {
         for (int i = 1; i < maxHP + 1; i++)
         {
-
             HeartChild[maxHP - i].SetActive(true);
-            
         }
     }
 
+    /// <summary>
+    /// レイヤー変更
+    /// </summary>
+    public void ChangeLayer()
+    {
+        move_ctr.setOnLadder = false;
+        if (gameObject.layer != LayerMask.NameToLayer("Player"))
+        {
+            PotObject.layer = LayerMask.NameToLayer("Pot");
+            PotObject.GetComponent<Rigidbody2D>().simulated = true;
+            var children = BrotherObj.transform;
+            foreach (Transform child in children)
+            {
+                if (child.GetComponent<Collider2D>())
+                {
+                    child.gameObject.layer = LayerMask.NameToLayer("Player");
+                }
+            }
+            BrotherObj.layer = LayerMask.NameToLayer("Player");
+        }
+    }
 }

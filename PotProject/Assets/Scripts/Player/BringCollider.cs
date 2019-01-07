@@ -10,7 +10,6 @@ public class BringCollider : MonoBehaviour {
     public bool _bring = false;
     private MoveController move_controll;
     private PotController pot_ctr;
-    private GameObject Joints;
 
     private enum Direction
     {
@@ -43,7 +42,6 @@ public class BringCollider : MonoBehaviour {
         if (move_controll.OnLeft) // || direction == Direction.RIGHT
         {
             gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
-            //Joints.transform.rotation = Quaternion.Euler(0, 0, 0);
             direction = Direction.LEFT;
         }
         if (move_controll.OnRight) // || direction == Direction.LEFT
@@ -56,23 +54,31 @@ public class BringCollider : MonoBehaviour {
     /// <summary>
     /// 持てる範囲で□ボタンを押した時の処理
     /// </summary>
-    private void SquereButton(Transform pos)
+    public void SquereButton(Transform pos)
     {
+        //アイテムを持ってる時
         if (_Brotherhit && !_bring)
         {
-            pos.position = new Vector2(gameObject.transform.transform.position.x, gameObject.transform.transform.position.y + 5f);
             _bring = true;
+            pos.GetComponent<Rigidbody2D>().simulated = false;
+            pot_ctr.ChangeLayer();
         }
         else
         {
-            pos.transform.parent = null;
-            if(move_controll.OnRight)
-                pos.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y);
+            //アイテムを離す時
+            if (direction == Direction.RIGHT)
+            {
+                pos.gameObject.transform.position = new Vector2(gameObject.transform.position.x + 2f, gameObject.transform.position.y + 1.5f);
+            }
             else
-                pos.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y);
-
+            {
+                pos.gameObject.transform.position = new Vector2(gameObject.transform.position.x - 2f, gameObject.transform.position.y + 1.5f);
+            }
+            pos.gameObject.transform.parent = pos.transform.parent;
+            pos.GetComponent<Rigidbody2D>().simulated = true;
+            pot_ctr.ChangeLayer();
+            move_controll._itemFall = true;
             _bring = false;
-            _Brotherhit = false;
         }
     }
 
