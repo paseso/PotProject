@@ -10,6 +10,10 @@ public struct ItemStatus
         SLIME = 0,
         GOLEM,
         SNAKE,
+        PORTION_G,
+        PORTION_R,
+        HARB,
+        ROPE,
     };
 
     public ITEM item;

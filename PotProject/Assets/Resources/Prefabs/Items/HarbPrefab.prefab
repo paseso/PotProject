@@ -21,9 +21,8 @@ GameObject:
   - component: {fileID: 4297624233435818}
   - component: {fileID: 212459998275877722}
   - component: {fileID: 50155233871850762}
-  - component: {fileID: 61623216280089796}
-  - component: {fileID: 114374333368176786}
   - component: {fileID: 114998210204635918}
+  - component: {fileID: 61924590619940530}
   m_Layer: 0
   m_Name: HarbPrefab
   m_TagString: Item
@@ -64,7 +63,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 5
---- !u!61 &61623216280089796
+--- !u!61 &61924590619940530
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -80,26 +79,15 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.38, y: 1.7}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 1.38, y: 1.7}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.38, y: 1.7}
+  m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
---- !u!114 &114374333368176786
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1612088441867594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a645bff2f9392364a9d7268cfe98560d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114998210204635918
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -145,7 +133,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8197e4ea8cbf6fe4ca8332325c866067, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 81724879b01dfde45b1c79291ee17567, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

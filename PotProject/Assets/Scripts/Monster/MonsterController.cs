@@ -40,8 +40,10 @@ public struct MonsterStatus
         CLOUD,
         TURTLE,
         FAIRY,
+        HARB,
     }
     public MonsterType type;
+
 
     // 属性
     public enum MonsterAttribute
@@ -61,8 +63,29 @@ public struct MonsterStatus
 /// </summary>
 public class MonsterController : MonoBehaviour
 {
+    private string itemFolder = "Prefabs/Items/";
+
     [SerializeField]
     private MonsterStatus status;
+
+    public Dictionary<MonsterStatus.MonsterType, string> ItemList = new Dictionary<MonsterStatus.MonsterType, string>
+    {
+        {MonsterStatus.MonsterType.WATER,"" },
+        {MonsterStatus.MonsterType.LION,"" },
+        {MonsterStatus.MonsterType.BAT,"" },
+        {MonsterStatus.MonsterType.LAMP,"" },
+        {MonsterStatus.MonsterType.ROBOT,"" },
+        {MonsterStatus.MonsterType.SLIME,"" },
+        {MonsterStatus.MonsterType.SNAKE,"RopePrefab" },
+        {MonsterStatus.MonsterType.LUKEWARM,"" },
+        {MonsterStatus.MonsterType.WOOD,"HarbPrefab" },
+        {MonsterStatus.MonsterType.HAMSTAR,"" },
+        {MonsterStatus.MonsterType.SHADOW,"" },
+        {MonsterStatus.MonsterType.CLOUD,"" },
+        {MonsterStatus.MonsterType.TURTLE,"" },
+        {MonsterStatus.MonsterType.FAIRY,"" },
+        {MonsterStatus.MonsterType.HARB,"HarbPrefab" },
+    };
 
     private GameObject clearPanel;
 
@@ -87,18 +110,10 @@ public class MonsterController : MonoBehaviour
 
     public void DropItem(MonsterStatus status)
     {
-        GameObject item = new GameObject();
-        switch (status.type)
-        {
-            case MonsterStatus.MonsterType.WOOD:
-                item = Instantiate(Resources.Load<GameObject>("Prefabs/HarbPrefab"));
-                item.transform.SetParent(transform.parent.transform);
-                break;
-            case MonsterStatus.MonsterType.SNAKE:
-                item = Instantiate(Resources.Load<GameObject>("Prefabs/Rope"));
-                item.transform.SetParent(transform.parent.transform);
-                break;
-        }
+        GameObject item = Instantiate(Resources.Load<GameObject>(itemFolder + ItemList[status.type]));
+        item.AddComponent<PopUp>();
+        item.transform.SetParent(transform.parent.transform);
+        
         item.transform.localPosition = transform.localPosition;
     }
 }

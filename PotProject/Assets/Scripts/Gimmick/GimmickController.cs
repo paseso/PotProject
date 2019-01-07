@@ -12,7 +12,6 @@ public class GimmickController :MonoBehaviour {
     private StageController sController;
     private MapInfo mInfo;
     private GimmickInfo gInfo;
-    private PlayerController pController;
     private MiniMapController mMapController;
 
     // Use this for initialization
@@ -23,7 +22,6 @@ public class GimmickController :MonoBehaviour {
         }
 
         mMapController = FindObjectOfType<MiniMapController>();
-        pController = FindObjectOfType<PlayerController>();
         mInfo = transform.root.GetComponent<MapInfo>();
         gInfo = GetComponent<GimmickInfo>();
     }
@@ -58,10 +56,6 @@ public class GimmickController :MonoBehaviour {
                 case GimmickInfo.GimmickType.ROCK:
                     RockDoorOpen();
                     break;
-                case GimmickInfo.GimmickType.GRASS:
-                    DropHarb();
-                    break;
-                
                 default:
                     break;
             }
@@ -126,14 +120,8 @@ public class GimmickController :MonoBehaviour {
     /// 木(ツル)を成長させる
     /// </summary>
     public void Grow() {
-        Vector2 defaultScale = transform.parent.transform.localScale;
-        transform.parent.transform.DOScaleY(3f, 1f).SetEase(Ease.Linear);
-        //float time = 0;
-        //while(time < 3)
-        //{
-        //    time += Time.deltaTime;
-        //}
-        //transform.parent.transform.DOScaleY(defaultScale.y, 1f).SetEase(Ease.Linear);
+        GameObject growTree = FindObjectOfType<TreeGrow>().gameObject;
+        growTree.GetComponent<TreeGrow>().Grow();
     }
 
     /// <summary>
@@ -170,25 +158,6 @@ public class GimmickController :MonoBehaviour {
 
     // 浮く座標(仮)
     private float endPos;
-
-    /// <summary>
-    /// 水でタイルを浮かせる
-    /// </summary>
-    public void FloatingTile(GameObject obj)
-    {
-
-    }
-
-    /// <summary>
-    /// 薬草ドロップ
-    /// </summary>
-    public void DropHarb()
-    {
-        // ドロップする薬草をResourcesから生成
-        GameObject harb = Instantiate(Resources.Load<GameObject>("Prefabs/HarbPrefab"),transform.parent.transform);
-        harb.transform.localPosition = transform.localPosition;
-        Destroy(gameObject);
-    }
 
     /// <summary>
     /// 鍵付き扉
