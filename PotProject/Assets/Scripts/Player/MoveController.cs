@@ -235,8 +235,8 @@ public class MoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("Up=" + ladderUp);
-        //Debug.Log("Down=" + ladderDown);
+        Debug.Log(onLadder);
+        
         if (!player_ctr.IsCommandActive) { return; }
 
         if (bringctr._bring)
@@ -368,7 +368,7 @@ public class MoveController : MonoBehaviour
 
                 _onUp = true;
 
-                if (status.state == Status.GimmickState.ONLADDER) {
+                if (onLadder) {
                     Ladder(ladderSpeed, 1);
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LADDER_UP);
                 }
@@ -380,7 +380,7 @@ public class MoveController : MonoBehaviour
                 Debug.Log("DOWN");
 
                 _onDown = true;
-                if (status.state == Status.GimmickState.ONLADDER) {
+                if (onLadder) {
                     Ladder(ladderSpeed, -1);
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LADDER_DOWN);
                 }
@@ -695,6 +695,14 @@ public class MoveController : MonoBehaviour
     private bool ladderUp = false;
     private bool ladderDown = false;
 
+    public bool GetLadderUp {
+        get { return ladderUp; }
+    }
+
+    public bool GetLadderDown {
+        get { return ladderDown; }
+    }
+
     /// <summary>
     /// はしごの上下処理
     /// </summary>
@@ -702,7 +710,8 @@ public class MoveController : MonoBehaviour
     /// <param name="dir"></param>
     public void Ladder(float speed, float dir)
     {
-        if(dir < 0) {
+        status.state = Status.GimmickState.ONLADDER;
+        if (dir < 0) {
             ladderUp = false;
             ladderDown = true;
         }else if(dir > 0) {
@@ -755,6 +764,7 @@ public class MoveController : MonoBehaviour
                 case GimmickInfo.GimmickType.GROWTREE:
                     status.state = Status.GimmickState.ONTREE;
                     break;
+                case GimmickInfo.GimmickType.LADDER:
                 case GimmickInfo.GimmickType.LADDERTOP:
                     onLadder = true;
                     status.state = Status.GimmickState.ONLADDER;
@@ -767,9 +777,9 @@ public class MoveController : MonoBehaviour
         if (!col.GetComponent<GimmickInfo>()) { return; }
 
         switch (col.GetComponent<GimmickInfo>().type) {
-
             case GimmickInfo.GimmickType.LADDER:
-                status.state = Status.GimmickState.ONLADDER;
+            case GimmickInfo.GimmickType.LADDERTOP:
+                onLadder = true;
                 break;
             default:
                 break;
@@ -778,27 +788,18 @@ public class MoveController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        //if (!_isJump) return;
         PotObject.transform.position = new Vector2(PotObject.transform.position.x, PotObject.transform.position.y);
-        if(!col.GetComponent<GimmickInfo>()) { return; }
-
+        if (!col.GetComponent<GimmickInfo>()) { return; }
         switch (col.GetComponent<GimmickInfo>().type) {
             case GimmickInfo.GimmickType.LADDER:
-            //    status.state = Status.GimmickState.NORMAL;
-            //    ChangeLayer();
-                PotObject.layer = LayerMask.NameToLayer("Pot");
-                _laddernow = false;
-                break;
-            case GimmickInfo.GimmickType.LADDERTOP:
-                if (!ladderUp) { break; }
-                onLadder = false;
+                if (!_isJump) return;
                 status.state = Status.GimmickState.NORMAL;
                 ChangeLayer();
                 PotObject.layer = LayerMask.NameToLayer("Pot");
                 _laddernow = false;
-                PotObject.transform.position = new Vector2(PotObject.transform.position.x, PotObject.transform.position.y);
+                onLadder = false;
                 break;
-        } 
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D col)
@@ -824,6 +825,7 @@ public class MoveController : MonoBehaviour
     /// </summary>
     public void ChangeLayer()
     {
+        onLadder = false;
         if (gameObject.layer != LayerMask.NameToLayer("Player"))
         {
             PotObject.GetComponent<Rigidbody2D>().simulated = true;

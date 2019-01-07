@@ -52,14 +52,19 @@ public class LegCollider : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D col)
     {
+        
         GimmickInfo info = col.GetComponent<GimmickInfo>();
         move_ctr._isJump = false;
         if (info && info.type == GimmickInfo.GimmickType.LADDER)
         {
             move_ctr.IsLadder = false;
+        }
+
+        if (info && info.type == GimmickInfo.GimmickType.LADDERTOP) {
+            if(!move_ctr.GetLadderDown)
             move_ctr.ChangeLayer();
         }
-        falldistance = gameObject.transform.position.y;
+            falldistance = gameObject.transform.position.y;
     }
 
     private void OnTriggerEnter2D(Collider2D col)

@@ -249,6 +249,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 114477684173658472, guid: 46a2855876a394c43b9173becbcd16b8,
         type: 2}
+      propertyPath: tiles.Array.size
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114477684173658472, guid: 46a2855876a394c43b9173becbcd16b8,
+        type: 2}
       propertyPath: enemies.Array.size
       value: 19
       objectReference: {fileID: 0}
@@ -309,6 +314,28 @@ Prefab:
       propertyPath: enemies.Array.data[18].enemyObj
       value: 
       objectReference: {fileID: 1398486377858722, guid: 232a0f376f1909e45b5fc702aca0b1d5,
+        type: 2}
+    - target: {fileID: 114477684173658472, guid: 46a2855876a394c43b9173becbcd16b8,
+        type: 2}
+      propertyPath: tiles.Array.data[13].tileImage
+      value: 
+      objectReference: {fileID: 2800000, guid: 22d51f751a3df0e4e9a829a9a258c53f, type: 3}
+    - target: {fileID: 114477684173658472, guid: 46a2855876a394c43b9173becbcd16b8,
+        type: 2}
+      propertyPath: tiles.Array.data[13].tileObj
+      value: 
+      objectReference: {fileID: 1969949159051794, guid: 1a1136247daa82d4a9aad65f51eb1f18,
+        type: 2}
+    - target: {fileID: 114477684173658472, guid: 46a2855876a394c43b9173becbcd16b8,
+        type: 2}
+      propertyPath: tiles.Array.data[14].tileImage
+      value: 
+      objectReference: {fileID: 2800000, guid: 4e1eafdd10c086b409ad0a4ac5c53e81, type: 3}
+    - target: {fileID: 114477684173658472, guid: 46a2855876a394c43b9173becbcd16b8,
+        type: 2}
+      propertyPath: tiles.Array.data[14].tileObj
+      value: 
+      objectReference: {fileID: 1762579745653278, guid: 3b0d62313ac2332429786caa4c3dbea9,
         type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 46a2855876a394c43b9173becbcd16b8, type: 2}
@@ -511,7 +538,7 @@ RectTransform:
   m_GameObject: {fileID: 678254240}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_Children:
   - {fileID: 965388688}
   - {fileID: 1223026091}
@@ -527,7 +554,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -344, y: 177}
+  m_AnchoredPosition: {x: -344, y: 179.3}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &678254242

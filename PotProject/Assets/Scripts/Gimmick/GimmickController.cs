@@ -13,6 +13,7 @@ public class GimmickController :MonoBehaviour {
     private MapInfo mInfo;
     private GimmickInfo gInfo;
     private PlayerController pController;
+    private MiniMapController mMapController;
 
     // Use this for initialization
     void Start() {
@@ -21,6 +22,7 @@ public class GimmickController :MonoBehaviour {
             sController = GameObject.Find("Controller").GetComponent<StageController>();
         }
 
+        mMapController = FindObjectOfType<MiniMapController>();
         pController = FindObjectOfType<PlayerController>();
         mInfo = transform.root.GetComponent<MapInfo>();
         gInfo = GetComponent<GimmickInfo>();
@@ -82,6 +84,7 @@ public class GimmickController :MonoBehaviour {
                 break;
             case GimmickInfo.GimmickType.MAPCHANGE:
                 col.transform.parent.transform.parent.transform.SetParent(transform.root.gameObject.transform);
+                mMapController.NowMap();
                 break;
             default:
                 break;
