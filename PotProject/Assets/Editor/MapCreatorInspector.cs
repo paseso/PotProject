@@ -57,13 +57,14 @@ public class MapCreatorInspector : Editor
     {
         //  最新情報に更新
         serializedObject.Update();
+
+        base.OnInspectorGUI();
+
         //  マップデータ
         mapCreator = (MapCreator)target;
         mapCreator.Map = (MapData)EditorGUILayout.ObjectField("マップデータ", mapCreator.Map, typeof(MapData), false);
-        mapCreator.Player = (GameObject)EditorGUILayout.ObjectField("Player", mapCreator.Player, typeof(GameObject), false);
-        mapCreator.Pot = (GameObject)EditorGUILayout.ObjectField("Pot", mapCreator.Pot, typeof(GameObject), false);
 
-        //if (GUILayout.Button("マップに変換")) { mapCreator.CreateMap(); }
+        if (GUILayout.Button("マップに変換")) { mapCreator.CreateMap(); }
         if (GUILayout.Button("マップのタイルID表示")) { PrintlistNum(); }
         tileFoldOut = EditorGUILayout.Foldout( tileFoldOut,"Tile" );
 		if(tileFoldOut)

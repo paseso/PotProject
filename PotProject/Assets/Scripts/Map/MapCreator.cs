@@ -1,24 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEditor;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 [DisallowMultipleComponent,DefaultExecutionOrder(-1)]
 public class MapCreator : MonoBehaviour
 {
+    [HideInInspector]
+    public Tile[]  tiles;
+    [HideInInspector]
+    public Gimmick[] gimmicks;
+    [HideInInspector]
+    public Enemy[] enemies;
+    [HideInInspector]
+    public MapData map;
     [SerializeField]
-    private Tile[]  tiles;
-    [SerializeField]
-    private Gimmick[] gimmicks;
-    [SerializeField]
-    private Enemy[] enemies;
-    [SerializeField]
-    private MapData map;
-
-    [SerializeField]
-    private GameObject player;
-    [SerializeField]
-    private GameObject pot;
+    private Texture[] backImage;
 
     private GameObject[] mapObjects = new GameObject[9];
 
@@ -35,81 +34,6 @@ public class MapCreator : MonoBehaviour
         set{ map = value; }
     }
 
-    public GameObject Player
-    {
-        get { return player; }
-        set { player = value; }
-    }
-
-    public GameObject Pot
-    {
-        get { return pot; }
-        set { pot = value; }
-    }
-
-    /// <summary>
-    /// マップを生成
-    /// </summary>
-    //public void CreateMap()
-    //{
-    //    if (!this.Map)
-    //    {
-    //        EditorUtility.DisplayDialog("Error", "マップデータがセットされていません", "OK");
-    //        return;
-    //    }
-    //    //  配列の長さを取得
-    //    int xLength = Map.mapDate[0].mapNum.Length;
-    //    int yLength = Map.mapDate.Length;
-
-    //    //  タイルのサイズを取得
-    //    float tileSize = 2;
-    //    //  ルートオブジェクトの作成
-    //    var rootObj = new GameObject("StageRootObject");
-    //    //  エディター側では左上が始点なので、その分場所の移動
-    //    Vector2 startPos = rootObj.transform.position + new Vector3(tileSize / 2, tileSize * yLength - tileSize / 2, 0);
-    //    //  オブジェクトの生成
-    //    for (int y = 0; y < yLength; y++)
-    //    {
-    //        for (int x = 0; x < xLength; x++)
-    //        {
-    //            int tilenum = Map.mapDate[y].mapNum[x];
-    //            int gimmickNum = Map.gimmickDate[y].mapNum[x];
-    //            int enemyNum = Map.enemyDate[y].mapNum[x];
-    //            //  通常タイルの生成
-    //            if (tilenum != 0)
-    //            {
-    //                var tileObj = Instantiate(GetTile(tilenum).TileObj);
-    //                tileObj.transform.parent = rootObj.transform;
-    //                tileObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
-    //                //  周りにはしごギミックがあったらレイヤーを変更
-    //                if (gimmickNum != 0 && GetGimmick(gimmickNum).GimmickObj.GetComponent<GimmickInfo>() != null)
-    //                {
-    //                    if (x != xLength && Map.gimmickDate[y].mapNum[x + 1] != 0 && GetGimmick(Map.gimmickDate[y].mapNum[x + 1]).GimmickObj.GetComponent<GimmickInfo>() != null)
-    //                    {
-    //                        if (GetGimmick(gimmickNum).GimmickObj.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
-    //                        {
-    //                            tileObj.layer = LayerMask.NameToLayer("LadderBrock");
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //            //  ギミックの生成
-    //            if (gimmickNum != 0)
-    //            {
-    //                var gimmickObj = Instantiate(GetGimmick(gimmickNum).GimmickObj);
-    //                gimmickObj.transform.parent = rootObj.transform;
-    //                gimmickObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
-    //            }
-    //            //  エネミーやポジションの生成
-    //            if (enemyNum != 0)
-    //            {
-    //                var enemyObj = Instantiate(GetEnemy(enemyNum).EnemyObj);
-    //                enemyObj.transform.parent = rootObj.transform;
-    //                enemyObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
-    //            }
-    //        }
-    //    }
-    //}
     //public void CreateMap(MapData data)
     //{
     //    //  配列の長さを取得 再編集
@@ -170,6 +94,70 @@ public class MapCreator : MonoBehaviour
     //        }
     //    }
     //}
+
+    /// <summary>
+    /// マップを生成
+    /// </summary>
+    public void CreateMap()
+    {
+        if (!this.Map)
+        {
+            EditorUtility.DisplayDialog("Error", "マップデータがセットされていません", "OK");
+            return;
+        }
+        //  配列の長さを取得
+        int xLength = Map.mapDate[0].mapNum.Length;
+        int yLength = Map.mapDate.Length;
+
+        //  タイルのサイズを取得
+        float tileSize = 2;
+        //  ルートオブジェクトの作成
+        var rootObj = new GameObject("StageRootObject");
+        //  エディター側では左上が始点なので、その分場所の移動
+        Vector2 startPos = rootObj.transform.position + new Vector3(tileSize / 2, tileSize * yLength - tileSize / 2, 0);
+        //  オブジェクトの生成
+        for (int y = 0; y < yLength; y++)
+        {
+            for (int x = 0; x < xLength; x++)
+            {
+                int tilenum = Map.mapDate[y].mapNum[x];
+                int gimmickNum = Map.gimmickDate[y].mapNum[x];
+                int enemyNum = Map.enemyDate[y].mapNum[x];
+                //  通常タイルの生成
+                if (tilenum != 0)
+                {
+                    var tileObj = Instantiate(GetTile(tilenum).TileObj);
+                    tileObj.transform.parent = rootObj.transform;
+                    tileObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
+                    //  周りにはしごギミックがあったらレイヤーを変更
+                    if (gimmickNum != 0 && GetGimmick(gimmickNum).GimmickObj.GetComponent<GimmickInfo>() != null)
+                    {
+                        if (x != xLength && Map.gimmickDate[y].mapNum[x + 1] != 0 && GetGimmick(Map.gimmickDate[y].mapNum[x + 1]).GimmickObj.GetComponent<GimmickInfo>() != null)
+                        {
+                            if (GetGimmick(gimmickNum).GimmickObj.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
+                            {
+                                tileObj.layer = LayerMask.NameToLayer("LadderBrock");
+                            }
+                        }
+                    }
+                }
+                //  ギミックの生成
+                if (gimmickNum != 0)
+                {
+                    var gimmickObj = Instantiate(GetGimmick(gimmickNum).GimmickObj);
+                    gimmickObj.transform.parent = rootObj.transform;
+                    gimmickObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
+                }
+                //  エネミーやポジションの生成
+                if (enemyNum != 0)
+                {
+                    var enemyObj = Instantiate(GetEnemy(enemyNum).EnemyObj);
+                    enemyObj.transform.parent = rootObj.transform;
+                    enemyObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y);
+                }
+            }
+        }
+    }
 
     public void CreateMap(MapData[] datas)
     {

@@ -128,6 +128,7 @@ public class MapEditor : EditorWindow {
         EditorGUILayout.EndScrollView();
     }
 
+    //  データを配列に格納
     private void SetMapDate()
     {
         Event e = Event.current;
@@ -275,8 +276,7 @@ public class MapEditor : EditorWindow {
         enemyData = new int[gridNum, gridNum];
     }
 
-
-        //  グリッドのサイズを設定
+    //  グリッドのサイズを設定
     private Rect[,] CreateGrid()
     {
         //  EditorGUILayout.GetControlRectを呼ぶとSpace()が勝手に入るようでfor文で回したときバグの原因だった
@@ -339,7 +339,7 @@ public class MapEditor : EditorWindow {
         switch (toolberInt)
         {
             case 0:
-                if (gimmicks.Length > 0)
+                if (tiles.Length > 0)
                 {
                     for (int i = 0; i < tiles.Length; i++)
                     {
