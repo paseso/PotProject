@@ -9,7 +9,7 @@ public class MapData : ScriptableObject
     public MapArray[] gimmickDate = new MapArray[20];
     public MapArray[] enemyDate =   new MapArray[20];
 
-    public int _sampleIntValue;
+    public int backGroundNum;
 }
 [System.Serializable]
 public class MapArray {

@@ -7761,6 +7761,11 @@ Prefab:
       propertyPath: backImage.Array.size
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114477684173658472, guid: 46a2855876a394c43b9173becbcd16b8,
+        type: 2}
+      propertyPath: backImages.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4317403914716936, guid: 46a2855876a394c43b9173becbcd16b8, type: 2}
       propertyPath: m_LocalPosition.x
       value: 1
@@ -7802,6 +7807,21 @@ Prefab:
       propertyPath: backImage.Array.data[0]
       value: 
       objectReference: {fileID: 2800000, guid: 7c312b56e2857b24bba33ed4e5386843, type: 3}
+    - target: {fileID: 114477684173658472, guid: 46a2855876a394c43b9173becbcd16b8,
+        type: 2}
+      propertyPath: backImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 2800000, guid: f4c6df7a78221554b8cc43c6823405d7, type: 3}
+    - target: {fileID: 114477684173658472, guid: 46a2855876a394c43b9173becbcd16b8,
+        type: 2}
+      propertyPath: backImages.Array.data[1]
+      value: 
+      objectReference: {fileID: 2800000, guid: 4da0539c6a8bd54418ed7751c49c09de, type: 3}
+    - target: {fileID: 114477684173658472, guid: 46a2855876a394c43b9173becbcd16b8,
+        type: 2}
+      propertyPath: backImages.Array.data[2]
+      value: 
+      objectReference: {fileID: 2800000, guid: 76e3b0a9baec13842ade0211817d7d80, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 46a2855876a394c43b9173becbcd16b8, type: 2}
   m_IsPrefabParent: 0

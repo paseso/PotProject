@@ -17,7 +17,7 @@ public class MapCreator : MonoBehaviour
     [HideInInspector]
     public MapData map;
     [SerializeField]
-    private Texture[] backImage;
+    private Texture[] backImages;
 
     private GameObject[] mapObjects = new GameObject[9];
 
@@ -27,6 +27,8 @@ public class MapCreator : MonoBehaviour
     public Gimmick GetGimmick(int index) { return gimmicks[index]; }
     public Enemy[] GetEnemies() { return enemies; }
     public Enemy GetEnemy(int index) { return enemies[index]; }
+    public Texture[] GetBackImages() { return backImages; }
+
 
     public MapData Map
     {

@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using System;
 
 public class MapEditor : EditorWindow {
@@ -14,17 +16,31 @@ public class MapEditor : EditorWindow {
     private Tile[] tiles;
     private Gimmick[] gimmicks;
     private Enemy[] enemies;
+    private Texture[] bgImages;
     private int toolberInt;
     private int[,] mapData;
     private int[,] gimmickData;
     private int[,] enemyData;
-    private Rect rect;
     private Rect[,] gridRect;
-    //private Color gridColor;
+    private Rect rect;
+    private Rect firstRect;
+    private Rect lastRect;
     private Vector2 scrollPos = Vector2.zero;
 
     //  選択中のボタンの種類
     private int SelectNum = 0;
+
+    private enum BackGround
+    {
+        NONE = 0,
+        NORMAL,
+        FIRE,
+        WATER,
+        THUNDER,
+        DARK
+    };
+
+    private BackGround backGround;
     
 
     [MenuItem("Editor/MapEditor")]
@@ -34,7 +50,7 @@ public class MapEditor : EditorWindow {
         MapEditor window = GetWindow<MapEditor>("MapEditor");
         //  最小サイズ設定
         window.minSize = new Vector2(320, 500);
-        window.maxSize = new Vector2(320, 501);
+        window.maxSize = new Vector2(320, 500);
         //  マップクリエイター側からデータを拾う
         window.Init();
     }
@@ -45,6 +61,7 @@ public class MapEditor : EditorWindow {
         tiles = mapCreator.GetTiles();
         gimmicks = mapCreator.GetGimmicks();
         enemies = mapCreator.GetEnemies();
+        bgImages = mapCreator.GetBackImages();
         mapData = new int[gridNum, gridNum];
         gimmickData = new int[gridNum, gridNum];
         enemyData = new int[gridNum, gridNum];
@@ -77,6 +94,7 @@ public class MapEditor : EditorWindow {
 
         //  グリッドのサイズを設定
         gridRect = CreateGrid();
+        DrawBackGround();
         //  グリッドの描画
         for (int y = 0; y < gridNum; y++)
         {
@@ -117,9 +135,10 @@ public class MapEditor : EditorWindow {
                 }
             }
         }
-
+        //  グリッド分の空白を挿入
         GUILayout.Space(280);
-
+        //  背景の属性設定
+        backGround = (BackGround)EditorGUILayout.EnumPopup("背景", backGround);
         //  タイルの種類を分ける
         toolberInt = GUILayout.Toolbar(toolberInt, new string[] { "地面", "ギミック", "エネミー" });
         //  タイルのボタンを描画
@@ -217,6 +236,9 @@ public class MapEditor : EditorWindow {
                 tmp.enemyDate[i].mapNum = new int[gridNum];
             }
             //  値の代入
+            //  背景の情報の代入
+            tmp.backGroundNum = (int)backGround;
+            //  タイルの情報の代入
             for (int i = 0; i < tmp.mapDate.Length; i++)
             {
                 for (int j = 0; j < tmp.mapDate[i].mapNum.Length; j++)
@@ -248,23 +270,24 @@ public class MapEditor : EditorWindow {
             //  フルパスから相対パスへ
             string path = "Assets" + fullPath.Substring(Application.dataPath.Length);
             //  パスからデータを取得
-            MapData date = AssetDatabase.LoadAssetAtPath<MapData>(path);
+            MapData data = AssetDatabase.LoadAssetAtPath<MapData>(path);
 
-            if (date == null)
+            if (data == null)
             {
                 Debug.Log("Dataの読み込みエラー");
             }
 
             //  値の代入
-            for (int i = 0; i < date.mapDate.Length; i++)
+            for (int i = 0; i < data.mapDate.Length; i++)
             {
-                for (int j = 0; j < date.mapDate.Length; j++)
+                for (int j = 0; j < data.mapDate.Length; j++)
                 {
-                    mapData[i,j] = date.mapDate[i].mapNum[j];
-                    gimmickData[i,j] = date.gimmickDate[i].mapNum[j];
-                    enemyData[i,j] = date.enemyDate[i].mapNum[j];
+                    mapData[i,j] = data.mapDate[i].mapNum[j];
+                    gimmickData[i,j] = data.gimmickDate[i].mapNum[j];
+                    enemyData[i,j] = data.enemyDate[i].mapNum[j];
                 }
             }
+            backGround = (BackGround)data.backGroundNum;
         }
     }
 
@@ -274,6 +297,7 @@ public class MapEditor : EditorWindow {
         mapData = new int[gridNum, gridNum];
         gimmickData = new int[gridNum, gridNum];
         enemyData = new int[gridNum, gridNum];
+        backGround = BackGround.NONE;
     }
 
     //  グリッドのサイズを設定
@@ -298,7 +322,37 @@ public class MapEditor : EditorWindow {
             }
             y += gridSize;
         }
+        //  最初と最後のRectを保存する
+        firstRect = resultRects[0, 0];
+        lastRect = resultRects[gridNum - 1, gridNum - 1];
+        //  Rect[]を返す
         return resultRects;
+    }
+
+    private void DrawBackGround()
+    {
+        switch (backGround)
+        {
+            case BackGround.NONE:
+                break;
+            case BackGround.NORMAL:
+                GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[0]);
+                break;
+            case BackGround.FIRE:
+                GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[1]);
+                break;
+            case BackGround.WATER:
+                GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[2]);
+                break;
+            case BackGround.THUNDER:
+                GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[0]);
+                break;
+            case BackGround.DARK:
+                GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[0]);
+                break;
+            default:
+                break;
+        }
     }
 
     //  Rect通りにグリッドを表示
