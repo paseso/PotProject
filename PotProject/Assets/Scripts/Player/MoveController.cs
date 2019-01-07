@@ -243,9 +243,7 @@ public class MoveController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        Debug.Log(onLadder);
-        
+    {   
         if (bringctr._bring)
         {
             target.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 2.5f);
@@ -799,11 +797,6 @@ public class MoveController : MonoBehaviour
                 case GimmickInfo.GimmickType.GROWTREE:
                     status.state = Status.GimmickState.ONTREE;
                     break;
-                case GimmickInfo.GimmickType.LADDER:
-                case GimmickInfo.GimmickType.LADDERTOP:
-                    onLadder = true;
-                    status.state = Status.GimmickState.ONLADDER;
-                    break;
             }
         }
     }
@@ -813,7 +806,6 @@ public class MoveController : MonoBehaviour
 
         switch (col.GetComponent<GimmickInfo>().type) {
             case GimmickInfo.GimmickType.LADDER:
-            case GimmickInfo.GimmickType.LADDERTOP:
                 onLadder = true;
                 break;
             default:
@@ -830,7 +822,6 @@ public class MoveController : MonoBehaviour
                 if (!_isJump) return;
                 status.state = Status.GimmickState.NORMAL;
                 ChangeLayer();
-                PotObject.layer = LayerMask.NameToLayer("Pot");
                 _laddernow = false;
                 onLadder = false;
                 break;
@@ -863,6 +854,7 @@ public class MoveController : MonoBehaviour
         onLadder = false;
         if (gameObject.layer != LayerMask.NameToLayer("Player"))
         {
+            PotObject.layer = LayerMask.NameToLayer("Pot");
             PotObject.GetComponent<Rigidbody2D>().simulated = true;
             var children = transform.parent.transform;
             foreach (Transform child in children)
