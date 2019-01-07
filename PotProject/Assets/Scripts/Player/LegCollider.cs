@@ -24,7 +24,7 @@ public class LegCollider : MonoBehaviour {
     private void FallCheck()
     {
         now = gameObject.transform.position.y;
-        if ((falldistance - now) >= 2f)
+        if ((falldistance - now) >= 2.5f)
         {
             Debug.Log("dir = " + (falldistance - now));
             player_ctr.DownHp(1);
@@ -61,8 +61,7 @@ public class LegCollider : MonoBehaviour {
         }
 
         if (info && info.type == GimmickInfo.GimmickType.LADDERTOP) {
-            if (move_ctr.GetLadderDown) { return; }
-            move_ctr.ChangeLayer();
+            player_ctr.ChangeLayer();
             move_ctr.IsLadder = false;
         }
             falldistance = gameObject.transform.position.y;

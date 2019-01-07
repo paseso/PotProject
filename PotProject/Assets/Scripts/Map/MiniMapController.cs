@@ -9,13 +9,19 @@ public class MiniMapController : MonoBehaviour {
     private int mapNum;
     private int numX, numY;
     private List<List<Image>> miniMaps = new List<List<Image>>();
+    private Status status;
+    private PlayerController player_ctr;
+    private CameraManager cManager;
+    private StageController sController;
 
-    void Awake() {
-
+    private bool isMiniMap;
+    public bool getIsMiniMap
+    {
+        get { return isMiniMap; }
     }
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         int count = 0;
         for (int i = 0; i < 3; i++) {
             List<Image> tempList = new List<Image>();
@@ -25,6 +31,9 @@ public class MiniMapController : MonoBehaviour {
             }
             miniMaps.Add(tempList);
         }
+        cManager = GameObject.Find("Controller").gameObject.GetComponent<CameraManager>();
+        sController = GameObject.Find("Controller").gameObject.GetComponent<StageController>();
+        player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         player = GameObject.FindGameObjectWithTag("Player");
         NowMap();
 	}
@@ -35,5 +44,28 @@ public class MiniMapController : MonoBehaviour {
         numX = mInfo.MapNumX;
         numY = mInfo.MapNumY;
         miniMaps[mInfo.MapNumY][mInfo.MapNumX].color = Color.yellow;
+    }
+
+    /// <summary>
+    /// ミニマップを開く処理
+    /// </summary>
+    public void ActiveMiniMap()
+    {
+        Status tempStatus = new Status();
+        if (status.event_state != Status.EventState.MINIMAP)
+        {
+            player_ctr.IsCommandActive = false;
+            isMiniMap = true;
+            tempStatus = status;
+            status.event_state = Status.EventState.MINIMAP;
+            cManager.SwitchingCameraSub(sController.GetMaps[1][1].transform.localPosition, 70);
+        }
+        else
+        {
+            cManager.SwitchingCameraMain();
+            status.event_state = tempStatus.event_state;
+            isMiniMap = false;
+            player_ctr.IsCommandActive = true;
+        }
     }
 }
