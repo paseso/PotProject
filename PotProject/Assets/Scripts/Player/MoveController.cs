@@ -32,12 +32,9 @@ public class MoveController : MonoBehaviour
     }
     //はしごに当たってるかどうか--------------------
     private bool onLadder = false;
-    public bool getOnLadder
+    public bool OnLadder
     {
         get { return onLadder; }
-    }
-    public bool setOnLadder
-    {
         set { onLadder = value; }
     }
     //---------------------------------------------
@@ -79,6 +76,7 @@ public class MoveController : MonoBehaviour
     public GameObject target;
     private List<Sprite> BrotherSprites;
     private GameObject PotObject;
+    private bool downFlag = false;
 
     private PlayerController player_ctr;
     private BringCollider bringctr;
@@ -233,7 +231,8 @@ public class MoveController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
+    {
+        Debug.Log(downFlag);
         //何か持ってる時、その持ってる物のtransformをプレイヤーの頭の位置に合わせる
         if (bringctr._bring)
         {
@@ -367,7 +366,7 @@ public class MoveController : MonoBehaviour
             case ButtonType.LEFTJOYSTICK_UP:
                 _onUp = true;
 
-                if (getOnLadder) {
+                if (OnLadder) {
                     Ladder(ladderSpeed, 1);
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LADDER_UP);
                 }
@@ -376,7 +375,7 @@ public class MoveController : MonoBehaviour
             case ButtonType.LEFTJOYSTICK_DOWN:
                 _onDown = true;
 
-                if (getOnLadder) {
+                if (OnLadder) {
                     Ladder(ladderSpeed, -1);
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LADDER_DOWN);
                 }
@@ -655,6 +654,8 @@ public class MoveController : MonoBehaviour
     /// <param name="dir"></param>
     public void Ladder(float speed, float dir)
     {
+        downFlag = dir < 0 ? true : false;
+
         status.state = Status.GimmickState.ONLADDER;
 
         if (status.state != Status.GimmickState.ONLADDER) { return; }
@@ -695,7 +696,8 @@ public class MoveController : MonoBehaviour
 
         switch (col.GetComponent<GimmickInfo>().type) {
             case GimmickInfo.GimmickType.LADDER:
-                setOnLadder = true;
+                OnLadder = true;
+                IsLadder = true;
                 break;
             default:
                 break;
@@ -704,6 +706,7 @@ public class MoveController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D col)
     {
+        if (!downFlag) return;
         PotObject.transform.position = new Vector2(PotObject.transform.position.x, PotObject.transform.position.y);
         if (!col.GetComponent<GimmickInfo>()) { return; }
         switch (col.GetComponent<GimmickInfo>().type) {
@@ -712,7 +715,7 @@ public class MoveController : MonoBehaviour
                 status.state = Status.GimmickState.NORMAL;
                 player_ctr.ChangeLayer();
                 _laddernow = false;
-                setOnLadder = false;
+                OnLadder = false;
                 break;
         }
     }

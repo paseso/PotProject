@@ -29,18 +29,4 @@ public class MapInfo : MonoBehaviour {
     // スイッチ岩
     private bool _upRock;
     public bool UpRockFlag { get; set; }
-
-    //public int LadderCount
-    //{
-    //    get { return this.ladderCount; }
-    //    private set { value = this.ladderCount; }
-    //}
-
-    //public bool UpRock
-    //{
-    //    get {return this._upRock;}
-    //    set {value = this._upRock;}
-    //}
-
-    
 }

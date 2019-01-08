@@ -21,6 +21,7 @@ public class GimmickInfo : MonoBehaviour {
         BAKETREE,
         MAPCHANGE,
         KEYDOOR,
+        WATER,
     }
 
     public GimmickType type;

@@ -329,7 +329,7 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     public void ChangeLayer()
     {
-        move_ctr.setOnLadder = false;
+        move_ctr.OnLadder = false;
         if (gameObject.layer != LayerMask.NameToLayer("Player"))
         {
             PotObject.layer = LayerMask.NameToLayer("Pot");

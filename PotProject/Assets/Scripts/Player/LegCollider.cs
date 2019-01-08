@@ -38,13 +38,12 @@ public class LegCollider : MonoBehaviour {
         
         if (!info || info.type != GimmickInfo.GimmickType.LADDER && 
                      info.type != GimmickInfo.GimmickType.MAPCHANGE &&
-                     info.type != GimmickInfo.GimmickType.LADDERTOP &&
-                     info.type != GimmickInfo.GimmickType.GROWTREE)
+                     info.type != GimmickInfo.GimmickType.LADDERTOP)
         {
             move_ctr._isJump = true;
-        }else if(info.type == GimmickInfo.GimmickType.LADDER)
+        }else if(info.type == GimmickInfo.GimmickType.LADDERTOP)
         {
-            move_ctr.IsLadder = true;
+            move_ctr.OnLadder = true;
         }else {
             return;
         }
@@ -61,8 +60,11 @@ public class LegCollider : MonoBehaviour {
         }
 
         if (info && info.type == GimmickInfo.GimmickType.LADDERTOP) {
+            Debug.Log("This = " + transform.localPosition.y);
+            Debug.Log("Col = " + col.transform.localPosition.y);
+            
             player_ctr.ChangeLayer();
-            move_ctr.IsLadder = false;
+            move_ctr.OnLadder = false;
         }
             falldistance = gameObject.transform.position.y;
     }

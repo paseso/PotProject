@@ -24,6 +24,7 @@ public class GimmickController :MonoBehaviour {
         mMapController = FindObjectOfType<MiniMapController>();
         mInfo = transform.root.GetComponent<MapInfo>();
         gInfo = GetComponent<GimmickInfo>();
+
     }
 
     /// <summary>

@@ -125,7 +125,6 @@ public class StageController : MonoBehaviour
         Vector3 turnPos = new Vector3();
         
         float mapSize = 40;
-        Debug.Log(mapSize);
         int mapCount = 0;
 
         switch (dir)
