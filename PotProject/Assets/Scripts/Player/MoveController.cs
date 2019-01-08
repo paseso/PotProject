@@ -320,7 +320,8 @@ public class MoveController : MonoBehaviour
             case ButtonType.JUMP:
                 if (!_isJump)
                     return;
-                if(direc == Direction.RIGHT)
+                Debug.Log("きてるよ");
+                if (direc == Direction.RIGHT)
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTJUMP);
                 }
@@ -525,11 +526,11 @@ public class MoveController : MonoBehaviour
                 _laddernow = false;
             }
 
-            if (direc == Direction.LEFT)
+            if (direc == Direction.LEFT && !Jumping && _isJump)
             {
                 anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTIDLE);
             }
-            else
+            else if(direc == Direction.RIGHT && !Jumping && _isJump)
             {
                 anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTIDLE);
             }

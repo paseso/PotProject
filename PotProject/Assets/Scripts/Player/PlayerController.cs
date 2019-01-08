@@ -270,7 +270,7 @@ public class PlayerController : MonoBehaviour {
         {
             DownHpUI(point);
             status.PlayerHP = 0;
-            BrotherObj.transform.localPosition = GameObject.Find(BrotherObj.transform.root.name + "/RespornPoint(Clone)").transform.localPosition;
+            BrotherObj.transform.position = GameObject.Find(BrotherObj.transform.root.name + "/RespornPoint(Clone)").transform.position;
             UpHp(maxHP);
             Debug.Log("HPが0になりました");
             return;

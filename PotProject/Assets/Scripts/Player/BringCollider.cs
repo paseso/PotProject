@@ -76,6 +76,7 @@ public class BringCollider : MonoBehaviour {
             }
             pos.gameObject.transform.parent = pos.transform.parent;
             pos.GetComponent<Rigidbody2D>().simulated = true;
+            pos = null;
             pot_ctr.ChangeLayer();
             move_controll._itemFall = true;
             _bring = false;

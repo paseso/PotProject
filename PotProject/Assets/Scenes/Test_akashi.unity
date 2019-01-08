@@ -3355,7 +3355,7 @@ Prefab:
     - target: {fileID: 224369260580713278, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224686235188629336, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
@@ -3375,7 +3375,7 @@ Prefab:
     - target: {fileID: 224686235188629336, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -190
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224695265454405620, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
@@ -3395,12 +3395,12 @@ Prefab:
     - target: {fileID: 224695265454405620, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -330
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224231129181068484, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 8.200006
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224897799623385658, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
@@ -3415,12 +3415,12 @@ Prefab:
     - target: {fileID: 224897799623385658, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 56.9515
+      value: 56.2715
       objectReference: {fileID: 0}
     - target: {fileID: 224897799623385658, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224951932393607462, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
@@ -3435,17 +3435,17 @@ Prefab:
     - target: {fileID: 224951932393607462, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 56.9515
+      value: 56.2715
       objectReference: {fileID: 0}
     - target: {fileID: 224951932393607462, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -200
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224537135227526870, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 2.187509
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ba692b9aca076b1438470328adf05bc6, type: 2}
@@ -7047,7 +7047,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.185, y: 0.94}
   m_AnchorMax: {x: 0.315, y: 1}
-  m_AnchoredPosition: {x: 0.30000305, y: -0.3999939}
+  m_AnchoredPosition: {x: 0.2999878, y: -0.3999939}
   m_SizeDelta: {x: -1.4000015, y: -1.5999999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1187144309
@@ -7308,7 +7308,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 902857482
+  randomSeed: 164414894
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -15046,7 +15046,7 @@ Prefab:
         type: 2}
       propertyPath: m_SpriteMesh
       value: 
-      objectReference: {fileID: 11400000, guid: 41bce6300e634c54e957d7c0211aca86,
+      objectReference: {fileID: 11400000, guid: 5f96162788d92b04d87ec41d816b0208,
         type: 2}
     - target: {fileID: 4112050997043128, guid: ebf2e4c2beeba774e86221b30dc732a5, type: 2}
       propertyPath: m_LocalRotation.z
@@ -15060,6 +15060,66 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 67.803
       objectReference: {fileID: 0}
+    - target: {fileID: 114786900448188374, guid: ebf2e4c2beeba774e86221b30dc732a5,
+        type: 2}
+      propertyPath: m_SpriteMesh
+      value: 
+      objectReference: {fileID: 11400000, guid: 8d89ff7c6c9c52d448ecb6230405d3f3,
+        type: 2}
+    - target: {fileID: 114758136142219590, guid: ebf2e4c2beeba774e86221b30dc732a5,
+        type: 2}
+      propertyPath: m_SpriteMesh
+      value: 
+      objectReference: {fileID: 11400000, guid: e4078a6d18e401d448629fbc8ef04fd2,
+        type: 2}
+    - target: {fileID: 114878835856345656, guid: ebf2e4c2beeba774e86221b30dc732a5,
+        type: 2}
+      propertyPath: m_SpriteMesh
+      value: 
+      objectReference: {fileID: 11400000, guid: 9b4e2c3a21befc146838ec910d644f6f,
+        type: 2}
+    - target: {fileID: 114931228932538558, guid: ebf2e4c2beeba774e86221b30dc732a5,
+        type: 2}
+      propertyPath: m_SpriteMesh
+      value: 
+      objectReference: {fileID: 11400000, guid: cad80e9d5c5604147b141f1ae66fda96,
+        type: 2}
+    - target: {fileID: 114741790256152424, guid: ebf2e4c2beeba774e86221b30dc732a5,
+        type: 2}
+      propertyPath: m_SpriteMesh
+      value: 
+      objectReference: {fileID: 11400000, guid: f93616a58759ce1478194c023ee93c53,
+        type: 2}
+    - target: {fileID: 114090523917960928, guid: ebf2e4c2beeba774e86221b30dc732a5,
+        type: 2}
+      propertyPath: m_SpriteMesh
+      value: 
+      objectReference: {fileID: 11400000, guid: 5d63949aebc6f5f448396a8f75f3e32e,
+        type: 2}
+    - target: {fileID: 114565891442543522, guid: ebf2e4c2beeba774e86221b30dc732a5,
+        type: 2}
+      propertyPath: m_SpriteMesh
+      value: 
+      objectReference: {fileID: 11400000, guid: aa7e5c72737c31347912e262d427e0f0,
+        type: 2}
+    - target: {fileID: 114652486207364484, guid: ebf2e4c2beeba774e86221b30dc732a5,
+        type: 2}
+      propertyPath: m_SpriteMesh
+      value: 
+      objectReference: {fileID: 11400000, guid: 094dbc8eb1b1ce948bf03d218a5243b7,
+        type: 2}
+    - target: {fileID: 114005689837551496, guid: ebf2e4c2beeba774e86221b30dc732a5,
+        type: 2}
+      propertyPath: m_SpriteMesh
+      value: 
+      objectReference: {fileID: 11400000, guid: 8652e361b82d6b44283945b58c23131a,
+        type: 2}
+    - target: {fileID: 114018167481075254, guid: ebf2e4c2beeba774e86221b30dc732a5,
+        type: 2}
+      propertyPath: m_SpriteMesh
+      value: 
+      objectReference: {fileID: 11400000, guid: d9027ac2ba2a2dd498f1e33f912d0dd5,
+        type: 2}
     m_RemovedComponents:
     - {fileID: 33439170382344622, guid: ebf2e4c2beeba774e86221b30dc732a5, type: 2}
     - {fileID: 23556758189672472, guid: ebf2e4c2beeba774e86221b30dc732a5, type: 2}
