@@ -22,6 +22,7 @@ public class GimmickInfo : MonoBehaviour {
         MAPCHANGE,
         KEYDOOR,
         WATER,
+        FIREFIELD,
     }
 
     public GimmickType type;

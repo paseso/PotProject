@@ -233,6 +233,7 @@ public class MoveController : MonoBehaviour
     void Update()
     {
         Debug.Log(downFlag);
+        Debug.Log(isActiveAndEnabled);
         //何か持ってる時、その持ってる物のtransformをプレイヤーの頭の位置に合わせる
         if (bringctr._bring)
         {

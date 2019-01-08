@@ -24,7 +24,6 @@ public class GimmickController :MonoBehaviour {
         mMapController = FindObjectOfType<MiniMapController>();
         mInfo = transform.root.GetComponent<MapInfo>();
         gInfo = GetComponent<GimmickInfo>();
-
     }
 
     /// <summary>
@@ -83,6 +82,14 @@ public class GimmickController :MonoBehaviour {
                 break;
             default:
                 break;
+        }
+    }
+
+    public void OnCollisionStay2D(Collision2D col)
+    {
+        if(gInfo.type == GimmickInfo.GimmickType.FIREFIELD)
+        {
+            
         }
     }
 
