@@ -16,7 +16,7 @@ public class MapEditor : EditorWindow {
     private Tile[] tiles;
     private Gimmick[] gimmicks;
     private Enemy[] enemies;
-    private Texture[] bgImages;
+    private Sprite[] bgImages;
     private int toolberInt;
     private int[,] mapData;
     private int[,] gimmickData;
@@ -336,19 +336,19 @@ public class MapEditor : EditorWindow {
             case BackGround.NONE:
                 break;
             case BackGround.NORMAL:
-                GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[0]);
+                GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[0].texture);
                 break;
             case BackGround.FIRE:
-                GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[1]);
+                GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[1].texture);
                 break;
             case BackGround.WATER:
-                GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[2]);
+                GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[2].texture);
                 break;
             case BackGround.THUNDER:
-                GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[0]);
+                GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[0].texture);
                 break;
             case BackGround.DARK:
-                GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[0]);
+                GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[0].texture);
                 break;
             default:
                 break;

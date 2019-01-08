@@ -17,7 +17,7 @@ public class MapCreator : MonoBehaviour
     [HideInInspector]
     public MapData map;
     [SerializeField]
-    private Texture[] backImages;
+    private Sprite[] backImages;
 
     private GameObject[] mapObjects = new GameObject[9];
 
@@ -27,7 +27,7 @@ public class MapCreator : MonoBehaviour
     public Gimmick GetGimmick(int index) { return gimmicks[index]; }
     public Enemy[] GetEnemies() { return enemies; }
     public Enemy GetEnemy(int index) { return enemies[index]; }
-    public Texture[] GetBackImages() { return backImages; }
+    public Sprite[] GetBackImages() { return backImages; }
 
 
     public MapData Map
@@ -171,20 +171,29 @@ public class MapCreator : MonoBehaviour
         int yLength = datas[0].mapDate.Length;
         //  タイルのサイズを取得
         float tileSize = 2;
-        float oneSide = tileSize * xLength;
+        float stageSize = tileSize * xLength;
         for (int i = 0; i < datas.Length; i++)
         {
             int quo = i / 3;
             int rem = i % 3;
             //  ルートオブジェクトの作成
             string rootName = datas[i].name;
-            Vector2 startPos = new Vector2(0, oneSide * 3);
+            //  Y軸方向に３ステージ分あげる
+            Vector2 startPos = new Vector2(0, stageSize * 3);
             var rootObj = new GameObject(rootName);
             rootObj.AddComponent<MapInfo>();
             rootObj.GetComponent<MapInfo>().MapNumX = rem;
             rootObj.GetComponent<MapInfo>().MapNumY = quo;
-            rootObj.transform.position = startPos + new Vector2(oneSide / 2, -oneSide / 2) + new Vector2(rem * oneSide, -quo * oneSide);
-            //Vector2 startPos = rootObj.transform.position + new Vector3(-tileSize * xLength / 2, tileSize * yLength / 2) + new Vector3(0, tileSize * yLength * 2);
+            rootObj.transform.position = startPos + new Vector2(stageSize / 2, -stageSize / 2) + new Vector2(rem * stageSize, -quo * stageSize);
+
+            //  背景オブジェクトの生成
+            GameObject backGroundObject = new GameObject("BG");
+            backGroundObject.AddComponent<SpriteRenderer>();
+            backGroundObject.GetComponent<SpriteRenderer>().sortingOrder = -1;
+            backGroundObject.transform.parent = rootObj.transform;
+            backGroundObject.transform.localPosition = Vector3.zero + new Vector3(-tileSize * 0.5f, tileSize * 0.5f, 0);
+            backGroundObject.GetComponent<SpriteRenderer>().sprite = backImages[datas[i].backGroundNum];
+            backGroundObject.transform.localScale = new Vector3(stageSize / backGroundObject.GetComponent<SpriteRenderer>().size.x, stageSize / backGroundObject.GetComponent<SpriteRenderer>().size.y, 0);
 
             //  オブジェクトの生成
             for (int y = 0; y < yLength; y++)
