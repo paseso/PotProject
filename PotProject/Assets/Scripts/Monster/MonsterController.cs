@@ -41,6 +41,7 @@ public struct MonsterStatus
         TURTLE,
         FAIRY,
         HARB,
+        FATHER,
     }
     public MonsterType type;
 
@@ -94,14 +95,7 @@ public class MonsterController : MonoBehaviour
         get { return status; }
     }
 
-    void Start()
-    {
-        if(status.type == MonsterStatus.MonsterType.HAMSTAR)
-        {
-            clearPanel = GameObject.FindGameObjectWithTag("ClearPanel");
-            clearPanel.SetActive(false);
-        }
-    }
+
 
     public void OnDestroy()
     {
