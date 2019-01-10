@@ -17,6 +17,7 @@ public class AnimController : MonoBehaviour {
             LADDER_UP,
             LADDER_DOWN,
         }
+        public AnimType animtype;
     }
 
     public AnimState animstate;
@@ -148,8 +149,19 @@ public class AnimController : MonoBehaviour {
         switch (type)
         {
             case AnimState.AnimType.RIGHTJUMP:
-                Debug.Log("きたーー");
+                animstate.animtype = AnimState.AnimType.RIGHTJUMP;
                 anim.SetBool("isRightJump", true);
+                anim.SetBool("isLeftJump", false);
+                anim.SetBool("isLeftWalk", false);
+                anim.SetBool("isRightWalk", false);
+                anim.SetBool("isLeftIdle", false);
+                anim.SetBool("isRightIdle", false);
+                break;
+
+            case AnimState.AnimType.LEFTJUMP:
+                animstate.animtype = AnimState.AnimType.LEFTJUMP;
+                anim.SetBool("isRightJump", false);
+                anim.SetBool("isLeftJump", true);
                 anim.SetBool("isLeftWalk", false);
                 anim.SetBool("isRightWalk", false);
                 anim.SetBool("isLeftIdle", false);
@@ -157,7 +169,9 @@ public class AnimController : MonoBehaviour {
                 break;
 
             case AnimState.AnimType.LEFTIDLE:
+                animstate.animtype = AnimState.AnimType.LEFTIDLE;
                 anim.SetBool("isRightJump", false);
+                anim.SetBool("isLeftJump", false);
                 anim.SetBool("isLeftWalk", false);
                 anim.SetBool("isRightWalk", false);
                 anim.SetBool("isLeftIdle", true);
@@ -165,8 +179,9 @@ public class AnimController : MonoBehaviour {
                 break;
 
             case AnimState.AnimType.RIGHTIDLE:
-                Debug.Log("きたーー2");
+                animstate.animtype = AnimState.AnimType.RIGHTIDLE;
                 anim.SetBool("isRightJump", false);
+                anim.SetBool("isLeftJump", false);
                 anim.SetBool("isLeftWalk", false);
                 anim.SetBool("isRightWalk", false);
                 anim.SetBool("isLeftIdle", false);
@@ -174,7 +189,9 @@ public class AnimController : MonoBehaviour {
                 break;
 
             case AnimState.AnimType.LEFT_WALK:
+                animstate.animtype = AnimState.AnimType.LEFT_WALK;
                 anim.SetBool("isRightJump", false);
+                anim.SetBool("isLeftJump", false);
                 anim.SetBool("isLeftWalk", true);
                 anim.SetBool("isRightWalk", false);
                 anim.SetBool("isLeftIdle", false);
@@ -182,7 +199,9 @@ public class AnimController : MonoBehaviour {
                 break;
 
             case AnimState.AnimType.RIGHT_WALK:
+                animstate.animtype = AnimState.AnimType.RIGHT_WALK;
                 anim.SetBool("isRightJump", false);
+                anim.SetBool("isLeftJump", false);
                 anim.SetBool("isLeftWalk", false);
                 anim.SetBool("isRightWalk", true);
                 anim.SetBool("isLeftIdle", false);
@@ -190,7 +209,9 @@ public class AnimController : MonoBehaviour {
                 break;
 
             case AnimState.AnimType.LADDER_UP:
+                animstate.animtype = AnimState.AnimType.LADDER_UP;
                 anim.SetBool("isRightJump", false);
+                anim.SetBool("isLeftJump", false);
                 anim.SetBool("isLeftWalk", false);
                 anim.SetBool("isRightWalk", false);
                 anim.SetBool("isLeftIdle", false);
@@ -198,7 +219,9 @@ public class AnimController : MonoBehaviour {
                 break;
 
             case AnimState.AnimType.LADDER_DOWN:
+                animstate.animtype = AnimState.AnimType.LADDER_DOWN;
                 anim.SetBool("isRightJump", false);
+                anim.SetBool("isLeftJump", false);
                 anim.SetBool("isLeftWalk", false);
                 anim.SetBool("isRightWalk", false);
                 anim.SetBool("isLeftIdle", false);

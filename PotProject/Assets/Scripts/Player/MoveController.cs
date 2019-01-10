@@ -321,14 +321,13 @@ public class MoveController : MonoBehaviour
             case ButtonType.JUMP:
                 if (!_isJump)
                     return;
-                Debug.Log("きてるよ");
                 if (direc == Direction.RIGHT)
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTJUMP);
                 }
                 else
                 {
-                    anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTJUMP);
+                    anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTJUMP);
                 }
                 
                 rig.velocity = new Vector2(0, 1f * speed);
@@ -338,30 +337,34 @@ public class MoveController : MonoBehaviour
             case ButtonType.LEFTJOYSTICK_LEFT:
                 _onLeft = true;
                 _onRight = false;
-                
-                if (status.state == Status.GimmickState.ONLADDER && !_isJump) {
-                    return;
-                }
+
                 direc = Direction.LEFT;
                 if (!_ActiveRightLeft)
                     return;
-
-                anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
+                if (_isJump && !Jumping)
+                {
+                    anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
+                }
+                if (status.state == Status.GimmickState.ONLADDER && !_isJump) {
+                    return;
+                }
                 rig.velocity = new Vector2(-5f, rig.velocity.y);
                 break;
 
             case ButtonType.LEFTJOYSTICK_RIGHT:
                 _onRight = true;
                 _onLeft = false;
-               
-                if (status.state == Status.GimmickState.ONLADDER && !_isJump) {
-                    return;
-                }
+
                 direc = Direction.RIGHT;
                 if (!_ActiveRightLeft)
                     return;
-
-                anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_WALK);
+                if (_isJump && !Jumping)
+                {
+                    anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_WALK);
+                }
+                if (status.state == Status.GimmickState.ONLADDER && !_isJump) {
+                    return;
+                }
                 rig.velocity = new Vector2(5f, rig.velocity.y);
                 break;
 
