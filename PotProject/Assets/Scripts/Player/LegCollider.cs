@@ -24,7 +24,7 @@ public class LegCollider : MonoBehaviour {
     private void FallCheck()
     {
         now = gameObject.transform.position.y;
-        if ((falldistance - now) >= 2f)
+        if ((falldistance - now) >= 2.5f)
         {
             Debug.Log("dir = " + (falldistance - now));
             player_ctr.DownHp(1);
@@ -35,12 +35,15 @@ public class LegCollider : MonoBehaviour {
     private void OnTriggerStay2D(Collider2D col)
     {
         GimmickInfo info = col.GetComponent<GimmickInfo>();
-        if (!info && col.gameObject.layer == LayerMask.NameToLayer("Block") || info.type != GimmickInfo.GimmickType.LADDER && info.type != GimmickInfo.GimmickType.MAPCHANGE)
+        
+        if (!info || info.type != GimmickInfo.GimmickType.LADDER && 
+                     info.type != GimmickInfo.GimmickType.MAPCHANGE &&
+                     info.type != GimmickInfo.GimmickType.LADDERTOP)
         {
             move_ctr._isJump = true;
-        }else if(info.type == GimmickInfo.GimmickType.LADDER)
+        }else if(info.type == GimmickInfo.GimmickType.LADDERTOP)
         {
-            move_ctr.IsLadder = true;
+            move_ctr.OnLadder = true;
         }else {
             return;
         }
@@ -48,14 +51,22 @@ public class LegCollider : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D col)
     {
+        
         GimmickInfo info = col.GetComponent<GimmickInfo>();
         move_ctr._isJump = false;
         if (info && info.type == GimmickInfo.GimmickType.LADDER)
         {
             move_ctr.IsLadder = false;
-            move_ctr.ChangeLayer();
         }
-        falldistance = gameObject.transform.position.y;
+
+        if (info && info.type == GimmickInfo.GimmickType.LADDERTOP) {
+            Debug.Log("This = " + transform.localPosition.y);
+            Debug.Log("Col = " + col.transform.localPosition.y);
+            
+            player_ctr.ChangeLayer();
+            move_ctr.OnLadder = false;
+        }
+            falldistance = gameObject.transform.position.y;
     }
 
     private void OnTriggerEnter2D(Collider2D col)

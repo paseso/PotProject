@@ -10,6 +10,10 @@ public struct ItemStatus
         SLIME = 0,
         GOLEM,
         SNAKE,
+        PORTION_G,
+        PORTION_R,
+        HARB,
+        ROPE,
     };
 
     public ITEM item;
@@ -21,5 +25,12 @@ public class ItemManager : MonoBehaviour {
     [SerializeField]
     private ItemStatus item_status;
     
+    /// <summary>
+    /// Item Status取得
+    /// </summary>
+    public ItemStatus getItemStatus()
+    {
+        return item_status;
+    }
 
 }

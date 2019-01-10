@@ -24,6 +24,8 @@ public class StageController : MonoBehaviour
 
     private PlayerController pController;
 
+    private MiniMapController mMapController;
+
     public List<List<GameObject>> GetMaps
     {
         get { return Maps; }
@@ -41,10 +43,14 @@ public class StageController : MonoBehaviour
 
     private int stageLength = 3;
 
+    private CameraManager cManager;
+
     void Start()
     {
         SetList();
         pController = FindObjectOfType<PlayerController>();
+        mMapController = FindObjectOfType<MiniMapController>();
+        cManager = FindObjectOfType<CameraManager>();
     }
 
     /// <summary>
@@ -63,8 +69,7 @@ public class StageController : MonoBehaviour
 
                 info1.MapNumX = j;
                 info1.MapNumY = i;
-                //mapLists[count].GetComponent<MapInfo>().MapNumX = j;
-                //mapLists[count].GetComponent<MapInfo>().MapNumY = i;
+                
                 varMap.Add(mapLists[count]);
                 count++;
             }
@@ -81,11 +86,12 @@ public class StageController : MonoBehaviour
     /// <param name="size"></param>
     public void Sride(int num, Direction dir) {
         if (isMove) { return; }
+        pController.IsCommandActive = false;
         StartCoroutine(SrideInFade(num,dir, GetMaps[1][1].transform.localPosition));
     }
 
 
-    CameraManager cManager;
+    
     /// <summary>
     /// カメラ切り替えとスライド関数呼び出し
     /// </summary>
@@ -96,12 +102,13 @@ public class StageController : MonoBehaviour
     /// <returns></returns>
     public IEnumerator SrideInFade(int num, Direction dir, Vector2 pos)
     {
-        cManager = FindObjectOfType<CameraManager>();
         cManager.SwitchingCameraSub(pos, subCameraSize);
         yield return new WaitForSeconds(1.5f);
         SrideStage(num, dir);
-        yield return new WaitForSeconds(1.5f);
-        pController.SetCommandActive = true;
+        mMapController.NowMap();
+        yield return new WaitForSeconds(4.5f);
+        pController.IsCommandActive = true;
+
     }
 
     /// <summary>
@@ -118,7 +125,6 @@ public class StageController : MonoBehaviour
         Vector3 turnPos = new Vector3();
         
         float mapSize = 40;
-        Debug.Log(mapSize);
         int mapCount = 0;
 
         switch (dir)

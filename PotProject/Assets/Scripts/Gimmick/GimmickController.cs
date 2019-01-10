@@ -12,7 +12,7 @@ public class GimmickController :MonoBehaviour {
     private StageController sController;
     private MapInfo mInfo;
     private GimmickInfo gInfo;
-    private PlayerController pController;
+    private MiniMapController mMapController;
 
     // Use this for initialization
     void Start() {
@@ -21,13 +21,9 @@ public class GimmickController :MonoBehaviour {
             sController = GameObject.Find("Controller").GetComponent<StageController>();
         }
 
-        pController = FindObjectOfType<PlayerController>();
+        mMapController = FindObjectOfType<MiniMapController>();
         mInfo = transform.root.GetComponent<MapInfo>();
         gInfo = GetComponent<GimmickInfo>();
-    }
-
-    void Update() {
-
     }
 
     /// <summary>
@@ -39,19 +35,19 @@ public class GimmickController :MonoBehaviour {
         if (col.gameObject.tag == "Player") {
             switch (gInfo.type) {
                 case GimmickInfo.GimmickType.UP:
-                    pController.SetCommandActive = false;
+                    
                     sController.Sride(objInfo.MapNumX, StageController.Direction.UP);
                     break;
                 case GimmickInfo.GimmickType.DOWN:
-                    pController.SetCommandActive = false;
+                    
                     sController.Sride(objInfo.MapNumX, StageController.Direction.DOWN);
                     break;
                 case GimmickInfo.GimmickType.LEFT:
-                    pController.SetCommandActive = false;
+                    
                     sController.Sride(objInfo.MapNumY, StageController.Direction.LEFT);
                     break;
                 case GimmickInfo.GimmickType.RIGHT:
-                    pController.SetCommandActive = false;
+                    
                     sController.Sride(objInfo.MapNumY, StageController.Direction.RIGHT);
                     break;
                 case GimmickInfo.GimmickType.BAKETREE:
@@ -60,10 +56,6 @@ public class GimmickController :MonoBehaviour {
                 case GimmickInfo.GimmickType.ROCK:
                     RockDoorOpen();
                     break;
-                case GimmickInfo.GimmickType.GRASS:
-                    DropHarb();
-                    break;
-                
                 default:
                     break;
             }
@@ -86,9 +78,18 @@ public class GimmickController :MonoBehaviour {
                 break;
             case GimmickInfo.GimmickType.MAPCHANGE:
                 col.transform.parent.transform.parent.transform.SetParent(transform.root.gameObject.transform);
+                mMapController.NowMap();
                 break;
             default:
                 break;
+        }
+    }
+
+    public void OnCollisionStay2D(Collision2D col)
+    {
+        if(gInfo.type == GimmickInfo.GimmickType.FIREFIELD)
+        {
+            
         }
     }
 
@@ -127,14 +128,8 @@ public class GimmickController :MonoBehaviour {
     /// 木(ツル)を成長させる
     /// </summary>
     public void Grow() {
-        Vector2 defaultScale = transform.parent.transform.localScale;
-        transform.parent.transform.DOScaleY(3f, 1f).SetEase(Ease.Linear);
-        //float time = 0;
-        //while(time < 3)
-        //{
-        //    time += Time.deltaTime;
-        //}
-        //transform.parent.transform.DOScaleY(defaultScale.y, 1f).SetEase(Ease.Linear);
+        GameObject growTree = FindObjectOfType<TreeGrow>().gameObject;
+        growTree.GetComponent<TreeGrow>().Grow();
     }
 
     /// <summary>
@@ -171,25 +166,6 @@ public class GimmickController :MonoBehaviour {
 
     // 浮く座標(仮)
     private float endPos;
-
-    /// <summary>
-    /// 水でタイルを浮かせる
-    /// </summary>
-    public void FloatingTile(GameObject obj)
-    {
-
-    }
-
-    /// <summary>
-    /// 薬草ドロップ
-    /// </summary>
-    public void DropHarb()
-    {
-        // ドロップする薬草をResourcesから生成
-        GameObject harb = Instantiate(Resources.Load<GameObject>("Prefabs/HarbPrefab"),transform.parent.transform);
-        harb.transform.localPosition = transform.localPosition;
-        Destroy(gameObject);
-    }
 
     /// <summary>
     /// 鍵付き扉

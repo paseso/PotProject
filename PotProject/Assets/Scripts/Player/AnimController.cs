@@ -94,10 +94,10 @@ public class AnimController : MonoBehaviour {
                 //首モフ
                 gameObject.transform.GetChild(6).GetComponent<Anima2D.SpriteMeshAnimation>().frame = 1;
                 //LeftArm
-                gameObject.transform.GetChild(7).GetChild(0).GetComponent<Anima2D.SpriteMeshInstance>().sortingOrder = 6;
-                gameObject.transform.GetChild(7).GetChild(0).GetChild(0).GetComponent<Anima2D.SpriteMeshInstance>().sortingOrder = 6;
+                gameObject.transform.GetChild(7).GetChild(0).GetComponent<Anima2D.SpriteMeshInstance>().sortingOrder = 10;
                 gameObject.transform.GetChild(7).GetChild(0).GetChild(0).GetComponent<Anima2D.SpriteMeshAnimation>().frame = 1;
-                gameObject.transform.GetChild(7).GetChild(0).GetChild(0).GetComponent<Anima2D.SpriteMeshInstance>().sortingOrder = 1;
+                gameObject.transform.GetChild(7).GetChild(0).GetChild(0).GetComponent<Anima2D.SpriteMeshAnimation>().frame = 1;
+                gameObject.transform.GetChild(7).GetChild(0).GetChild(0).GetComponent<Anima2D.SpriteMeshInstance>().sortingOrder = 9;
                 //Stomach
                 gameObject.transform.GetChild(8).GetComponent<Anima2D.SpriteMeshInstance>().sortingOrder = 1;
                 gameObject.transform.GetChild(8).GetComponent<Anima2D.SpriteMeshAnimation>().frame = 1;
@@ -148,6 +148,7 @@ public class AnimController : MonoBehaviour {
         switch (type)
         {
             case AnimState.AnimType.RIGHTJUMP:
+                Debug.Log("きたーー");
                 anim.SetBool("isRightJump", true);
                 anim.SetBool("isLeftWalk", false);
                 anim.SetBool("isRightWalk", false);
@@ -164,6 +165,7 @@ public class AnimController : MonoBehaviour {
                 break;
 
             case AnimState.AnimType.RIGHTIDLE:
+                Debug.Log("きたーー2");
                 anim.SetBool("isRightJump", false);
                 anim.SetBool("isLeftWalk", false);
                 anim.SetBool("isRightWalk", false);

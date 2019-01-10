@@ -5,14 +5,14 @@ using UnityEngine;
 public class SubCameraShake : MonoBehaviour {
 
     private Vector3 pos;
-	// Use this for initialization
-	void Start () {
-        
-	}
+    private MiniMapController mController;
 
     public void OnEnable() {
-        pos = transform.position;
-        StartCoroutine(Shake());
+        mController = GameObject.Find("Canvas/MiniMap").GetComponent<MiniMapController>();
+        if (!mController.getIsMiniMap) {
+            pos = transform.position;
+            StartCoroutine(Shake());
+        }
     }
 
     public IEnumerator Shake() {
