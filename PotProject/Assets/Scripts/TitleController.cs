@@ -1,22 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class TitleController : MonoBehaviour
 {
-
+    [SerializeField]
+    private GameObject CharaObject;
+    [SerializeField]
+    private GameObject logoObject;
     private FadeManager fade_m;
+    [SerializeField]
+    private float loopTime = 3;
+    [SerializeField]
+    private Vector2 startPos = new Vector2(0, 135), endPos = new Vector2(0, 100);
 
     // Use this for initialization
     void Start()
     {
         fade_m = GameObject.Find("FadeManager").GetComponent<FadeManager>();
+        LogoAnimatino();
+        LoopCharaAnimation();
     }
 
     // Update is called once per frame
     void Update()
     {
-        TapTitle();
+        if (Input.GetButtonDown("Circle") || Input.GetKeyDown(KeyCode.E))
+        {
+            TapTitle();
+        }
     }
 
     /// <summary>
@@ -24,9 +38,48 @@ public class TitleController : MonoBehaviour
     /// </summary>
     private void TapTitle()
     {
-        if (Input.GetButtonDown("Circle") || Input.GetKeyDown(KeyCode.E))
+        fade_m.LoadScene(1, 0.3f);
+    }
+
+    private void LoopCharaAnimation()
+    {
+        CharaObject.GetComponent<AnimController>().ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
+    }
+
+    /// <summary>
+    /// タイトルロゴを上下させる
+    /// </summary>
+    private void LogoAnimatino()
+    {
+        StartCoroutine(logoAnimation());
+    }
+
+    IEnumerator logoAnimation()
+    {
+        float time = 0;
+        bool isDown = false;
+        while (SceneManager.GetActiveScene().buildIndex == 0)
         {
-            fade_m.LoadScene(1, 0.3f);
+            if (time > loopTime)
+            {
+                time = 0;
+                isDown = !isDown;
+            }
+                
+            if (time < loopTime && !isDown)
+            {
+                logoObject.GetComponent<RectTransform>().localPosition = Vector3.Slerp(startPos, endPos, time / loopTime);
+                time += Time.deltaTime;
+                yield return null;
+            }
+            if (time < loopTime && isDown)
+            {
+                logoObject.GetComponent<RectTransform>().localPosition = Vector3.Slerp(endPos, startPos, time / loopTime);
+                time += Time.deltaTime;
+                yield return null;
+            }
+            yield return null;
         }
+        yield break;
     }
 }

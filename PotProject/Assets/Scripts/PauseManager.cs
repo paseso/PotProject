@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-//using UnityEditor;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class PauseManager : SingletonMonoBehaviour<PauseManager> {
 
@@ -79,11 +81,11 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
 
     public void EscapeGame()
     {
-    //#if UNITY_EDITOR
-    //    EditorApplication.isPlaying = false;
-    //#elif UNITY_STANDALONE
-    //        Application.Quit();
-    //#endif
+    #if UNITY_EDITOR
+            EditorApplication.isPlaying = false;
+    #elif UNITY_STANDALONE
+            Application.Quit();
+    #endif
     }
 
 }
