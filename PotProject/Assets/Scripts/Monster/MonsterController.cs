@@ -104,6 +104,7 @@ public class MonsterController : MonoBehaviour
 
     public void DropItem(MonsterStatus status)
     {
+        if(ItemList[status.type] == "") { return; }
         GameObject item = Instantiate(Resources.Load<GameObject>(itemFolder + ItemList[status.type]));
         item.AddComponent<PopUp>();
         item.transform.SetParent(transform.parent.transform);
