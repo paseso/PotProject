@@ -32,13 +32,21 @@ public class LegCollider : MonoBehaviour {
         }
     }
 
+    public bool JumpCheck(GameObject col)
+    {
+        if (!col.GetComponent<GimmickInfo>()) { return false; }
+        GimmickInfo info = col.GetComponent<GimmickInfo>();
+        if (col.gameObject.layer != LayerMask.NameToLayer("Background")) { return false; }
+        if(info.type != GimmickInfo.GimmickType.LADDER) { return false; }
+        if (info.type != GimmickInfo.GimmickType.LADDERTOP) { return false; }
+        return true;
+    }
+
     private void OnTriggerStay2D(Collider2D col)
     {
         GimmickInfo info = col.GetComponent<GimmickInfo>();
         
-        if (!info || info.type != GimmickInfo.GimmickType.LADDER && 
-                     info.type != GimmickInfo.GimmickType.MAPCHANGE &&
-                     info.type != GimmickInfo.GimmickType.LADDERTOP)
+        if (JumpCheck(col.gameObject))
         {
             move_ctr._isJump = true;
         }else if(info.type == GimmickInfo.GimmickType.LADDERTOP)

@@ -12,7 +12,7 @@ public class MapChange : MonoBehaviour {
 
     public void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("call");
+        Debug.Log(col.gameObject.name);
         col.transform.parent.transform.parent.transform.SetParent(transform.root.gameObject.transform);
         mMapController.NowMap();
     }
