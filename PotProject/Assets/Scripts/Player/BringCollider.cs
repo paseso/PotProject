@@ -2,14 +2,16 @@
 
 public class BringCollider : MonoBehaviour {
 
-    [HideInInspector]
-    public bool _Brotherhit = false;
-    [HideInInspector]
-    public bool _Tubohit = false;
-    [HideInInspector]
-    public bool _bring = false;
     private MoveController move_controll;
     private PotController pot_ctr;
+    //範囲内に入ったアイテムオブジェクト
+    private GameObject target;
+    private bool _setTarget = false;
+
+    public bool getSetTarget
+    {
+        get { return _setTarget; }
+    }
 
     private enum Direction
     {
@@ -21,9 +23,7 @@ public class BringCollider : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        _Brotherhit = false;
-        _Tubohit = false;
-        _bring = false;
+        _setTarget = false;
         move_controll = gameObject.transform.parent.GetComponentInChildren<MoveController>();
         pot_ctr = GameObject.FindObjectOfType<PotController>();
         direction = Direction.LEFT;
@@ -54,11 +54,15 @@ public class BringCollider : MonoBehaviour {
     /// <summary>
     /// 持てる範囲で□ボタンを押した時の処理
     /// </summary>
-    public void SquereButton(Transform pos)
+    public void SquereButton()
     {
+        if (!_setTarget)
+            return;
+        Debug.Log("きてる");
         //アイテムを拾う
-        pot_ctr.AddItem(pos.GetComponent<ItemManager>().getItemStatus());
-        Destroy(pos.gameObject);
+        pot_ctr.AddItem(target.GetComponent<ItemManager>().getItemStatus());
+        Destroy(target.gameObject);
+        target = null;
     }
 
     private void OnTriggerStay2D(Collider2D col)
@@ -66,7 +70,9 @@ public class BringCollider : MonoBehaviour {
         //アイテムの子供にあるUIを表示
         if (col.gameObject.tag == "Item")
         {
+            target = col.gameObject;
             col.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            _setTarget = true;
         }
     }
 
@@ -75,7 +81,9 @@ public class BringCollider : MonoBehaviour {
         //アイテムの子供にあるUIを非表示
         if (col.gameObject.tag == "Item")
         {
+            target = null;
             col.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+            _setTarget = false;
         }
     }
 }

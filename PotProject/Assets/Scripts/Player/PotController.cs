@@ -71,16 +71,6 @@ public class PotController : MonoBehaviour {
     public void ChangeLayer()
     {
         gameObject.layer = LayerMask.NameToLayer("Default");
-        if (bring_col._bring)
-        {
-            gameObject.GetComponent<DistanceJoint2D>().enabled = false;
-            move_ctr.transform.parent.GetComponent<DistanceJoint2D>().enabled = false;
-        }
-        else
-        {
-            gameObject.GetComponent<DistanceJoint2D>().enabled = true;
-            move_ctr.transform.parent.GetComponent<DistanceJoint2D>().enabled = false;
-        }
     }
 
     /// <summary>
@@ -112,13 +102,8 @@ public class PotController : MonoBehaviour {
     {
         if (col.gameObject.GetComponent<MonsterController>())
         {
-            //if (!bring_col._Tubohit || !move_ctr._itemFall)
-            //    return;
-            if (!bring_col._Tubohit)
-                return;
 
             Destroy(col.gameObject);
-            //gameObject.layer = LayerMask.NameToLayer("Pot");
             MonsterController mInfo = col.gameObject.GetComponent<MonsterController>();
             switch (mInfo.GetMStatus.type)
             {

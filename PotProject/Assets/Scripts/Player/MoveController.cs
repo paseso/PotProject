@@ -232,11 +232,6 @@ public class MoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //何か持ってる時、その持ってる物のtransformをプレイヤーの頭の位置に合わせる
-        if (bringctr._bring)
-        {
-            target.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 2.5f);
-        }
         //はしご処理してる時、ツボのtransformをプレイヤーと同じ位置にする
         if (_laddernow)
         {
@@ -426,15 +421,13 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.SQUARE:
-                if (!bringctr._Brotherhit || target.gameObject.tag != "Item")
-                    return;
-
                 _onSquare = true;
-                bringctr.SquereButton(target.transform);
+                bringctr.SquereButton();
+                target = null;
                 break;
 
             case ButtonType.TRIANGLE:
-                Debug.Log("△");
+                //錬金したアイテム使用
                 break;
 
             case ButtonType.L1:
@@ -455,7 +448,7 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.OPTION:
-                Debug.Log("Option");
+                //PouseManagerにOption処理が書いてある（Escapeと同じ処理）
                 break;
 
             case ButtonType.PSBTN:
@@ -681,6 +674,11 @@ public class MoveController : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D col)
     {
+        if(col.gameObject.tag == "Item")
+        {
+            target = col.gameObject;
+        }
+        
         if (col.GetComponent<GimmickInfo>())
         {
             switch (col.GetComponent<GimmickInfo>().type)
@@ -696,7 +694,6 @@ public class MoveController : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D col) {
         if (!col.GetComponent<GimmickInfo>()) { return; }
-
         switch (col.GetComponent<GimmickInfo>().type) {
             case GimmickInfo.GimmickType.LADDER:
                 OnLadder = true;
