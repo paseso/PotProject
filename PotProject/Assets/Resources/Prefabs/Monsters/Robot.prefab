@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4927785294458292}
   - component: {fileID: 212963144655288432}
-  - component: {fileID: 61894999406576664}
   - component: {fileID: 114930995633659532}
+  - component: {fileID: 61894999406576664}
   - component: {fileID: 50828317854093486}
   m_Layer: 0
   m_Name: Robot
@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   status:
-    HP: 2
-    ATK: 2
+    hp: 0
+    atk: 0
     barrier: 0
     type: 4
     attribute: 0

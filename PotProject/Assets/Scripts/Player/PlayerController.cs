@@ -3,72 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public struct PlayerStatus
-{
-    //兄のHP
-    [SerializeField]
-    private int hp,atk;
-    
-
-    // バリアの制限時間
-    [SerializeField]
-    private float barrierTime;
-
-    public float GetBarrierTime
-    {
-        get { return barrierTime; }
-    }
-
-    public int PlayerHP
-    {
-        get { return hp; }
-        set { hp = value; }
-    }
-
-    public int PlayerAttack
-    {
-        get { return atk; }
-        set { atk = value; }
-    }
-
-    //剣のタイプ
-    public enum SWORDTYPE
-    {
-        FIRE = 0,
-        WATER,
-        EARTH,
-        KEY,
-    }
-
-    // 兄がどの状態か
-    public enum GimmickState
-    {
-        NORMAL,
-        ONLADDER,
-        ONTREE,
-    }
-
-    //今のイベント状態
-    public enum EventState
-    {
-        NORMAL = 0,
-        CAMERA,
-        ALCHEMYUI,
-        MINIMAP,
-    }
-
-    //アイテム
-    public SWORDTYPE swordtype;
-
-    // 状態
-    public GimmickState state;
-
-    public EventState event_state;
-
-    //持ち物に入ってるアイテム
-    public List<ItemStatus.ITEM> ItemList;
-}
-
 public class PlayerController : MonoBehaviour {
 
     [SerializeField, Header("剣Sprite")]
@@ -77,9 +11,11 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private List<Sprite> swordSpriteList;
 
+    private GameObject[] hearts;
+
     private GameObject HeartObject;
-    private GameObject[] HeartChild = new GameObject[maxHP];
-    private const int maxHP = 3;
+    private GameObject[] HeartChild;
+    private int maxHP;
     private const int maxItemBox = 3;
 
     public PlayerStatus status;
@@ -116,9 +52,23 @@ public class PlayerController : MonoBehaviour {
         set { isMiniMap = value; }
     }
 
+    private GameObject lifePoint;
+
     // Use this for initialization
-    void Start () {
-        status.PlayerHP = maxHP;
+    void Start ()
+    {
+        hearts = new GameObject[status.GetMaxHP];
+        lifePoint = GameObject.FindGameObjectWithTag("LifePoint");
+        for(int i = 0; i < status.GetMaxHP; i++)
+        {
+            hearts[i] = lifePoint.transform.GetChild(i).gameObject;
+        }
+
+        if (status.PlayerHP == 0)
+        {
+            status.PlayerHP = status.GetMaxHP;
+        }
+
         status.ItemList = new List<ItemStatus.ITEM>();
         alchemy_ctr = FindObjectOfType<AlchemyController>();
         alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
@@ -129,6 +79,11 @@ public class PlayerController : MonoBehaviour {
         getHeartChildren();
         _itemMax = false;
         _alchemyUi = false;
+
+        for(int i = 0; i < status.PlayerHP; i++)
+        {
+            hearts[i].SetActive(true);
+        }
 	}
 
     /// <summary>
@@ -212,6 +167,9 @@ public class PlayerController : MonoBehaviour {
     {
         switch (s_type)
         {
+            case PlayerStatus.SWORDTYPE.NORMAL:
+                sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.NORMAL];
+                break;
             case PlayerStatus.SWORDTYPE.FIRE:
                 Debug.Log("火属性");
                 sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.FIRE];
@@ -225,6 +183,7 @@ public class PlayerController : MonoBehaviour {
                 sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.EARTH];
                 break;
             case PlayerStatus.SWORDTYPE.KEY:
+                sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.KEY];
                 Debug.Log("鍵");
                 break;
         }
@@ -269,66 +228,47 @@ public class PlayerController : MonoBehaviour {
     }
 
     /// <summary>
-    /// プレイヤーのHP減らす処理
-    /// </summary>
-    public void DownHp(int point)
-    {
-        if((status.PlayerHP - point) <= 0)
-        {
-            DownHpUI(point);
-            status.PlayerHP = 0;
-            BrotherObj.transform.position = GameObject.Find(BrotherObj.transform.root.name + "/RespornPoint(Clone)").transform.position;
-            UpHp(maxHP);
-            Debug.Log("HPが0になりました");
-            return;
-        }
-        DownHpUI(point);
-        status.PlayerHP -= point;
-        Debug.Log("HP: " + status.PlayerHP);
-    }
-
-    /// <summary>
     /// プレイヤーのHP増やす処理
     /// </summary>
-    public void UpHp(int point)
+    public void HPUp(int point)
     {
-        if ((status.PlayerHP + point) >= 3)
-        {
-            status.PlayerHP = 3;
-            UpHpUI(3);
-            Debug.Log("HPがmaxになりました");
+        if (status.PlayerHP + point > status.GetMaxHP) {
+            status.PlayerHP = status.GetMaxHP;
+            for (int i = 0; i < status.PlayerHP; i++)
+            {
+                hearts[i].SetActive(true);
+            }
             return;
         }
-        UpHpUI(point);
         status.PlayerHP += point;
+        for(int i = 0; i < status.PlayerHP; i++)
+        {
+            hearts[i].SetActive(true);
+        }
     }
 
     /// <summary>
-    /// ハートの数を減らす処理
+    /// プレイヤーのHP減らす処理
     /// </summary>
-    /// <param name="point"></param>
-    private void DownHpUI(int point)
+    public void HPDown(int point)
     {
-        if (status.PlayerHP <= 0)
+        // HPが0になる攻撃を受けたら
+        if (point < 0 && status.PlayerHP + point == 0)
+        {
+            Resporn();
             return;
-        for (int i = status.PlayerHP; i < status.PlayerHP + point; i++)
+        }
+        status.PlayerHP -= point;
+        for(int i = status.GetMaxHP - 1; i > status.PlayerHP; i--)
         {
-            HeartChild[maxHP - i].SetActive(false);
-            if (status.PlayerHP == maxHP)
-                break;
+            hearts[i].SetActive(false);
         }
     }
 
-    /// <summary>
-    /// ハートの数増やす処理
-    /// </summary>
-    /// <param name="point"></param>
-    private void UpHpUI(int point)
+    public void Resporn()
     {
-        for (int i = 1; i < maxHP + 1; i++)
-        {
-            HeartChild[maxHP - i].SetActive(true);
-        }
+        status.PlayerHP = status.GetMaxHP;
+        BrotherObj.transform.position = GameObject.Find(BrotherObj.transform.root.name + "/RespornPoint(Clone)").transform.position;
     }
 
     /// <summary>

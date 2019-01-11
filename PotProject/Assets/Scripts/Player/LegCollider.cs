@@ -27,7 +27,7 @@ public class LegCollider : MonoBehaviour {
         if ((falldistance - now) >= 2.5f)
         {
             Debug.Log("dir = " + (falldistance - now));
-            player_ctr.DownHp(1);
+            player_ctr.HPDown(2);
             falldistance = gameObject.transform.position.y;
         }
     }

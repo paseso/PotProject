@@ -70,6 +70,9 @@ public class MonsterController : MonoBehaviour
     [SerializeField]
     private MonsterStatus status;
 
+    //private float knockback = 6;
+    private Vector2 knockback = new Vector2(1, 6);
+
     private Dictionary<MonsterStatus.MonsterType, string> ItemList = new Dictionary<MonsterStatus.MonsterType, string>
     {
         {MonsterStatus.MonsterType.WATER,"" },
@@ -106,7 +109,10 @@ public class MonsterController : MonoBehaviour
         if(status.HP <= 0)
         {
             DropItem(status);
+            return;
         }
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        rb.AddForce(new Vector2(knockback.x, rb.velocity.y + knockback.y), ForceMode2D.Impulse);
     }
 
     public void DropItem(MonsterStatus status)

@@ -188,6 +188,10 @@ public class MapCreator : MonoBehaviour
 
             //  背景オブジェクトの生成
             GameObject backGroundObject = new GameObject("BG");
+            backGroundObject.AddComponent<BoxCollider2D>();
+            backGroundObject.GetComponent<BoxCollider2D>().isTrigger = true;
+            backGroundObject.layer = LayerMask.NameToLayer("Background");
+            backGroundObject.AddComponent<MapChange>();
             backGroundObject.AddComponent<SpriteRenderer>();
             backGroundObject.GetComponent<SpriteRenderer>().sortingOrder = -1;
             backGroundObject.transform.parent = rootObj.transform;

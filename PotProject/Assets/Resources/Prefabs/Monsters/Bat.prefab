@@ -19,8 +19,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4933897539478414}
-  - component: {fileID: 114515571616213586}
   - component: {fileID: 212895607236413472}
+  - component: {fileID: 114515571616213586}
   - component: {fileID: 61458509454995018}
   - component: {fileID: 50975644889916752}
   m_Layer: 0
@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   status:
-    HP: 3
-    ATK: 3
+    hp: 0
+    atk: 0
     barrier: 0
     type: 2
     attribute: 4

@@ -15,11 +15,18 @@ public class TitleController : MonoBehaviour
     private float loopTime = 3;
     [SerializeField]
     private Vector2 startPos = new Vector2(0, 135), endPos = new Vector2(0, 100);
+    private PlayerManager pInfo;
 
     // Use this for initialization
     void Start()
     {
         fade_m = GameObject.Find("FadeManager").GetComponent<FadeManager>();
+        if (GameObject.Find("PlayerStatus"))
+        {
+            pInfo = GameObject.Find("PlayerStatus").GetComponent<PlayerManager>();
+        }
+
+        pInfo.InitStatus();
         LogoAnimatino();
         LoopCharaAnimation();
     }

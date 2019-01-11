@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4501822527210974}
   - component: {fileID: 212363327139260666}
-  - component: {fileID: 61799431281225384}
   - component: {fileID: 114115177767705326}
+  - component: {fileID: 61799431281225384}
   m_Layer: 13
   m_Name: CreateItem_1
   m_TagString: Untagged
@@ -79,8 +79,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   status:
-    HP: 1
-    ATK: 0
+    hp: 1
+    atk: 0
     barrier: 0
     type: 14
     attribute: 0

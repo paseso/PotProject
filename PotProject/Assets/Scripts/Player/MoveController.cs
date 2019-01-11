@@ -338,7 +338,7 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
                 }
-                if (status.state == PlayerStatus.GimmickState.ONLADDER && !_isJump) {
+                if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !_isJump) {
                     return;
                 }
                 rig.velocity = new Vector2(-5f, rig.velocity.y);
@@ -355,7 +355,7 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_WALK);
                 }
-                if (status.state == PlayerStatus.GimmickState.ONLADDER && !_isJump) {
+                if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !_isJump) {
                     return;
                 }
                 rig.velocity = new Vector2(5f, rig.velocity.y);
@@ -416,7 +416,7 @@ public class MoveController : MonoBehaviour
                 }
                 else
                 {
-                    atc_ctr.AttackObject();
+                    atc_ctr.Attack();
                 }
                 break;
 
@@ -529,7 +529,7 @@ public class MoveController : MonoBehaviour
             {
                 anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTIDLE);
             }
-            if (status.state == PlayerStatus.GimmickState.ONLADDER && !_isJump && IsLadder)
+            if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !_isJump && IsLadder)
             {
                 transform.parent.GetComponent<Rigidbody2D>().simulated = false;
                 Debug.Log("name = " + PotObject.name);
@@ -652,9 +652,9 @@ public class MoveController : MonoBehaviour
     {
         downFlag = dir < 0 ? true : false;
 
-        status.state = PlayerStatus.GimmickState.ONLADDER;
+        status.gimmick_state = PlayerStatus.GimmickState.ONLADDER;
 
-        if (status.state != PlayerStatus.GimmickState.ONLADDER) { return; }
+        if (status.gimmick_state != PlayerStatus.GimmickState.ONLADDER) { return; }
         transform.parent.GetComponent<Rigidbody2D>().simulated = true;
         //プレイヤーの子供全部のレイヤーを変更
         var children = transform.parent.transform;
@@ -684,7 +684,7 @@ public class MoveController : MonoBehaviour
             switch (col.GetComponent<GimmickInfo>().type)
             {
                 case GimmickInfo.GimmickType.GROWTREE:
-                    status.state = PlayerStatus.GimmickState.ONTREE;
+                    status.gimmick_state = PlayerStatus.GimmickState.ONTREE;
                     break;
                 default:
                     break;
@@ -712,7 +712,7 @@ public class MoveController : MonoBehaviour
         switch (col.GetComponent<GimmickInfo>().type) {
             case GimmickInfo.GimmickType.LADDER:
                 if (!_isJump) return;
-                status.state = PlayerStatus.GimmickState.NORMAL;
+                status.gimmick_state = PlayerStatus.GimmickState.NORMAL;
                 player_ctr.ChangeLayer();
                 _laddernow = false;
                 OnLadder = false;
@@ -723,11 +723,11 @@ public class MoveController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D col)
     {
         //モンスターにぶつかった時
-        if(col.gameObject.tag == "Monster")
+        if (col.gameObject.tag == "Monster")
         {
+            int atk = col.gameObject.GetComponent<MonsterStatus>().GetAttack;
             _hitmonster = true;
-            player_ctr.DownHp(1);
-            atc_ctr.AttackObject();
+            player_ctr.HPDown(atk);
         }
     }
 

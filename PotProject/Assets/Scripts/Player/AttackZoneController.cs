@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AttackZoneController : MonoBehaviour {
 
+    private PlayerStatus status;
     private MoveController move_ctr;
     [HideInInspector]
     public GameObject Attack_Target;
@@ -72,36 +73,12 @@ public class AttackZoneController : MonoBehaviour {
     }
 
     /// <summary>
-    /// オブジェクトを殴った時の処理
-    /// </summary>
-    /// <param name="obj">殴るオブジェクト</param>
-    public void AttackObject()
-    {
-
-        if (move_ctr._hitmonster)
-        {
-            move_ctr._ActiveRightLeft = false;
-            Attack_Target = PlayerObject;
-            Rigidbody2D target_rig = Attack_Target.GetComponent<Rigidbody2D>();
-            target_rig.AddForce(new Vector2(-Impalce_x * -1 + 5, target_rig.velocity.y + Impalce_y), ForceMode2D.Impulse);
-            StartCoroutine(WaitObject());
-        }
-        else if (move_ctr.OnCircle && Attack_Target != null)
-        {
-
-            //Destroy(Attack_Target);
-            //return;
-            //Rigidbody2D target_rig = Attack_Target.GetComponent<Rigidbody2D>();
-            //target_rig.AddForce(new Vector2(-Impalce_x, target_rig.velocity.y + Impalce_y), ForceMode2D.Impulse);
-        }
-    }
-
-    /// <summary>
     /// 攻撃
     /// </summary>
     public void Attack()
     {
-        Attack_Target.GetComponent<MonsterController>().Damage(1);
+        if(Attack_Target == null) { return; }
+        Attack_Target.GetComponent<MonsterController>().Damage(status.PlayerAttack);
     }
 
     /// <summary>
