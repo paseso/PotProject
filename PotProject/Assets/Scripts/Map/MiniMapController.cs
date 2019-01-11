@@ -9,7 +9,7 @@ public class MiniMapController : MonoBehaviour {
     private int mapNum;
     private int numX, numY;
     private List<List<Image>> miniMaps = new List<List<Image>>();
-    private Status status;
+    private PlayerStatus status;
     private PlayerController player_ctr;
     private CameraManager cManager;
     private StageController sController;
@@ -51,13 +51,13 @@ public class MiniMapController : MonoBehaviour {
     /// </summary>
     public void ActiveMiniMap()
     {
-        Status tempStatus = new Status();
-        if (status.event_state != Status.EventState.MINIMAP)
+        PlayerStatus tempStatus = new PlayerStatus();
+        if (status.event_state != PlayerStatus.EventState.MINIMAP)
         {
             player_ctr.IsCommandActive = false;
             isMiniMap = true;
             tempStatus = status;
-            status.event_state = Status.EventState.MINIMAP;
+            status.event_state = PlayerStatus.EventState.MINIMAP;
             cManager.SwitchingCameraSub(sController.GetMaps[1][1].transform.localPosition, 70);
         }
         else

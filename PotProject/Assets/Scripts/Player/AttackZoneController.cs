@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackZoonController : MonoBehaviour {
+public class AttackZoneController : MonoBehaviour {
 
     private MoveController move_ctr;
     [HideInInspector]
@@ -88,11 +88,20 @@ public class AttackZoonController : MonoBehaviour {
         }
         else if (move_ctr.OnCircle && Attack_Target != null)
         {
-            Destroy(Attack_Target);
-            return;
-            Rigidbody2D target_rig = Attack_Target.GetComponent<Rigidbody2D>();
-            target_rig.AddForce(new Vector2(-Impalce_x, target_rig.velocity.y + Impalce_y), ForceMode2D.Impulse);
+
+            //Destroy(Attack_Target);
+            //return;
+            //Rigidbody2D target_rig = Attack_Target.GetComponent<Rigidbody2D>();
+            //target_rig.AddForce(new Vector2(-Impalce_x, target_rig.velocity.y + Impalce_y), ForceMode2D.Impulse);
         }
+    }
+
+    /// <summary>
+    /// 攻撃
+    /// </summary>
+    public void Attack()
+    {
+        Attack_Target.GetComponent<MonsterController>().Damage(1);
     }
 
     /// <summary>
