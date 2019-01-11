@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public struct Status
+public struct PlayerStatus
 {
     //兄のHP
     [SerializeField]
-    private int playerHP;
+    private int hp,atk;
+    
 
     // バリアの制限時間
     [SerializeField]
@@ -20,8 +21,14 @@ public struct Status
 
     public int PlayerHP
     {
-        get { return playerHP; }
-        set { playerHP = value; }
+        get { return hp; }
+        set { hp = value; }
+    }
+
+    public int PlayerAttack
+    {
+        get { return atk; }
+        set { atk = value; }
     }
 
     //剣のタイプ
@@ -75,7 +82,7 @@ public class PlayerController : MonoBehaviour {
     private const int maxHP = 3;
     private const int maxItemBox = 3;
 
-    public Status status;
+    public PlayerStatus status;
     private AlchemyController alchemy_ctr;
     private AlchemyUIController alchemyUI_ctr;
     private MoveController move_ctr;
@@ -140,19 +147,19 @@ public class PlayerController : MonoBehaviour {
     /// <summary>
     /// EventStateの設定
     /// </summary>
-    private void setEventState(Status.EventState st)
+    private void setEventState(PlayerStatus.EventState st)
     {
         switch (st)
         {
-            case Status.EventState.NORMAL:
+            case PlayerStatus.EventState.NORMAL:
 
                 break;
 
-            case Status.EventState.CAMERA:
+            case PlayerStatus.EventState.CAMERA:
 
                 break;
 
-            case Status.EventState.ALCHEMYUI:
+            case PlayerStatus.EventState.ALCHEMYUI:
 
                 break;
         }
@@ -201,23 +208,23 @@ public class PlayerController : MonoBehaviour {
     /// 剣の属性を変える処理
     /// </summary>
     /// <param name="s_type">FIRE=火、WATER=水、EARTH=土</param>
-    public void SwordTypeChange(Status.SWORDTYPE s_type)
+    public void SwordTypeChange(PlayerStatus.SWORDTYPE s_type)
     {
         switch (s_type)
         {
-            case Status.SWORDTYPE.FIRE:
+            case PlayerStatus.SWORDTYPE.FIRE:
                 Debug.Log("火属性");
-                sword.sprite = swordSpriteList[(int)Status.SWORDTYPE.FIRE];
+                sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.FIRE];
                 break;
-            case Status.SWORDTYPE.WATER:
+            case PlayerStatus.SWORDTYPE.WATER:
                 Debug.Log("水属性");
-                sword.sprite = swordSpriteList[(int)Status.SWORDTYPE.WATER];
+                sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.WATER];
                 break;
-            case Status.SWORDTYPE.EARTH:
+            case PlayerStatus.SWORDTYPE.EARTH:
                 Debug.Log("土属性");
-                sword.sprite = swordSpriteList[(int)Status.SWORDTYPE.EARTH];
+                sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.EARTH];
                 break;
-            case Status.SWORDTYPE.KEY:
+            case PlayerStatus.SWORDTYPE.KEY:
                 Debug.Log("鍵");
                 break;
         }

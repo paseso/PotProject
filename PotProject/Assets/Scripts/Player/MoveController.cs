@@ -80,10 +80,10 @@ public class MoveController : MonoBehaviour
 
     private PlayerController player_ctr;
     private BringCollider bringctr;
-    private AttackZoonController atc_ctr;
+    private AttackZoneController atc_ctr;
     private AlchemyUIController alchemyUI_ctr;
     private AnimController anim_ctr;
-    private Status status;
+    private PlayerStatus status;
     private MiniMapController miniMap_ctr;
     
     //----------ボタンFlagのget---------------------
@@ -222,7 +222,7 @@ public class MoveController : MonoBehaviour
         rig = gameObject.transform.parent.GetComponent<Rigidbody2D>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         bringctr = gameObject.transform.parent.GetChild(0).GetComponent<BringCollider>();
-        atc_ctr = gameObject.transform.parent.GetComponentInChildren<AttackZoonController>();
+        atc_ctr = gameObject.transform.parent.GetComponentInChildren<AttackZoneController>();
         alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
         miniMap_ctr = GameObject.Find("Canvas/MiniMap").GetComponent<MiniMapController>();
         anim_ctr = gameObject.transform.parent.GetComponent<AnimController>();
@@ -232,8 +232,6 @@ public class MoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(downFlag);
-        Debug.Log(isActiveAndEnabled);
         //何か持ってる時、その持ってる物のtransformをプレイヤーの頭の位置に合わせる
         if (bringctr._bring)
         {
@@ -256,14 +254,14 @@ public class MoveController : MonoBehaviour
     {
         switch (player_ctr.status.event_state)
         {
-            case Status.EventState.NORMAL:
+            case PlayerStatus.EventState.NORMAL:
                 BtnCheck();
                 break;
 
-            case Status.EventState.CAMERA:
+            case PlayerStatus.EventState.CAMERA:
                 break;
 
-            case Status.EventState.ALCHEMYUI:
+            case PlayerStatus.EventState.ALCHEMYUI:
                 UIControll();
                 break;
         }
@@ -345,7 +343,7 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
                 }
-                if (status.state == Status.GimmickState.ONLADDER && !_isJump) {
+                if (status.state == PlayerStatus.GimmickState.ONLADDER && !_isJump) {
                     return;
                 }
                 rig.velocity = new Vector2(-5f, rig.velocity.y);
@@ -362,7 +360,7 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_WALK);
                 }
-                if (status.state == Status.GimmickState.ONLADDER && !_isJump) {
+                if (status.state == PlayerStatus.GimmickState.ONLADDER && !_isJump) {
                     return;
                 }
                 rig.velocity = new Vector2(5f, rig.velocity.y);
@@ -538,7 +536,7 @@ public class MoveController : MonoBehaviour
             {
                 anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTIDLE);
             }
-            if (status.state == Status.GimmickState.ONLADDER && !_isJump && IsLadder)
+            if (status.state == PlayerStatus.GimmickState.ONLADDER && !_isJump && IsLadder)
             {
                 transform.parent.GetComponent<Rigidbody2D>().simulated = false;
                 Debug.Log("name = " + PotObject.name);
@@ -661,9 +659,9 @@ public class MoveController : MonoBehaviour
     {
         downFlag = dir < 0 ? true : false;
 
-        status.state = Status.GimmickState.ONLADDER;
+        status.state = PlayerStatus.GimmickState.ONLADDER;
 
-        if (status.state != Status.GimmickState.ONLADDER) { return; }
+        if (status.state != PlayerStatus.GimmickState.ONLADDER) { return; }
         transform.parent.GetComponent<Rigidbody2D>().simulated = true;
         //プレイヤーの子供全部のレイヤーを変更
         var children = transform.parent.transform;
@@ -688,7 +686,7 @@ public class MoveController : MonoBehaviour
             switch (col.GetComponent<GimmickInfo>().type)
             {
                 case GimmickInfo.GimmickType.GROWTREE:
-                    status.state = Status.GimmickState.ONTREE;
+                    status.state = PlayerStatus.GimmickState.ONTREE;
                     break;
                 default:
                     break;
@@ -717,7 +715,7 @@ public class MoveController : MonoBehaviour
         switch (col.GetComponent<GimmickInfo>().type) {
             case GimmickInfo.GimmickType.LADDER:
                 if (!_isJump) return;
-                status.state = Status.GimmickState.NORMAL;
+                status.state = PlayerStatus.GimmickState.NORMAL;
                 player_ctr.ChangeLayer();
                 _laddernow = false;
                 OnLadder = false;
