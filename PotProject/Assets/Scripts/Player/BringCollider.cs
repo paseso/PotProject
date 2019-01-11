@@ -39,12 +39,12 @@ public class BringCollider : MonoBehaviour {
     /// </summary>
     private void MoveCollider()
     {
-        if (move_controll.OnLeft) // || direction == Direction.RIGHT
+        if (move_controll.OnLeft)
         {
             gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
             direction = Direction.LEFT;
         }
-        if (move_controll.OnRight) // || direction == Direction.LEFT
+        if (move_controll.OnRight)
         {
             gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
             direction = Direction.RIGHT;
@@ -56,58 +56,25 @@ public class BringCollider : MonoBehaviour {
     /// </summary>
     public void SquereButton(Transform pos)
     {
-        //アイテムを持ってる時
-        if (_Brotherhit && !_bring)
-        {
-            _bring = true;
-            pos.GetComponent<Rigidbody2D>().simulated = false;
-            pot_ctr.ChangeLayer();
-        }
-        else
-        {
-            //アイテムを離す時
-            if (direction == Direction.RIGHT)
-            {
-                pos.gameObject.transform.position = new Vector2(gameObject.transform.position.x + 2f, gameObject.transform.position.y + 1.5f);
-            }
-            else
-            {
-                pos.gameObject.transform.position = new Vector2(gameObject.transform.position.x - 2f, gameObject.transform.position.y + 1.5f);
-            }
-            pos.gameObject.transform.parent = pos.transform.parent;
-            pos.GetComponent<Rigidbody2D>().simulated = true;
-            pos = null;
-            pot_ctr.ChangeLayer();
-            move_controll._itemFall = true;
-            _bring = false;
-        }
+        //アイテムを拾う
+        pot_ctr.AddItem(pos.GetComponent<ItemManager>().getItemStatus());
+        Destroy(pos.gameObject);
     }
 
     private void OnTriggerStay2D(Collider2D col)
     {
+        //アイテムの子供にあるUIを表示
         if (col.gameObject.tag == "Item")
         {
-            if (!_bring)
-            {
-                pot_ctr.ChangeLayer();
-                move_controll.target = col.gameObject;
-                _Brotherhit = true;
-            }
-        }
-
-        //壺に当たってたらアイテムを入れれる合図を出す（UI表示）
-        if (col.gameObject.tag == "Tubo")
-        {
-            _Tubohit = true;
             col.gameObject.transform.GetChild(0).gameObject.SetActive(true);
         }
     }
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        if(col.gameObject.tag == "Tubo")
+        //アイテムの子供にあるUIを非表示
+        if (col.gameObject.tag == "Item")
         {
-            _Tubohit = false;
             col.gameObject.transform.GetChild(0).gameObject.SetActive(false);
         }
     }

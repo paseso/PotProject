@@ -35,7 +35,6 @@ public class PotController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         PotJump();
-        //ChangeLayer();
 	}
 
     /// <summary>
@@ -82,47 +81,35 @@ public class PotController : MonoBehaviour {
             gameObject.GetComponent<DistanceJoint2D>().enabled = true;
             move_ctr.transform.parent.GetComponent<DistanceJoint2D>().enabled = false;
         }
-        
-        //if (gameObject.layer == LayerMask.NameToLayer("Pot"))
-        //{
-        //    gameObject.layer = LayerMask.NameToLayer("Default");
-        //}
-        //else
-        //{
-        //    gameObject.layer = LayerMask.NameToLayer("Pot");
-        //}
-        
+    }
+
+    /// <summary>
+    /// ツボにアイテムを受け渡す処理
+    /// </summary>
+    public void AddItem(ItemStatus.ITEM type)
+    {
+        switch (type)
+        {
+            case ItemStatus.ITEM.SLIME:
+                player_ctr.setItemList(ItemStatus.ITEM.SLIME);
+                break;
+
+            case ItemStatus.ITEM.GOLEM:
+                player_ctr.setItemList(ItemStatus.ITEM.GOLEM);
+                break;
+
+            case ItemStatus.ITEM.SNAKE:
+                player_ctr.setItemList(ItemStatus.ITEM.SNAKE);
+                break;
+
+            default:
+                Debug.Log("ItemType: " + type);
+                break;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Item")
-        {
-            if (!bring_col._Tubohit)
-                return;
-
-            Destroy(col.gameObject);
-            var type = col.gameObject.GetComponent<ItemManager>().getItemStatus();
-            switch (type.item)
-            {
-                case ItemStatus.ITEM.SLIME:
-                    player_ctr.setItemList(ItemStatus.ITEM.SLIME);
-                    break;
-
-                case ItemStatus.ITEM.GOLEM:
-                    player_ctr.setItemList(ItemStatus.ITEM.GOLEM);
-                    break;
-
-                case ItemStatus.ITEM.SNAKE:
-                    player_ctr.setItemList(ItemStatus.ITEM.SNAKE);
-                    break;
-
-                default:
-                    Debug.Log("ItemType: " + type);
-                    break;
-            }
-
-        }
         if (col.gameObject.GetComponent<MonsterController>())
         {
             //if (!bring_col._Tubohit || !move_ctr._itemFall)

@@ -28,9 +28,9 @@ public class ItemManager : MonoBehaviour {
     /// <summary>
     /// Item Status取得
     /// </summary>
-    public ItemStatus getItemStatus()
+    public ItemStatus.ITEM getItemStatus()
     {
-        return item_status;
+        return item_status.item;
     }
 
 }
