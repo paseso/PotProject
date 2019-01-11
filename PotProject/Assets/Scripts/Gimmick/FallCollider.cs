@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class FallCollider : MonoBehaviour {
 
-    public void OnTriggerEnter2D(Collider2D col) {
-        if (col.tag == "Player") {
+    public void OnTriggerStay2D(Collider2D col) {
+        
+        if (col.gameObject.layer == LayerMask.NameToLayer("Player")) {
             transform.parent.GetComponent<FallBlock>().SetFallFlag = true;
         }
     }
 
     public void OnTriggerExit2D(Collider2D col) {
-        if (col.tag == "Player") {
+        if (col.gameObject.layer == LayerMask.NameToLayer("Player")) {
             transform.parent.GetComponent<FallBlock>().SetFallFlag = false;
         }
     }

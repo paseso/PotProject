@@ -9,16 +9,17 @@ using UnityEngine;
 public struct MonsterStatus
 {
     [SerializeField]
-    private int HP, ATK;
+    private int hp, atk;
 
-    public int SetHP
+    public int HP
     {
-        set { value = HP; }
+        get { return hp; }
+        set { value = hp; }
     }
 
     public int GetAttack
     {
-        get { return ATK; }
+        get { return atk; }
     }
 
     public bool barrier;
@@ -60,7 +61,7 @@ public struct MonsterStatus
 }
 
 /// <summary>
-/// モンスター情報
+/// モンスターコントローラー
 /// </summary>
 public class MonsterController : MonoBehaviour
 {
@@ -69,7 +70,7 @@ public class MonsterController : MonoBehaviour
     [SerializeField]
     private MonsterStatus status;
 
-    public Dictionary<MonsterStatus.MonsterType, string> ItemList = new Dictionary<MonsterStatus.MonsterType, string>
+    private Dictionary<MonsterStatus.MonsterType, string> ItemList = new Dictionary<MonsterStatus.MonsterType, string>
     {
         {MonsterStatus.MonsterType.WATER,"" },
         {MonsterStatus.MonsterType.LION,"" },
@@ -95,20 +96,30 @@ public class MonsterController : MonoBehaviour
         get { return status; }
     }
 
-
-
-    public void OnDestroy()
+    /// <summary>
+    /// ダメージ処理
+    /// </summary>
+    /// <param name="damage"></param>
+    public void Damage(int damage)
     {
-        DropItem(GetMStatus);
+        status.HP -= damage;
+        if(status.HP <= 0)
+        {
+            DropItem(status);
+        }
     }
 
     public void DropItem(MonsterStatus status)
     {
-        if(ItemList[status.type] == "") { return; }
+        if(ItemList[status.type] == "") {
+            Destroy(gameObject);
+            return;
+        }
+
         GameObject item = Instantiate(Resources.Load<GameObject>(itemFolder + ItemList[status.type]));
         item.AddComponent<PopUp>();
         item.transform.SetParent(transform.parent.transform);
-        
         item.transform.localPosition = transform.localPosition;
+        Destroy(gameObject);
     }
 }

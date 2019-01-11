@@ -8,7 +8,7 @@ using UnityEngine;
 public class PlayerBarrier : MonoBehaviour {
     // バリアの制限時間
     private float timeLimit;
-    private Status status;
+    private PlayerStatus status;
 
 	// Use this for initialization
 	void Awake () {

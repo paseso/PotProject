@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FallBlock : MonoBehaviour {
+    private string blockPrefab = ("Prefabs/GimmickTiles/FallBlockPrefab");
     private enum fallState {
         normal,
         reach,
@@ -28,27 +29,38 @@ public class FallBlock : MonoBehaviour {
     void Start() {
         defaultPos = transform.localPosition;
         state = fallState.normal;
-        if(createTime < fallTime) {
+        transform.GetComponent<Rigidbody2D>().isKinematic = true;
+
+        // バグ回避
+        if (createTime < fallTime) {
             createTime = fallTime * 2;
         }
     }
 
     void Update() {
-        if (!fallFlag) { return; }
+        if (fallFlag || state == fallState.fall) {
+            timer += Time.deltaTime;
 
-        timer += Time.deltaTime;
+            if (timer > fallTime / 2 && state == fallState.normal)
+            {
+                state = fallState.reach;
+            }
+            else if (timer > fallTime && state == fallState.reach)
+            {
+                timer = 0;
+                state = fallState.fall;
+                transform.GetComponent<Rigidbody2D>().isKinematic = false;
+            }
+        }
 
-        if(timer > fallTime / 2 && state == fallState.normal) {
-            state = fallState.reach;
-        }else if(timer > fallTime && state == fallState.reach) {
-            state = fallState.fall;
-            transform.GetComponent<Rigidbody2D>().simulated = true;
-        }else if(timer > createTime && state == fallState.fall) {
-            GameObject fallBlock = Instantiate(Resources.Load<GameObject>("Prefabs/GimmickTiles/fallBlockPrefab"));
+        if (timer > createTime && state == fallState.fall)
+        {
+            timer = 0;
+            GameObject fallBlock = Instantiate(Resources.Load<GameObject>(blockPrefab));
             fallBlock.transform.SetParent(transform.root.transform);
             fallBlock.transform.localPosition = defaultPos;
             Destroy(gameObject);
         }
-        
+
     }
 }

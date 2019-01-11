@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4605885070993848}
   - component: {fileID: 61846085221588536}
+  - component: {fileID: 114815005352907056}
   m_Layer: 16
   m_Name: FallCol
   m_TagString: Untagged
@@ -38,8 +39,9 @@ GameObject:
   - component: {fileID: 212226648286324604}
   - component: {fileID: 50840870073915128}
   - component: {fileID: 61962422289062868}
+  - component: {fileID: 114285141528337036}
   m_Layer: 16
-  m_Name: FallBlock
+  m_Name: FallBlockPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -142,6 +144,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &114285141528337036
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1622490842944640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea52c54291e6a0488ba689a5bf32167, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fallTime: 3
+  createTime: 5
+--- !u!114 &114815005352907056
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1325530872530992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5024cfaae242849854421ba9abc6d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212226648286324604
 SpriteRenderer:
   m_ObjectHideFlags: 1
