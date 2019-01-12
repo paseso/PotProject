@@ -23,7 +23,7 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
         }
         if (pauseCanvasObj == null)
         {
-            pauseCanvasObj = transform.GetChild(0).gameObject;
+            pauseCanvasObj = Instantiate(pauseCanvasPrefab);
             pauseCanvasObj.SetActive(false);
         }
         isPause = false;
@@ -33,9 +33,10 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
         btns[1].onClick.AddListener(ReturnStageSelect);
         btns[2].onClick.AddListener(EscapeGame);
         //  EventSystemの設定
-        eventSystem = EventSystem.current;
+        eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
         eventSystem.firstSelectedGameObject = btns[0].gameObject;
-        //  シーン遷移時に破棄されないように 
+        //  シーン遷移時に破棄されないように
+        DontDestroyOnLoad(pauseCanvasObj);
         DontDestroyOnLoad(this.gameObject);
     }
 
