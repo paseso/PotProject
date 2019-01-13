@@ -97,6 +97,11 @@ public class MoveController : MonoBehaviour
         get { return _jumping; }
     }
 
+    public bool setJumping
+    {
+        set { _jumping = value; }
+    }
+
     public bool OnRight
     {
         get { return _onRight; }
@@ -240,6 +245,7 @@ public class MoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("jumping = " + Jumping);
         //はしご処理してる時、ツボのtransformをプレイヤーと同じ位置にする
         if (_laddernow)
         {
@@ -292,7 +298,6 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void ClearBtnFlg()
     {
-        _jumping = false;
         _onUp = false;
         _onDown = false;
         _onRight = false;
@@ -320,9 +325,9 @@ public class MoveController : MonoBehaviour
         switch (btn)
         {
             case ButtonType.JUMP:
-                leg_col.JumpingMove(direc);
                 if (!_isJump)
                     return;
+
                 if (direc == Direction.RIGHT)
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTJUMP);
@@ -331,15 +336,17 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTJUMP);
                 }
-                rig.velocity = new Vector2(0, 1f * speed);
+                rig.velocity = new Vector2(rig.velocity.x, 1f * speed);
                 _jumping = true;
                 break;
 
             case ButtonType.LEFTJOYSTICK_LEFT:
+                direc = Direction.LEFT;
+                leg_col.JumpingMove(direc);
+
                 if (_notLeft)
                     return;
-
-                direc = Direction.LEFT;
+                Debug.Log("左");
                 if (!_ActiveRightLeft)
                     return;
                 if (_isJump && !Jumping)
@@ -354,10 +361,13 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.LEFTJOYSTICK_RIGHT:
+                direc = Direction.RIGHT;
+                leg_col.JumpingMove(direc);
+
                 if (_notRight)
                     return;
+                Debug.Log("右");
 
-                direc = Direction.RIGHT;
                 if (!_ActiveRightLeft)
                     return;
                 if (_isJump && !Jumping)
