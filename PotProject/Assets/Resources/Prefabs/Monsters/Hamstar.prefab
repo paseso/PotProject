@@ -20,10 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4635255761639470}
   - component: {fileID: 212235673278103790}
-  - component: {fileID: 114875839392784282}
+  - component: {fileID: 114610031800598382}
   - component: {fileID: 61632854038615982}
   - component: {fileID: 50837073238841848}
-  - component: {fileID: 114784109080726004}
   m_Layer: 13
   m_Name: Hamstar
   m_TagString: Monster
@@ -119,7 +118,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.12, y: 3.9020815}
   m_EdgeRadius: 0
---- !u!114 &114784109080726004
+--- !u!114 &114610031800598382
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -146,23 +145,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbf27ee7189b89e419a55d8c82610093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114875839392784282
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1247499424015016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd229fd54d0c8d241846c6b53edd4566, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  status:
-    HP: 1
-    ATK: 1
-    barrier: 0
-    type: 9
-    attribute: 0
 --- !u!212 &212235673278103790
 SpriteRenderer:
   m_ObjectHideFlags: 1

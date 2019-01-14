@@ -9,6 +9,16 @@ public struct BossStatus
     public int ATTACK;
     public int INT;
     public int magicTime;
+
+    // 属性
+    public enum BossAttribute {
+        NORMAL,
+        FIRE,
+        ICE,
+        THUNDER,
+        DARK,
+    }
+    public BossAttribute attribute;
 }
 
 public class BossController : MonoBehaviour {

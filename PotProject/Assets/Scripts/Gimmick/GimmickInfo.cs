@@ -23,6 +23,7 @@ public class GimmickInfo : MonoBehaviour {
         KEYDOOR,
         WATER,
         FIREFIELD,
+        MAGIC,
     }
 
     public GimmickType type;
