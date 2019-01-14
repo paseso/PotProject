@@ -34,9 +34,9 @@ public class LegCollider : MonoBehaviour {
 
     public bool JumpCheck(GameObject col)
     {
-        if (!col.GetComponent<GimmickInfo>()) { return false; }
+        if (col.gameObject.layer == LayerMask.NameToLayer("Background")) { return false; }
+        if (!col.GetComponent<GimmickInfo>()) { return true; }
         GimmickInfo info = col.GetComponent<GimmickInfo>();
-        if (col.gameObject.layer != LayerMask.NameToLayer("Background")) { return false; }
         if(info.type != GimmickInfo.GimmickType.LADDER) { return false; }
         if (info.type != GimmickInfo.GimmickType.LADDERTOP) { return false; }
         return true;
@@ -44,8 +44,10 @@ public class LegCollider : MonoBehaviour {
 
     private void OnTriggerStay2D(Collider2D col)
     {
+        //if (!col.GetComponent<GimmickInfo>()) { return; }
         GimmickInfo info = col.GetComponent<GimmickInfo>();
         
+
         if (JumpCheck(col.gameObject))
         {
             move_ctr._isJump = true;
