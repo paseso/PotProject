@@ -1,9 +1,23 @@
 fileFormatVersion: 2
 guid: a4750804909afed40b3b98467ec90928
-timeCreated: 1544747173
+timeCreated: 1547553393
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: ANI_BACK_0
+    21300002: ANI_BACK_1
+    21300004: ANI_BACK_2
+    21300006: ANI_BACK_3
+    21300008: ANI_BACK_4
+    21300010: ANI_BACK_5
+    21300012: ANI_BACK_6
+    21300014: ANI_BACK_7
+    21300016: ANI_BACK_8
+    21300018: ANI_BACK_9
+    21300020: ANI_BACK_10
+    21300022: ANI_BACK_11
+    21300024: ANI_BACK_12
+    21300026: ANI_BACK_13
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -34,7 +48,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -58,11 +72,217 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: iPhone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: ANI_BACK_0
+      rect:
+        serializedVersion: 2
+        x: 2.1281662
+        y: 431.36865
+        width: 87
+        height: 49.250977
+      alignment: 9
+      pivot: {x: 0.5100211, y: 0.4798148}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ANI_BACK_1
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 374
+        width: 31
+        height: 94
+      alignment: 9
+      pivot: {x: 0.5, y: 0.49999997}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ANI_BACK_2
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 374
+        width: 34
+        height: 95
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ANI_BACK_3
+      rect:
+        serializedVersion: 2
+        x: 318
+        y: 325.5761
+        width: 179
+        height: 184.42389
+      alignment: 9
+      pivot: {x: 0.4972067, y: 0.50114924}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ANI_BACK_4
+      rect:
+        serializedVersion: 2
+        x: 3.8767233
+        y: 390.29514
+        width: 122.623276
+        height: 43.704865
+      alignment: 9
+      pivot: {x: 0.4943864, y: 0.49662355}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ANI_BACK_5
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 338
+        width: 110
+        height: 39
+      alignment: 9
+      pivot: {x: 0.49999997, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ANI_BACK_6
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 304
+        width: 81
+        height: 39.516754
+      alignment: 9
+      pivot: {x: 0.48765433, y: 0.5061144}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ANI_BACK_7
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 294
+        width: 84
+        height: 44
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ANI_BACK_8
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 126
+        width: 98.00976
+        height: 143
+      alignment: 9
+      pivot: {x: 0.4999502, y: 0.506993}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ANI_BACK_9
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 196.41414
+        width: 126.64725
+        height: 77.58586
+      alignment: 9
+      pivot: {x: 0.50139266, y: 0.4973311}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ANI_BACK_10
+      rect:
+        serializedVersion: 2
+        x: 305.77603
+        y: 162
+        width: 206.22397
+        height: 152
+      alignment: 9
+      pivot: {x: 0.500543, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ANI_BACK_11
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 7
+        width: 70
+        height: 70
+      alignment: 9
+      pivot: {x: 0.5, y: 0.51428574}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ANI_BACK_12
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 7
+        width: 71
+        height: 69.546745
+      alignment: 9
+      pivot: {x: 0.49295774, y: 0.51763743}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ANI_BACK_13
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 15
+        width: 146
+        height: 126
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
-  userData: 
+  userData: 101420458051355
   assetBundleName: 
   assetBundleVariant: 
