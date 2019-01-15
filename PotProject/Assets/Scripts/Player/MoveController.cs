@@ -299,7 +299,6 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void ClearBtnFlg()
     {
-        _jumping = false;
         _onUp = false;
         _onDown = false;
         _onRight = false;
@@ -337,8 +336,8 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTJUMP);
                 }
-                //rig.velocity = new Vector2(rig.velocity.x, 1f * speed);
-                rig.AddForce(new Vector2(rig.velocity.x, 50f * speed), ForceMode2D.Force);
+                rig.velocity = new Vector2(rig.velocity.x, 1f * speed);
+                //rig.AddForce(new Vector2(rig.velocity.x, 50f * speed), ForceMode2D.Force);
                 _jumping = true;
                 break;
 
