@@ -32,6 +32,29 @@ public class LegCollider : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// ジャンプ中の左右移動制限
+    /// </summary>
+    public void JumpingMove(MoveController.Direction dir)
+    {
+        if (!move_ctr.Jumping)
+        {
+            move_ctr._notLeft = false;
+            move_ctr._notRight = false;
+            return;
+        }
+        if (dir == MoveController.Direction.LEFT)
+        {
+            move_ctr._notLeft = true;
+            move_ctr._notRight = false;
+        }
+        else
+        {
+            move_ctr._notLeft = false;
+            move_ctr._notRight = true;
+        }
+    }
+
     public bool JumpCheck(GameObject col)
     {
         if (col.gameObject.layer == LayerMask.NameToLayer("Background")) { return false; }
@@ -43,6 +66,10 @@ public class LegCollider : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D col) {
+        if (move_ctr.Jumping)
+        {
+            move_ctr.setJumping = false;
+        }
         if (col.gameObject.tag == "floor") {
             _legFloor = true;
         }

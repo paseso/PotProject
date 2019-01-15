@@ -75,6 +75,10 @@ public class MoveController : MonoBehaviour
     private bool _onCrossLeft = false;
     private bool _onR2 = false;
     //---------------------------------------------
+    //左右押しても反応しなくなるフラグ
+    public bool _notLeft = false;
+    public bool _notRight = false;
+
     [HideInInspector]
     public GameObject target;
     private List<Sprite> BrotherSprites;
@@ -88,11 +92,16 @@ public class MoveController : MonoBehaviour
     private AnimController anim_ctr;
     private PlayerStatus status;
     private MiniMapController miniMap_ctr;
-    
+    private LegCollider leg_col;
+
     //----------ボタンFlagのget---------------------
     public bool Jumping
     {
         get { return _jumping; }
+    }
+    public bool setJumping
+    {
+        set { _jumping = value; }
     }
 
     public bool OnRight
@@ -199,12 +208,12 @@ public class MoveController : MonoBehaviour
     };
 
     //プレイヤーの今向いてる方向
-    private enum Direction
+    public enum Direction
     {
         RIGHT = 0,
         LEFT
     }
-    private Direction direc;
+    public Direction direc;
 
     private void Awake()
     {
@@ -214,6 +223,8 @@ public class MoveController : MonoBehaviour
         _jumping = false;
         _hitmonster = false;
         _laddernow = false;
+        _notLeft = false;
+        _notRight = false;
         ClearBtnFlg();
     }
 
@@ -229,6 +240,7 @@ public class MoveController : MonoBehaviour
         alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
         miniMap_ctr = GameObject.Find("Canvas/MiniMap").GetComponent<MiniMapController>();
         anim_ctr = gameObject.transform.parent.GetComponent<AnimController>();
+        leg_col = gameObject.transform.parent.GetComponentInChildren<LegCollider>();
         _isJump = false;
     }
 
@@ -287,7 +299,6 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void ClearBtnFlg()
     {
-        _jumping = false;
         _onUp = false;
         _onDown = false;
         _onRight = false;
@@ -325,40 +336,45 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTJUMP);
                 }
-                
-                rig.velocity = new Vector2(0, 1f * speed);
+                rig.velocity = new Vector2(rig.velocity.x, 1f * speed);
+                //rig.AddForce(new Vector2(rig.velocity.x, 50f * speed), ForceMode2D.Force);
                 _jumping = true;
                 break;
 
             case ButtonType.LEFTJOYSTICK_LEFT:
-                _onLeft = true;
-                _onRight = false;
-
                 direc = Direction.LEFT;
+                leg_col.JumpingMove(direc);
+
+                if (_notLeft)
+                    return;
                 if (!_ActiveRightLeft)
                     return;
                 if (_isJump && !Jumping)
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
                 }
-                if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !_isJump) {
+                if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !_isJump)
+                {
                     return;
                 }
                 rig.velocity = new Vector2(-5f, rig.velocity.y);
                 break;
 
             case ButtonType.LEFTJOYSTICK_RIGHT:
-                _onRight = true;
-                _onLeft = false;
-
                 direc = Direction.RIGHT;
+                leg_col.JumpingMove(direc);
+
+                if (_notRight)
+                    return;
+
                 if (!_ActiveRightLeft)
                     return;
                 if (_isJump && !Jumping)
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_WALK);
                 }
-                if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !_isJump) {
+                if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !_isJump)
+                {
                     return;
                 }
                 rig.velocity = new Vector2(5f, rig.velocity.y);
@@ -430,6 +446,10 @@ public class MoveController : MonoBehaviour
                 else
                 {
                     atc_ctr.Attack();
+                    if(direc == Direction.LEFT)
+                        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.SORDATTACK_LEFT);
+                    else
+                        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.SORDATTACK_RIGHT);
                 }
                 break;
 
