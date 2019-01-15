@@ -446,6 +446,10 @@ public class MoveController : MonoBehaviour
                 else
                 {
                     atc_ctr.Attack();
+                    if(direc == Direction.LEFT)
+                        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.SORDATTACK_LEFT);
+                    else
+                        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.SORDATTACK_RIGHT);
                 }
                 break;
 

@@ -13,6 +13,8 @@ public class AnimController : MonoBehaviour {
             RIGHTIDLE,
             LEFT_WALK,
             RIGHT_WALK,
+            SORDATTACK_LEFT,
+            SORDATTACK_RIGHT,
             LADDER_UP,
             LADDER_DOWN,
         }
@@ -43,6 +45,7 @@ public class AnimController : MonoBehaviour {
             case AnimState.AnimType.LEFTJUMP:
             case AnimState.AnimType.LEFTIDLE:
             case AnimState.AnimType.LEFT_WALK:
+            case AnimState.AnimType.SORDATTACK_LEFT:
                 //剣
                 gameObject.transform.GetChild(4).GetComponent<SpriteRenderer>().sortingOrder = 10;
                 //頭
@@ -87,6 +90,7 @@ public class AnimController : MonoBehaviour {
             case AnimState.AnimType.RIGHTJUMP:
             case AnimState.AnimType.RIGHTIDLE:
             case AnimState.AnimType.RIGHT_WALK:
+            case AnimState.AnimType.SORDATTACK_RIGHT:
                 //剣
                 gameObject.transform.GetChild(4).GetComponent<SpriteRenderer>().sortingOrder = 1;
                 //頭
@@ -155,6 +159,8 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightWalk", false);
                 anim.SetBool("isLeftIdle", false);
                 anim.SetBool("isRightIdle", false);
+                anim.SetBool("isSordAttackLeft", false);
+                anim.SetBool("isSordAttackRight", false);
                 break;
 
             case AnimState.AnimType.LEFTJUMP:
@@ -165,6 +171,8 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightWalk", false);
                 anim.SetBool("isLeftIdle", false);
                 anim.SetBool("isRightIdle", false);
+                anim.SetBool("isSordAttackLeft", false);
+                anim.SetBool("isSordAttackRight", false);
                 break;
 
             case AnimState.AnimType.LEFTIDLE:
@@ -175,6 +183,8 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightWalk", false);
                 anim.SetBool("isLeftIdle", true);
                 anim.SetBool("isRightIdle", false);
+                anim.SetBool("isSordAttackLeft", false);
+                anim.SetBool("isSordAttackRight", false);
                 break;
 
             case AnimState.AnimType.RIGHTIDLE:
@@ -185,6 +195,8 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightWalk", false);
                 anim.SetBool("isLeftIdle", false);
                 anim.SetBool("isRightIdle", true);
+                anim.SetBool("isSordAttackLeft", false);
+                anim.SetBool("isSordAttackRight", false);
                 break;
 
             case AnimState.AnimType.LEFT_WALK:
@@ -195,6 +207,8 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightWalk", false);
                 anim.SetBool("isLeftIdle", false);
                 anim.SetBool("isRightIdle", false);
+                anim.SetBool("isSordAttackLeft", false);
+                anim.SetBool("isSordAttackRight", false);
                 break;
 
             case AnimState.AnimType.RIGHT_WALK:
@@ -205,6 +219,32 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightWalk", true);
                 anim.SetBool("isLeftIdle", false);
                 anim.SetBool("isRightIdle", false);
+                anim.SetBool("isSordAttackLeft", false);
+                anim.SetBool("isSordAttackRight", false);
+                break;
+
+            case AnimState.AnimType.SORDATTACK_LEFT:
+                animstate.animtype = AnimState.AnimType.SORDATTACK_LEFT;
+                anim.SetBool("isRightJump", false);
+                anim.SetBool("isLeftJump", false);
+                anim.SetBool("isLeftWalk", false);
+                anim.SetBool("isRightWalk", false);
+                anim.SetBool("isLeftIdle", false);
+                anim.SetBool("isRightIdle", false);
+                anim.SetBool("isSordAttackLeft", true);
+                anim.SetBool("isSordAttackRight", false);
+                break;
+
+            case AnimState.AnimType.SORDATTACK_RIGHT:
+                animstate.animtype = AnimState.AnimType.SORDATTACK_RIGHT;
+                anim.SetBool("isRightJump", false);
+                anim.SetBool("isLeftJump", false);
+                anim.SetBool("isLeftWalk", false);
+                anim.SetBool("isRightWalk", false);
+                anim.SetBool("isLeftIdle", false);
+                anim.SetBool("isRightIdle", false);
+                anim.SetBool("isSordAttackLeft", false);
+                anim.SetBool("isSordAttackRight", true);
                 break;
 
             case AnimState.AnimType.LADDER_UP:
@@ -215,6 +255,8 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightWalk", false);
                 anim.SetBool("isLeftIdle", false);
                 anim.SetBool("isRightIdle", false);
+                anim.SetBool("isSordAttackLeft", false);
+                anim.SetBool("isSordAttackRight", false);
                 break;
 
             case AnimState.AnimType.LADDER_DOWN:
@@ -225,6 +267,8 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightWalk", false);
                 anim.SetBool("isLeftIdle", false);
                 anim.SetBool("isRightIdle", false);
+                anim.SetBool("isSordAttackLeft", false);
+                anim.SetBool("isSordAttackRight", false);
                 break;
         }
     }
