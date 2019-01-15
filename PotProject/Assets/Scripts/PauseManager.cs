@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -10,9 +11,9 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
 
     public GameObject pauseCanvasPrefab;
     private GameObject pauseCanvasObj;
+    private EventSystem eventSystem;
 
     private bool isPause;
-
     public void Awake()
     {
         if (this != Instance)
@@ -31,7 +32,10 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
         btns[0].onClick.AddListener(ReturnTitle);
         btns[1].onClick.AddListener(ReturnStageSelect);
         btns[2].onClick.AddListener(EscapeGame);
-        //  シーン遷移時に破棄されないように 
+        //  EventSystemの設定
+        eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+        eventSystem.firstSelectedGameObject = btns[0].gameObject;
+        //  シーン遷移時に破棄されないように
         DontDestroyOnLoad(pauseCanvasObj);
         DontDestroyOnLoad(this.gameObject);
     }
@@ -39,7 +43,7 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Option"))
         {
             Debug.Log("Esc");
             if (!isPause)
