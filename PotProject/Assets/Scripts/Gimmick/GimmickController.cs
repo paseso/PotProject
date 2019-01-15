@@ -13,12 +13,19 @@ public class GimmickController :MonoBehaviour {
     private MapInfo mInfo;
     private GimmickInfo gInfo;
     private MiniMapController mMapController;
+    private BossController bossCon;
+    private int inFireZone = 0;
 
     // Use this for initialization
     void Start() {
         if (GameObject.Find("Controller") != null)
         {
             sController = GameObject.Find("Controller").GetComponent<StageController>();
+        }
+
+        if (FindObjectOfType<BossController>())
+        {
+            bossCon = FindObjectOfType<BossController>();
         }
 
         mMapController = FindObjectOfType<MiniMapController>();
@@ -67,29 +74,27 @@ public class GimmickController :MonoBehaviour {
     /// </summary>
     /// <param name="col"></param>
     public void OnTriggerEnter2D(Collider2D col) {
+        if(col.gameObject.tag != ("Player")) { return; }
         switch (gInfo.type) {
-            case GimmickInfo.GimmickType.GROWTREE:
-                mInfo.GrowTreeFlag = true;
-                Debug.Log("TreeFlag: " + mInfo.GrowTreeFlag);
-                break;
-
-            case GimmickInfo.GimmickType.LADDER:
-
-                break;
             case GimmickInfo.GimmickType.MAPCHANGE:
                 col.transform.parent.transform.parent.transform.SetParent(transform.root.gameObject.transform);
                 mMapController.NowMap();
+                break;
+            case GimmickInfo.GimmickType.FIREFIELD:
+                bossCon.IsMagicAttack = true;
+                inFireZone++;
                 break;
             default:
                 break;
         }
     }
 
-    public void OnCollisionStay2D(Collision2D col)
+    public void OnTriggerStay2D(Collider2D col)
     {
-        if(gInfo.type == GimmickInfo.GimmickType.FIREFIELD)
+        if (col.gameObject.tag != ("Player")) { return; }
+        if (gInfo.type == GimmickInfo.GimmickType.FIREFIELD)
         {
-            
+            bossCon.IsMagicAttack = true;
         }
     }
 
@@ -98,14 +103,14 @@ public class GimmickController :MonoBehaviour {
     /// </summary>
     /// <param name="col"></param>
     public void OnTriggerExit2D(Collider2D col) {
+        if (col.gameObject.tag != ("Player")) { return; }
         switch (gInfo.type) {
-            case GimmickInfo.GimmickType.GROWTREE:
-                mInfo.GrowTreeFlag = true;
-                //Debug.Log("TreeFlag: " + mInfo.GrowTreeFlag);
-                break;
-
-            case GimmickInfo.GimmickType.LADDER:
-
+            case GimmickInfo.GimmickType.FIREFIELD:
+                inFireZone--;
+                if (inFireZone < 0)
+                {
+                    bossCon.IsMagicAttack = false;
+                }
                 break;
             default:
                 break;

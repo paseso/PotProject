@@ -11,6 +11,9 @@ public class MapInfo : MonoBehaviour {
     private int mapNumX;
     private int mapNumY;
 
+    // このマップが踏破済か
+    private bool isAccessMap = false;
+
     public GameObject rock;
     // 伸びる木
     private bool _tree;
@@ -24,6 +27,12 @@ public class MapInfo : MonoBehaviour {
     public int MapNumY {
         get { return mapNumY; }
         set { mapNumY = value; }
+    }
+
+    public bool IsAccessMap
+    {
+        get { return isAccessMap; }
+        set { isAccessMap = value; }
     }
 
     // スイッチ岩
