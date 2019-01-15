@@ -37,10 +37,7 @@ public class MiniMapController : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player");
 	}
 
-    int count = 0;
     public void NowMap() {
-        count++;
-        Debug.Log(count);
         miniMaps[numY][numX].color = Color.white;
         mInfo = player.transform.root.gameObject.GetComponent<MapInfo>();
         numX = mInfo.MapNumX;

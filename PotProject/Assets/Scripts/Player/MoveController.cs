@@ -32,15 +32,6 @@ public class MoveController : MonoBehaviour
         set { inLadderCount = value; }
     }
 
-    //はしごに当たってるかどうか--------------------
-    private bool onLadder = false;
-
-    public bool OnLadder
-    {
-        get { return onLadder; }
-        set { onLadder = value; }
-    }
-    //---------------------------------------------
     //ジャンプできるかどうか
     private bool IsJump = false;
 
@@ -83,7 +74,6 @@ public class MoveController : MonoBehaviour
     public GameObject target;
     private List<Sprite> BrotherSprites;
     private GameObject PotObject;
-    private bool downFlag = false;
 
     private PlayerController player_ctr;
     private BringCollider bringctr;
@@ -93,6 +83,8 @@ public class MoveController : MonoBehaviour
     private PlayerStatus status;
     private MiniMapController miniMap_ctr;
     private LegCollider leg_col;
+
+    #region ボタンFlagのget
 
     //----------ボタンFlagのget---------------------
     public bool Jumping
@@ -179,6 +171,8 @@ public class MoveController : MonoBehaviour
         get { return _onR2; }
     }
     //------------------------------------------
+
+    #endregion
 
     private enum ButtonType
     {
@@ -387,11 +381,7 @@ public class MoveController : MonoBehaviour
                     Ladder(ladderSpeed, 1);
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LADDER_UP);
                 }
-
-                //if (OnLadder) {
-                //    Ladder(ladderSpeed, 1);
-                //    anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LADDER_UP);
-                //}
+                
                 break;
 
             case ButtonType.LEFTJOYSTICK_DOWN:
@@ -402,10 +392,6 @@ public class MoveController : MonoBehaviour
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LADDER_DOWN);
                 }
 
-                //if (OnLadder) {
-                //    Ladder(ladderSpeed, -1);
-                //    anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LADDER_DOWN);
-                //}
                 break;
 
             case ButtonType.RIGHTJOYSTICK_LEFT:
@@ -445,7 +431,6 @@ public class MoveController : MonoBehaviour
                 }
                 else
                 {
-                    atc_ctr.Attack();
                     if(direc == Direction.LEFT)
                         anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.SORDATTACK_LEFT);
                     else
@@ -542,10 +527,12 @@ public class MoveController : MonoBehaviour
         }
         if (Input.GetAxis("Vertical_ps4") >= 0.15f || Input.GetKey(KeyCode.A))
         {//左ジョイスティックを左にたおす or キーボードの「A」
+            if(status.gimmick_state == PlayerStatus.GimmickState.ONLADDER) { return; }
             Move(ButtonType.LEFTJOYSTICK_LEFT);
         }
         else if (Input.GetAxis("Vertical_ps4") <= -0.15f || Input.GetKey(KeyCode.D))
         {//左ジョイスティックを右にたおす or キーボードの「D」
+            if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER) { return; }
             Move(ButtonType.LEFTJOYSTICK_RIGHT);
         }
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
@@ -563,15 +550,11 @@ public class MoveController : MonoBehaviour
                 anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTIDLE);
             }
             if(InLadderCount > 0 && status.gimmick_state == PlayerStatus.GimmickState.ONLADDER) {
+                transform.parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                PotObject.transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 transform.parent.GetComponent<Rigidbody2D>().isKinematic = true;
                 PotObject.GetComponent<Rigidbody2D>().isKinematic = true;
             }
-            //if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !_isJump && IsLadder)
-            //{
-            //    transform.parent.GetComponent<Rigidbody2D>().simulated = false;
-            //    Debug.Log("name = " + PotObject.name);
-            //    PotObject.GetComponent<Rigidbody2D>().simulated = false;
-            //}
 
             rig.velocity = new Vector2(0, rig.velocity.y);
         }
@@ -689,7 +672,6 @@ public class MoveController : MonoBehaviour
     {
         status.gimmick_state = PlayerStatus.GimmickState.ONLADDER;
 
-        //if (status.gimmick_state != PlayerStatus.GimmickState.ONLADDER) { return; }
         transform.parent.GetComponent<Rigidbody2D>().isKinematic = false;
         //プレイヤーの子供全部のレイヤーを変更
         var children = transform.parent.transform;
@@ -727,31 +709,9 @@ public class MoveController : MonoBehaviour
         }
     }
 
-    //private void OnTriggerStay2D(Collider2D col) {
-    //    if (!col.GetComponent<GimmickInfo>()) { return; }
-    //    switch (col.GetComponent<GimmickInfo>().type) {
-    //        case GimmickInfo.GimmickType.LADDER:
-    //            OnLadder = true;
-    //            IsLadder = true;
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
-
     private void OnTriggerExit2D(Collider2D col)
     {
         PotObject.transform.position = new Vector2(PotObject.transform.position.x, PotObject.transform.position.y);
-        //if (!col.GetComponent<GimmickInfo>()) { return; }
-        //switch (col.GetComponent<GimmickInfo>().type) {
-        //    case GimmickInfo.GimmickType.LADDER:
-        //        if (!_isJump) return;
-        //        status.gimmick_state = PlayerStatus.GimmickState.NORMAL;
-        //        player_ctr.ChangeLayer();
-        //        _laddernow = false;
-        //        OnLadder = false;
-        //        break;
-        //}
     }
 
     private void OnCollisionEnter2D(Collision2D col)
@@ -759,9 +719,10 @@ public class MoveController : MonoBehaviour
         //モンスターにぶつかった時
         if (col.gameObject.tag == "Monster")
         {
-            MonsterStatus mStatus = col.gameObject.GetComponent<MonsterStatus>();
+            MonsterStatus mStatus = col.gameObject.GetComponent<MonsterController>().Status;
             int atk = mStatus.GetAttack;
             _hitmonster = true;
+            Debug.Log(atk);
             player_ctr.HPDown(atk);
         }
     }

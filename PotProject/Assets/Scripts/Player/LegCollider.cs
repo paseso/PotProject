@@ -4,6 +4,7 @@ public class LegCollider : MonoBehaviour {
 
     private MoveController move_ctr;
     private PlayerController player_ctr;
+    private PlayerStatus status;
     //足の部分にfloorがあったってるかどうか
     [HideInInspector]
     public bool _legFloor = false;
@@ -61,7 +62,6 @@ public class LegCollider : MonoBehaviour {
         if (!col.GetComponent<GimmickInfo>()) { return true; }
         GimmickInfo info = col.GetComponent<GimmickInfo>();
         if(info.type != GimmickInfo.GimmickType.LADDER) { return false; }
-        if (info.type != GimmickInfo.GimmickType.LADDERTOP) { return false; }
         return true;
     }
 
@@ -80,30 +80,36 @@ public class LegCollider : MonoBehaviour {
             }
         }
 
-        
+        if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER)
+        {
+            if (col.gameObject.layer == LayerMask.NameToLayer("Block"))
+            {
+                move_ctr.InLadderCount = 0;
+                player_ctr.ChangeLayer();
+                return;
+            }
+        }
+
         if (!col.GetComponent<GimmickInfo>()) { return; }
         GimmickInfo info = col.GetComponent<GimmickInfo>();
         Debug.Log(info);
-        if (info.type == GimmickInfo.GimmickType.LADDER) {
-            
-                move_ctr.InLadderCount++;
-            
-            Debug.Log("Enter"+ move_ctr.InLadderCount);
+        if (info.type == GimmickInfo.GimmickType.LADDER)
+        {
+            move_ctr.InLadderCount++;
+
+            Debug.Log("Enter" + move_ctr.InLadderCount);
         }
     }
 
     private void OnTriggerStay2D(Collider2D col)
     {
-        //if (!col.GetComponent<GimmickInfo>()) { return; }
         GimmickInfo info = col.GetComponent<GimmickInfo>();
         
 
         if (JumpCheck(col.gameObject))
         {
             move_ctr._isJump = true;
-        //}else if(info.type == GimmickInfo.GimmickType.LADDERTOP)
-        //{
-        //    move_ctr.OnLadder = true;
+        
         }else {
             return;
         }
@@ -123,10 +129,7 @@ public class LegCollider : MonoBehaviour {
             }
         }
 
-        if (info && info.type == GimmickInfo.GimmickType.LADDERTOP) {
-            move_ctr.OnLadder = false;
-        }
-            falldistance = gameObject.transform.position.y;
+        falldistance = gameObject.transform.position.y;
     }
 
    
