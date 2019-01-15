@@ -77,6 +77,7 @@ public class AttackZoneController : MonoBehaviour {
     /// </summary>
     public void Attack()
     {
+        Debug.Log(status.PlayerAttack);
         if(Attack_Target == null) { return; }
         Attack_Target.GetComponent<MonsterController>().Damage(status.PlayerAttack);
     }

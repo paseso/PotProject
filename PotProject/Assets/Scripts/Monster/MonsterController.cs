@@ -70,6 +70,12 @@ public class MonsterController : MonoBehaviour
     [SerializeField]
     private MonsterStatus status;
 
+    public MonsterStatus Status
+    {
+        get { return status; }
+        set { status = value; }
+    }
+
     //private float knockback = 6;
     private Vector2 knockback = new Vector2(1, 6);
 

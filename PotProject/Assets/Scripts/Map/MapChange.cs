@@ -11,7 +11,8 @@ public class MapChange : MonoBehaviour {
     }
 
     public void OnTriggerEnter2D(Collider2D col)
-    {
+    {  
+        if(col.name == "Leg") { return; }
         col.transform.parent.transform.parent.transform.SetParent(transform.root.gameObject.transform);
         mMapController.NowMap();
     }

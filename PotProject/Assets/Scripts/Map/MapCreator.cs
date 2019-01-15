@@ -132,12 +132,17 @@ public class MapCreator : MonoBehaviour
             backGroundObject.AddComponent<SpriteRenderer>();
             backGroundObject.GetComponent<SpriteRenderer>().sortingOrder = -1;
             backGroundObject.AddComponent<BoxCollider2D>();
-            backGroundObject.GetComponent<BoxCollider2D>().isTrigger = true;
             backGroundObject.GetComponent<BoxCollider2D>().size = new Vector2(xLength * 0.5f, xLength * 0.5f);
             backGroundObject.transform.parent = rootObj.transform;
             backGroundObject.transform.localPosition = Vector3.zero + new Vector3(-tileSize * 0.5f, tileSize * 0.5f, 0);
             backGroundObject.GetComponent<SpriteRenderer>().sprite = backImages[datas[i].backGroundNum];
+            
             backGroundObject.transform.localScale = new Vector3(stageSize / backGroundObject.GetComponent<SpriteRenderer>().size.x, stageSize / backGroundObject.GetComponent<SpriteRenderer>().size.y, 0);
+            if (backGroundObject.GetComponent<SpriteRenderer>().sprite.name != "Empty" && backGroundObject.GetComponent<SpriteRenderer>().sprite.name != "Empty2")
+            {
+                backGroundObject.GetComponent<BoxCollider2D>().isTrigger = true;
+            }
+
 
             //  オブジェクトの生成
             for (int y = 0; y < yLength; y++)

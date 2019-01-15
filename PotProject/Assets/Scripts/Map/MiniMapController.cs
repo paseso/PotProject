@@ -35,7 +35,6 @@ public class MiniMapController : MonoBehaviour {
         sController = GameObject.Find("Controller").gameObject.GetComponent<StageController>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         player = GameObject.FindGameObjectWithTag("Player");
-        NowMap();
 	}
 
     public void NowMap() {

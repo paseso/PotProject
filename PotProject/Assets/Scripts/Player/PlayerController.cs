@@ -21,7 +21,6 @@ public class PlayerController : MonoBehaviour {
     public PlayerStatus status;
     private AlchemyController alchemy_ctr;
     private AlchemyUIController alchemyUI_ctr;
-    private MoveController move_ctr;
     private GameObject BrotherObj;
     private GameObject PotObject;
 
@@ -72,8 +71,7 @@ public class PlayerController : MonoBehaviour {
         status.ItemList = new List<ItemStatus.ITEM>();
         alchemy_ctr = FindObjectOfType<AlchemyController>();
         alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
-        BrotherObj = FindObjectOfType<AnimController>().gameObject;
-        move_ctr = BrotherObj.transform.GetChild(3).GetComponent<MoveController>();
+        BrotherObj = FindObjectOfType<MoveController>().gameObject;
         PotObject = FindObjectOfType<PotController>().gameObject;
         HeartObject = GameObject.Find("Canvas/Heart");
         getHeartChildren();
@@ -253,13 +251,13 @@ public class PlayerController : MonoBehaviour {
     public void HPDown(int point)
     {
         // HPが0になる攻撃を受けたら
-        if (point < 0 && status.PlayerHP + point == 0)
+        if (status.PlayerHP - point <= 0)
         {
             Resporn();
             return;
         }
         status.PlayerHP -= point;
-        for(int i = status.GetMaxHP - 1; i > status.PlayerHP; i--)
+        for(int i = status.GetMaxHP - 1; i > status.PlayerHP - 1; i--)
         {
             hearts[i].SetActive(false);
         }
@@ -268,7 +266,11 @@ public class PlayerController : MonoBehaviour {
     public void Resporn()
     {
         status.PlayerHP = status.GetMaxHP;
-        BrotherObj.transform.position = GameObject.Find(BrotherObj.transform.root.name + "/RespornPoint(Clone)").transform.position;
+        for (int i = 0; i < status.GetMaxHP; i++)
+        {
+            hearts[i].SetActive(true);
+        }
+        BrotherObj.transform.parent.position = GameObject.Find(BrotherObj.transform.root.name + "/RespornPoint(Clone)").transform.position;
     }
 
     /// <summary>
@@ -276,12 +278,13 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     public void ChangeLayer()
     {
-        move_ctr.OnLadder = false;
         if (gameObject.layer != LayerMask.NameToLayer("Player"))
         {
+            status.gimmick_state = PlayerStatus.GimmickState.NORMAL;
             PotObject.layer = LayerMask.NameToLayer("Pot");
-            PotObject.GetComponent<Rigidbody2D>().simulated = true;
-            var children = BrotherObj.transform;
+            BrotherObj.transform.parent.GetComponent<Rigidbody2D>().isKinematic = false;
+            PotObject.GetComponent<Rigidbody2D>().isKinematic = false;
+            var children = BrotherObj.transform.parent.transform;
             foreach (Transform child in children)
             {
                 if (child.GetComponent<Collider2D>())
@@ -289,7 +292,7 @@ public class PlayerController : MonoBehaviour {
                     child.gameObject.layer = LayerMask.NameToLayer("Player");
                 }
             }
-            BrotherObj.layer = LayerMask.NameToLayer("Player");
+            BrotherObj.transform.parent.gameObject.layer = LayerMask.NameToLayer("Player");
         }
     }
 }

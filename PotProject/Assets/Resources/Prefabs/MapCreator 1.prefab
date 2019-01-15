@@ -79,6 +79,14 @@ MonoBehaviour:
     tileObj: {fileID: 1547875337690938, guid: beba8964046e942488a970cd0d192358, type: 2}
   - tileImage: {fileID: 2800000, guid: fd21fea2cf17dac4c8cb46d032acf977, type: 3}
     tileObj: {fileID: 1484047775898816, guid: b761f346f27f27a45981a8b2dd7331c6, type: 2}
+  - tileImage: {fileID: 2800000, guid: 22d51f751a3df0e4e9a829a9a258c53f, type: 3}
+    tileObj: {fileID: 1969949159051794, guid: 1a1136247daa82d4a9aad65f51eb1f18, type: 2}
+  - tileImage: {fileID: 2800000, guid: 4e1eafdd10c086b409ad0a4ac5c53e81, type: 3}
+    tileObj: {fileID: 1762579745653278, guid: 3b0d62313ac2332429786caa4c3dbea9, type: 2}
+  - tileImage: {fileID: 2800000, guid: dbde18de3bd7c9d47aa0b4236d2ba854, type: 3}
+    tileObj: {fileID: 1425604863402516, guid: 55193fc0bac529740a5021e2d771356e, type: 2}
+  - tileImage: {fileID: 2800000, guid: 85677633d085bdd48b3d9c322ad73830, type: 3}
+    tileObj: {fileID: 1514044741085670, guid: d600ae76759389a4a84419aab08a623d, type: 2}
   gimmicks:
   - gimmickImage: {fileID: 2800000, guid: d1a5bda456b103e4c858f26fbc740877, type: 3}
     gimmickSize: {x: 1, y: 1}
@@ -123,6 +131,14 @@ MonoBehaviour:
     gimmickSize: {x: 1, y: 1}
     gimmickObj: {fileID: 1752128078412662, guid: 14ead344de08f3c43b4d5c6b13e5d204,
       type: 2}
+  - gimmickImage: {fileID: 2800000, guid: 7c3950833b2a673438690a056edaf6cd, type: 3}
+    gimmickSize: {x: 1, y: 1}
+    gimmickObj: {fileID: 1836902585609636, guid: 8c95d8665498d4043b114af5798d34fd,
+      type: 2}
+  - gimmickImage: {fileID: 2800000, guid: 06210e9ddde82ab4c9a4d87388b64091, type: 3}
+    gimmickSize: {x: 1, y: 1}
+    gimmickObj: {fileID: 1622490842944640, guid: da6553b81902a2e42b1a9a4131995fdc,
+      type: 2}
   enemies:
   - enemyImage: {fileID: 2800000, guid: d1a5bda456b103e4c858f26fbc740877, type: 3}
     enemyObj: {fileID: 0}
@@ -158,7 +174,7 @@ MonoBehaviour:
     enemyObj: {fileID: 1147350200905694, guid: bb895f1f76b0a7d4a95286dba8d00f8a, type: 2}
   - enemyImage: {fileID: 2800000, guid: 4af51d7f6bd60804694536bdacfbd84a, type: 3}
     enemyObj: {fileID: 1769760332151546, guid: 33009dd3808e2f7478b267ef9f15cea4, type: 2}
-  - enemyImage: {fileID: 10900, guid: 0000000000000000f000000000000000, type: 0}
+  - enemyImage: {fileID: 2800000, guid: 7ea513704f09dd74ba71ee7debd24187, type: 3}
     enemyObj: {fileID: 1569513556675868, guid: b11136211eeb97344beb3b5205e4c1d6, type: 2}
   - enemyImage: {fileID: 2800000, guid: 0eb3422dd8a555240b6ff3ab1db2f169, type: 3}
     enemyObj: {fileID: 1398486377858722, guid: 232a0f376f1909e45b5fc702aca0b1d5, type: 2}
@@ -166,7 +182,9 @@ MonoBehaviour:
   backImages:
   - {fileID: 21300000, guid: f4c6df7a78221554b8cc43c6823405d7, type: 3}
   - {fileID: 21300000, guid: 4da0539c6a8bd54418ed7751c49c09de, type: 3}
-  - {fileID: 21300004, guid: d7507aa3853483b43b168c0f69353b14, type: 3}
+  - {fileID: 21300000, guid: 6a991f66ad9706446b5806a24262241c, type: 3}
+  - {fileID: 21300000, guid: aceadb682c3793842a1deca6aef2ccd6, type: 3}
+  - {fileID: 21300000, guid: 3cfaee6c33be5d742a3b104e65eff684, type: 3}
 --- !u!114 &114882833881507694
 MonoBehaviour:
   m_ObjectHideFlags: 1
