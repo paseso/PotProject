@@ -146,31 +146,31 @@ public class AnimController : MonoBehaviour {
                 //剣
                 gameObject.transform.GetChild(4).GetComponent<SpriteRenderer>().sortingOrder = 0;
                 //頭
-                gameObject.transform.GetChild(5).GetComponent<SpriteRenderer>().sortingOrder = 5;
+                gameObject.transform.GetChild(5).GetComponent<SpriteMeshInstance>().sortingOrder = 5;
                 gameObject.transform.GetChild(5).GetComponent<SpriteMeshAnimation>().frame = 2;
-                gameObject.transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = 1;
-                gameObject.transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<SpriteRenderer>().sortingOrder = 1;
+                gameObject.transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<SpriteMeshInstance>().sortingOrder = 1;
+                gameObject.transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<SpriteMeshInstance>().sortingOrder = 1;
                 gameObject.transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<SpriteMeshAnimation>().frame = 2;
                 gameObject.transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<SpriteMeshAnimation>().frame = 2;
                 //首モフ
                 gameObject.transform.GetChild(6).GetComponent<SpriteMeshAnimation>().frame = 5;
                 //LeftArm
-                gameObject.transform.GetChild(7).GetChild(0).GetComponent<SpriteMeshInstance>().sortingOrder = 2;
-                gameObject.transform.GetChild(7).GetChild(0).GetChild(0).GetComponent<SpriteMeshInstance>().sortingOrder = 5;
+                gameObject.transform.GetChild(7).GetChild(0).GetComponent<SpriteMeshInstance>().sortingOrder = 4;
+                gameObject.transform.GetChild(7).GetChild(0).GetChild(0).GetComponent<SpriteMeshInstance>().sortingOrder = 3;
                 gameObject.transform.GetChild(7).GetChild(0).GetComponent<SpriteMeshAnimation>().frame = 2;
                 gameObject.transform.GetChild(7).GetChild(0).GetChild(0).GetComponent<SpriteMeshAnimation>().frame = 2;
                 //Stomach
                 gameObject.transform.GetChild(8).GetComponent<SpriteMeshInstance>().sortingOrder = 3;
                 gameObject.transform.GetChild(8).GetComponent<SpriteMeshAnimation>().frame = 2;
                 //RightArm
-                gameObject.transform.GetChild(9).GetChild(0).GetComponent<SpriteMeshInstance>().sortingOrder = 5;
-                gameObject.transform.GetChild(9).GetChild(0).GetChild(0).GetComponent<SpriteMeshInstance>().sortingOrder = 5;
+                gameObject.transform.GetChild(9).GetChild(0).GetComponent<SpriteMeshInstance>().sortingOrder = 4;
+                gameObject.transform.GetChild(9).GetChild(0).GetChild(0).GetComponent<SpriteMeshInstance>().sortingOrder = 3;
                 gameObject.transform.GetChild(9).GetChild(0).GetComponent<SpriteMeshAnimation>().frame = 2;
                 gameObject.transform.GetChild(9).GetChild(0).GetChild(0).GetComponent<SpriteMeshAnimation>().frame = 2;
                 //Waist
                 gameObject.transform.GetChild(10).GetComponent<SpriteMeshAnimation>().frame = 2;
                 //LeftMant
-                gameObject.transform.GetChild(11).GetComponent<SpriteMeshInstance>().sortingOrder = 4;
+                gameObject.transform.GetChild(11).GetComponent<SpriteMeshInstance>().sortingOrder = 10;
                 gameObject.transform.GetChild(11).GetComponent<SpriteMeshAnimation>().frame = 2;
                 //RightMant
                 gameObject.transform.GetChild(12).GetComponent<SpriteMeshInstance>().sortingOrder = 4;
@@ -249,6 +249,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightIdle", false);
                 anim.SetBool("isSordAttackLeft", false);
                 anim.SetBool("isSordAttackRight", false);
+                anim.SetBool("isLadder", false);
                 break;
 
             case AnimState.AnimType.LEFTJUMP:
@@ -261,6 +262,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightIdle", false);
                 anim.SetBool("isSordAttackLeft", false);
                 anim.SetBool("isSordAttackRight", false);
+                anim.SetBool("isLadderUp", false);
                 break;
 
             case AnimState.AnimType.LEFTIDLE:
@@ -273,6 +275,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightIdle", false);
                 anim.SetBool("isSordAttackLeft", false);
                 anim.SetBool("isSordAttackRight", false);
+                anim.SetBool("isLadderUp", false);
                 break;
 
             case AnimState.AnimType.RIGHTIDLE:
@@ -285,6 +288,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightIdle", true);
                 anim.SetBool("isSordAttackLeft", false);
                 anim.SetBool("isSordAttackRight", false);
+                anim.SetBool("isLadderUp", false);
                 break;
 
             case AnimState.AnimType.LEFT_WALK:
@@ -297,6 +301,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightIdle", false);
                 anim.SetBool("isSordAttackLeft", false);
                 anim.SetBool("isSordAttackRight", false);
+                anim.SetBool("isLadderUp", false);
                 break;
 
             case AnimState.AnimType.RIGHT_WALK:
@@ -309,6 +314,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightIdle", false);
                 anim.SetBool("isSordAttackLeft", false);
                 anim.SetBool("isSordAttackRight", false);
+                anim.SetBool("isLadderUp", false);
                 break;
 
             case AnimState.AnimType.SORDATTACK_LEFT:
@@ -321,6 +327,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightIdle", false);
                 anim.SetBool("isSordAttackLeft", true);
                 anim.SetBool("isSordAttackRight", false);
+                anim.SetBool("isLadderUp", false);
                 break;
 
             case AnimState.AnimType.SORDATTACK_RIGHT:
@@ -333,6 +340,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightIdle", false);
                 anim.SetBool("isSordAttackLeft", false);
                 anim.SetBool("isSordAttackRight", true);
+                anim.SetBool("isLadderUp", false);
                 break;
 
             case AnimState.AnimType.LADDER_UP:
@@ -345,6 +353,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightIdle", false);
                 anim.SetBool("isSordAttackLeft", false);
                 anim.SetBool("isSordAttackRight", false);
+                anim.SetBool("isLadderUp", true);
                 break;
 
             case AnimState.AnimType.LADDER_DOWN:
@@ -357,6 +366,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightIdle", false);
                 anim.SetBool("isSordAttackLeft", false);
                 anim.SetBool("isSordAttackRight", false);
+                anim.SetBool("isLadderUp", false);
                 break;
         }
     }

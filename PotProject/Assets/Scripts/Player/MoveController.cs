@@ -389,7 +389,7 @@ public class MoveController : MonoBehaviour
 
                 if(InLadderCount > 0) {
                     Ladder(ladderSpeed, -1);
-                    anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LADDER_DOWN);
+                    anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LADDER_UP);
                 }
 
                 break;
