@@ -72,10 +72,6 @@ public class MoveController : MonoBehaviour
     private bool _onCrossLeft = false;
     private bool _onR2 = false;
     //---------------------------------------------
-
-    public bool _notLeft = false;
-    public bool _notRight = false;
-
     [HideInInspector]
     public GameObject target;
     private List<Sprite> BrotherSprites;
@@ -89,7 +85,6 @@ public class MoveController : MonoBehaviour
     private AnimController anim_ctr;
     private PlayerStatus status;
     private MiniMapController miniMap_ctr;
-    private LegCollider leg_col;
     
     //----------ボタンFlagのget---------------------
     public bool Jumping
@@ -201,12 +196,12 @@ public class MoveController : MonoBehaviour
     };
 
     //プレイヤーの今向いてる方向
-    public enum Direction
+    private enum Direction
     {
         RIGHT = 0,
         LEFT
     }
-    public Direction direc;
+    private Direction direc;
 
     private void Awake()
     {
@@ -216,8 +211,6 @@ public class MoveController : MonoBehaviour
         _jumping = false;
         _hitmonster = false;
         _laddernow = false;
-        _notLeft = false;
-        _notRight = false;
         ClearBtnFlg();
     }
 
@@ -233,7 +226,6 @@ public class MoveController : MonoBehaviour
         alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
         miniMap_ctr = GameObject.Find("Canvas/MiniMap").GetComponent<MiniMapController>();
         anim_ctr = gameObject.transform.parent.GetComponent<AnimController>();
-        leg_col = gameObject.transform.parent.GetComponentInChildren<LegCollider>();
         _isJump = false;
     }
 
@@ -320,7 +312,6 @@ public class MoveController : MonoBehaviour
         switch (btn)
         {
             case ButtonType.JUMP:
-                leg_col.JumpingMove(direc);
                 if (!_isJump)
                     return;
                 if (direc == Direction.RIGHT)
@@ -331,13 +322,14 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTJUMP);
                 }
+                
                 rig.velocity = new Vector2(0, 1f * speed);
                 _jumping = true;
                 break;
 
             case ButtonType.LEFTJOYSTICK_LEFT:
-                if (_notLeft)
-                    return;
+                _onLeft = true;
+                _onRight = false;
 
                 direc = Direction.LEFT;
                 if (!_ActiveRightLeft)
@@ -350,12 +342,11 @@ public class MoveController : MonoBehaviour
                     return;
                 }
                 rig.velocity = new Vector2(-5f, rig.velocity.y);
-
                 break;
 
             case ButtonType.LEFTJOYSTICK_RIGHT:
-                if (_notRight)
-                    return;
+                _onRight = true;
+                _onLeft = false;
 
                 direc = Direction.RIGHT;
                 if (!_ActiveRightLeft)
@@ -512,7 +503,7 @@ public class MoveController : MonoBehaviour
 
         if (!player_ctr.IsCommandActive) { return; }
 
-        if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButton("Jump") || Input.GetKeyDown(KeyCode.Space))
         {//×ボタン or キーボードの「W」
             Move(ButtonType.JUMP);
         }

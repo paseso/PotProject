@@ -9,15 +9,12 @@ public class LegCollider : MonoBehaviour {
     public bool _legFloor = false;
     private float now = 0f;
     private float falldistance = 0f;
-    private Rigidbody2D parentRig;
-
 
 	// Use this for initialization
 	void Start () {
         falldistance = gameObject.transform.position.y;
         move_ctr = transform.parent.GetComponentInChildren<MoveController>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
-        parentRig = transform.parent.GetComponent<Rigidbody2D>();
         _legFloor = false;
 	}
     
@@ -32,26 +29,6 @@ public class LegCollider : MonoBehaviour {
             Debug.Log("dir = " + (falldistance - now));
             player_ctr.HPDown(2);
             falldistance = gameObject.transform.position.y;
-        }
-    }
-
-    /// <summary>
-    /// ジャンプ中の左右移動制限
-    /// </summary>
-    public void JumpingMove(MoveController.Direction dir)
-    {
-        if (move_ctr.Jumping)
-        {
-            Debug.Log("今の方向: " + dir);
-            if (dir == MoveController.Direction.LEFT)
-            {
-                move_ctr._notLeft = true;
-            }
-            else
-            {
-                move_ctr._notRight = true;
-            }
-            parentRig.velocity = new Vector2(1 * 0, parentRig.velocity.y);
         }
     }
 
@@ -74,9 +51,9 @@ public class LegCollider : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D col)
     {
+        
         GimmickInfo info = col.GetComponent<GimmickInfo>();
         move_ctr._isJump = false;
-        //move_ctr._isJump = true;
         if (info && info.type == GimmickInfo.GimmickType.LADDER)
         {
             move_ctr.IsLadder = false;
