@@ -543,8 +543,8 @@ public class MoveController : MonoBehaviour
                 anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTIDLE);
             }
             if(InLadderCount > 0 && status.gimmick_state == PlayerStatus.GimmickState.ONLADDER) {
-                transform.parent.GetComponent<Rigidbody2D>().simulated = false;
-                PotObject.GetComponent<Rigidbody2D>().simulated = false;
+                transform.parent.GetComponent<Rigidbody2D>().isKinematic = true;
+                PotObject.GetComponent<Rigidbody2D>().isKinematic = true;
             }
             //if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !_isJump && IsLadder)
             //{
@@ -670,7 +670,7 @@ public class MoveController : MonoBehaviour
         status.gimmick_state = PlayerStatus.GimmickState.ONLADDER;
 
         //if (status.gimmick_state != PlayerStatus.GimmickState.ONLADDER) { return; }
-        transform.parent.GetComponent<Rigidbody2D>().simulated = true;
+        transform.parent.GetComponent<Rigidbody2D>().isKinematic = false;
         //プレイヤーの子供全部のレイヤーを変更
         var children = transform.parent.transform;
         foreach(Transform child in children)

@@ -280,7 +280,7 @@ public class PlayerController : MonoBehaviour {
         if (gameObject.layer != LayerMask.NameToLayer("Player"))
         {
             PotObject.layer = LayerMask.NameToLayer("Pot");
-            PotObject.GetComponent<Rigidbody2D>().simulated = true;
+            PotObject.GetComponent<Rigidbody2D>().isKinematic = false;
             var children = BrotherObj.transform;
             foreach (Transform child in children)
             {
