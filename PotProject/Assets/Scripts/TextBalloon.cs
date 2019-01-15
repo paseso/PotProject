@@ -11,6 +11,7 @@ public class TextBalloon : MonoBehaviour {
 
     [SerializeField]
     private string[] massages;
+    private string[] trueMassages = new string[5];
     [SerializeField]
     private GameObject balloonPrefab;
     [SerializeField,Range(0, 0.3f)]
@@ -24,14 +25,9 @@ public class TextBalloon : MonoBehaviour {
     private string currentSentence = string.Empty;  // 現在の文字列
     private float timeBeginTalk = 0;                // 会話が始まってからの時間
 
-    // イベント開始のフラグがたったら会話が始まる（その間はキャラの操作は無効）
-    // 1文章を1文字ずつ表示する
-    // 何らかのボタンが押されたら次の文章に進む
-    // 全部話し終わったら会話を終了して戦闘に戻る
-
-
     void Start () {
         canvas = GameObject.Find("Canvas");
+        AddBlank(massages);
         playerController = FindObjectOfType<PlayerController>();
         StartCoroutine(InstanceBalloon());
     }
@@ -47,7 +43,7 @@ public class TextBalloon : MonoBehaviour {
             if (massages[currentSentenceNum].Length >= timeBeginTalk / intervalForCharDisplay)
             {
                 timeBeginTalk += Time.deltaTime;
-                currentSentence = massages[currentSentenceNum].Substring(0, (int)(timeBeginTalk / intervalForCharDisplay));
+                currentSentence = trueMassages[currentSentenceNum].Substring(0, (int)(timeBeginTalk / intervalForCharDisplay));
                 massageUI.transform.GetComponentInChildren<Text>().text = currentSentence;
             }
             if (Input.GetKeyDown(KeyCode.Return) || Input.GetButton("Circle"))
@@ -57,6 +53,7 @@ public class TextBalloon : MonoBehaviour {
         }
     }
 
+    // 次の文章へ
     private void NextWard()
     {
         if (massages.Length > currentSentenceNum + 1)
@@ -67,6 +64,15 @@ public class TextBalloon : MonoBehaviour {
         else
         {
             StartCoroutine(DisableBalloon());
+        }
+    }
+
+    // 改行文字の追加
+    private void AddBlank(string[] massages)
+    {
+        for (int i = 0; i < massages.Length; i++)
+        {
+            trueMassages[i] = massages[i].Replace("/", "\n");
         }
     }
 
