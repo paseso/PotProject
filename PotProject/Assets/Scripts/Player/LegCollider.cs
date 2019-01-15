@@ -19,7 +19,7 @@ public class LegCollider : MonoBehaviour {
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         parentRig = transform.parent.GetComponent<Rigidbody2D>();
         _legFloor = false;
-    }
+	}
     
     /// <summary>
     /// 落ちた時にHPを減らすかどうかの処理
@@ -40,25 +40,19 @@ public class LegCollider : MonoBehaviour {
     /// </summary>
     public void JumpingMove(MoveController.Direction dir)
     {
-        if (!move_ctr.Jumping)
+        if (move_ctr.Jumping)
         {
-            move_ctr._notLeft = false;
-            move_ctr._notRight = false;
-            return;
+            Debug.Log("今の方向: " + dir);
+            if (dir == MoveController.Direction.LEFT)
+            {
+                move_ctr._notLeft = true;
+            }
+            else
+            {
+                move_ctr._notRight = true;
+            }
+            parentRig.velocity = new Vector2(1 * 0, parentRig.velocity.y);
         }
-        if (dir == MoveController.Direction.LEFT)
-        {
-            move_ctr._notLeft = true;
-            move_ctr._notRight = false;
-        }
-        else
-        {
-            move_ctr._notLeft = false;
-            move_ctr._notRight = true;
-        }
-
-        Debug.Log("_notLeft = " + move_ctr._notLeft);
-        Debug.Log("_notRight = " + move_ctr._notRight);
     }
 
     private void OnTriggerStay2D(Collider2D col)
@@ -100,11 +94,7 @@ public class LegCollider : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (move_ctr.Jumping)
-        {
-            move_ctr.setJumping = false;
-        }
-        if (col.gameObject.tag == "floor")
+        if(col.gameObject.tag == "floor")
         {
             _legFloor = true;
         }

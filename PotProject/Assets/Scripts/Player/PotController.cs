@@ -10,8 +10,6 @@ public class PotController : MonoBehaviour {
 
     private Sprite[] PotImages;
 
-    private bool _onece = false;
-
     private enum Direction
     {
         RIGHT = 0,
@@ -32,13 +30,12 @@ public class PotController : MonoBehaviour {
             Debug.Log("お兄ちゃんが見当たらない");
         }
         direction = Direction.LEFT;
-        _onece = false;
     }
 	
 	// Update is called once per frame
 	void Update () {
         PotJump();
-    }
+	}
 
     /// <summary>
     /// 壺の画像変更処理
@@ -64,17 +61,8 @@ public class PotController : MonoBehaviour {
     {
         if (move_ctr.Jumping)
         {
-            if (!_onece)
-            {
-                rig.velocity = new Vector2(0, 1f * move_ctr.speed);
-                _onece = true;
-            }
+            rig.velocity = new Vector2(0, 1f * move_ctr.speed);
         }
-        else
-        {
-            _onece = false;
-        }
-        
     }
 
     /// <summary>
