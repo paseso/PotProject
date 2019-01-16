@@ -527,12 +527,12 @@ public class MoveController : MonoBehaviour
         }
         if (Input.GetAxis("Vertical_ps4") >= 0.15f || Input.GetKey(KeyCode.A))
         {//左ジョイスティックを左にたおす or キーボードの「A」
-            if(status.gimmick_state == PlayerStatus.GimmickState.ONLADDER) { return; }
+            if(gameObject.layer == LayerMask.NameToLayer("LadderPlayer")) { return; }
             Move(ButtonType.LEFTJOYSTICK_LEFT);
         }
         else if (Input.GetAxis("Vertical_ps4") <= -0.15f || Input.GetKey(KeyCode.D))
         {//左ジョイスティックを右にたおす or キーボードの「D」
-            if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER) { return; }
+            if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer")) { return; }
             Move(ButtonType.LEFTJOYSTICK_RIGHT);
         }
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)

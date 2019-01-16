@@ -88,20 +88,20 @@ public class PotController : MonoBehaviour {
     /// <summary>
     /// ツボにアイテムを受け渡す処理
     /// </summary>
-    public void AddItem(ItemStatus.ITEM type)
+    public void AddItem(ItemStatus.Type type)
     {
         switch (type)
         {
-            case ItemStatus.ITEM.SLIME:
-                player_ctr.setItemList(ItemStatus.ITEM.SLIME);
+            case ItemStatus.Type.SLIME:
+                player_ctr.setItemList(ItemStatus.Type.SLIME);
                 break;
 
-            case ItemStatus.ITEM.GOLEM:
-                player_ctr.setItemList(ItemStatus.ITEM.GOLEM);
+            case ItemStatus.Type.GOLEM:
+                player_ctr.setItemList(ItemStatus.Type.GOLEM);
                 break;
 
-            case ItemStatus.ITEM.SNAKE:
-                player_ctr.setItemList(ItemStatus.ITEM.SNAKE);
+            case ItemStatus.Type.SNAKE:
+                player_ctr.setItemList(ItemStatus.Type.SNAKE);
                 break;
 
             default:
@@ -120,11 +120,11 @@ public class PotController : MonoBehaviour {
             switch (mInfo.GetMStatus.type)
             {
                 case MonsterStatus.MonsterType.WATER:
-                    player_ctr.setItemList(ItemStatus.ITEM.SLIME);
+                    player_ctr.setItemList(ItemStatus.Type.SLIME);
                     break;
 
                 case MonsterStatus.MonsterType.SNAKE:
-                    player_ctr.setItemList(ItemStatus.ITEM.SNAKE);
+                    player_ctr.setItemList(ItemStatus.Type.SNAKE);
                     break;
 
                 default:

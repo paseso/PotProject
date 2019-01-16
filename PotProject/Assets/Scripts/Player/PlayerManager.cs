@@ -71,12 +71,16 @@ public struct PlayerStatus
     public EventState event_state;
 
     //持ち物に入ってるアイテム
-    public List<ItemStatus.ITEM> ItemList;
+    public List<ItemStatus.Type> ItemList;
 }
 
 public class PlayerManager : SingletonMonoBehaviour<PlayerManager>{
     [SerializeField]
     private PlayerStatus status;
+
+    public PlayerStatus Status {
+        get;set;
+    }
 
     void Awake()
     {
@@ -96,7 +100,7 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>{
         status.swordtype = PlayerStatus.SWORDTYPE.NORMAL;
         status.event_state = PlayerStatus.EventState.NORMAL;
         status.gimmick_state = PlayerStatus.GimmickState.NORMAL;
-        status.ItemList = new List<ItemStatus.ITEM>();
+        status.ItemList = new List<ItemStatus.Type>();
     }
 }
 

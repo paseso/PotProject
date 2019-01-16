@@ -22,8 +22,8 @@ public class AlchemyUIController : MonoBehaviour {
     //-----------------------------------
     private int nowBox = 0;
     private GameObject[] Box_item;
-    private List<ItemStatus.ITEM> items = new List<ItemStatus.ITEM>();
-    private List<ItemStatus.ITEM> Materials_item = new List<ItemStatus.ITEM>();
+    private List<ItemStatus.Type> items = new List<ItemStatus.Type>();
+    private List<ItemStatus.Type> Materials_item = new List<ItemStatus.Type>();
     private bool _boxRight = true;
 
     private MoveController move_ctr;
@@ -143,7 +143,7 @@ public class AlchemyUIController : MonoBehaviour {
     /// 素材アイテム欄のリセット
     /// </summary>
     /// <param name="items">二つリセット</param>
-    private void ReSetMaterialsBox(List<ItemStatus.ITEM> items)
+    private void ReSetMaterialsBox(List<ItemStatus.Type> items)
     {
         mtr_0.GetComponent<Image>().sprite = null;
         mtr_1.GetComponent<Image>().sprite = null;
@@ -328,13 +328,13 @@ public class AlchemyUIController : MonoBehaviour {
 
             switch (items[i])
             {
-                case ItemStatus.ITEM.SLIME:
+                case ItemStatus.Type.SLIME:
                     item_img.sprite = ItemImage[0];
                     break;
-                case ItemStatus.ITEM.GOLEM:
+                case ItemStatus.Type.GOLEM:
                     item_img.sprite = ItemImage[1];
                     break;
-                case ItemStatus.ITEM.SNAKE:
+                case ItemStatus.Type.SNAKE:
                     item_img.sprite = ItemImage[2];
                     break;
             }

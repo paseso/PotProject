@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour {
             status.PlayerHP = status.GetMaxHP;
         }
 
-        status.ItemList = new List<ItemStatus.ITEM>();
+        status.ItemList = new List<ItemStatus.Type>();
         alchemy_ctr = FindObjectOfType<AlchemyController>();
         alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
         BrotherObj = FindObjectOfType<MoveController>().gameObject;
@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour {
     /// 持ち物リストの情報
     /// </summary>
     /// <returns></returns>
-    public List<ItemStatus.ITEM> getItemList()
+    public List<ItemStatus.Type> getItemList()
     {
         return status.ItemList;
     }
@@ -131,7 +131,7 @@ public class PlayerController : MonoBehaviour {
     /// 持ち物リストにアイテムを追加
     /// </summary>
     /// <param name="name"></param>
-    public void setItemList(ItemStatus.ITEM Item_Id)
+    public void setItemList(ItemStatus.Type Item_Id)
     {
         if(status.ItemList.Count == maxItemBox)
         {
@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour {
     /// <summary>
     /// 持ち物リストのアイテムを削除
     /// </summary>
-    public void deleteItemList(List<ItemStatus.ITEM> items)
+    public void deleteItemList(List<ItemStatus.Type> items)
     {
         foreach (var _item in items)
         {
@@ -191,7 +191,7 @@ public class PlayerController : MonoBehaviour {
     /// アイテムを錬金する処理
     /// </summary>
     /// <param name="item"></param>
-    public void ItemAlchemy(List<ItemStatus.ITEM> item)
+    public void ItemAlchemy(List<ItemStatus.Type> item)
     {
         if (item == null)
             return;
@@ -284,6 +284,8 @@ public class PlayerController : MonoBehaviour {
             PotObject.layer = LayerMask.NameToLayer("Pot");
             BrotherObj.transform.parent.GetComponent<Rigidbody2D>().isKinematic = false;
             PotObject.GetComponent<Rigidbody2D>().isKinematic = false;
+            BrotherObj.transform.parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            PotObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             var children = BrotherObj.transform.parent.transform;
             foreach (Transform child in children)
             {

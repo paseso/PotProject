@@ -60,7 +60,7 @@ public class BringCollider : MonoBehaviour {
             return;
         Debug.Log("きてる");
         //アイテムを拾う
-        pot_ctr.AddItem(target.GetComponent<ItemManager>().getItemStatus());
+        //pot_ctr.AddItem(target.GetComponent<CreateItemManager>().getStatus());
         Destroy(target.gameObject);
         target = null;
     }

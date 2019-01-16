@@ -71,11 +71,11 @@ public class AlchemyController : MonoBehaviour {
     /// アイテム錬金
     /// </summary>
     /// <param name="item">錬金したいアイテム</param>
-    public void MadeItem(ItemStatus.ITEM item)
+    public void MadeItem(ItemStatus.Type item)
     {
         switch (item)
         {
-            case ItemStatus.ITEM.SLIME:
+            case ItemStatus.Type.SLIME:
                 gimmick_ctr = FindObjectOfType<GimmickController>();
                 mInfo = transform.root.GetComponent<MapInfo>();
                 Debug.Log("mInfo.GrowTreeFlag: " + mInfo.GrowTreeFlag);
@@ -83,12 +83,12 @@ public class AlchemyController : MonoBehaviour {
                 gimmick_ctr.Grow();
                 
                 break;
-            case ItemStatus.ITEM.GOLEM:
+            case ItemStatus.Type.GOLEM:
                 setGeneratedImg(1);
                 //GameObject obj = Instantiate(CreateItem[1], null);
                 //obj.transform.position = new Vector2(gameObject.transform.position.x + 2, gameObject.transform.position.y + 1);
                 break;
-            case ItemStatus.ITEM.SNAKE:
+            case ItemStatus.Type.SNAKE:
                 setGeneratedImg(1);
                 break;
         }
@@ -100,49 +100,49 @@ public class AlchemyController : MonoBehaviour {
     /// </summary>
     /// <param name="item_0">素材_0</param>
     /// <param name="item_1">素材_1</param>
-    public void MadeItem(ItemStatus.ITEM item_0, ItemStatus.ITEM item_1)
+    public void MadeItem(ItemStatus.Type item_0, ItemStatus.Type item_1)
     {
         switch (item_0)
         {
-            case ItemStatus.ITEM.SLIME:
+            case ItemStatus.Type.SLIME:
                 switch (item_1)
                 {
-                    case ItemStatus.ITEM.SLIME:
+                    case ItemStatus.Type.SLIME:
                         setGeneratedImg(0);
                         break;
-                    case ItemStatus.ITEM.GOLEM:
+                    case ItemStatus.Type.GOLEM:
                         setGeneratedImg(0);
                         break;
-                    case ItemStatus.ITEM.SNAKE:
+                    case ItemStatus.Type.SNAKE:
                         setGeneratedImg(0);
                         break;
                 }
                 break;
-            case ItemStatus.ITEM.GOLEM:
+            case ItemStatus.Type.GOLEM:
                 switch (item_1)
                 {
-                    case ItemStatus.ITEM.SLIME:
+                    case ItemStatus.Type.SLIME:
                         setGeneratedImg(1);
                         break;
-                    case ItemStatus.ITEM.GOLEM:
+                    case ItemStatus.Type.GOLEM:
                         setGeneratedImg(1);
                         break;
-                    case ItemStatus.ITEM.SNAKE:
+                    case ItemStatus.Type.SNAKE:
                         setGeneratedImg(1);
                         break;
                 }
                 break;
 
-            case ItemStatus.ITEM.SNAKE:
+            case ItemStatus.Type.SNAKE:
                 switch (item_1)
                 {
-                    case ItemStatus.ITEM.SLIME:
+                    case ItemStatus.Type.SLIME:
                         setGeneratedImg(2);
                         break;
-                    case ItemStatus.ITEM.GOLEM:
+                    case ItemStatus.Type.GOLEM:
                         setGeneratedImg(2);
                         break;
-                    case ItemStatus.ITEM.SNAKE:
+                    case ItemStatus.Type.SNAKE:
                         setGeneratedImg(2);
                         break;
                 }

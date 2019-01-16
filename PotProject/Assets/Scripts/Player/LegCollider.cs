@@ -61,7 +61,9 @@ public class LegCollider : MonoBehaviour {
         if (col.gameObject.layer == LayerMask.NameToLayer("Background")) { return false; }
         if (!col.GetComponent<GimmickInfo>()) { return true; }
         GimmickInfo info = col.GetComponent<GimmickInfo>();
-        if(info.type != GimmickInfo.GimmickType.LADDER) { return false; }
+        if (info.type == GimmickInfo.GimmickType.GROWTREE) { return true; }
+        if (info.type != GimmickInfo.GimmickType.LADDER) { return false; }
+        
         return true;
     }
 
@@ -70,6 +72,7 @@ public class LegCollider : MonoBehaviour {
         {
             move_ctr.setJumping = false;
         }
+
         if (col.gameObject.tag == "floor") {
             _legFloor = true;
         }
@@ -79,26 +82,23 @@ public class LegCollider : MonoBehaviour {
                 FallCheck();
             }
         }
-
-        if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER)
-        {
-            if (col.gameObject.layer == LayerMask.NameToLayer("Block"))
-            {
-                move_ctr.InLadderCount = 0;
-                player_ctr.ChangeLayer();
-                return;
-            }
+        Debug.Log("colName=" + col.gameObject.name);
+        if (player_ctr.status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && move_ctr.Jumping) {
+            Debug.Log("HitBlock");
+            move_ctr.InLadderCount = 0;
+            player_ctr.ChangeLayer();
         }
 
         if (!col.GetComponent<GimmickInfo>()) { return; }
         GimmickInfo info = col.GetComponent<GimmickInfo>();
-        Debug.Log(info);
         if (info.type == GimmickInfo.GimmickType.LADDER)
         {
             move_ctr.InLadderCount++;
 
             Debug.Log("Enter" + move_ctr.InLadderCount);
         }
+
+        
     }
 
     private void OnTriggerStay2D(Collider2D col)
@@ -125,10 +125,11 @@ public class LegCollider : MonoBehaviour {
             move_ctr.InLadderCount--;
             Debug.Log("Exit"+move_ctr.InLadderCount);
             if (move_ctr.InLadderCount <= 0) {
+                move_ctr.InLadderCount = 0;
                 player_ctr.ChangeLayer();
             }
         }
-
+        
         falldistance = gameObject.transform.position.y;
     }
 

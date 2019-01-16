@@ -191,7 +191,7 @@ public class AnimController : MonoBehaviour {
                 break;
         }
         _attackStart = false;
-        Debug.Log("StateOrderInLayer通った");
+        //Debug.Log("StateOrderInLayer通った");
     }
 
     /// <summary>

@@ -118,8 +118,23 @@ public class GimmickController :MonoBehaviour {
     }
 
     public void RockDoorOpen() {
-        GameObject rock = GameObject.FindGameObjectWithTag("Rock");
-        rock.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
+        if (!mInfo.UpRockFlag) {
+            mInfo.UpRockFlag = true;
+            GameObject rock = GameObject.FindGameObjectWithTag("Rock");
+            StartCoroutine(RockStep(rock));
+        }
+    }
+
+    public IEnumerator RockStep(GameObject obj) {
+        transform.parent.transform.parent.DOLocalMoveY(transform.parent.transform.parent.localPosition.y - 0.25f, 1f);
+        yield return new WaitForSeconds(1.5f);
+        obj.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
+        while (true) {
+            obj.transform.localPosition = new Vector2(obj.transform.localPosition.x + 0.2f, obj.transform.localPosition.y);
+            yield return new WaitForSeconds(0.1f);
+            obj.transform.localPosition = new Vector2(obj.transform.localPosition.x - 0.2f, obj.transform.localPosition.y);
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     public void IsWater() {
@@ -178,8 +193,9 @@ public class GimmickController :MonoBehaviour {
     public void UnlockKeyDoor()
     {
         // 扉（仮）
-        GameObject door = new GameObject();
+        PlayerManager manager = FindObjectOfType<PlayerManager>();
+        if(manager.Status.swordtype != PlayerStatus.SWORDTYPE.KEY) { return; }
+        GameObject door = GameObject.FindGameObjectWithTag("KeyDoor");
         door.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
-
     }
 }

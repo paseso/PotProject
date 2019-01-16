@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct ItemStatus
-{
-    public enum ITEM
-    {
+public struct ItemStatus {
+    public enum Type {
         SLIME = 0,
         GOLEM,
         SNAKE,
@@ -16,7 +14,7 @@ public struct ItemStatus
         ROPE,
     };
 
-    public ITEM item;
+    public Type type;
 };
 
 public class ItemManager : MonoBehaviour {
@@ -28,9 +26,9 @@ public class ItemManager : MonoBehaviour {
     /// <summary>
     /// Item Status取得
     /// </summary>
-    public ItemStatus.ITEM getItemStatus()
+    public ItemStatus.Type getItemStatus()
     {
-        return item_status.item;
+        return item_status.type;
     }
 
 }
