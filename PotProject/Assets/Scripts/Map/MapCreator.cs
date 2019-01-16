@@ -17,6 +17,8 @@ public class MapCreator : MonoBehaviour
     [HideInInspector]
     public MapData map;
     [SerializeField]
+    GameObject playerPrefab;
+    [SerializeField]
     private Sprite[] backImages;
 
     private GameObject[] mapObjects = new GameObject[9];
@@ -191,8 +193,7 @@ public class MapCreator : MonoBehaviour
                         if (enemyObj.tag == "StartPos")
                         {
                             startPositionObject = enemyObj;
-                            testtest test = FindObjectOfType<testtest>();
-                            test.setParent(startPositionObject);
+                            SetParentPlayer(startPositionObject);
                         }
 
                         enemyObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y) + new Vector2(tileSize * xLength * rem, -tileSize * yLength * quo);
@@ -204,6 +205,12 @@ public class MapCreator : MonoBehaviour
         }
         StageController stageController = FindObjectOfType<StageController>();
         stageController.SetMapList = mapObjects;
+    }
+
+    public void SetParentPlayer(GameObject parent)
+    {
+        GameObject broOld = Instantiate(playerPrefab);
+        broOld.transform.SetParent(parent.transform);
     }
 }
 

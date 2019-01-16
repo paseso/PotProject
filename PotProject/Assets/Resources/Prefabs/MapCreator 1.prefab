@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4317403914716936}
   - component: {fileID: 114477684173658472}
-  - component: {fileID: 114882833881507694}
   m_Layer: 0
   m_Name: MapCreator 1
   m_TagString: Untagged
@@ -139,6 +138,10 @@ MonoBehaviour:
     gimmickSize: {x: 1, y: 1}
     gimmickObj: {fileID: 1622490842944640, guid: da6553b81902a2e42b1a9a4131995fdc,
       type: 2}
+  - gimmickImage: {fileID: 2800000, guid: 0348cb07b2cb003499b3567fbbdef26b, type: 3}
+    gimmickSize: {x: 1, y: 1}
+    gimmickObj: {fileID: 1538882862113310, guid: a16bc37317025384a9653976c1b7544b,
+      type: 2}
   enemies:
   - enemyImage: {fileID: 2800000, guid: d1a5bda456b103e4c858f26fbc740877, type: 3}
     enemyObj: {fileID: 0}
@@ -179,21 +182,11 @@ MonoBehaviour:
   - enemyImage: {fileID: 2800000, guid: 0eb3422dd8a555240b6ff3ab1db2f169, type: 3}
     enemyObj: {fileID: 1398486377858722, guid: 232a0f376f1909e45b5fc702aca0b1d5, type: 2}
   map: {fileID: 0}
+  playerPrefab: {fileID: 1918219012865452, guid: edf43bd1930ee6544b29d2446d3d6f4c,
+    type: 2}
   backImages:
   - {fileID: 21300000, guid: f4c6df7a78221554b8cc43c6823405d7, type: 3}
   - {fileID: 21300000, guid: 4da0539c6a8bd54418ed7751c49c09de, type: 3}
-  - {fileID: 21300000, guid: 6a991f66ad9706446b5806a24262241c, type: 3}
-  - {fileID: 21300000, guid: aceadb682c3793842a1deca6aef2ccd6, type: 3}
-  - {fileID: 21300000, guid: 3cfaee6c33be5d742a3b104e65eff684, type: 3}
---- !u!114 &114882833881507694
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1239466112595404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69cfaf32981b42948aa4c4618ace8fee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 1918219012865452, guid: edf43bd1930ee6544b29d2446d3d6f4c, type: 2}
+  - {fileID: 0}
+  - {fileID: 21300000, guid: c9d18ed8e79817d4c9976f5ba48e004c, type: 3}
+  - {fileID: 21300000, guid: 6a1a9dd0c76f23a4e8f1b0235e9993c0, type: 3}
