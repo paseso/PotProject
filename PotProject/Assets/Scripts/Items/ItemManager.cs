@@ -5,13 +5,20 @@ using UnityEngine;
 [System.Serializable]
 public struct ItemStatus {
     public enum Type {
-        SLIME = 0,
-        GOLEM,
+        VAJURA = 0,
+        MIC,
+        LAMP,
+        KEYROD,
+        CLAY,
         SNAKE,
-        PORTION_G,
-        PORTION_R,
-        HARB,
-        ROPE,
+        LIZARD,
+        WOOD,
+        CROWN,
+        SMOKE,
+        CRYSTAL,
+        CLOUD,
+        POWDER,
+        FLOWER,
     };
 
     public Type type;

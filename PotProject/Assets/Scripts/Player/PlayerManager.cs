@@ -40,8 +40,10 @@ public struct PlayerStatus
     {
         NORMAL,
         FIRE,
-        WATER,
-        EARTH,
+        FROZEN,
+        DARK,
+        SPEAR,
+        AXE,
         KEY,
     }
 

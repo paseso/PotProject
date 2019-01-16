@@ -6,6 +6,26 @@ using UnityEngine.UI;
 
 public class AlchemyUIController : MonoBehaviour {
 
+    //Item_img
+    /* 
+     * 0.粘土
+     * 1.ランプ
+     * 2.ヘビ
+     * 3.花
+     * 4.雲
+     * 5.王冠
+     * 6.クリスタル
+     * 7.鍵棒
+     * 8.トカゲ
+     * 9.コウモリ
+     * 10.鱗粉
+     * 11.バジュラ
+     * 12.木材
+     * 13.煙玉
+     * 14.火薬
+     * 
+     */
+
     //錬金UIにある持っている素材一覧の欄オブジェクト
     private GameObject[] Itembox;
 
@@ -328,14 +348,47 @@ public class AlchemyUIController : MonoBehaviour {
 
             switch (items[i])
             {
-                case ItemStatus.Type.SLIME:
+                case ItemStatus.Type.CLAY:
                     item_img.sprite = ItemImage[0];
                     break;
-                case ItemStatus.Type.GOLEM:
+                case ItemStatus.Type.LAMP:
                     item_img.sprite = ItemImage[1];
                     break;
                 case ItemStatus.Type.SNAKE:
                     item_img.sprite = ItemImage[2];
+                    break;
+                case ItemStatus.Type.FLOWER:
+                    item_img.sprite = ItemImage[3];
+                    break;
+                case ItemStatus.Type.CLOUD:
+                    item_img.sprite = ItemImage[4];
+                    break;
+                case ItemStatus.Type.CROWN:
+                    item_img.sprite = ItemImage[5];
+                    break;
+                case ItemStatus.Type.CRYSTAL:
+                    item_img.sprite = ItemImage[6];
+                    break;
+                case ItemStatus.Type.KEYROD:
+                    item_img.sprite = ItemImage[7];
+                    break;
+                case ItemStatus.Type.LIZARD:
+                    item_img.sprite = ItemImage[8];
+                    break;
+                case ItemStatus.Type.MIC:
+                    item_img.sprite = ItemImage[9];
+                    break;
+                case ItemStatus.Type.POWDER:
+                    item_img.sprite = ItemImage[10];
+                    break;
+                case ItemStatus.Type.VAJURA:
+                    item_img.sprite = ItemImage[11];
+                    break;
+                case ItemStatus.Type.WOOD:
+                    item_img.sprite = ItemImage[12];
+                    break;
+                case ItemStatus.Type.SMOKE:
+                    item_img.sprite = ItemImage[13];
                     break;
             }
         }
