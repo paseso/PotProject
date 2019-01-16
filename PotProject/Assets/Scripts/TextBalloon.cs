@@ -29,7 +29,6 @@ public class TextBalloon : MonoBehaviour {
         canvas = GameObject.Find("Canvas");
         AddBlank(massages);
         playerController = FindObjectOfType<PlayerController>();
-        StartCoroutine(InstanceBalloon());
     }
 	
 	void Update () {
@@ -51,6 +50,11 @@ public class TextBalloon : MonoBehaviour {
                 NextWard();
             }
         }
+    }
+
+    public void BeginTalk()
+    {
+        StartCoroutine(InstanceBalloon());
     }
 
     // 次の文章へ
@@ -81,6 +85,7 @@ public class TextBalloon : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.1f);
         massageUI = Instantiate(balloonPrefab) as GameObject;
+        playerController.IsCommandActive = false;
         massageUI.transform.SetParent(canvas.transform, false);
         massageUI.transform.localScale = new Vector3(0.75f, 0.75f, 1);
         massageUI.transform.DOScale(new Vector2(1, 1), 0.1f);
@@ -96,6 +101,7 @@ public class TextBalloon : MonoBehaviour {
         massageUI.transform.DOScale(new Vector2(0.75f, 0.75f), 0.1f);
         massageUI.GetComponentInChildren<Text>().text = "";
         yield return new WaitForSeconds(0.1f);
+        playerController.IsCommandActive = true;
         massageUI.SetActive(false);
         yield break;
     }
