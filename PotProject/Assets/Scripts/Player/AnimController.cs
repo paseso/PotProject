@@ -55,6 +55,8 @@ public class AnimController : MonoBehaviour {
                 gameObject.transform.GetChild(4).GetComponent<SpriteRenderer>().sortingOrder = 10;
                 //頭
                 gameObject.transform.GetChild(5).GetComponent<SpriteMeshAnimation>().frame = 0;
+                gameObject.transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<SpriteMeshInstance>().sortingOrder = 8;
+                gameObject.transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<SpriteMeshInstance>().sortingOrder = 8;
                 gameObject.transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<SpriteMeshAnimation>().frame = 0;
                 gameObject.transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<SpriteMeshAnimation>().frame = 0;
                 //首モフ
@@ -102,6 +104,8 @@ public class AnimController : MonoBehaviour {
                 gameObject.transform.GetChild(4).GetComponent<SpriteRenderer>().sortingOrder = 1;
                 //頭
                 gameObject.transform.GetChild(5).GetComponent<SpriteMeshAnimation>().frame = 1;
+                gameObject.transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<SpriteMeshInstance>().sortingOrder = 8;
+                gameObject.transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<SpriteMeshInstance>().sortingOrder = 8;
                 gameObject.transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<SpriteMeshAnimation>().frame = 1;
                 gameObject.transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<SpriteMeshAnimation>().frame = 1;
                 //首モフ
@@ -191,7 +195,6 @@ public class AnimController : MonoBehaviour {
                 break;
         }
         _attackStart = false;
-        Debug.Log("StateOrderInLayer通った");
     }
 
     /// <summary>
@@ -226,7 +229,6 @@ public class AnimController : MonoBehaviour {
             default:
                 break;
         }
-        Debug.Log("AttackAnimOrderInLayer通った");
         _attackStart = true;
     }
 
