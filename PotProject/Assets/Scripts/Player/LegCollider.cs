@@ -24,6 +24,8 @@ public class LegCollider : MonoBehaviour {
     /// </summary>
     private void FallCheck()
     {
+        if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER)
+            return;
         now = gameObject.transform.position.y;
         if ((falldistance - now) >= 2.5f)
         {
