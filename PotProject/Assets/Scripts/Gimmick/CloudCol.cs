@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CloudCol : MonoBehaviour {
+    private bool onCloud = false;
+    private GameObject player;
+
+    void SetColParent(GameObject player) {
+        player.transform.SetParent(transform);
+    }
 
     private void OnTriggerStay2D(Collider2D col) {
         if (col.gameObject.name == "Leg") {
-            GameObject player = col.transform.parent.transform.parent.gameObject;
+            player = col.transform.parent.transform.parent.gameObject;
             player.transform.SetParent(transform);
-            IsMovePosSet(player);
         }
     }
 
@@ -17,9 +22,5 @@ public class CloudCol : MonoBehaviour {
             GameObject player = col.transform.parent.transform.parent.gameObject;
             player.transform.SetParent(transform.root.transform);
         }
-    }
-
-    void IsMovePosSet(GameObject obj) {
-        obj.transform.localPosition = new Vector2(transform.localPosition.x, obj.transform.localPosition.y);
     }
 }

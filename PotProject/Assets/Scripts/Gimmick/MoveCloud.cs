@@ -6,14 +6,14 @@ using DG.Tweening;
 public class MoveCloud : MonoBehaviour {
     private float distance;
     private int direction = 1;
-    private int speed = 3;
+    private int speed = 5;
 	// Use this for initialization
 	void Start () {
         
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
         Move(direction);
     }
 
@@ -25,6 +25,6 @@ public class MoveCloud : MonoBehaviour {
     }
 
     public void Move(int dir) {
-        GetComponent<Rigidbody2D>().velocity = new Vector2(speed * dir, 0);
+        transform.localPosition = new Vector2(transform.localPosition.x + (Time.deltaTime * speed * dir), transform.localPosition.y);
     }
 }

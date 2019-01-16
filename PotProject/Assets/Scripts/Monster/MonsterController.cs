@@ -43,6 +43,7 @@ public struct MonsterStatus
         FAIRY,
         HARB,
         FATHER,
+        MAGIC,
     }
     public MonsterType type;
 

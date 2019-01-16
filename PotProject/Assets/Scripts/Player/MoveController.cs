@@ -687,6 +687,9 @@ public class MoveController : MonoBehaviour
         PotObject.layer = LayerMask.NameToLayer("Trans");
         transform.parent.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed * dir);
         _laddernow = true;
+        if(InLadderCount < 0) {
+            player_ctr.ChangeLayer();
+        }
     }
     
     private void OnTriggerEnter2D(Collider2D col)

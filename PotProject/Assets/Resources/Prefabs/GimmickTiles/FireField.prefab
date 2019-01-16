@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212805698563755148}
   - component: {fileID: 61469757222386004}
   - component: {fileID: 114203785227820102}
+  - component: {fileID: 114541004427107466}
   m_Layer: 0
   m_Name: FireField
   m_TagString: Untagged
@@ -79,6 +80,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 13
+--- !u!114 &114541004427107466
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1836902585609636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9696294e9f29da043846bc1bdfa5a0bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212805698563755148
 SpriteRenderer:
   m_ObjectHideFlags: 1

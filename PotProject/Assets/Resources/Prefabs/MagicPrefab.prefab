@@ -21,7 +21,10 @@ GameObject:
   - component: {fileID: 4321892039179340}
   - component: {fileID: 212801386887361490}
   - component: {fileID: 50245173494033926}
-  m_Layer: 0
+  - component: {fileID: 114678365232561586}
+  - component: {fileID: 58404472254118666}
+  - component: {fileID: 114337082107048400}
+  m_Layer: 13
   m_Name: MagicPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,6 +64,49 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!58 &58404472254118666
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1060816451991622}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
+--- !u!114 &114337082107048400
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1060816451991622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd229fd54d0c8d241846c6b53edd4566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status:
+    hp: 1
+    atk: 1
+    barrier: 0
+    type: 16
+    attribute: 1
+--- !u!114 &114678365232561586
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1060816451991622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d76d4a5028d895b48a69b058b768c752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212801386887361490
 SpriteRenderer:
   m_ObjectHideFlags: 1

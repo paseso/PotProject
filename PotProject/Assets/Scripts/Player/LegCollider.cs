@@ -61,9 +61,9 @@ public class LegCollider : MonoBehaviour {
         if (col.gameObject.layer == LayerMask.NameToLayer("Background")) { return false; }
         if (!col.GetComponent<GimmickInfo>()) { return true; }
         GimmickInfo info = col.GetComponent<GimmickInfo>();
-        if (info.type == GimmickInfo.GimmickType.GROWTREE) { return true; }
-        if (info.type != GimmickInfo.GimmickType.LADDER) { return false; }
-        
+        if (info.type == GimmickInfo.GimmickType.LADDER) { return false; }
+        if (info.type == GimmickInfo.GimmickType.FIREFIELD) { return false; }
+
         return true;
     }
 
@@ -82,11 +82,11 @@ public class LegCollider : MonoBehaviour {
                 FallCheck();
             }
         }
-        Debug.Log("colName=" + col.gameObject.name);
-        if (player_ctr.status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && move_ctr.Jumping) {
-            Debug.Log("HitBlock");
-            move_ctr.InLadderCount = 0;
+
+        if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer") && col.gameObject.layer == LayerMask.NameToLayer("Block")) {
+            
             player_ctr.ChangeLayer();
+            move_ctr.InLadderCount = 0;
         }
 
         if (!col.GetComponent<GimmickInfo>()) { return; }
@@ -94,18 +94,13 @@ public class LegCollider : MonoBehaviour {
         if (info.type == GimmickInfo.GimmickType.LADDER)
         {
             move_ctr.InLadderCount++;
-
-            Debug.Log("Enter" + move_ctr.InLadderCount);
         }
-
-        
     }
 
     private void OnTriggerStay2D(Collider2D col)
     {
         GimmickInfo info = col.GetComponent<GimmickInfo>();
         
-
         if (JumpCheck(col.gameObject))
         {
             move_ctr._isJump = true;
@@ -123,7 +118,6 @@ public class LegCollider : MonoBehaviour {
         if (info.type == GimmickInfo.GimmickType.LADDER) {
             
             move_ctr.InLadderCount--;
-            Debug.Log("Exit"+move_ctr.InLadderCount);
             if (move_ctr.InLadderCount <= 0) {
                 move_ctr.InLadderCount = 0;
                 player_ctr.ChangeLayer();

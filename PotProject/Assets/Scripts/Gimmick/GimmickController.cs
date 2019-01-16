@@ -39,33 +39,32 @@ public class GimmickController :MonoBehaviour {
     /// <param name="col"></param>
     public void OnCollisionEnter2D(Collision2D col) {
         MapInfo objInfo = col.transform.root.gameObject.GetComponent<MapInfo>();
-        if (col.gameObject.tag == "Player") {
-            switch (gInfo.type) {
-                case GimmickInfo.GimmickType.UP:
-                    
-                    sController.Sride(objInfo.MapNumX, StageController.Direction.UP);
-                    break;
-                case GimmickInfo.GimmickType.DOWN:
-                    
-                    sController.Sride(objInfo.MapNumX, StageController.Direction.DOWN);
-                    break;
-                case GimmickInfo.GimmickType.LEFT:
-                    
-                    sController.Sride(objInfo.MapNumY, StageController.Direction.LEFT);
-                    break;
-                case GimmickInfo.GimmickType.RIGHT:
-                    
-                    sController.Sride(objInfo.MapNumY, StageController.Direction.RIGHT);
-                    break;
-                case GimmickInfo.GimmickType.BAKETREE:
-                    BakeTree(gameObject);
-                    break;
-                case GimmickInfo.GimmickType.ROCK:
-                    RockDoorOpen();
-                    break;
-                default:
-                    break;
-            }
+        if (col.gameObject.layer != LayerMask.NameToLayer("Player")) { return; }
+        switch (gInfo.type) {
+            case GimmickInfo.GimmickType.UP:
+                
+                sController.Sride(objInfo.MapNumX, StageController.Direction.UP);
+                break;
+            case GimmickInfo.GimmickType.DOWN:
+                
+                sController.Sride(objInfo.MapNumX, StageController.Direction.DOWN);
+                break;
+            case GimmickInfo.GimmickType.LEFT:
+                
+                sController.Sride(objInfo.MapNumY, StageController.Direction.LEFT);
+                break;
+            case GimmickInfo.GimmickType.RIGHT:
+                
+                sController.Sride(objInfo.MapNumY, StageController.Direction.RIGHT);
+                break;
+            case GimmickInfo.GimmickType.BAKETREE:
+                BakeTree(gameObject);
+                break;
+            case GimmickInfo.GimmickType.ROCK:
+                RockDoorOpen();
+                break;
+            default:
+                break;
         }
     }
 
@@ -74,7 +73,8 @@ public class GimmickController :MonoBehaviour {
     /// </summary>
     /// <param name="col"></param>
     public void OnTriggerEnter2D(Collider2D col) {
-        if(col.gameObject.tag != ("Player")) { return; }
+        
+        if(col.gameObject.layer != LayerMask.NameToLayer("Player")) { return; }
         switch (gInfo.type) {
             case GimmickInfo.GimmickType.MAPCHANGE:
                 col.transform.parent.transform.parent.transform.SetParent(transform.root.gameObject.transform);
@@ -82,19 +82,11 @@ public class GimmickController :MonoBehaviour {
                 break;
             case GimmickInfo.GimmickType.FIREFIELD:
                 bossCon.IsMagicAttack = true;
-                inFireZone++;
                 break;
+            case GimmickInfo.GimmickType.SPRING:
+                
             default:
                 break;
-        }
-    }
-
-    public void OnTriggerStay2D(Collider2D col)
-    {
-        if (col.gameObject.tag != ("Player")) { return; }
-        if (gInfo.type == GimmickInfo.GimmickType.FIREFIELD)
-        {
-            bossCon.IsMagicAttack = true;
         }
     }
 
@@ -103,14 +95,11 @@ public class GimmickController :MonoBehaviour {
     /// </summary>
     /// <param name="col"></param>
     public void OnTriggerExit2D(Collider2D col) {
-        if (col.gameObject.tag != ("Player")) { return; }
+        if (col.gameObject.layer != LayerMask.NameToLayer("Player")) { return; }
         switch (gInfo.type) {
             case GimmickInfo.GimmickType.FIREFIELD:
                 inFireZone--;
-                if (inFireZone < 0)
-                {
-                    bossCon.IsMagicAttack = false;
-                }
+                bossCon.IsMagicAttack = false;
                 break;
             default:
                 break;
@@ -128,12 +117,12 @@ public class GimmickController :MonoBehaviour {
     public IEnumerator RockStep(GameObject obj) {
         transform.parent.transform.parent.DOLocalMoveY(transform.parent.transform.parent.localPosition.y - 0.25f, 1f);
         yield return new WaitForSeconds(1.5f);
-        obj.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
+        obj.transform.DOScaleY(0f, 2.0f).SetEase(Ease.Linear);
         while (true) {
-            obj.transform.localPosition = new Vector2(obj.transform.localPosition.x + 0.2f, obj.transform.localPosition.y);
-            yield return new WaitForSeconds(0.1f);
-            obj.transform.localPosition = new Vector2(obj.transform.localPosition.x - 0.2f, obj.transform.localPosition.y);
-            yield return new WaitForSeconds(0.1f);
+            obj.transform.localPosition = new Vector2(obj.transform.localPosition.x + 0.05f, obj.transform.localPosition.y);
+            yield return new WaitForSeconds(0.05f);
+            obj.transform.localPosition = new Vector2(obj.transform.localPosition.x - 0.05f, obj.transform.localPosition.y);
+            yield return new WaitForSeconds(0.05f);
         }
     }
 
@@ -142,6 +131,10 @@ public class GimmickController :MonoBehaviour {
         foreach(var i in waters) {
             i.gameObject.SetActive(true);
         }
+    }
+
+    public void BossSpring(GameObject obj) {
+
     }
 
     /// <summary>

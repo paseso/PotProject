@@ -20,9 +20,6 @@ public class RenkinController : MonoBehaviour {
         DropItemStatus.Type.collar,DropItemStatus.Type.scales,   // 投げ縄
         DropItemStatus.Type.smokeball,DropItemStatus.Type.scales,// 煙玉
         DropItemStatus.Type.cloud,DropItemStatus.Type.crystals,  // 雨雲
-        //DropItemStatus.Type.smokeball,DropItemStatus.Type.none,  // 
-        //DropItemStatus.Type.lamp,DropItemStatus.Type.none,       // ろうそく
-
     };
     
     private List<DropItemStatus.Type[]> recipes = new List<DropItemStatus.Type[]>();

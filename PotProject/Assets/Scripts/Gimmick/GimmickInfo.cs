@@ -24,6 +24,7 @@ public class GimmickInfo : MonoBehaviour {
         WATER,
         FIREFIELD,
         MAGIC,
+        SPRING,
     }
 
     public GimmickType type;

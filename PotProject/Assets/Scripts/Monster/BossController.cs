@@ -41,12 +41,15 @@ public class BossController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        // 魔法攻撃
         if (isMagicAttack)
         {
             mTime += Time.deltaTime;
             if(mTime > status.magicTime)
             {
                 // 魔法飛ばす処理
+                playerPos = GameObject.FindGameObjectWithTag("Player").transform.localPosition;
+                Debug.Log("PlayerPos=" + playerPos);
                 GetComponentInChildren<MagicShoot>().Shoot(playerPos);
                 mTime = 0;
             }
