@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour {
     private AlchemyUIController alchemyUI_ctr;
     private GameObject BrotherObj;
     private GameObject PotObject;
+    //錬金したアイテムのボックス　最大3つ
+    private List<CreateItemStatus.Type> createItemBox;
 
     [SerializeField]
     private RectTransform Pot_UI;
@@ -68,6 +70,7 @@ public class PlayerController : MonoBehaviour {
             status.PlayerHP = status.GetMaxHP;
         }
 
+        setSwordSpriteList();
         status.ItemList = new List<ItemStatus.Type>();
         alchemy_ctr = FindObjectOfType<AlchemyController>();
         alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
@@ -158,6 +161,38 @@ public class PlayerController : MonoBehaviour {
     }
 
     /// <summary>
+    /// 錬金したアイテムボックスにアイテムを入れる処理
+    /// </summary>
+    public void setCreateItemList(CreateItemStatus.Type type)
+    {
+        if (createItemBox.Count >= 3)
+            return;
+
+        createItemBox.Add(type);
+    }
+
+    /// <summary>
+    /// 錬金したアイテムボックスの中身を取得する処理
+    /// </summary>
+    /// <returns></returns>
+    public List<CreateItemStatus.Type> getCreateItemList()
+    {
+        return createItemBox;
+    }
+
+    /// <summary>
+    /// sowrdSpriteListに画像をセットする処理
+    /// </summary>
+    private void setSwordSpriteList()
+    {
+        for (int i = 0; i < maxItemBox; i++)
+        {
+            Sprite img = Resources.Load<Sprite>("Textures/SwordImage_" + i);
+            swordSpriteList[i] = img;
+        }
+    }
+
+    /// <summary>
     /// 剣の属性を変える処理
     /// </summary>
     /// <param name="s_type">FIRE=火、WATER=水、EARTH=土</param>
@@ -169,20 +204,22 @@ public class PlayerController : MonoBehaviour {
                 sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.NORMAL];
                 break;
             case PlayerStatus.SWORDTYPE.FIRE:
-                Debug.Log("火属性");
                 sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.FIRE];
                 break;
-            case PlayerStatus.SWORDTYPE.WATER:
-                Debug.Log("水属性");
-                sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.WATER];
+            case PlayerStatus.SWORDTYPE.FROZEN:
+                sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.FROZEN];
                 break;
-            case PlayerStatus.SWORDTYPE.EARTH:
-                Debug.Log("土属性");
-                sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.EARTH];
+            case PlayerStatus.SWORDTYPE.DARK:
+                sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.DARK];
                 break;
             case PlayerStatus.SWORDTYPE.KEY:
                 sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.KEY];
-                Debug.Log("鍵");
+                break;
+            case PlayerStatus.SWORDTYPE.SPEAR:
+                sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.SPEAR];
+                break;
+            case PlayerStatus.SWORDTYPE.AXE:
+                sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.AXE];
                 break;
         }
     }

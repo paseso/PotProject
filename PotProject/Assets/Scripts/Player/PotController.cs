@@ -92,18 +92,48 @@ public class PotController : MonoBehaviour {
     {
         switch (type)
         {
-            case ItemStatus.Type.SLIME:
-                player_ctr.setItemList(ItemStatus.Type.SLIME);
+            case ItemStatus.Type.CLAY:
+                player_ctr.setItemList(ItemStatus.Type.CLAY);
                 break;
-
-            case ItemStatus.Type.GOLEM:
-                player_ctr.setItemList(ItemStatus.Type.GOLEM);
+            case ItemStatus.Type.CLOUD:
+                player_ctr.setItemList(ItemStatus.Type.CLOUD);
                 break;
-
             case ItemStatus.Type.SNAKE:
                 player_ctr.setItemList(ItemStatus.Type.SNAKE);
                 break;
-
+            case ItemStatus.Type.CROWN:
+                player_ctr.setItemList(ItemStatus.Type.CROWN);
+                break;
+            case ItemStatus.Type.CRYSTAL:
+                player_ctr.setItemList(ItemStatus.Type.CRYSTAL);
+                break;
+            case ItemStatus.Type.FLOWER:
+                player_ctr.setItemList(ItemStatus.Type.FLOWER);
+                break;
+            case ItemStatus.Type.KEYROD:
+                player_ctr.setItemList(ItemStatus.Type.KEYROD);
+                break;
+            case ItemStatus.Type.LAMP:
+                player_ctr.setItemList(ItemStatus.Type.LAMP);
+                break;
+            case ItemStatus.Type.LIZARD:
+                player_ctr.setItemList(ItemStatus.Type.LIZARD);
+                break;
+            case ItemStatus.Type.MIC:
+                player_ctr.setItemList(ItemStatus.Type.MIC);
+                break;
+            case ItemStatus.Type.POWDER:
+                player_ctr.setItemList(ItemStatus.Type.POWDER);
+                break;
+            case ItemStatus.Type.SMOKE:
+                player_ctr.setItemList(ItemStatus.Type.SMOKE);
+                break;
+            case ItemStatus.Type.VAJURA:
+                player_ctr.setItemList(ItemStatus.Type.VAJURA);
+                break;
+            case ItemStatus.Type.WOOD:
+                player_ctr.setItemList(ItemStatus.Type.WOOD);
+                break;
             default:
                 Debug.Log("ItemType: " + type);
                 break;
@@ -120,7 +150,7 @@ public class PotController : MonoBehaviour {
             switch (mInfo.GetMStatus.type)
             {
                 case MonsterStatus.MonsterType.WATER:
-                    player_ctr.setItemList(ItemStatus.Type.SLIME);
+                    player_ctr.setItemList(ItemStatus.Type.CLAY);
                     break;
 
                 case MonsterStatus.MonsterType.SNAKE:
