@@ -37,14 +37,16 @@ public class MapEditor : EditorWindow {
         FIRE,
         WATER,
         THUNDER,
-        DARK
+        DARK,
+        EMPTY1,
+        EMPTY2
     };
 
     private BackGround backGround;
     
 
     [MenuItem("Editor/MapEditor")]
-    private static void Create()
+    private static void Open()
     {
         //  生成
         MapEditor window = GetWindow<MapEditor>("MapEditor");
@@ -72,7 +74,7 @@ public class MapEditor : EditorWindow {
     private void OnEnable()
     {
         Debug.Log("OnEnable");
-        Create();
+        Open();
     }
 
     private void OnGUI()
@@ -89,7 +91,7 @@ public class MapEditor : EditorWindow {
         //  マップの読み込み
         if (GUILayout.Button("ファイル入力")) { ImportMapData(); }
         //  グリッドをリセットをする
-        if (GUILayout.Button("リセット")) { mapData = new int[gridNum, gridNum]; ResetMapData(); }
+        if (GUILayout.Button("リセット")) { ResetMapData(); }
         GUILayout.EndHorizontal();
 
         //  グリッドのサイズを設定
