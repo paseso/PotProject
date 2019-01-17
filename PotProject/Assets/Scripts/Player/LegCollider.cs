@@ -11,6 +11,8 @@ public class LegCollider : MonoBehaviour {
     private float now = 0f;
     private float falldistance = 0f;
 
+    
+
 	// Use this for initialization
 	void Start () {
         falldistance = gameObject.transform.position.y;
@@ -60,7 +62,7 @@ public class LegCollider : MonoBehaviour {
 
     public bool JumpCheck(GameObject col)
     {
-        if (col.gameObject.layer == LayerMask.NameToLayer("Background")) { return false; }
+        if (col.gameObject.layer == 2) { return false; }
         if (!col.GetComponent<GimmickInfo>()) { return true; }
         GimmickInfo info = col.GetComponent<GimmickInfo>();
         if (info.type == GimmickInfo.GimmickType.LADDER) { return false; }
@@ -90,6 +92,10 @@ public class LegCollider : MonoBehaviour {
             player_ctr.ChangeLayer();
             move_ctr.InLadderCount = 0;
         }
+        if (col.gameObject.layer == LayerMask.NameToLayer("Block")) {
+            player_ctr.OnBlock = col.gameObject;
+        }
+        
 
         if (!col.GetComponent<GimmickInfo>()) { return; }
         GimmickInfo info = col.GetComponent<GimmickInfo>();
@@ -97,6 +103,7 @@ public class LegCollider : MonoBehaviour {
         {
             move_ctr.InLadderCount++;
         }
+        player_ctr.OnBlock = null;
     }
 
     private void OnTriggerStay2D(Collider2D col)

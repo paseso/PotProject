@@ -53,6 +53,8 @@ public class PlayerController : MonoBehaviour {
         set { isMiniMap = value; }
     }
 
+    public GameObject OnBlock { get; set; }
+
     private GameObject lifePoint;
 
     // Use this for initialization
@@ -202,24 +204,30 @@ public class PlayerController : MonoBehaviour {
         {
             case PlayerStatus.SWORDTYPE.NORMAL:
                 sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.NORMAL];
+                status.PlayerAttack = 1;
                 break;
             case PlayerStatus.SWORDTYPE.FIRE:
                 sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.FIRE];
+                status.PlayerAttack = 1;
                 break;
             case PlayerStatus.SWORDTYPE.FROZEN:
                 sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.FROZEN];
+                status.PlayerAttack = 1;
                 break;
             case PlayerStatus.SWORDTYPE.DARK:
                 sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.DARK];
+                status.PlayerAttack = 1;
                 break;
             case PlayerStatus.SWORDTYPE.KEY:
                 sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.KEY];
+                status.PlayerAttack = 0;
                 break;
             case PlayerStatus.SWORDTYPE.SPEAR:
                 sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.SPEAR];
                 break;
             case PlayerStatus.SWORDTYPE.AXE:
                 sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.AXE];
+                status.PlayerAttack = 2;
                 break;
         }
     }
@@ -265,6 +273,7 @@ public class PlayerController : MonoBehaviour {
     /// <summary>
     /// プレイヤーのHP増やす処理
     /// </summary>
+    /// <param name="point">上昇値</param>
     public void HPUp(int point)
     {
         if (status.PlayerHP + point > status.GetMaxHP) {
@@ -285,6 +294,7 @@ public class PlayerController : MonoBehaviour {
     /// <summary>
     /// プレイヤーのHP減らす処理
     /// </summary>
+    /// <param name="point">減少値</param>
     public void HPDown(int point)
     {
         // HPが0になる攻撃を受けたら
@@ -300,6 +310,17 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// 攻撃力変更
+    /// </summary>
+    /// <param name="point">可変値(下がるなら「-」をつける)</param>
+    public void ATKChange(int point) {
+        status.PlayerAttack += point;
+    }
+
+    /// <summary>
+    /// 再生
+    /// </summary>
     public void Resporn()
     {
         status.PlayerHP = status.GetMaxHP;

@@ -147,11 +147,6 @@ public class StageController : MonoBehaviour
                     mapCount++;
                 }
 
-                //Maps[0][num].transform.localPosition = new Vector2(turnPos.x, turnPos.y - mapSize);
-
-                // 折り返し
-                //StartCoroutine(SrideAnimation(Maps[0][num], turnPos, turnPos, mapCount));
-
                 // スライド終了時の配列内入れ替え
                 temp = Maps[0][num];
 
@@ -184,11 +179,6 @@ public class StageController : MonoBehaviour
                     mapCount++;
                 }
 
-                //Maps[stageLength - 1][num].transform.localPosition = new Vector2(turnPos.x, turnPos.y + mapSize);
-
-                // 折り返し
-                //StartCoroutine(SrideAnimation(Maps[stageLength - 1][num], turnPos, turnPos, mapCount));
-
                 // スライド終了時の配列内入れ替え
                 temp = Maps[stageLength - 1][num];
                 
@@ -220,11 +210,6 @@ public class StageController : MonoBehaviour
                     mapCount++;
                 }
 
-                //Maps[num][stageLength - 1].transform.localPosition = new Vector2(turnPos.x - mapSize, turnPos.y);
-
-                // 折り返し
-                //StartCoroutine(SrideAnimation(Maps[num][stageLength - 1], turnPos, turnPos, mapCount));
-
                 // スライド終了時の配列内入れ替え
                 temp = Maps[num][stageLength - 1];
                 for (int i = 0; i < stageLength - 1; i++) {
@@ -254,11 +239,6 @@ public class StageController : MonoBehaviour
                     mapCount++;
                 }
 
-                //　折り返し座標からマップサイズ分ずれた場所に移動
-                //Maps[num][0].transform.localPosition = new Vector2(turnPos.x + mapSize, turnPos.y);
-
-                // 折り返し
-                //StartCoroutine(SrideAnimation(Maps[num][0],turnPos, turnPos, mapCount));
                 Maps[num][0].transform.localPosition = turnPos;
 
                 // スライド終了時の配列内入れ替え

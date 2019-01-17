@@ -79,7 +79,7 @@ public class MapCreator : MonoBehaviour
                         {
                             if (GetGimmick(gimmickNum).GimmickObj.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
                             {
-                                tileObj.layer = LayerMask.NameToLayer("LadderBrock");
+                                tileObj.layer = LayerMask.NameToLayer("LadderBlock");
                             }
                         }
                     }
@@ -129,7 +129,7 @@ public class MapCreator : MonoBehaviour
 
             //  背景オブジェクトの生成
             GameObject backGroundObject = new GameObject("BG");
-            backGroundObject.layer = LayerMask.NameToLayer("Background");
+            backGroundObject.layer = 2;
             backGroundObject.AddComponent<MapChange>();
             backGroundObject.AddComponent<SpriteRenderer>();
             backGroundObject.GetComponent<SpriteRenderer>().sortingOrder = -1;
@@ -167,7 +167,7 @@ public class MapCreator : MonoBehaviour
                             {
                                 //  レイヤー変更
                                 Debug.Log("aaa");
-                                tileObj.layer = LayerMask.NameToLayer("LadderBrock");
+                                tileObj.layer = LayerMask.NameToLayer("LadderBlock");
                             }
 
                             //////  1つ先のブロックも検索する
@@ -175,7 +175,7 @@ public class MapCreator : MonoBehaviour
 
                             if (GetGimmick(gimmickNum).GimmickObj.transform.childCount != 0  && GetGimmick(gimmickNum).GimmickObj.transform.GetChild(0).GetComponent<GimmickInfo>() != null && GetGimmick(gimmickNum).GimmickObj.transform.GetChild(0).GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
                             {
-                                tileObj.layer = LayerMask.NameToLayer("LadderBrock");
+                                tileObj.layer = LayerMask.NameToLayer("LadderBlock");
                             }
                         }
                     }

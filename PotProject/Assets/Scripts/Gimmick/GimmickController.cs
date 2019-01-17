@@ -110,11 +110,12 @@ public class GimmickController :MonoBehaviour {
         if (!mInfo.UpRockFlag) {
             mInfo.UpRockFlag = true;
             GameObject rock = GameObject.FindGameObjectWithTag("Rock");
-            StartCoroutine(RockStep(rock));
+            StartCoroutine(DoorStep(rock));
         }
     }
 
-    public IEnumerator RockStep(GameObject obj) {
+    // ドアが開くコルーチン
+    public IEnumerator DoorStep(GameObject obj) {
         transform.parent.transform.parent.DOLocalMoveY(transform.parent.transform.parent.localPosition.y - 0.25f, 1f);
         yield return new WaitForSeconds(1.5f);
         obj.transform.DOScaleY(0f, 2.0f).SetEase(Ease.Linear);
@@ -189,6 +190,7 @@ public class GimmickController :MonoBehaviour {
         PlayerManager manager = FindObjectOfType<PlayerManager>();
         if(manager.Status.swordtype != PlayerStatus.SWORDTYPE.KEY) { return; }
         GameObject door = GameObject.FindGameObjectWithTag("KeyDoor");
-        door.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
+        DoorStep(door);
+        //door.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
     }
 }
