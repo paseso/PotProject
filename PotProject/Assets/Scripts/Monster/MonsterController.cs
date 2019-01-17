@@ -66,7 +66,7 @@ public struct MonsterStatus
 /// </summary>
 public class MonsterController : MonoBehaviour
 {
-    private string itemFolder = "Prefabs/Items/";
+    private string itemFolder = "Prefabs/Items/Drop/";
 
     [SerializeField]
     private MonsterStatus status;
@@ -83,20 +83,20 @@ public class MonsterController : MonoBehaviour
     private Dictionary<MonsterStatus.MonsterType, string> ItemList = new Dictionary<MonsterStatus.MonsterType, string>
     {
         {MonsterStatus.MonsterType.WATER,"" },
-        {MonsterStatus.MonsterType.LION,"" },
-        {MonsterStatus.MonsterType.BAT,"" },
-        {MonsterStatus.MonsterType.LAMP,"" },
-        {MonsterStatus.MonsterType.ROBOT,"" },
+        {MonsterStatus.MonsterType.LION,"Cane" },
+        {MonsterStatus.MonsterType.BAT,"Mic" },
+        {MonsterStatus.MonsterType.LAMP,"Lamp" },
+        {MonsterStatus.MonsterType.ROBOT,"Pothook" },
         {MonsterStatus.MonsterType.SLIME,"" },
         {MonsterStatus.MonsterType.SNAKE,"RopePrefab" },
         {MonsterStatus.MonsterType.LUKEWARM,"" },
-        {MonsterStatus.MonsterType.WOOD,"HarbPrefab" },
+        {MonsterStatus.MonsterType.WOOD,"Roots" },
         {MonsterStatus.MonsterType.HAMSTAR,"" },
         {MonsterStatus.MonsterType.SHADOW,"" },
-        {MonsterStatus.MonsterType.CLOUD,"" },
-        {MonsterStatus.MonsterType.TURTLE,"" },
+        {MonsterStatus.MonsterType.CLOUD,"Cloud" },
+        {MonsterStatus.MonsterType.TURTLE,"Crystal" },
         {MonsterStatus.MonsterType.FAIRY,"" },
-        {MonsterStatus.MonsterType.HARB,"HarbPrefab" },
+        {MonsterStatus.MonsterType.HARB,"Weed" },
     };
 
     private GameObject clearPanel;

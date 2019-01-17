@@ -36,11 +36,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4297624233435818}
   - component: {fileID: 212459998275877722}
+  - component: {fileID: 114571108528096710}
   - component: {fileID: 50155233871850762}
-  - component: {fileID: 114998210204635918}
   - component: {fileID: 61924590619940530}
   m_Layer: 0
-  m_Name: HarbPrefab
+  m_Name: Weed
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118,7 +118,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
---- !u!114 &114998210204635918
+--- !u!114 &114571108528096710
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -126,11 +126,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1612088441867594}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9197302f0ca15774290e40a746958c27, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a5965fbedf4d3d489479895e517dd69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item_status:
-    item: 0
+  status:
+    type: 14
 --- !u!212 &212310480781624842
 SpriteRenderer:
   m_ObjectHideFlags: 1
