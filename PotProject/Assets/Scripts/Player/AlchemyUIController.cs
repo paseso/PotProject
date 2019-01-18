@@ -35,7 +35,8 @@ public class AlchemyUIController : MonoBehaviour {
     private PlayerController player_ctr;
 
     private GameObject ItemFrame;
-    private GameObject IntoPot;
+    private GameObject PotFrame;
+    private GameObject PotMain;
     //---IntoPotの子オブジェクト---------
     private GameObject mtr_0;
     private GameObject mtr_1;
@@ -72,14 +73,15 @@ public class AlchemyUIController : MonoBehaviour {
             crossAxisdown = move_ctr.gameObject.GetComponent<CrossAxisDown>();
 
             ItemFrame = gameObject.transform.GetChild(gameObject.transform.childCount - 2).gameObject;
-            IntoPot = gameObject.transform.GetChild(gameObject.transform.childCount - 3).gameObject;
-            mtr_0 = IntoPot.transform.GetChild(0).GetChild(0).gameObject;
-            mtr_1 = IntoPot.transform.GetChild(0).GetChild(1).gameObject;
+            PotFrame = gameObject.transform.GetChild(gameObject.transform.childCount - 3).gameObject;
+            PotMain = PotFrame.transform.GetChild(0).gameObject;
+            mtr_0 = PotFrame.transform.GetChild(1).GetChild(0).gameObject;
+            mtr_1 = PotFrame.transform.GetChild(1).GetChild(1).gameObject;
             
         }
         catch (Exception e)
         {
-            Debug.Log(e + "がないよ！");
+            Debug.LogWarning(e + "がないよ！");
         }
 
 
