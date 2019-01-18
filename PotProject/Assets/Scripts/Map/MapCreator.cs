@@ -40,7 +40,7 @@ public class MapCreator : MonoBehaviour
     }
 
     /// <summary>
-    /// マップを生成
+    /// マップを生成 1つだけ
     /// </summary>
     public void CreateMap()
     {
@@ -103,6 +103,11 @@ public class MapCreator : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// マップの生成 9つ分
+    /// </summary>
+    /// <param name="datas"></param>
     public void CreateMap(MapData[] datas)
     {
         //  プレイヤーの初期地点
@@ -118,15 +123,27 @@ public class MapCreator : MonoBehaviour
         {
             int quo = i / 3;
             int rem = i % 3;
+
+            //  Y軸方向に3ステージ分あげる
+            Vector2 startPos = new Vector2(0, stageSize * 3);
             //  ルートオブジェクトの作成
             string rootName = datas[i].name;
-            //  Y軸方向に３ステージ分あげる
-            Vector2 startPos = new Vector2(0, stageSize * 3);
             var rootObj = new GameObject(rootName);
             rootObj.AddComponent<MapInfo>();
             rootObj.GetComponent<MapInfo>().MapNumX = rem;
             rootObj.GetComponent<MapInfo>().MapNumY = quo;
             rootObj.transform.position = startPos + new Vector2(stageSize / 2, -stageSize / 2) + new Vector2(rem * stageSize, -quo * stageSize);
+            //  ジャンル別の空のオブジェクト生成
+            var tileObjectGroupe = new GameObject("TileObject");
+            var gimmickObjectGroupe = new GameObject("GimmickObject");
+            var OtherObjectGroupe = new GameObject("OtherObject");
+            tileObjectGroupe.transform.position = rootObj.transform.position;
+            gimmickObjectGroupe.transform.position = rootObj.transform.position;
+            OtherObjectGroupe.transform.position = rootObj.transform.position;
+            //  親子付け
+            tileObjectGroupe.transform.parent = rootObj.transform;
+            gimmickObjectGroupe.transform.parent = rootObj.transform;
+            OtherObjectGroupe.transform.parent = rootObj.transform;
 
             //  背景オブジェクトの生成
             GameObject backGroundObject = new GameObject("BG");
@@ -144,8 +161,7 @@ public class MapCreator : MonoBehaviour
             if (backGroundObject.GetComponent<SpriteRenderer>().sprite.name != "Empty" && backGroundObject.GetComponent<SpriteRenderer>().sprite.name != "Empty2")
             {
                 backGroundObject.GetComponent<BoxCollider2D>().isTrigger = true;
-            }
-
+            }            
 
             //  オブジェクトの生成
             for (int y = 0; y < yLength; y++)
@@ -155,12 +171,14 @@ public class MapCreator : MonoBehaviour
                     int tilenum = datas[i].mapDate[y].mapNum[x];
                     int gimmickNum = datas[i].gimmickDate[y].mapNum[x];
                     int enemyNum = datas[i].enemyDate[y].mapNum[x];
-                    //  通常タイルの生成
+                    //  通常タイル
                     if (tilenum != 0)
                     {
+                        //  生成
                         var tileObj = Instantiate(GetTile(tilenum).TileObj);
+                        tileObj.name = tileObj.name + x + "-" + y;
                         tileObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y) + new Vector2(tileSize * xLength * rem, -tileSize * yLength * quo);
-                        tileObj.transform.parent = rootObj.transform;
+                        tileObj.transform.parent = tileObjectGroupe.transform;
                         //周りにはしごギミックがあったらレイヤーを変更
                         if (gimmickNum != 0)
                         {
@@ -180,17 +198,21 @@ public class MapCreator : MonoBehaviour
                             }
                         }
                     }
-                    //  ギミックの生成
+                    //  ギミック
                     if (gimmickNum != 0)
                     {
+                        //  生成
                         var gimmickObj = Instantiate(GetGimmick(gimmickNum).GimmickObj);
+                        gimmickObj.name = gimmickObj.name + x + "-" + y;
                         gimmickObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y) + new Vector2(tileSize * xLength * rem, -tileSize * yLength * quo);
-                        gimmickObj.transform.parent = rootObj.transform;
+                        gimmickObj.transform.parent = gimmickObjectGroupe.transform;
                     }
-                    //  エネミーやポジションの生成
+                    //  エネミーやポジション
                     if (enemyNum != 0)
                     {
                         var enemyObj = Instantiate(GetEnemy(enemyNum).EnemyObj);
+                        enemyObj.name = enemyObj.name + x + "-" + y;
+                        //  スタート位置の配置
                         if (enemyObj.tag == "StartPos")
                         {
                             startPositionObject = enemyObj;
@@ -198,7 +220,7 @@ public class MapCreator : MonoBehaviour
                         }
 
                         enemyObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y) + new Vector2(tileSize * xLength * rem, -tileSize * yLength * quo);
-                        enemyObj.transform.parent = rootObj.transform;
+                        enemyObj.transform.parent = OtherObjectGroupe.transform;
                     }
                 }
             }
@@ -208,6 +230,10 @@ public class MapCreator : MonoBehaviour
         stageController.SetMapList = mapObjects;
     }
 
+    /// <summary>
+    /// プレイヤーをゲームスタート時に生成する
+    /// </summary>
+    /// <param name="parent"></param>
     public void SetParentPlayer(GameObject parent)
     {
         GameObject broOld = Instantiate(playerPrefab);
