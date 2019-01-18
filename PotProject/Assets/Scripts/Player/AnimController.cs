@@ -457,4 +457,12 @@ public class AnimController : MonoBehaviour {
 
         pot_anim.SetBool("isGetItem", true);
     }
+
+    /// <summary>
+    /// PotアニメーションのisGetItemを変更
+    /// </summary>
+    public void PotAnimSetBool()
+    {
+        pot_anim.SetBool("isGetItem", false);
+    }
 }
