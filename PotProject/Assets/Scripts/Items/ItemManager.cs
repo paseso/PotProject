@@ -26,16 +26,15 @@ public struct ItemStatus {
 
 public class ItemManager : MonoBehaviour {
 
-    
     [SerializeField]
-    private ItemStatus item_status;
+    private ItemStatus.Type item_status = ItemStatus.Type.CLAY;
     
     /// <summary>
     /// Item Status取得
     /// </summary>
     public ItemStatus.Type getItemStatus()
     {
-        return item_status.type;
+        return item_status;
     }
 
 }

@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour {
         PotObject = FindObjectOfType<PotController>().gameObject;
         HeartObject = GameObject.Find("Canvas/Heart");
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
+        createItemBox = new List<CreateItemStatus.Type>();
         getHeartChildren();
         _itemMax = false;
         _alchemyUi = false;
