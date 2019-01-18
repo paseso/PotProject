@@ -18,7 +18,6 @@ public class MoveCloud : MonoBehaviour {
     }
 
     public void OnCollisionEnter2D(Collision2D col) {
-        Debug.Log(col.gameObject.name);
         if(col.gameObject.layer == LayerMask.NameToLayer("Block")){
             direction *= -1;
         }

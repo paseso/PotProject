@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class AlchemyUIController : MonoBehaviour {
 
@@ -257,11 +258,19 @@ public class AlchemyUIController : MonoBehaviour {
             return;
 
         if (move_ctr.OnRJoystickUp)
-            _one = true;
+            _one = true;            
         if (move_ctr.OnRJoystickRight)
             _two = true;
         if (move_ctr.OnRJoystickDown)
             _three = true;
+
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+        float total = Mathf.Atan2(v, h);
+        total *= Mathf.Rad2Deg;
+        
+        var direction = new Vector3(0, 0, total);
+        PotMain.transform.DOLocalRotate(direction, 0.5f);
 
         if (move_ctr.OnRJoystickLeft)
         {

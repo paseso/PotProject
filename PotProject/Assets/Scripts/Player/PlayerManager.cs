@@ -73,6 +73,7 @@ public struct PlayerStatus
     public EventState event_state;
 
     //持ち物に入ってるアイテム
+    [HideInInspector]
     public List<ItemStatus.Type> ItemList;
 }
 

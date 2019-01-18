@@ -89,6 +89,14 @@ public class PlayerController : MonoBehaviour {
         }
 	}
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            HPDown(3);
+        }
+    }
+
     /// <summary>
     /// HaertChildに子供を入れる処理
     /// </summary>
@@ -304,6 +312,7 @@ public class PlayerController : MonoBehaviour {
             return;
         }
         status.PlayerHP -= point;
+        EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Damage, BrotherObj.transform.position, 5, BrotherObj);
         for(int i = status.GetMaxHP - 1; i > status.PlayerHP - 1; i--)
         {
             hearts[i].SetActive(false);
@@ -328,7 +337,11 @@ public class PlayerController : MonoBehaviour {
         {
             hearts[i].SetActive(true);
         }
-        BrotherObj.transform.parent.position = GameObject.Find(BrotherObj.transform.root.name + "/RespornPoint(Clone)").transform.position;
+        BrotherObj.transform.parent.position = GameObject.Find(BrotherObj.transform.root.name + "/RespornPoint(Clone)").transform.position + new Vector3(0, 1.5f, 0);
+        PotObject.transform.position = GameObject.Find(BrotherObj.transform.root.name + "/RespornPoint(Clone)").transform.position;
+        // Effectの生成
+        Debug.Log("effects生成");
+        EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Respawn, BrotherObj.transform.position, 5, BrotherObj);
     }
 
     /// <summary>
