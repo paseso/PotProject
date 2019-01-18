@@ -130,7 +130,7 @@ public class MonsterController : MonoBehaviour
         }
 
         GameObject item = Instantiate(Resources.Load<GameObject>(itemFolder + ItemList[status.type]));
-        item.AddComponent<PopUp>();
+        item.AddComponent<DropItemMove>();
         item.transform.SetParent(transform.parent.transform);
         item.transform.localPosition = transform.localPosition;
         Destroy(gameObject);
