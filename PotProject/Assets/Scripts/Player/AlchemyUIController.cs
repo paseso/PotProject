@@ -67,9 +67,6 @@ public class AlchemyUIController : MonoBehaviour {
 
     void Start ()
     {
-        //デバッグ
-        //player_ctr.setItemList(ItemStatus.ITEM.SLIME);
-        //player_ctr.setItemList(ItemStatus.ITEM.SNAKE);
         try
         {
             player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
@@ -88,7 +85,6 @@ public class AlchemyUIController : MonoBehaviour {
         {
             Debug.LogWarning(e + "がないよ！");
         }
-
         nowAlchemyItem = 0;
         nowBox = 0;
 
@@ -116,6 +112,23 @@ public class AlchemyUIController : MonoBehaviour {
             setMaterialsBox();
         else
             ReSetMaterials(nowBox);
+    }
+
+    /// <summary>
+    /// イメージ画像がなかった時に仮画像を入れる処理
+    /// </summary>
+    /// <returns></returns>
+    private bool NullCheckImage(int num)
+    {
+        bool _null = false;
+
+        if (num != null)
+            return _null;
+
+        Sprite img = Resources.Load<Sprite>("Textures/AlchemyUI_item0");
+        ItemImage[num] = img;
+
+        return _null;
     }
 
     /// <summary>
@@ -332,11 +345,19 @@ public class AlchemyUIController : MonoBehaviour {
     /// </summary>
     private void setItemImageList()
     {
-        ItemImage = new Sprite[3];
-        for(int i = 0; i < ItemImage.Length; i++)
+        ItemImage = new Sprite[14];
+        Sprite img;
+        for (int i = 0; i < ItemImage.Length; i++)
         {
-            Sprite img = Resources.Load<Sprite>("Textures/AlchemyUI_item" + i);
-            ItemImage[i] = img;
+            if (!NullCheckImage(i))
+            {
+                img = Resources.Load<Sprite>("Textures/AlchemyUI_item" + i);
+                ItemImage[i] = img;
+            }
+            else
+            {
+                NullCheckImage(i);
+            }
         }
     }
 
@@ -412,9 +433,12 @@ public class AlchemyUIController : MonoBehaviour {
     /// <summary>
     /// 今セットされてる錬金アイテムの変更処理
     /// </summary>
-    private void setNowAlchemyItem()
+    public void setNowAlchemyItem()
     {
         int num = player_ctr.getCreateItemList().Count;
+        if (num == 0)
+            return;
+        
         if (nowAlchemyItem >= num - 1)
             nowAlchemyItem = 0;
         else

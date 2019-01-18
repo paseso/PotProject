@@ -433,6 +433,7 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.TRIANGLE:
                 //錬金したアイテム使用
+                player_ctr.UseAlchemyItem(alchemyUI_ctr.getNowAlchemyItem);
                 break;
 
             case ButtonType.L1:
@@ -441,6 +442,7 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.R1:
                 Debug.Log("R1");
+                alchemyUI_ctr.setNowAlchemyItem();
                 break;
 
             case ButtonType.L2:

@@ -91,11 +91,13 @@ public class AlchemyController : MonoBehaviour {
     //フレームの右下のImage
     private Image GeneratedImg;
     private PlayerController player_ctr;
+    private ItemController item_ctr;
 
     // Use this for initialization
     void Start () {
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         GeneratedImg = GameObject.Find("Canvas/Panel/Image").GetComponent<Image>();
+        item_ctr = GameObject.Find("Controller").GetComponent<ItemController>();
         ReSetGeneratedImg();
         setCreateItem();
         mInfo = transform.root.GetComponent<MapInfo>();
@@ -111,7 +113,7 @@ public class AlchemyController : MonoBehaviour {
     /// </summary>
     private void setCreateItem()
     {
-        CreateItem = new Sprite[3];
+        CreateItem = new Sprite[23];
         for(int i = 0; i < CreateItem.Length; i++)
         {
             CreateItem[i] = Resources.Load<Sprite>("Textures/CreateItem_" + i);
@@ -538,7 +540,7 @@ public class AlchemyController : MonoBehaviour {
         switch (type)
         {
             case CreateItemStatus.Type.ATKPotion:
-
+                item_ctr.ATKPortion();
                 break;
             case CreateItemStatus.Type.Barrier:
 
@@ -556,7 +558,7 @@ public class AlchemyController : MonoBehaviour {
 
                 break;
             case CreateItemStatus.Type.HPPotion:
-
+                item_ctr.HPPortion();
                 break;
             case CreateItemStatus.Type.Inclubator:
 
