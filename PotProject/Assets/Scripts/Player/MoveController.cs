@@ -468,29 +468,41 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.CROSSX_RIGTH:
                 if (!player_ctr.AlchemyWindow)
+                {
+                    player_ctr.SwordTypeChange(player_ctr.GetSwordList[1]);
                     return;
+                }
 
                 _onCrossRight = true;
                 break;
 
             case ButtonType.CROSSX_LEFT:
                 if (!player_ctr.AlchemyWindow)
+                {
+                    player_ctr.SwordTypeChange(player_ctr.GetSwordList[3]);
                     return;
+                }
+
 
                 _onCrossLeft = true;
                 break;
 
             case ButtonType.CROSSY_UP:
                 if (!player_ctr.AlchemyWindow)
+                {
+                    player_ctr.SwordTypeChange(player_ctr.GetSwordList[0]);
                     return;
+                }
 
                 _onCrossUp = true;
                 break;
 
             case ButtonType.CROSSY_DOWN:
                 if (!player_ctr.AlchemyWindow)
+                {
+                    player_ctr.SwordTypeChange(player_ctr.GetSwordList[2]);
                     return;
-
+                }
                 _onCrossDown = true;
                 break;
         }
