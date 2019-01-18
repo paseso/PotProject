@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using Anima2D;
+using System.Collections;
+using System.Collections.Generic;
 
 public class AnimController : MonoBehaviour {
 
@@ -17,6 +19,8 @@ public class AnimController : MonoBehaviour {
             SORDATTACK_RIGHT,
             LADDER_UP,
             LADDER_DOWN,
+            LEFT_GETITEM,
+            RIGHT_GETITEM,
         }
         public AnimType animtype;
     }
@@ -25,13 +29,24 @@ public class AnimController : MonoBehaviour {
 
     private Animator anim;
     private AttackZoneController attack_ctr;
+    private BringCollider bring_col;
+    private Animator pot_anim;
 
+    //拾うアニメーションの時に使う
+    private Vector2 Itemtarget;
     private bool _attackStart = false;
+
+    public Vector2 setItemtaget
+    {
+        set { Itemtarget = value; }
+    }
 
 	// Use this for initialization
 	void Start () {
         anim = gameObject.GetComponent<Animator>();
+        pot_anim = gameObject.transform.parent.GetComponentInChildren<PotController>().gameObject.GetComponent<Animator>();
         attack_ctr = gameObject.transform.parent.GetComponentInChildren<AttackZoneController>();
+        bring_col = gameObject.transform.GetComponentInChildren<BringCollider>();
         _attackStart = false;
 	}
 	
@@ -252,6 +267,8 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isSordAttackLeft", false);
                 anim.SetBool("isSordAttackRight", false);
                 anim.SetBool("isLadderUp", false);
+                anim.SetBool("isLeftGetItem", false);
+                anim.SetBool("isRightGetItem", false);
                 break;
 
             case AnimState.AnimType.LEFTJUMP:
@@ -265,6 +282,8 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isSordAttackLeft", false);
                 anim.SetBool("isSordAttackRight", false);
                 anim.SetBool("isLadderUp", false);
+                anim.SetBool("isLeftGetItem", false);
+                anim.SetBool("isRightGetItem", false);
                 break;
 
             case AnimState.AnimType.LEFTIDLE:
@@ -278,6 +297,8 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isSordAttackLeft", false);
                 anim.SetBool("isSordAttackRight", false);
                 anim.SetBool("isLadderUp", false);
+                anim.SetBool("isLeftGetItem", false);
+                anim.SetBool("isRightGetItem", false);
                 break;
 
             case AnimState.AnimType.RIGHTIDLE:
@@ -291,6 +312,8 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isSordAttackLeft", false);
                 anim.SetBool("isSordAttackRight", false);
                 anim.SetBool("isLadderUp", false);
+                anim.SetBool("isLeftGetItem", false);
+                anim.SetBool("isRightGetItem", false);
                 break;
 
             case AnimState.AnimType.LEFT_WALK:
@@ -304,6 +327,8 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isSordAttackLeft", false);
                 anim.SetBool("isSordAttackRight", false);
                 anim.SetBool("isLadderUp", false);
+                anim.SetBool("isLeftGetItem", false);
+                anim.SetBool("isRightGetItem", false);
                 break;
 
             case AnimState.AnimType.RIGHT_WALK:
@@ -317,6 +342,8 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isSordAttackLeft", false);
                 anim.SetBool("isSordAttackRight", false);
                 anim.SetBool("isLadderUp", false);
+                anim.SetBool("isLeftGetItem", false);
+                anim.SetBool("isRightGetItem", false);
                 break;
 
             case AnimState.AnimType.SORDATTACK_LEFT:
@@ -330,6 +357,8 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isSordAttackLeft", true);
                 anim.SetBool("isSordAttackRight", false);
                 anim.SetBool("isLadderUp", false);
+                anim.SetBool("isLeftGetItem", false);
+                anim.SetBool("isRightGetItem", false);
                 break;
 
             case AnimState.AnimType.SORDATTACK_RIGHT:
@@ -343,6 +372,8 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isSordAttackLeft", false);
                 anim.SetBool("isSordAttackRight", true);
                 anim.SetBool("isLadderUp", false);
+                anim.SetBool("isLeftGetItem", false);
+                anim.SetBool("isRightGetItem", false);
                 break;
 
             case AnimState.AnimType.LADDER_UP:
@@ -356,6 +387,8 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isSordAttackLeft", false);
                 anim.SetBool("isSordAttackRight", false);
                 anim.SetBool("isLadderUp", true);
+                anim.SetBool("isLeftGetItem", false);
+                anim.SetBool("isRightGetItem", false);
                 break;
 
             case AnimState.AnimType.LADDER_DOWN:
@@ -369,6 +402,38 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isSordAttackLeft", false);
                 anim.SetBool("isSordAttackRight", false);
                 anim.SetBool("isLadderUp", false);
+                anim.SetBool("isLeftGetItem", false);
+                anim.SetBool("isRightGetItem", false);
+                break;
+
+            case AnimState.AnimType.LEFT_GETITEM:
+                animstate.animtype = AnimState.AnimType.LEFT_GETITEM;
+                anim.SetBool("isRightJump", false);
+                anim.SetBool("isLeftJump", false);
+                anim.SetBool("isLeftWalk", false);
+                anim.SetBool("isRightWalk", false);
+                anim.SetBool("isLeftIdle", false);
+                anim.SetBool("isRightIdle", false);
+                anim.SetBool("isSordAttackLeft", false);
+                anim.SetBool("isSordAttackRight", false);
+                anim.SetBool("isLadderUp", false);
+                anim.SetBool("isLeftGetItem", true);
+                anim.SetBool("isRightGetItem", false);
+                break;
+
+            case AnimState.AnimType.RIGHT_GETITEM:
+                animstate.animtype = AnimState.AnimType.RIGHT_GETITEM;
+                anim.SetBool("isRightJump", false);
+                anim.SetBool("isLeftJump", false);
+                anim.SetBool("isLeftWalk", false);
+                anim.SetBool("isRightWalk", false);
+                anim.SetBool("isLeftIdle", false);
+                anim.SetBool("isRightIdle", false);
+                anim.SetBool("isSordAttackLeft", false);
+                anim.SetBool("isSordAttackRight", false);
+                anim.SetBool("isLadderUp", false);
+                anim.SetBool("isLeftGetItem", false);
+                anim.SetBool("isRightGetItem", true);
                 break;
         }
     }
@@ -379,5 +444,17 @@ public class AnimController : MonoBehaviour {
     public void AttackDamage()
     {
         attack_ctr.Attack();
+    }
+
+    /// <summary>
+    /// 拾うアニメーション中にでるエフェクトと連動させるための処理
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator GetItemEffectWaitTime()
+    {
+        yield return new WaitForSeconds(0.35f);
+        //アイテムのある位置にエフェクトの位置を合わせて呼ぶ
+
+        pot_anim.SetBool("isGetItem", true);
     }
 }
