@@ -5,24 +5,27 @@ using DG.Tweening;
 
 public class CameraController : MonoBehaviour {
 
-    private GameObject AniObject;
+    /// <summary>
+    /// カメラが追うオブジェクト
+    /// </summary>
+    public GameObject target { get; set; }
 
 	// Use this for initialization
 	void Start () {
-        AniObject = FindObjectOfType<MoveController>().gameObject;
+        target = FindObjectOfType<MoveController>().gameObject;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        CameraMove();
+        CameraMove(target);
 	}
 
     /// <summary>
     /// カメラ移動処理（追従）
     /// </summary>
-    private void CameraMove()
+    private void CameraMove(GameObject obj)
     {
-        gameObject.transform.position = new Vector3(AniObject.transform.position.x, AniObject.transform.position.y + 2.13f, -100);
+        gameObject.transform.position = new Vector3(obj.transform.position.x, obj.transform.position.y + 2.13f, -100);
         //if (gameObject.transform.position.x < 0)
         //{
         //    gameObject.transform.position = new Vector3(0, AniObject.transform.position.y + 2.13f, -10);

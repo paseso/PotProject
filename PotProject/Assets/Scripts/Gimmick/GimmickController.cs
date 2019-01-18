@@ -42,19 +42,19 @@ public class GimmickController :MonoBehaviour {
         if (col.gameObject.layer != LayerMask.NameToLayer("Player")) { return; }
         switch (gInfo.type) {
             case GimmickInfo.GimmickType.UP:
-                
+                transform.parent.transform.parent.DOLocalMoveY(transform.parent.transform.parent.localPosition.y - 0.25f, 1f);
                 sController.Sride(objInfo.MapNumX, StageController.Direction.UP);
                 break;
             case GimmickInfo.GimmickType.DOWN:
-                
+                transform.parent.transform.parent.DOLocalMoveY(transform.parent.transform.parent.localPosition.y - 0.25f, 1f);
                 sController.Sride(objInfo.MapNumX, StageController.Direction.DOWN);
                 break;
             case GimmickInfo.GimmickType.LEFT:
-                
+                transform.parent.transform.parent.DOLocalMoveY(transform.parent.transform.parent.localPosition.y - 0.25f, 1f);
                 sController.Sride(objInfo.MapNumY, StageController.Direction.LEFT);
                 break;
             case GimmickInfo.GimmickType.RIGHT:
-                
+                transform.parent.transform.parent.DOLocalMoveY(transform.parent.transform.parent.localPosition.y - 0.25f, 1f);
                 sController.Sride(objInfo.MapNumY, StageController.Direction.RIGHT);
                 break;
             case GimmickInfo.GimmickType.BAKETREE:
@@ -62,6 +62,9 @@ public class GimmickController :MonoBehaviour {
                 break;
             case GimmickInfo.GimmickType.ROCK:
                 RockDoorOpen();
+                break;
+            case GimmickInfo.GimmickType.SPRING:
+                StartCoroutine(IsSpring());
                 break;
             default:
                 break;
@@ -83,8 +86,7 @@ public class GimmickController :MonoBehaviour {
             case GimmickInfo.GimmickType.FIREFIELD:
                 bossCon.IsMagicAttack = true;
                 break;
-            case GimmickInfo.GimmickType.SPRING:
-                
+            
             default:
                 break;
         }
@@ -178,9 +180,6 @@ public class GimmickController :MonoBehaviour {
         // Destroy
     }
 
-    // 浮く座標(仮)
-    private float endPos;
-
     /// <summary>
     /// 鍵付き扉
     /// </summary>
@@ -192,5 +191,17 @@ public class GimmickController :MonoBehaviour {
         GameObject door = GameObject.FindGameObjectWithTag("KeyDoor");
         DoorStep(door);
         //door.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
+    }
+
+    public IEnumerator IsSpring()
+    {
+        GetComponent<BoxCollider2D>().enabled = false;   
+        GameObject obj = FindObjectOfType<PlayerController>().gameObject;
+        obj.GetComponent<PlayerController>().IsCommandActive = false;
+
+        transform.parent.transform.parent.DOLocalMoveY(transform.parent.transform.parent.localPosition.y - 0.25f, 1f);
+        yield return new WaitForSeconds(1.5f);
+        GameObject player = FindObjectOfType<MoveController>().gameObject;
+        bossCon.Flying(player);
     }
 }

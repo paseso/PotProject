@@ -24,21 +24,8 @@ public class MoveController : MonoBehaviour
     //はしご中かどうか
     private bool _laddernow = false;
 
-    // はしご内カウント
-    private int inLadderCount;
+    public int InLadderCount { get; set; }
 
-    public int InLadderCount {
-        get { return inLadderCount; }
-        set { inLadderCount = value; }
-    }
-
-    //ジャンプできるかどうか
-    private bool IsJump = false;
-
-    public bool _isJump {
-        get { return IsJump; }
-        set { IsJump = value; }
-    }
     //左右動かしてもいいかどうか
     [HideInInspector]
     public bool _ActiveRightLeft = false;
@@ -83,6 +70,7 @@ public class MoveController : MonoBehaviour
     private PlayerStatus status;
     private MiniMapController miniMap_ctr;
     private LegCollider leg_col;
+    
 
     #region ボタンFlagのget
 
@@ -235,7 +223,7 @@ public class MoveController : MonoBehaviour
         miniMap_ctr = GameObject.Find("Canvas/MiniMap").GetComponent<MiniMapController>();
         anim_ctr = gameObject.transform.parent.GetComponent<AnimController>();
         leg_col = gameObject.transform.parent.GetComponentInChildren<LegCollider>();
-        _isJump = false;
+        leg_col.isLanding = false;
     }
 
     // Update is called once per frame
@@ -276,7 +264,7 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void UIControll()
     {
-        _isJump = false;
+        leg_col.isLanding = false;
         _ActiveRightLeft = false;
         if(Input.GetAxis("CrossY") <= -0.15f || Input.GetAxis("CrossY") >= 0.15f ||
             Input.GetAxis("CrossX") <= -0.15f || Input.GetAxis("CrossX") >= 0.15f ||
@@ -320,7 +308,7 @@ public class MoveController : MonoBehaviour
         switch (btn)
         {
             case ButtonType.JUMP:
-                if (!_isJump)
+                if (!leg_col.isLanding)
                     return;
                 if (direc == Direction.RIGHT)
                 {
@@ -343,11 +331,11 @@ public class MoveController : MonoBehaviour
                     return;
                 if (!_ActiveRightLeft)
                     return;
-                if (_isJump && !Jumping)
+                if (leg_col.isLanding && !Jumping)
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
                 }
-                if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !_isJump)
+                if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !leg_col.isLanding)
                 {
                     return;
                 }
@@ -363,11 +351,11 @@ public class MoveController : MonoBehaviour
 
                 if (!_ActiveRightLeft)
                     return;
-                if (_isJump && !Jumping)
+                if (leg_col.isLanding && !Jumping)
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_WALK);
                 }
-                if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !_isJump)
+                if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !leg_col.isLanding)
                 {
                     return;
                 }
@@ -537,15 +525,15 @@ public class MoveController : MonoBehaviour
         }
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
         {//左ジョイスティックを押してない時
-            if (_isJump) {
+            if (leg_col.isLanding) {
                 _laddernow = false;
             }
 
-            if (direc == Direction.LEFT && !Jumping && _isJump)
+            if (direc == Direction.LEFT && !Jumping && leg_col.isLanding)
             {
                 anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTIDLE);
             }
-            else if(direc == Direction.RIGHT && !Jumping && _isJump)
+            else if(direc == Direction.RIGHT && !Jumping && leg_col.isLanding)
             {
                 anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTIDLE);
             }

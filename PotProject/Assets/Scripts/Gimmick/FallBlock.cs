@@ -50,6 +50,7 @@ public class FallBlock : MonoBehaviour {
                 timer = 0;
                 state = fallState.fall;
                 transform.GetComponent<Rigidbody2D>().isKinematic = false;
+                gameObject.layer = LayerMask.NameToLayer("FallBlock");
             }
         }
 

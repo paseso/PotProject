@@ -8,11 +8,7 @@ public class MagicBallcontroller : MonoBehaviour {
     public Vector2 Pos {
         get;set;
     }
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
+
 	// Update is called once per frame
 	void Update () {
         GetComponent<Rigidbody2D>().velocity = Pos;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 [System.Serializable]
 public struct BossStatus
@@ -38,9 +39,20 @@ public class BossController : MonoBehaviour {
     {
         set { playerPos = value; }
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    int count = 3;
+    Vector2 size;
+    float moveTime = 4f;
+    private CameraController cController;
+
+    void Start()
+    {
+        cController = FindObjectOfType<CameraController>();
+        size = GetComponent<SpriteRenderer>().bounds.size;
+    }
+
+    // Update is called once per frame
+    void Update () {
         // 魔法攻撃
         if (isMagicAttack)
         {
@@ -55,5 +67,38 @@ public class BossController : MonoBehaviour {
             }
         }
 	}
+
+    /// <summary>
+    /// 吹っ飛び
+    /// </summary>
+    /// <param name="player"></param>
+    public void Flying(GameObject player)
+    {
+        cController.target = gameObject;
+        var sr = GetComponent<SpriteRenderer>();
+        GetComponent<Rigidbody2D>().isKinematic = true;
+        GetComponent<BoxCollider2D>().enabled = false;
+
+        Vector2 pos = player.transform.position;
+
+        sr.sortingOrder = 1000;
+
+        transform.DOLocalMoveY(transform.localPosition.y - 0.5f, 0.5f).SetEase(Ease.Linear).OnComplete(() =>
+        {
+            Sequence s = DOTween.Sequence();
+            s.Append(transform.DORotate(new Vector3(0, 0, 365 * 4), 1f, RotateMode.FastBeyond360).SetEase(Ease.Linear));
+            s.SetLoops(100);
+            transform.DOScale(size * 1.2f, count).SetEase(Ease.InSine);
+            transform.DOMove(pos, count).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                s.Complete();
+                cController.target = player;
+                transform.DOMoveY(transform.localPosition.y - (size.y * 5), moveTime).SetEase(Ease.Linear).SetDelay(1f);
+            });
+
+        });
+
+
+    }
 
 }

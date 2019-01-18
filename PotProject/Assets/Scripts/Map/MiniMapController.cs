@@ -65,6 +65,7 @@ public class MiniMapController : MonoBehaviour {
             status.event_state = tempStatus.event_state;
             isMiniMap = false;
             player_ctr.IsCommandActive = true;
+            status.event_state = PlayerStatus.EventState.NORMAL;
         }
     }
 }
