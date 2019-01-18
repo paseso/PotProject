@@ -5,11 +5,10 @@ using DG.Tweening;
 
 public class PlayerController : MonoBehaviour {
 
-    [SerializeField, Header("剣Sprite")]
     private SpriteRenderer sword;
 
     [SerializeField]
-    private List<Sprite> swordSpriteList;
+    private List<Sprite> swordSpriteList = new List<Sprite>();
 
     private GameObject[] hearts;
 
@@ -26,6 +25,13 @@ public class PlayerController : MonoBehaviour {
     private GameObject PotObject;
     //錬金したアイテムのボックス　最大3つ
     private List<CreateItemStatus.Type> createItemBox;
+
+    private PlayerStatus.SWORDTYPE[] swordList;
+
+    public PlayerStatus.SWORDTYPE[] GetSwordList
+    {
+        get { return swordList; }
+    }
 
     [SerializeField]
     private RectTransform Pot_UI;
@@ -72,7 +78,6 @@ public class PlayerController : MonoBehaviour {
         {
             status.PlayerHP = status.GetMaxHP;
         }
-
         setSwordSpriteList();
         status.ItemList = new List<ItemStatus.Type>();
         alchemy_ctr = FindObjectOfType<AlchemyController>();
@@ -85,7 +90,6 @@ public class PlayerController : MonoBehaviour {
         getHeartChildren();
         _itemMax = false;
         _alchemyUi = false;
-
         for(int i = 0; i < status.PlayerHP; i++)
         {
             hearts[i].SetActive(true);
@@ -97,6 +101,35 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.T))
         {
             HPDown(3);
+        }
+    }
+
+    /// <summary>
+    /// スタート時に剣のセットをする処理
+    /// </summary>
+    public void setStartSwordList()
+    {
+        Debug.Log("SwordListInit");
+        //剣は最大４つまで持てる
+        swordList = new PlayerStatus.SWORDTYPE[4];
+    }
+
+    /// <summary>
+    /// 剣をリストにセットする処理
+    /// </summary>
+    /// <param name="type"></param>
+    public void setSwordList(PlayerStatus.SWORDTYPE type)
+    {
+        //nullのところに錬金した剣をいれる
+        for(int i = 1; i < 3; i++)
+        {
+            if (swordList[i] != null)
+            {
+                continue;
+            }
+            Debug.Log("swordList = " + swordList[i]);
+            swordList[i] = type;
+            break;
         }
     }
 
@@ -170,7 +203,6 @@ public class PlayerController : MonoBehaviour {
         {
             status.ItemList.Remove(_item);
         }
-        Debug.Log("ItemList: " + status.ItemList.GetType());
     }
 
     /// <summary>
@@ -216,17 +248,19 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     private void setSwordSpriteList()
     {
-        for (int i = 0; i < maxItemBox; i++)
+        swordSpriteList = new List<Sprite>();
+        for (int i = 0; i < 7; i++)
         {
             Sprite img = Resources.Load<Sprite>("Textures/SwordImage_" + i);
-            swordSpriteList[i] = img;
+            swordSpriteList.Add(img);
         }
+        sword = GameObject.FindObjectOfType<AnimController>().transform.GetChild(4).GetComponent<SpriteRenderer>();
     }
 
     /// <summary>
     /// 剣の属性を変える処理
     /// </summary>
-    /// <param name="s_type">FIRE=火、WATER=水、EARTH=土</param>
+    /// <param name="s_type">FIRE=火、</param>
     public void SwordTypeChange(PlayerStatus.SWORDTYPE s_type)
     {
         switch (s_type)
@@ -253,9 +287,14 @@ public class PlayerController : MonoBehaviour {
                 break;
             case PlayerStatus.SWORDTYPE.SPEAR:
                 sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.SPEAR];
+                status.PlayerAttack = 2;
                 break;
             case PlayerStatus.SWORDTYPE.AXE:
                 sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.AXE];
+                status.PlayerAttack = 2;
+                break;
+            case PlayerStatus.SWORDTYPE.TORCH:
+                sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.TORCH];
                 status.PlayerAttack = 2;
                 break;
         }

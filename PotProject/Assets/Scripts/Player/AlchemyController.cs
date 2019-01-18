@@ -92,12 +92,14 @@ public class AlchemyController : MonoBehaviour {
     private Image GeneratedImg;
     private PlayerController player_ctr;
     private ItemController item_ctr;
+    private PlayerManager player_mng;
 
     // Use this for initialization
     void Start () {
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         GeneratedImg = GameObject.Find("Canvas/Panel/Image").GetComponent<Image>();
         item_ctr = GameObject.Find("Controller").GetComponent<ItemController>();
+        player_mng = GameObject.Find("PlayerStatus").GetComponent<PlayerManager>();
         ReSetGeneratedImg();
         setCreateItem();
         mInfo = transform.root.GetComponent<MapInfo>();
@@ -240,13 +242,15 @@ public class AlchemyController : MonoBehaviour {
                 {
                     case ItemStatus.Type.CROWN:
                         //鍵
-                        setGeneratedImg(CreateItemStatus.Type.Key);
+                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.KEY);
                         break;
                     case ItemStatus.Type.VAJURA:
                         //槍
+                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.SPEAR);
                         break;
                     case ItemStatus.Type.LIZARD:
                         //斧
+                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.AXE);
                         break;
                     default:
                         //ゴミ
@@ -286,6 +290,7 @@ public class AlchemyController : MonoBehaviour {
                         break;
                     case ItemStatus.Type.KEYROD:
                         //斧
+                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.AXE);
                         break;
                     case ItemStatus.Type.VAJURA:
                         //ドリル
@@ -321,6 +326,7 @@ public class AlchemyController : MonoBehaviour {
                         break;
                     case ItemStatus.Type.KEYROD:
                         //槍
+                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.SPEAR);
                         break;
                     case ItemStatus.Type.LIZARD:
                         //ドリル
@@ -386,6 +392,7 @@ public class AlchemyController : MonoBehaviour {
                         break;
                     case ItemStatus.Type.CLAY:
                         //氷の剣
+                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.FROZEN);
                         break;
                     default:
                         //ゴミ
@@ -407,6 +414,7 @@ public class AlchemyController : MonoBehaviour {
                         break;
                     case ItemStatus.Type.CLAY:
                         //闇の剣
+                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.DARK);
                         break;
                     default:
                         //ゴミ
@@ -478,9 +486,11 @@ public class AlchemyController : MonoBehaviour {
                         break;
                     case ItemStatus.Type.CRYSTAL:
                         //氷の剣
+                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.FROZEN);
                         break;
                     case ItemStatus.Type.SMOKE:
                         //闇の剣
+                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.DARK);
                         break;
                     default:
                         //ゴミ
@@ -506,6 +516,7 @@ public class AlchemyController : MonoBehaviour {
                 {
                     case CreateItemStatus.Type.Explosive:
                         //火の剣
+                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.FIRE);
                         break;
                 }
             break;
@@ -526,6 +537,7 @@ public class AlchemyController : MonoBehaviour {
                 {
                     case ItemStatus.Type.CLAY:
                         //火の剣
+                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.FIRE);
                         break;
                 }
                 break;
@@ -563,9 +575,6 @@ public class AlchemyController : MonoBehaviour {
             case CreateItemStatus.Type.Inclubator:
 
                 break;
-            case CreateItemStatus.Type.Key:
-
-                break;
             case CreateItemStatus.Type.Ladder:
 
                 break;
@@ -585,9 +594,6 @@ public class AlchemyController : MonoBehaviour {
 
                 break;
             case CreateItemStatus.Type.SmokeScreen:
-
-                break;
-            case CreateItemStatus.Type.Speaker:
 
                 break;
             case CreateItemStatus.Type.Torch:
