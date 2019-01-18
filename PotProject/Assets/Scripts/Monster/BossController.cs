@@ -27,6 +27,7 @@ public class BossController : MonoBehaviour {
     private BossStatus status;
     private float mTime;
     private bool isMagicAttack = false;
+    private GameObject clearPanel;
 
     public bool IsMagicAttack
     {
@@ -49,6 +50,8 @@ public class BossController : MonoBehaviour {
     {
         cController = FindObjectOfType<CameraController>();
         size = GetComponent<SpriteRenderer>().bounds.size;
+        clearPanel = FindObjectOfType<GameClear>().gameObject;
+        clearPanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -93,12 +96,13 @@ public class BossController : MonoBehaviour {
             {
                 s.Complete();
                 cController.target = player;
-                transform.DOMoveY(transform.localPosition.y - (size.y * 5), moveTime).SetEase(Ease.Linear).SetDelay(1f);
+                transform.DOMoveY(transform.localPosition.y - (size.y * 5), moveTime).SetEase(Ease.Linear).SetDelay(1f).OnComplete(() =>
+                {
+                    clearPanel.SetActive(true);
+                });
             });
 
         });
-
-
     }
 
 }
