@@ -50,6 +50,7 @@ public class AlchemyUIController : MonoBehaviour {
 
     private MoveController move_ctr;
     private CrossAxisDown crossAxisdown;
+    private AlchemyController alchemy_ctr;
 
     //---ジョイスティックを回す時に使う変数-----
     private bool _one = false;
@@ -58,8 +59,10 @@ public class AlchemyUIController : MonoBehaviour {
     private int RotationCount = 0;
     //------------------------------------------
 
-    private void Awake()
+    private int nowAlchemyItem;
+    public int getNowAlchemyItem
     {
+        get { return nowAlchemyItem; }
     }
 
     void Start ()
@@ -72,6 +75,7 @@ public class AlchemyUIController : MonoBehaviour {
             player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
             move_ctr = GameObject.FindObjectOfType<MoveController>();
             crossAxisdown = move_ctr.gameObject.GetComponent<CrossAxisDown>();
+            alchemy_ctr = GameObject.FindObjectOfType<AlchemyController>();
 
             ItemFrame = gameObject.transform.GetChild(gameObject.transform.childCount - 2).gameObject;
             PotFrame = gameObject.transform.GetChild(gameObject.transform.childCount - 3).gameObject;
@@ -85,7 +89,7 @@ public class AlchemyUIController : MonoBehaviour {
             Debug.LogWarning(e + "がないよ！");
         }
 
-
+        nowAlchemyItem = 0;
         nowBox = 0;
 
         setItembox();
@@ -403,5 +407,19 @@ public class AlchemyUIController : MonoBehaviour {
                     break;
             }
         }
+    }
+
+    /// <summary>
+    /// 今セットされてる錬金アイテムの変更処理
+    /// </summary>
+    private void setNowAlchemyItem()
+    {
+        int num = player_ctr.getCreateItemList().Count;
+        if (nowAlchemyItem >= num - 1)
+            nowAlchemyItem = 0;
+        else
+            nowAlchemyItem++;
+
+        alchemy_ctr.setGeneratedImg(player_ctr.getCreateItemList()[num]);
     }
 }

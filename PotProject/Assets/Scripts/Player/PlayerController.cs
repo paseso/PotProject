@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour {
     public PlayerStatus status;
     private AlchemyController alchemy_ctr;
     private AlchemyUIController alchemyUI_ctr;
+    private PlayerController player_ctr;
     private GameObject BrotherObj;
     private GameObject PotObject;
     //錬金したアイテムのボックス　最大3つ
@@ -79,6 +80,7 @@ public class PlayerController : MonoBehaviour {
         BrotherObj = FindObjectOfType<MoveController>().gameObject;
         PotObject = FindObjectOfType<PotController>().gameObject;
         HeartObject = GameObject.Find("Canvas/Heart");
+        player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         getHeartChildren();
         _itemMax = false;
         _alchemyUi = false;
@@ -188,6 +190,24 @@ public class PlayerController : MonoBehaviour {
     public List<CreateItemStatus.Type> getCreateItemList()
     {
         return createItemBox;
+    }
+
+    /// <summary>
+    /// 錬金したアイテムを1個消す処理
+    /// </summary>
+    public void deleteCreateItemList(int num)
+    {
+        createItemBox.RemoveAt(num);
+    }
+
+    /// <summary>
+    /// 錬金したアイテムを使う処理
+    /// </summary>
+    /// <param name="num"></param>
+    public void UseAlchemyItem(int num)
+    {
+        alchemy_ctr.AlchemyItem(player_ctr.getCreateItemList()[alchemyUI_ctr.getNowAlchemyItem]);
+        deleteCreateItemList(num);
     }
 
     /// <summary>

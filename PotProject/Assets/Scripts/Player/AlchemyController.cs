@@ -142,7 +142,7 @@ public class AlchemyController : MonoBehaviour {
     /// <summary>
     /// 右下のフレームにある生成したアイテム画像をセットする処理
     /// </summary>
-    private void setGeneratedImg(CreateItemStatus.Type type)
+    public void setGeneratedImg(CreateItemStatus.Type type)
     {
         if (player_ctr.getCreateItemList().Count >= 3)
             return;
@@ -530,4 +530,79 @@ public class AlchemyController : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// 錬金アイテムの効果
+    /// </summary>
+    public void AlchemyItem(CreateItemStatus.Type type)
+    {
+        switch (type)
+        {
+            case CreateItemStatus.Type.ATKPotion:
+
+                break;
+            case CreateItemStatus.Type.Barrier:
+
+                break;
+            case CreateItemStatus.Type.Boomerang:
+
+                break;
+            case CreateItemStatus.Type.Drill:
+
+                break;
+            case CreateItemStatus.Type.Explosive:
+
+                break;
+            case CreateItemStatus.Type.FlyCloud:
+
+                break;
+            case CreateItemStatus.Type.HPPotion:
+
+                break;
+            case CreateItemStatus.Type.Inclubator:
+
+                break;
+            case CreateItemStatus.Type.Key:
+
+                break;
+            case CreateItemStatus.Type.Ladder:
+
+                break;
+            case CreateItemStatus.Type.Lamp:
+
+                break;
+            case CreateItemStatus.Type.Lasso:
+
+                break;
+            case CreateItemStatus.Type.Magnet:
+
+                break;
+            case CreateItemStatus.Type.RainCloud:
+
+                break;
+            case CreateItemStatus.Type.SmokeBall:
+
+                break;
+            case CreateItemStatus.Type.SmokeScreen:
+
+                break;
+            case CreateItemStatus.Type.Speaker:
+
+                break;
+            case CreateItemStatus.Type.Torch:
+
+                break;
+            case CreateItemStatus.Type.Tornado:
+
+                break;
+            case CreateItemStatus.Type.Vajura:
+
+                break;
+            case CreateItemStatus.Type.Venom:
+
+                break;
+            case CreateItemStatus.Type.Watter:
+
+                break;
+        }
+    }
 }
