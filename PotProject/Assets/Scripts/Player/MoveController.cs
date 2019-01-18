@@ -223,7 +223,6 @@ public class MoveController : MonoBehaviour
         miniMap_ctr = GameObject.Find("Canvas/MiniMap").GetComponent<MiniMapController>();
         anim_ctr = gameObject.transform.parent.GetComponent<AnimController>();
         leg_col = gameObject.transform.parent.GetComponentInChildren<LegCollider>();
-        leg_col.isLanding = false;
     }
 
     // Update is called once per frame
@@ -264,7 +263,7 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void UIControll()
     {
-        leg_col.isLanding = false;
+        //leg_col.isLanding = false;
         _ActiveRightLeft = false;
         if(Input.GetAxis("CrossY") <= -0.15f || Input.GetAxis("CrossY") >= 0.15f ||
             Input.GetAxis("CrossX") <= -0.15f || Input.GetAxis("CrossX") >= 0.15f ||

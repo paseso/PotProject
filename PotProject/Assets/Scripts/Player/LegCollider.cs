@@ -17,12 +17,13 @@ public class LegCollider : MonoBehaviour {
         get { return landingFlag; }
         set
         {
-            Debug.Log("Call " + value);
+            //Debug.Log("Call " + value);
             if (value)
             {
                 if (jumpPos - transform.position.y >= 2.5f)
                 {
                     player_ctr.HPDown(2);
+                    jumpPos = transform.position.y;
                 }
                 landingFlag = value;
             }
@@ -50,22 +51,7 @@ public class LegCollider : MonoBehaviour {
         _legFloor = false;
 	}
     
-    /// <summary>
-    /// 落ちた時にHPを減らすかどうかの処理
-    /// </summary>
-    private void FallCheck()
-    {
-        //if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer"))
-        //    return;
-        //now = gameObject.transform.position.y;
-        //if ((falldistance - now) >= 2.5f)
-        //{
-        //    Debug.Log("dir = " + (falldistance - now));
-        //    player_ctr.HPDown(2);
-        //    falldistance = gameObject.transform.position.y;
-        //}
-    }
-
+    
     /// <summary>
     /// ジャンプ中の左右移動制限
     /// </summary>
@@ -101,10 +87,27 @@ public class LegCollider : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D col) {
-        if(!isLanding) onGroundCount+=2;
-        else onGroundCount++;
+        
+        if (col.gameObject.layer != 2 && JumpCheck(col.gameObject))
+        {
+            onGroundCount++;
+        }
 
-        isLanding = true;
+        // 魔法攻撃範囲内ならReturn
+        if (col.GetComponent<GimmickInfo>())
+            if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.FIREFIELD && onGroundCount <= 0)
+            {
+                return;
+            }
+
+        Debug.Log("GroundCountIn = " + onGroundCount);
+        if (onGroundCount > 0)
+        {
+            isLanding = true;
+        }
+        
+        Debug.Log("GroundCount = " + onGroundCount);
+        
         if (move_ctr.Jumping)
         {
             move_ctr.setJumping = false;
@@ -113,13 +116,6 @@ public class LegCollider : MonoBehaviour {
         if (col.gameObject.tag == "floor") {
             _legFloor = true;
         }
-
-        //if (gameObject.transform.localPosition.y != falldistance) {
-        //    if(!col.GetComponent<GimmickInfo>() )
-        //    if (col.gameObject.tag == "floor" || col.gameObject.tag == "Untagged") {
-        //        FallCheck();
-        //    }
-        //}
 
         if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer") && col.gameObject.layer == LayerMask.NameToLayer("Block")) {
             
@@ -140,31 +136,28 @@ public class LegCollider : MonoBehaviour {
         player_ctr.OnBlock = null;
     }
 
-    //private void OnTriggerStay2D(Collider2D col)
-    //{
-    //    GimmickInfo info = col.GetComponent<GimmickInfo>();
-
-    //    if (JumpCheck(col.gameObject))
-    //    {
-    //        isLanding = true;
-
-    //    }
-    //    else
-    //    {
-    //        return;
-    //    }
-    //}
-
     private void OnTriggerExit2D(Collider2D col)
     {
-        onGroundCount--;
-        if(onGroundCount <= 0)
+        
+        if (col.gameObject.layer != 2 && JumpCheck(col.gameObject))
+        {
+            onGroundCount--;
+        }
+
+        if (col.GetComponent<GimmickInfo>())
+            if(col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.FIREFIELD && onGroundCount <= 0)
+            {
+                return;
+            }
+
+            Debug.Log("GroundCountOut = " + onGroundCount);
+        if (onGroundCount <= 0)
         {
             onGroundCount = 0;
             isLanding = false;
         }
+
         falldistance = gameObject.transform.position.y;
-        isLanding = false;
         if (!col.GetComponent<GimmickInfo>()) { return; }
         GimmickInfo info = col.GetComponent<GimmickInfo>();
         if (info.type == GimmickInfo.GimmickType.LADDER) {
