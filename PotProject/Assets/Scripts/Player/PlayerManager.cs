@@ -45,6 +45,7 @@ public struct PlayerStatus
         SPEAR,
         AXE,
         KEY,
+        TORCH,
     }
 
     // 兄がどの状態か
@@ -80,13 +81,30 @@ public struct PlayerStatus
 public class PlayerManager : SingletonMonoBehaviour<PlayerManager>{
     [SerializeField]
     private PlayerStatus status;
+    private PlayerController player_ctr;
 
     public PlayerStatus Status {
         get;set;
     }
 
+    public PlayerStatus.SWORDTYPE GetSwordType
+    {
+        get { return status.swordtype; }
+    }
+
+    public PlayerStatus.SWORDTYPE SetSwordType
+    {
+        set
+        {
+            status.swordtype = value;
+            player_ctr.setSwordList(GetSwordType);
+        }
+    }
+
     void Awake()
     {
+        player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
+        player_ctr.setStartSwordList();
         InitStatus();
         if (this != Instance)
         {
@@ -100,10 +118,15 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>{
     {
         status.PlayerHP = status.GetMaxHP;
         status.PlayerAttack = 1;
-        status.swordtype = PlayerStatus.SWORDTYPE.NORMAL;
+        SetSwordType = PlayerStatus.SWORDTYPE.NORMAL;
         status.event_state = PlayerStatus.EventState.NORMAL;
         status.gimmick_state = PlayerStatus.GimmickState.NORMAL;
         status.ItemList = new List<ItemStatus.Type>();
+    }
+
+    private void Start()
+    {
+        player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
     }
 }
 
