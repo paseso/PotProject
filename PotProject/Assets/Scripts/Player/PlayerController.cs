@@ -397,8 +397,8 @@ public class PlayerController : MonoBehaviour {
         {
             hearts[i].SetActive(true);
         }
-        BrotherObj.transform.parent.position = GameObject.Find(BrotherObj.transform.root.name + "/RespornPoint(Clone)").transform.position + new Vector3(0, 1.5f, 0);
-        PotObject.transform.position = GameObject.Find(BrotherObj.transform.root.name + "/RespornPoint(Clone)").transform.position;
+        BrotherObj.transform.parent.position = GameObject.Find(BrotherObj.transform.root.name + "/OtherObject/RespornPoint(Clone)").transform.position + new Vector3(0, 1.5f, 0);
+        PotObject.transform.position = GameObject.Find(BrotherObj.transform.root.name + "/OtherObject/RespornPoint(Clone)").transform.position;
         // Effectの生成
         Debug.Log("effects生成");
         EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Respawn, BrotherObj.transform.position, 5, BrotherObj);

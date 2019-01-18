@@ -211,14 +211,12 @@ public class MapCreator : MonoBehaviour
                     if (enemyNum != 0)
                     {
                         var enemyObj = Instantiate(GetEnemy(enemyNum).EnemyObj);
-                        enemyObj.name = enemyObj.name + x + "-" + y;
                         //  スタート位置の配置
                         if (enemyObj.tag == "StartPos")
                         {
                             startPositionObject = enemyObj;
                             SetParentPlayer(startPositionObject);
                         }
-
                         enemyObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y) + new Vector2(tileSize * xLength * rem, -tileSize * yLength * quo);
                         enemyObj.transform.parent = OtherObjectGroupe.transform;
                     }
