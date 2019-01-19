@@ -74,11 +74,10 @@ public class AlchemyUIController : MonoBehaviour {
             crossAxisdown = move_ctr.gameObject.GetComponent<CrossAxisDown>();
             alchemy_ctr = GameObject.FindObjectOfType<AlchemyController>();
 
-            ItemFrame = gameObject.transform.GetChild(3).gameObject;
-            PotFrame = gameObject.transform.GetChild(0).gameObject;
-            PotMain = PotFrame.transform.GetChild(0).gameObject;
-            mtr_0 = PotFrame.transform.GetChild(1).GetChild(0).gameObject;
-            mtr_1 = PotFrame.transform.GetChild(1).GetChild(1).gameObject;
+            ItemFrame = gameObject.transform.Find("ItemFrame").gameObject;
+            PotFrame = gameObject.transform.Find("AlchemyPotFrame").gameObject;
+            mtr_0 = PotFrame.transform.Find("Material/material_0").gameObject;
+            mtr_1 = PotFrame.transform.Find("Material/material_1").gameObject;
         }
         catch (Exception e)
         {
@@ -286,7 +285,7 @@ public class AlchemyUIController : MonoBehaviour {
         total *= Mathf.Rad2Deg;
         
         var direction = new Vector3(0, 0, total);
-        PotMain.transform.DOLocalRotate(direction, 0.5f);
+        gameObject.transform.DOLocalRotate(direction, 0.5f);
 
         if (move_ctr.OnRJoystickLeft)
         {
@@ -332,7 +331,7 @@ public class AlchemyUIController : MonoBehaviour {
     private void setItembox()
     {
         Itembox = new GameObject[3];
-        GameObject Items = gameObject.transform.GetChild(1).gameObject;
+        GameObject Items = gameObject.transform.GetChild(0).gameObject;
         for(int i = 0; i < Items.transform.childCount; i++)
         {
             Itembox[i] = Items.transform.GetChild(i).gameObject;

@@ -31,12 +31,13 @@ public class AnimController : MonoBehaviour {
     private AttackZoneController attack_ctr;
     private BringCollider bring_col;
     private Animator pot_anim;
+    private EffectManager effect_mng;
 
     //拾うアニメーションの時に使う
-    private Vector2 Itemtarget;
+    private GameObject Itemtarget;
     private bool _attackStart = false;
 
-    public Vector2 setItemtaget
+    public GameObject setItemtaget
     {
         set { Itemtarget = value; }
     }
@@ -47,6 +48,7 @@ public class AnimController : MonoBehaviour {
         pot_anim = gameObject.transform.parent.GetComponentInChildren<PotController>().gameObject.GetComponent<Animator>();
         attack_ctr = gameObject.transform.parent.GetComponentInChildren<AttackZoneController>();
         bring_col = gameObject.transform.GetComponentInChildren<BringCollider>();
+        effect_mng = GameObject.Find("EffectManager").GetComponent<EffectManager>();
         _attackStart = false;
 	}
 	
@@ -454,9 +456,10 @@ public class AnimController : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.35f);
         //アイテムのある位置にエフェクトの位置を合わせて呼ぶ
-
+        effect_mng.PlayEffect(0, Itemtarget.transform.position, 30, Itemtarget);
         pot_anim.SetBool("isGetItem", true);
     }
+
 
     /// <summary>
     /// PotアニメーションのisGetItemを変更

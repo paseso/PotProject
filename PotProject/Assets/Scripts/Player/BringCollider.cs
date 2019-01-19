@@ -9,28 +9,25 @@ public class BringCollider : MonoBehaviour {
     private GameObject target;
     private bool _setTarget = false;
     private AnimController anim_ctr;
+    private bool _onece = false;
 
     public bool getSetTarget
     {
         get { return _setTarget; }
     }
 
-    private enum Direction
-    {
-        RIGHT = 0,
-        LEFT
-    }
-    private Direction direction;
+    private MoveController.Direction direction;
 
     // Use this for initialization
     void Start ()
     {
         _setTarget = false;
+        _onece = false;
         move_ctr = gameObject.transform.parent.GetComponentInChildren<MoveController>();
         pot_ctr = GameObject.FindObjectOfType<PotController>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         anim_ctr = gameObject.transform.parent.GetComponent<AnimController>();
-        direction = Direction.LEFT;
+        direction = move_ctr.direc;
     }
 	
 	// Update is called once per frame
@@ -43,15 +40,16 @@ public class BringCollider : MonoBehaviour {
     /// </summary>
     private void MoveCollider()
     {
-        if (move_ctr.OnLeft)
+        if (direction == move_ctr.direc)
+            return;
+        if (move_ctr.direc == MoveController.Direction.LEFT)
         {
-            gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
-            direction = Direction.LEFT;
-        }
-        if (move_ctr.OnRight)
+            gameObject.transform.localPosition = new Vector2(0, gameObject.transform.localPosition.y);
+            direction = MoveController.Direction.LEFT;
+        }else
         {
-            gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
-            direction = Direction.RIGHT;
+            gameObject.transform.localPosition = new Vector2(2.6f, gameObject.transform.localPosition.y);
+            direction = MoveController.Direction.RIGHT;
         }
     }
 
@@ -67,7 +65,7 @@ public class BringCollider : MonoBehaviour {
         //pot_ctr.AddItem(target.GetComponent<CreateItemManager>().getStatus());
         ItemStatus.Type type = target.GetComponent<ItemManager>().getItemStatus();
         player_ctr.setItemList(type);
-        Vector2 vec = new Vector2(target.transform.position.x, target.transform.position.y);
+        GameObject vec = target;
         anim_ctr.setItemtaget = vec;
         if(move_ctr.direc == MoveController.Direction.LEFT)
         {
