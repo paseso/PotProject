@@ -207,6 +207,15 @@ public class PlayerController : MonoBehaviour {
     }
 
     /// <summary>
+    /// 持ち物リストのアイテムを一つ削除
+    /// </summary>
+    /// <param name="items"></param>
+    public void deleteItemList(ItemStatus.Type items)
+    {
+        status.ItemList.Remove(items);
+    }
+
+    /// <summary>
     /// 錬金したアイテムボックスにアイテムを入れる処理
     /// </summary>
     public void setCreateItemList(CreateItemStatus.Type type)
@@ -329,6 +338,7 @@ public class PlayerController : MonoBehaviour {
         {
             alchemyUI_ctr.setItemboxImage();
             alchemyUI_ctr.ItemFrameReSet();
+            alchemyUI_ctr.ReSetMaterialsBox(player_ctr.status.ItemList);
             Pot_UI.DOLocalMoveX(0, 0.3f).SetEase(Ease.Linear);
             _alchemyUi = true;
         }

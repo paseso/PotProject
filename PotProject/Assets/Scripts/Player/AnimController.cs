@@ -476,7 +476,7 @@ public class AnimController : MonoBehaviour {
         //effect_mng.PlayEffect(0, Itemtarget.transform.localPosition, 0, Itemtarget, true).gameObject.transform.DOScale(new Vector2(10, 10), 0.4f);
         Itemtarget.transform.DOScale(new Vector2(1, 1), 0.4f);
         yield return new WaitForSeconds(0.4f);
-        Itemtarget.transform.DOScale(new Vector2(0, 0), 0.4f);
+        EffectObj.transform.DOScale(new Vector2(0, 0), 0.4f);
         Itemtarget.transform.DOScale(new Vector2(0, 0), 0.4f);
         Itemtarget.transform.DOMoveY(pot_anim.transform.position.y, 0.4f);
         PotAnimSetBool();
@@ -484,6 +484,8 @@ public class AnimController : MonoBehaviour {
         Destroy(EffectObj.gameObject);
         Destroy(Itemtarget.gameObject);
         PotAnimSetBool();
+        anim.SetBool("isRightGetItem", false);
+        anim.SetBool("isLeftGetItem", false);
     }
 
 

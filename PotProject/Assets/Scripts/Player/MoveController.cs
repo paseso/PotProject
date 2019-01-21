@@ -312,7 +312,7 @@ public class MoveController : MonoBehaviour
                 if (player_ctr.AlchemyWindow)
                 {
                     Debug.Log("捨てます");
-                    
+                    alchemyUI_ctr.deleteItemBox(alchemyUI_ctr.getNowBox);
                     return;
                 }
                 if (!leg_col.isLanding)

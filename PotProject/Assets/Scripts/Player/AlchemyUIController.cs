@@ -65,6 +65,11 @@ public class AlchemyUIController : MonoBehaviour {
         get { return nowAlchemyItem; }
     }
 
+    public int getNowBox
+    {
+        get { return nowBox; }
+    }
+
     void Start ()
     {
         try
@@ -109,7 +114,7 @@ public class AlchemyUIController : MonoBehaviour {
         if (_boxRight)
             setMaterialsBox();
         else
-            ReSetMaterials(nowBox);
+            ReSetMaterialsBox(nowBox);
     }
 
     /// <summary>
@@ -159,7 +164,7 @@ public class AlchemyUIController : MonoBehaviour {
     /// 素材アイテム欄のリセット
     /// </summary>
     /// <param name="num">一個だけリセット</param>
-    private void ReSetMaterials(int num)
+    public void ReSetMaterialsBox(int num)
     {
         //押したボックスの画像に何か入っていれば通る
         if (Box_item[num].GetComponent<Image>().sprite == null)
@@ -178,10 +183,26 @@ public class AlchemyUIController : MonoBehaviour {
     }
 
     /// <summary>
+    /// 取得した素材一覧にある素材を一つ削除
+    /// </summary>
+    /// <param name="num"></param>
+    public void deleteItemBox(int num)
+    {
+        if (Box_item[num].GetComponent<Image>().sprite == null)
+            return;
+        //画像を消す
+        Box_item[num].GetComponent<Image>().sprite = null;
+        Box_item[num] = null;
+        //持ち物リストからも削除
+        player_ctr.deleteItemList(player_ctr.status.ItemList[num]);
+        Materials_item.Remove(player_ctr.status.ItemList[num]);
+    }
+
+    /// <summary>
     /// 素材アイテム欄のリセット
     /// </summary>
     /// <param name="items">二つリセット</param>
-    private void ReSetMaterialsBox(List<ItemStatus.Type> items)
+    public void ReSetMaterialsBox(List<ItemStatus.Type> items)
     {
         mtr_0.GetComponent<Image>().sprite = null;
         mtr_1.GetComponent<Image>().sprite = null;
