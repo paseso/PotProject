@@ -285,7 +285,7 @@ public class AlchemyUIController : MonoBehaviour {
         total *= Mathf.Rad2Deg;
         
         var direction = new Vector3(0, 0, total);
-        gameObject.transform.DOLocalRotate(direction, 0.5f);
+        gameObject.transform.GetChild(0).GetChild(0).DOLocalRotate(direction, 0.5f);
 
         if (move_ctr.OnRJoystickLeft)
         {
