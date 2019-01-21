@@ -74,7 +74,7 @@ public class AlchemyUIController : MonoBehaviour {
             crossAxisdown = move_ctr.gameObject.GetComponent<CrossAxisDown>();
             alchemy_ctr = GameObject.FindObjectOfType<AlchemyController>();
 
-            ItemFrame = gameObject.transform.Find("ItemFrame").gameObject;
+            ItemFrame = gameObject.transform.Find("SelectFrame").gameObject;
             PotFrame = gameObject.transform.Find("AlchemyPotFrame").gameObject;
             mtr_0 = PotFrame.transform.Find("Material/material_0").gameObject;
             mtr_1 = PotFrame.transform.Find("Material/material_1").gameObject;
@@ -331,7 +331,7 @@ public class AlchemyUIController : MonoBehaviour {
     private void setItembox()
     {
         Itembox = new GameObject[3];
-        GameObject Items = gameObject.transform.GetChild(0).gameObject;
+        GameObject Items = gameObject.transform.Find("MaterialItems").gameObject;
         for(int i = 0; i < Items.transform.childCount; i++)
         {
             Itembox[i] = Items.transform.GetChild(i).gameObject;
