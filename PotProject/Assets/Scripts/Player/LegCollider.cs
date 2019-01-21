@@ -100,13 +100,11 @@ public class LegCollider : MonoBehaviour {
                 return;
             }
 
-        Debug.Log("GroundCountIn = " + onGroundCount);
         if (onGroundCount > 0)
         {
             isLanding = true;
         }
         
-        Debug.Log("GroundCount = " + onGroundCount);
         
         if (move_ctr.Jumping)
         {

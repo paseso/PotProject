@@ -14,13 +14,7 @@ public class AttackZoneController : MonoBehaviour {
     private float Impalce_y = 6;
     private GameObject PlayerObject;
 
-    private enum Direction
-    {
-        LEFT,
-        RIGHT,
-    }
-
-    private Direction dir;
+    private MoveController.Direction dir;
 
     //モンスターをアタックできるかどうか
     private bool _attackMonster = false;
@@ -48,27 +42,17 @@ public class AttackZoneController : MonoBehaviour {
     /// </summary>
     private void DirecControl()
     {
-        if (move_ctr.OnLeft)
+        if (dir == move_ctr.direc)
+            return;
+        if (move_ctr.direc == MoveController.Direction.LEFT)
         {
-            dir = Direction.LEFT;
-            gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
+            gameObject.transform.localPosition = new Vector2(0, gameObject.transform.localPosition.y);
+            dir = MoveController.Direction.LEFT;
         }
-        if (move_ctr.OnRight)
+        else
         {
-            dir = Direction.RIGHT;
-            gameObject.transform.rotation = new Quaternion(0, 180, 0, 0);
-        }
-        //MoveCollider();
-    }
-
-    private void MoveCollider()
-    {
-        if(dir == Direction.LEFT)
-        {
-            gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
-        }else if(dir == Direction.RIGHT)
-        {
-            gameObject.transform.rotation = new Quaternion(0, 180, 0, 0);
+            gameObject.transform.localPosition = new Vector2(2.6f, gameObject.transform.localPosition.y);
+            dir = MoveController.Direction.RIGHT;
         }
     }
 
@@ -78,6 +62,7 @@ public class AttackZoneController : MonoBehaviour {
     public void Attack()
     {
         Debug.Log(status.PlayerAttack);
+        Debug.Log("AttackTarget = " + Attack_Target.name);
         if(Attack_Target == null) { return; }
         Attack_Target.GetComponent<MonsterController>().Damage(status.PlayerAttack);
     }
@@ -98,6 +83,7 @@ public class AttackZoneController : MonoBehaviour {
         {
             _attackMonster = true;
             Attack_Target = col.gameObject;
+            Debug.Log("はいったよ");
         }
     }
 

@@ -19,6 +19,7 @@ public struct ItemStatus {
         CLOUD,
         POWDER,
         FLOWER,
+        SMOKESCREEN,
     };
 
     public Type type;

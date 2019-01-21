@@ -75,7 +75,6 @@ public class BringCollider : MonoBehaviour {
         {
             anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_GETITEM);
         }
-        Destroy(target.gameObject);
         target = null;
     }
 

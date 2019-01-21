@@ -61,6 +61,8 @@ public class MoveController : MonoBehaviour
     public GameObject target;
     private List<Sprite> BrotherSprites;
     private GameObject PotObject;
+    //横に動いた時の値
+    private float sidemove = 0f;
 
     private PlayerController player_ctr;
     private BringCollider bringctr;
@@ -317,7 +319,8 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTJUMP);
                 }
-                rig.velocity = new Vector2(rig.velocity.x, 1f * speed);
+                //rig.velocity = new Vector2(transform.position.x + 1f * Time.deltaTime, transform.position.y + 1f * Time.deltaTime + speed);
+                rig.velocity = new Vector2(sidemove, 1f * speed);  //rig.velocity.x
                 //rig.AddForce(new Vector2(rig.velocity.x, 50f * speed), ForceMode2D.Force);
                 _jumping = true;
                 break;
@@ -326,10 +329,9 @@ public class MoveController : MonoBehaviour
                 direc = Direction.LEFT;
                 leg_col.JumpingMove(direc);
 
-                if (_notLeft)
+                if (_notLeft || !_ActiveRightLeft)
                     return;
-                if (!_ActiveRightLeft)
-                    return;
+
                 if (leg_col.isLanding && !Jumping)
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
@@ -338,6 +340,7 @@ public class MoveController : MonoBehaviour
                 {
                     return;
                 }
+                sidemove = -5f;
                 rig.velocity = new Vector2(-5f, rig.velocity.y);
                 break;
 
@@ -345,11 +348,9 @@ public class MoveController : MonoBehaviour
                 direc = Direction.RIGHT;
                 leg_col.JumpingMove(direc);
 
-                if (_notRight)
+                if (_notRight || !_ActiveRightLeft)
                     return;
 
-                if (!_ActiveRightLeft)
-                    return;
                 if (leg_col.isLanding && !Jumping)
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_WALK);
@@ -358,6 +359,7 @@ public class MoveController : MonoBehaviour
                 {
                     return;
                 }
+                sidemove = 5f;
                 rig.velocity = new Vector2(5f, rig.velocity.y);
                 break;
 

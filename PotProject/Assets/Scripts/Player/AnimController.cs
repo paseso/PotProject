@@ -2,6 +2,7 @@
 using Anima2D;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class AnimController : MonoBehaviour {
 
@@ -421,6 +422,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isLadderUp", false);
                 anim.SetBool("isLeftGetItem", true);
                 anim.SetBool("isRightGetItem", false);
+                StartCoroutine(GetItemEffectWaitTime());
                 break;
 
             case AnimState.AnimType.RIGHT_GETITEM:
@@ -436,6 +438,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isLadderUp", false);
                 anim.SetBool("isLeftGetItem", false);
                 anim.SetBool("isRightGetItem", true);
+                StartCoroutine(GetItemEffectWaitTime());
                 break;
         }
     }
@@ -456,16 +459,31 @@ public class AnimController : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.35f);
         //アイテムのある位置にエフェクトの位置を合わせて呼ぶ
-        effect_mng.PlayEffect(0, Itemtarget.transform.position, 30, Itemtarget);
-        pot_anim.SetBool("isGetItem", true);
+        effect_mng.PlayEffect(0, Itemtarget.transform.position, 10, Itemtarget);
+        //Effectのスケールとアイテムのスケールをだんだん小さくしていく処理
+        Itemtarget.transform.DOScale(new Vector2(0, 0), 0.4f);
+        yield return new WaitForSeconds(0.4f);
+        Itemtarget.SetActive(false);
+        yield return new WaitForSeconds(0.2f);
+        effect_mng.PlayEffect(0, Itemtarget.transform.position, 10, Itemtarget);
+        Itemtarget.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        PotAnimSetBool();
     }
 
 
     /// <summary>
     /// PotアニメーションのisGetItemを変更
     /// </summary>
-    public void PotAnimSetBool()
+    private void PotAnimSetBool()
     {
-        pot_anim.SetBool("isGetItem", false);
+        if (!pot_anim.GetBool("isGetItem"))
+        {
+            pot_anim.SetBool("isGetItem", true);
+        }
+        else
+        {
+            pot_anim.SetBool("isGetItem", false);
+        }
     }
 }

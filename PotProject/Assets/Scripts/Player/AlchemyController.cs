@@ -189,7 +189,7 @@ public class AlchemyController : MonoBehaviour {
                 setGeneratedImg(CreateItemStatus.Type.Dast);
                 break;
         }
-        Debug.Log(item.GetType());
+        Debug.Log(item.ToString());
     }
     
     /// <summary>
@@ -410,7 +410,7 @@ public class AlchemyController : MonoBehaviour {
                         break;
                     case ItemStatus.Type.POWDER:
                         //煙幕
-                        setGeneratedImg(CreateItemStatus.Type.SmokeScreen);
+                        player_ctr.setItemList(ItemStatus.Type.SMOKESCREEN);
                         break;
                     case ItemStatus.Type.CLAY:
                         //闇の剣
@@ -440,7 +440,7 @@ public class AlchemyController : MonoBehaviour {
                         break;
                     case ItemStatus.Type.SMOKE:
                         //煙幕
-                        setGeneratedImg(CreateItemStatus.Type.SmokeScreen);
+                        player_ctr.setItemList(ItemStatus.Type.SMOKESCREEN);
                         break;
                     case ItemStatus.Type.LIZARD:
                         //ブーメラン
@@ -499,7 +499,7 @@ public class AlchemyController : MonoBehaviour {
                 }
                 break;
         }
-        Debug.Log(item_0.GetType() + "×" + item_1.GetType());
+        Debug.Log(item_0.ToString() + "×" + item_1.ToString());
     }
 
     /// <summary>
