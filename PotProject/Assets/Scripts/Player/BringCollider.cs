@@ -62,9 +62,7 @@ public class BringCollider : MonoBehaviour {
             return;
         Debug.Log("きてる");
         //アイテムを拾う
-        //pot_ctr.AddItem(target.GetComponent<CreateItemManager>().getStatus());
-        ItemStatus.Type type = target.GetComponent<ItemManager>().getItemStatus();
-        player_ctr.setItemList(type);
+        player_ctr.setItemList(target.GetComponent<ItemManager>().getItemStatus());
         GameObject vec = target;
         anim_ctr.setItemtaget = vec;
         if(move_ctr.direc == MoveController.Direction.LEFT)
