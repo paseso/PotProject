@@ -109,7 +109,6 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     public void setStartSwordList()
     {
-        Debug.Log("SwordListInit");
         //剣は最大４つまで持てる
         swordList = new PlayerStatus.SWORDTYPE[4];
     }
@@ -120,15 +119,17 @@ public class PlayerController : MonoBehaviour {
     /// <param name="type"></param>
     public void setSwordList(PlayerStatus.SWORDTYPE type)
     {
+        Debug.Log("剣のtype:" + type.ToString());
         //nullのところに錬金した剣をいれる
         for(int i = 1; i < 3; i++)
         {
-            if (swordList[i] != null)
+            if (swordList[i] != PlayerStatus.SWORDTYPE.NORMAL)
             {
                 continue;
             }
             Debug.Log("swordList = " + swordList[i]);
             swordList[i] = type;
+            Debug.Log(i + "番目にセット:" + type.ToString());
             break;
         }
     }

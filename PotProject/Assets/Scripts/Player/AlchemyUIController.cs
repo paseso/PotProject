@@ -120,7 +120,7 @@ public class AlchemyUIController : MonoBehaviour {
     {
         bool _null = false;
 
-        if (num != null)
+        if (ItemImage[num] != null)
             return _null;
 
         Sprite img = Resources.Load<Sprite>("Textures/AlchemyUI_item0");
