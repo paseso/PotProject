@@ -459,17 +459,23 @@ public class AnimController : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.35f);
         //アイテムのある位置にエフェクトの位置を合わせて呼ぶ
-        effect_mng.PlayEffect(0, Itemtarget.transform.position, 10, Itemtarget, false);
+        effect_mng.PlayEffect(0, Itemtarget.transform.localPosition, 10, Itemtarget, false).gameObject.transform.DOScale(new Vector2(0, 0), 0.4f);
         //Effectのスケールとアイテムのスケールをだんだん小さくしていく処理
         Itemtarget.transform.DOScale(new Vector2(0, 0), 0.4f);
         yield return new WaitForSeconds(0.4f);
         Itemtarget.SetActive(false);
         yield return new WaitForSeconds(0.2f);
         //ツボの上に移動させる
-        Itemtarget.transform.position = pot_anim.gameObject.transform.position;
+        Itemtarget.transform.localPosition = new Vector2(pot_anim.transform.position.x, pot_anim.transform.position.y + 3f);
         Itemtarget.SetActive(true);
-        effect_mng.PlayEffect(0, Itemtarget.transform.position, 10, Itemtarget, true);
-        yield return new WaitForSeconds(0.2f);
+        effect_mng.PlayEffect(0, Itemtarget.transform.localPosition, 0, Itemtarget, true).gameObject.transform.DOScale(new Vector2(10, 10), 0.4f);
+        Itemtarget.transform.DOScale(new Vector2(1, 1), 0.4f);
+        yield return new WaitForSeconds(0.4f);
+        Itemtarget.transform.DOScale(new Vector2(0, 0), 0.4f);
+        Itemtarget.transform.DOMoveY(pot_anim.transform.position.y, 0.4f);
+        PotAnimSetBool();
+        yield return new WaitForSeconds(1f);
+        Destroy(Itemtarget.gameObject);
         PotAnimSetBool();
     }
 

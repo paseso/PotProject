@@ -148,9 +148,6 @@ public class AlchemyController : MonoBehaviour {
     /// </summary>
     public void setGeneratedImg(CreateItemStatus.Type type)
     {
-        if (player_ctr.getCreateItemList().Count >= 3)
-            return;
-        player_ctr.setCreateItemList(type);
         GeneratedImg.sprite = CreateItem[(int)type];
     }
 
@@ -170,23 +167,23 @@ public class AlchemyController : MonoBehaviour {
                 break;
             case ItemStatus.Type.WOOD:
                 //たいまつ
-                setGeneratedImg(CreateItemStatus.Type.Torch);
+                player_ctr.setCreateItemList(CreateItemStatus.Type.Torch);
                 break;
             case ItemStatus.Type.LAMP:
                 //ランプ
-                setGeneratedImg(CreateItemStatus.Type.Lamp);
+                player_ctr.setCreateItemList(CreateItemStatus.Type.Lamp);
                 break;
             case ItemStatus.Type.SMOKE:
                 //爆薬
-                setGeneratedImg(CreateItemStatus.Type.Explosive);
+                player_ctr.setCreateItemList(CreateItemStatus.Type.Explosive);
                 break;
             case ItemStatus.Type.CRYSTAL:
                 //水
-                setGeneratedImg(CreateItemStatus.Type.Watter);
+                player_ctr.setCreateItemList(CreateItemStatus.Type.Watter);
                 break;
             default:
                 //ゴミができる
-                setGeneratedImg(CreateItemStatus.Type.Dast);
+                player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
                 break;
         }
         Debug.Log(item.ToString());
@@ -206,15 +203,15 @@ public class AlchemyController : MonoBehaviour {
                 {
                     case ItemStatus.Type.CLAY:
                         //はしご
-                        setGeneratedImg(CreateItemStatus.Type.Ladder);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Ladder);
                         break;
                     case ItemStatus.Type.POWDER:
                         //投げ縄
-                        setGeneratedImg(CreateItemStatus.Type.Lasso);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Lasso);
                         break;
                     default:
                         //ゴミ
-                        setGeneratedImg(CreateItemStatus.Type.Dast);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
                         break;
                 }
                 break;
@@ -224,15 +221,15 @@ public class AlchemyController : MonoBehaviour {
                 {
                     case ItemStatus.Type.KEYROD:
                         //鍵
-                        setGeneratedImg(CreateItemStatus.Type.Key);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Key);
                         break;
                     case ItemStatus.Type.CLAY:
                         //磁石
-                        setGeneratedImg(CreateItemStatus.Type.Magnet);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Magnet);
                         break;
                     default:
                         //ゴミ
-                        setGeneratedImg(CreateItemStatus.Type.Dast);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
                         break;
                 }
                 break;
@@ -254,7 +251,7 @@ public class AlchemyController : MonoBehaviour {
                         break;
                     default:
                         //ゴミ
-                        setGeneratedImg(CreateItemStatus.Type.Dast);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
                         break;
                 }
                 break;
@@ -264,15 +261,15 @@ public class AlchemyController : MonoBehaviour {
                 {
                     case ItemStatus.Type.POWDER:
                         //HPポーション
-                        setGeneratedImg(CreateItemStatus.Type.HPPotion);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.HPPotion);
                         break;
                     case ItemStatus.Type.CLAY:
                         //攻撃ポーション
-                        setGeneratedImg(CreateItemStatus.Type.ATKPotion);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.ATKPotion);
                         break;
                     default:
                         //ゴミ
-                        setGeneratedImg(CreateItemStatus.Type.Dast);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
                         break;
                 }
                 break;
@@ -282,11 +279,11 @@ public class AlchemyController : MonoBehaviour {
                 {
                     case ItemStatus.Type.CLAY:
                         //バリア
-                        setGeneratedImg(CreateItemStatus.Type.Barrier);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Barrier);
                         break;
                     case ItemStatus.Type.POWDER:
                         //ブーメラン
-                        setGeneratedImg(CreateItemStatus.Type.Boomerang);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Boomerang);
                         break;
                     case ItemStatus.Type.KEYROD:
                         //斧
@@ -294,11 +291,11 @@ public class AlchemyController : MonoBehaviour {
                         break;
                     case ItemStatus.Type.VAJURA:
                         //ドリル
-                        setGeneratedImg(CreateItemStatus.Type.Drill);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Drill);
                         break;
                     default:
                         //ゴミ
-                        setGeneratedImg(CreateItemStatus.Type.Dast);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
                         break;
                 }
                 break;
@@ -308,11 +305,11 @@ public class AlchemyController : MonoBehaviour {
                 {
                     case ItemStatus.Type.CRYSTAL:
                         //培養液
-                        setGeneratedImg(CreateItemStatus.Type.Inclubator);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Inclubator);
                         break;
                     default:
                         //ゴミ
-                        setGeneratedImg(CreateItemStatus.Type.Dast);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
                         break;
                 }
                 break;
@@ -322,7 +319,7 @@ public class AlchemyController : MonoBehaviour {
                 {
                     case ItemStatus.Type.CLAY:
                         //バジュラ（電撃武器）
-                        setGeneratedImg(CreateItemStatus.Type.Vajura);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Vajura);
                         break;
                     case ItemStatus.Type.KEYROD:
                         //槍
@@ -330,11 +327,11 @@ public class AlchemyController : MonoBehaviour {
                         break;
                     case ItemStatus.Type.LIZARD:
                         //ドリル
-                        setGeneratedImg(CreateItemStatus.Type.Drill);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Drill);
                         break;
                     default:
                         //ゴミ
-                        setGeneratedImg(CreateItemStatus.Type.Dast);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
                         break;
                 }
                 break;
@@ -344,11 +341,11 @@ public class AlchemyController : MonoBehaviour {
                 {
                     case ItemStatus.Type.CLAY:
                         //拡声器
-                        setGeneratedImg(CreateItemStatus.Type.Speaker);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Speaker);
                         break;
                     default:
                         //ゴミ
-                        setGeneratedImg(CreateItemStatus.Type.Dast);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
                         break;
                 }
                 break;
@@ -358,19 +355,19 @@ public class AlchemyController : MonoBehaviour {
                 {
                     case ItemStatus.Type.POWDER:
                         //飛べる雲
-                        setGeneratedImg(CreateItemStatus.Type.FlyCloud);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.FlyCloud);
                         break;
                     case ItemStatus.Type.SMOKE:
                         //竜巻
-                        setGeneratedImg(CreateItemStatus.Type.Tornado);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Tornado);
                         break;
                     case ItemStatus.Type.CRYSTAL:
                         //雨雲
-                        setGeneratedImg(CreateItemStatus.Type.RainCloud);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.RainCloud);
                         break;
                     default:
                         //ゴミ
-                        setGeneratedImg(CreateItemStatus.Type.Dast);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
                         break;
                 }
                 break;
@@ -380,15 +377,15 @@ public class AlchemyController : MonoBehaviour {
                 {
                     case ItemStatus.Type.CLOUD:
                         //雨雲
-                        setGeneratedImg(CreateItemStatus.Type.RainCloud);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.RainCloud);
                         break;
                     case ItemStatus.Type.WOOD:
                         //培養液
-                        setGeneratedImg(CreateItemStatus.Type.Inclubator);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Inclubator);
                         break;
                     case ItemStatus.Type.POWDER:
                         //毒液
-                        setGeneratedImg(CreateItemStatus.Type.Venom);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Venom);
                         break;
                     case ItemStatus.Type.CLAY:
                         //氷の剣
@@ -396,7 +393,7 @@ public class AlchemyController : MonoBehaviour {
                         break;
                     default:
                         //ゴミ
-                        setGeneratedImg(CreateItemStatus.Type.Dast);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
                         break;
                 }
                 break;
@@ -406,7 +403,7 @@ public class AlchemyController : MonoBehaviour {
                 {
                     case ItemStatus.Type.CLOUD:
                         //竜巻
-                        setGeneratedImg(CreateItemStatus.Type.Tornado);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Tornado);
                         break;
                     case ItemStatus.Type.POWDER:
                         //煙幕
@@ -418,7 +415,7 @@ public class AlchemyController : MonoBehaviour {
                         break;
                     default:
                         //ゴミ
-                        setGeneratedImg(CreateItemStatus.Type.Dast);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
                         break;
                 }
                 break;
@@ -428,15 +425,15 @@ public class AlchemyController : MonoBehaviour {
                 {
                     case ItemStatus.Type.SNAKE:
                         //投げ縄
-                        setGeneratedImg(CreateItemStatus.Type.Lasso);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Lasso);
                         break;
                     case ItemStatus.Type.CLOUD:
                         //飛べる雲
-                        setGeneratedImg(CreateItemStatus.Type.FlyCloud);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.FlyCloud);
                         break;
                     case ItemStatus.Type.FLOWER:
                         //HPポーション
-                        setGeneratedImg(CreateItemStatus.Type.HPPotion);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.HPPotion);
                         break;
                     case ItemStatus.Type.SMOKE:
                         //煙幕
@@ -444,15 +441,15 @@ public class AlchemyController : MonoBehaviour {
                         break;
                     case ItemStatus.Type.LIZARD:
                         //ブーメラン
-                        setGeneratedImg(CreateItemStatus.Type.Boomerang);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Boomerang);
                         break;
                     case ItemStatus.Type.CRYSTAL:
                         //毒液
-                        setGeneratedImg(CreateItemStatus.Type.Venom);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Venom);
                         break;
                     default:
                         //ゴミ
-                        setGeneratedImg(CreateItemStatus.Type.Dast);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
                         break;
                 }
                 break;
@@ -462,27 +459,27 @@ public class AlchemyController : MonoBehaviour {
                 {
                     case ItemStatus.Type.FLOWER:
                         //攻撃ポーション
-                        setGeneratedImg(CreateItemStatus.Type.ATKPotion);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.ATKPotion);
                         break;
                     case ItemStatus.Type.MIC:
                         //拡声器
-                        setGeneratedImg(CreateItemStatus.Type.Speaker);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Speaker);
                         break;
                     case ItemStatus.Type.VAJURA:
                         //バジュラ（電撃武器）
-                        setGeneratedImg(CreateItemStatus.Type.Vajura);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Vajura);
                         break;
                     case ItemStatus.Type.LIZARD:
                         //バリア
-                        setGeneratedImg(CreateItemStatus.Type.Barrier);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Barrier);
                         break;
                     case ItemStatus.Type.SNAKE:
                         //はしご
-                        setGeneratedImg(CreateItemStatus.Type.Ladder);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Ladder);
                         break;
                     case ItemStatus.Type.CROWN:
                         //磁石
-                        setGeneratedImg(CreateItemStatus.Type.Magnet);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Magnet);
                         break;
                     case ItemStatus.Type.CRYSTAL:
                         //氷の剣
@@ -494,7 +491,7 @@ public class AlchemyController : MonoBehaviour {
                         break;
                     default:
                         //ゴミ
-                        setGeneratedImg(CreateItemStatus.Type.Dast);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
                         break;
                 }
                 break;
