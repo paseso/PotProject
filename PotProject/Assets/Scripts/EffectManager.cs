@@ -64,25 +64,29 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
     /// <param name="EffectPos">Effectの生成場所</param>
     /// <param name="Magnification">Effectのスケール</param>
     /// <param name="Target">親子付けするObject</param>
-    private void EffectProcess(GameObject PlayEffect, Vector2 EffectPos, float Magnification, GameObject Target)
+    private void EffectProcess(GameObject PlayEffect, Vector2 EffectPos, float Magnification, GameObject Target, bool isDestry)
     {
         Debug.Log("InstanceEffects" + PlayEffect.transform.name);
         PlayEffect.transform.position = EffectPos;
         PlayEffect.transform.localScale = new Vector3(Magnification, Magnification, Magnification);
         PlayEffect.transform.SetParent(Target.transform);
-        ParticleSystem particlesystem = PlayEffect.GetComponent<ParticleSystem>();
-        var main = particlesystem.main;
-        if (PlayEffect != null)
-            Destroy(PlayEffect, main.duration);
+        //  再生終わったら破棄するか
+        if (isDestry)
+        {
+            ParticleSystem particlesystem = PlayEffect.GetComponent<ParticleSystem>();
+            var main = particlesystem.main;
+            if (PlayEffect != null)
+                Destroy(PlayEffect, main.duration);
+        }
     }
 
     //実行する時はコレ↓
-    //EffectManager.Instance_Effect.PlayEffect(0, new Vector2(0, 0), 1.0f);
+    //EffectManager.Instance_Effect.PlayEffect(0, new Vector2(0, 0), 1.0f, true);
 
     /// <summary>
     /// エフェクトナンバーを指定する方
     /// </summary>
-    public void PlayEffect(int EffectNum, Vector2 EffectPos, float Magnification, GameObject Target)
+    public GameObject PlayEffect(int EffectNum, Vector2 EffectPos, float Magnification, GameObject Target, bool isDestry)
     {
         GameObject PlayEffect = null;
         switch (EffectNum)
@@ -106,7 +110,8 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
                 Debug.Log("Effectmanagerのエラー");
                 break;
         }
-        // Debug.Log(EffectNum);
-        EffectProcess(PlayEffect, EffectPos, Magnification, Target);
+        EffectProcess(PlayEffect, EffectPos, Magnification, Target, isDestry);
+        return PlayEffect;
     }
+
 }
