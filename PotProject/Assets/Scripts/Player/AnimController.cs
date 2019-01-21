@@ -460,9 +460,9 @@ public class AnimController : MonoBehaviour {
         yield return new WaitForSeconds(0.35f);
         //アイテムのある位置にエフェクトの位置を合わせて呼ぶ
         GameObject EffectObj = effect_mng.PlayEffect(0, Itemtarget.transform.localPosition, 10, Itemtarget, false).gameObject;
-        EffectObj.transform.DOScale(new Vector2(0, 0), 0.4f);
+        EffectObj.transform.DOScale(new Vector3(0, 0, 1), 0.4f);
         //Effectのスケールとアイテムのスケールをだんだん小さくしていく処理
-        Itemtarget.transform.DOScale(new Vector2(0, 0), 0.4f);
+        Itemtarget.transform.DOScale(new Vector3(0, 0, 1), 0.4f);
         yield return new WaitForSeconds(0.4f);
         EffectObj.SetActive(false);
         Itemtarget.SetActive(false);
@@ -472,12 +472,12 @@ public class AnimController : MonoBehaviour {
         EffectObj.transform.position = Itemtarget.transform.localPosition;
         EffectObj.SetActive(true);
         Itemtarget.SetActive(true);
-        EffectObj.transform.DOScale(new Vector2(1, 1), 0.4f);
+        EffectObj.transform.DOScale(new Vector3(1, 1, 1), 0.4f);
         //effect_mng.PlayEffect(0, Itemtarget.transform.localPosition, 0, Itemtarget, true).gameObject.transform.DOScale(new Vector2(10, 10), 0.4f);
-        Itemtarget.transform.DOScale(new Vector2(1, 1), 0.4f);
+        Itemtarget.transform.DOScale(new Vector3(1, 1, 1), 0.4f);
         yield return new WaitForSeconds(0.4f);
-        EffectObj.transform.DOScale(new Vector2(0, 0), 0.4f);
-        Itemtarget.transform.DOScale(new Vector2(0, 0), 0.4f);
+        EffectObj.transform.DOScale(new Vector3(0, 0, 1), 0.4f);
+        Itemtarget.transform.DOScale(new Vector3(0, 0, 1), 0.4f);
         Itemtarget.transform.DOMoveY(pot_anim.transform.position.y, 0.4f);
         PotAnimSetBool();
         yield return new WaitForSeconds(1f);
