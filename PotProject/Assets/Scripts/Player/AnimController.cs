@@ -2,6 +2,7 @@
 using Anima2D;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class AnimController : MonoBehaviour {
 
@@ -31,12 +32,13 @@ public class AnimController : MonoBehaviour {
     private AttackZoneController attack_ctr;
     private BringCollider bring_col;
     private Animator pot_anim;
+    private EffectManager effect_mng;
 
     //拾うアニメーションの時に使う
-    private Vector2 Itemtarget;
+    private GameObject Itemtarget;
     private bool _attackStart = false;
 
-    public Vector2 setItemtaget
+    public GameObject setItemtaget
     {
         set { Itemtarget = value; }
     }
@@ -47,6 +49,7 @@ public class AnimController : MonoBehaviour {
         pot_anim = gameObject.transform.parent.GetComponentInChildren<PotController>().gameObject.GetComponent<Animator>();
         attack_ctr = gameObject.transform.parent.GetComponentInChildren<AttackZoneController>();
         bring_col = gameObject.transform.GetComponentInChildren<BringCollider>();
+        effect_mng = GameObject.Find("EffectManager").GetComponent<EffectManager>();
         _attackStart = false;
 	}
 	
@@ -419,6 +422,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isLadderUp", false);
                 anim.SetBool("isLeftGetItem", true);
                 anim.SetBool("isRightGetItem", false);
+                StartCoroutine(GetItemEffectWaitTime());
                 break;
 
             case AnimState.AnimType.RIGHT_GETITEM:
@@ -434,6 +438,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isLadderUp", false);
                 anim.SetBool("isLeftGetItem", false);
                 anim.SetBool("isRightGetItem", true);
+                StartCoroutine(GetItemEffectWaitTime());
                 break;
         }
     }
@@ -454,7 +459,33 @@ public class AnimController : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.35f);
         //アイテムのある位置にエフェクトの位置を合わせて呼ぶ
+        effect_mng.PlayEffect(0, Itemtarget.transform.position, 10, Itemtarget, false);
+        //Effectのスケールとアイテムのスケールをだんだん小さくしていく処理
+        Itemtarget.transform.DOScale(new Vector2(0, 0), 0.4f);
+        yield return new WaitForSeconds(0.4f);
+        Itemtarget.SetActive(false);
+        yield return new WaitForSeconds(0.2f);
+        //ツボの上に移動させる
+        Itemtarget.transform.position = pot_anim.gameObject.transform.position;
+        Itemtarget.SetActive(true);
+        effect_mng.PlayEffect(0, Itemtarget.transform.position, 10, Itemtarget, true);
+        yield return new WaitForSeconds(0.2f);
+        PotAnimSetBool();
+    }
 
-        pot_anim.SetBool("isGetItem", true);
+
+    /// <summary>
+    /// PotアニメーションのisGetItemを変更
+    /// </summary>
+    private void PotAnimSetBool()
+    {
+        if (!pot_anim.GetBool("isGetItem"))
+        {
+            pot_anim.SetBool("isGetItem", true);
+        }
+        else
+        {
+            pot_anim.SetBool("isGetItem", false);
+        }
     }
 }
