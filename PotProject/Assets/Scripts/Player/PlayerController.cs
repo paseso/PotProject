@@ -372,7 +372,8 @@ public class PlayerController : MonoBehaviour {
             return;
         }
         status.PlayerHP -= point;
-        EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Damage, BrotherObj.transform.position, 5, BrotherObj);
+        // ダメージエフェクトの生成
+        EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Damage, BrotherObj.transform.position, 5, BrotherObj, true);
         for(int i = status.GetMaxHP - 1; i > status.PlayerHP - 1; i--)
         {
             hearts[i].SetActive(false);
@@ -399,9 +400,8 @@ public class PlayerController : MonoBehaviour {
         }
         BrotherObj.transform.parent.position = GameObject.Find(BrotherObj.transform.root.name + "/OtherObject/RespornPoint(Clone)").transform.position + new Vector3(0, 1.5f, 0);
         PotObject.transform.position = GameObject.Find(BrotherObj.transform.root.name + "/OtherObject/RespornPoint(Clone)").transform.position;
-        // Effectの生成
-        Debug.Log("effects生成");
-        EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Respawn, BrotherObj.transform.position, 5, BrotherObj);
+        // リスポーンエフェクトの生成
+        EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Respawn, BrotherObj.transform.position, 5, BrotherObj, true);
     }
 
     /// <summary>
