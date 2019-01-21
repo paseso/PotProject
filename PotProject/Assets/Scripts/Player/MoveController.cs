@@ -309,6 +309,12 @@ public class MoveController : MonoBehaviour
         switch (btn)
         {
             case ButtonType.JUMP:
+                if (player_ctr.AlchemyWindow)
+                {
+                    Debug.Log("捨てます");
+                    
+                    return;
+                }
                 if (!leg_col.isLanding)
                     return;
                 if (direc == Direction.RIGHT)

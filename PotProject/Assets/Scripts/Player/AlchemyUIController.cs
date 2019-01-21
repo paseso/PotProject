@@ -442,6 +442,6 @@ public class AlchemyUIController : MonoBehaviour {
         else
             nowAlchemyItem++;
 
-        alchemy_ctr.setGeneratedImg(player_ctr.getCreateItemList()[num]);
+        alchemy_ctr.setGeneratedImg(player_ctr.getCreateItemList()[nowAlchemyItem]);
     }
 }
