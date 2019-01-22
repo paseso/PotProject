@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AttackZoneController : MonoBehaviour {
 
-    private PlayerStatus status;
     private MoveController move_ctr;
     [HideInInspector]
     public GameObject Attack_Target;
@@ -63,8 +62,8 @@ public class AttackZoneController : MonoBehaviour {
     /// </summary>
     public void Attack()
     {
+        PlayerStatus status = FindObjectOfType<PlayerController>().status;
         Debug.Log(status.PlayerAttack);
-        Debug.Log("AttackTarget = " + Attack_Target.name);
         if(Attack_Target == null) { return; }
         Attack_Target.GetComponent<MonsterController>().Damage(status.PlayerAttack);
     }
