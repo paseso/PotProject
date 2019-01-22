@@ -37,7 +37,6 @@ public class AttackZoneController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         DirecControl();
-        Debug.Log("KeyFlag=" + move_ctr.keyDoorFlag);
     }
 
     /// <summary>

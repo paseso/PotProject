@@ -229,7 +229,6 @@ public class MoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("SwordType=" + status.swordtype);
         //はしご処理してる時、ツボのtransformをプレイヤーと同じ位置にする
         if (_laddernow)
         {

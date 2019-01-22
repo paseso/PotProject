@@ -110,7 +110,6 @@ public class PlayerController : MonoBehaviour {
         {
             HPDown(3);
         }
-        Debug.Log("PConSword="+status.swordtype);
     }
 
     /// <summary>
