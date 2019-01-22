@@ -52,9 +52,6 @@ public class MoveController : MonoBehaviour
     private bool _onCrossLeft = false;
     private bool _onR2 = false;
     //---------------------------------------------
-    //左右押しても反応しなくなるフラグ
-    public bool _notLeft = false;
-    public bool _notRight = false;
 
     [HideInInspector]
     public GameObject target;
@@ -205,8 +202,6 @@ public class MoveController : MonoBehaviour
         _jumping = false;
         _hitmonster = false;
         _laddernow = false;
-        _notLeft = false;
-        _notRight = false;
         ClearBtnFlg();
     }
 
@@ -308,6 +303,7 @@ public class MoveController : MonoBehaviour
         switch (btn)
         {
             case ButtonType.JUMP:
+
                 if (player_ctr.GetAlchemyUIFlag)
                 {
                     Debug.Log("捨てます");
@@ -334,10 +330,10 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.LEFTJOYSTICK_LEFT:
+                if (direc != Direction.LEFT && Jumping)
+                    return;
                 direc = Direction.LEFT;
-                leg_col.JumpingMove(direc);
-
-                if (_notLeft || !_ActiveRightLeft)
+                if (!_ActiveRightLeft)
                     return;
 
                 if (player_ctr.GetAlchemyUIFlag) { return; }
@@ -355,10 +351,11 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.LEFTJOYSTICK_RIGHT:
+                if (direc != Direction.RIGHT && Jumping)
+                    return;
                 direc = Direction.RIGHT;
-                leg_col.JumpingMove(direc);
 
-                if (_notRight || !_ActiveRightLeft)
+                if (!_ActiveRightLeft)
                     return;
 
                 if (player_ctr.GetAlchemyUIFlag) { return; }

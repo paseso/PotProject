@@ -34,11 +34,6 @@ public class AnimController : MonoBehaviour {
     private Animator pot_anim;
     private EffectManager effect_mng;
     private PlayerController player_ctr;
-    private MoveController move_ctr;
-
-    private Sprite ototo_left;
-    private Sprite ototo_right;
-    private GameObject OtotoHead;
 
     //拾うアニメーションの時に使う
     private GameObject Itemtarget;
@@ -51,16 +46,12 @@ public class AnimController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        move_ctr = gameObject.transform.GetComponentInChildren<MoveController>();
-        OtotoHead = pot_anim.gameObject.transform.GetChild(1).gameObject;
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         anim = gameObject.GetComponent<Animator>();
         pot_anim = gameObject.transform.parent.GetComponentInChildren<PotController>().gameObject.GetComponent<Animator>();
         attack_ctr = gameObject.transform.parent.GetComponentInChildren<AttackZoneController>();
         bring_col = gameObject.transform.GetComponentInChildren<BringCollider>();
         effect_mng = GameObject.Find("EffectManager").GetComponent<EffectManager>();
-        ototo_left = Resources.Load("Textures/Charactor/Ototo_Head_Left")as Sprite;
-        ototo_right = Resources.Load("Textures/Charactor/Ototo_Head_Right") as Sprite;
         _attackStart = false;
 	}
 	
@@ -515,21 +506,6 @@ public class AnimController : MonoBehaviour {
         else
         {
             pot_anim.SetBool("isGetItem", false);
-        }
-    }
-
-    /// <summary>
-    /// 方向によって弟の画像切り替えする処理
-    /// </summary>
-    public void OtotoChangeSprite()
-    {
-        if(move_ctr.direc == MoveController.Direction.LEFT)
-        {
-            OtotoHead.GetComponent<SpriteRenderer>().sprite = ototo_left;
-        }
-        else
-        {
-            OtotoHead.GetComponent<SpriteRenderer>().sprite = ototo_right;
         }
     }
 }
