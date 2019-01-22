@@ -62,9 +62,8 @@ public class AttackZoneController : MonoBehaviour {
     /// </summary>
     public void Attack()
     {
-        PlayerStatus status = FindObjectOfType<PlayerController>().status;
-        Debug.Log(status.PlayerAttack);
-        if(Attack_Target == null) { return; }
+        PlayerStatus status = FindObjectOfType<PlayerManager>().Status;
+        if (Attack_Target == null) { return; }
         Attack_Target.GetComponent<MonsterController>().Damage(status.PlayerAttack);
     }
 
