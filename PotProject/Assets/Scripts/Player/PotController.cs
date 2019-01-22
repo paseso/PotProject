@@ -179,11 +179,11 @@ public class PotController : MonoBehaviour {
     {
         if (move_ctr.direc == MoveController.Direction.LEFT)
         {
-            OtotoHead.GetComponent<SpriteRenderer>().sprite = ototo_left;
+            OtotoHead.GetComponent<Anima2D.SpriteMeshAnimation>().frame = 0;
         }
         else
         {
-            OtotoHead.GetComponent<SpriteRenderer>().sprite = ototo_right;
+            OtotoHead.GetComponent<Anima2D.SpriteMeshAnimation>().frame = 1;
         }
     }
 }
