@@ -579,7 +579,7 @@ public class MoveController : MonoBehaviour
             {
                 anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTIDLE);
             }
-            if(InLadderCount > 0 && status.gimmick_state == PlayerStatus.GimmickState.ONLADDER) {
+            if(InLadderCount > 0 && gameObject.layer == LayerMask.NameToLayer("LadderPlayer")) {
                 transform.parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 PotObject.transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 transform.parent.GetComponent<Rigidbody2D>().isKinematic = true;
