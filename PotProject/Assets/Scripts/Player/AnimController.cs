@@ -275,6 +275,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isLeftGetItem", false);
                 anim.SetBool("isRightGetItem", false);
                 pot_anim.SetBool("isIdle", true);
+                pot_anim.SetBool("isMove", false);
                 break;
 
             case AnimState.AnimType.LEFTJUMP:
@@ -291,6 +292,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isLeftGetItem", false);
                 anim.SetBool("isRightGetItem", false);
                 pot_anim.SetBool("isIdle", true);
+                pot_anim.SetBool("isMove", false);
                 break;
 
             case AnimState.AnimType.LEFTIDLE:
@@ -307,6 +309,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isLeftGetItem", false);
                 anim.SetBool("isRightGetItem", false);
                 pot_anim.SetBool("isIdle", true);
+                pot_anim.SetBool("isMove", false);
                 break;
 
             case AnimState.AnimType.RIGHTIDLE:
@@ -323,6 +326,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isLeftGetItem", false);
                 anim.SetBool("isRightGetItem", false);
                 pot_anim.SetBool("isIdle", true);
+                pot_anim.SetBool("isMove", false);
                 break;
 
             case AnimState.AnimType.LEFT_WALK:
@@ -338,6 +342,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isLadderUp", false);
                 anim.SetBool("isLeftGetItem", false);
                 anim.SetBool("isRightGetItem", false);
+                pot_anim.SetBool("isIdle", false);
                 pot_anim.SetBool("isMove", true);
                 break;
 
@@ -354,6 +359,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isLadderUp", false);
                 anim.SetBool("isLeftGetItem", false);
                 anim.SetBool("isRightGetItem", false);
+                pot_anim.SetBool("isIdle", false);
                 pot_anim.SetBool("isMove", true);
                 break;
 
@@ -371,6 +377,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isLeftGetItem", false);
                 anim.SetBool("isRightGetItem", false);
                 pot_anim.SetBool("isIdle", true);
+                pot_anim.SetBool("isMove", false);
                 break;
 
             case AnimState.AnimType.SORDATTACK_RIGHT:
@@ -387,6 +394,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isLeftGetItem", false);
                 anim.SetBool("isRightGetItem", false);
                 pot_anim.SetBool("isIdle", true);
+                pot_anim.SetBool("isMove", false);
                 break;
 
             case AnimState.AnimType.LADDER_UP:
@@ -403,6 +411,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isLeftGetItem", false);
                 anim.SetBool("isRightGetItem", false);
                 pot_anim.SetBool("isIdle", true);
+                pot_anim.SetBool("isMove", false);
                 break;
 
             case AnimState.AnimType.LADDER_DOWN:
@@ -419,6 +428,7 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isLeftGetItem", false);
                 anim.SetBool("isRightGetItem", false);
                 pot_anim.SetBool("isIdle", true);
+                pot_anim.SetBool("isMove", false);
                 break;
 
             case AnimState.AnimType.LEFT_GETITEM:
@@ -434,7 +444,9 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isLadderUp", false);
                 anim.SetBool("isLeftGetItem", true);
                 anim.SetBool("isRightGetItem", false);
-                pot_anim.SetBool("isIdle", true);
+                pot_anim.SetBool("isIdle", false);
+                pot_anim.SetBool("isMove", false);
+                pot_anim.SetBool("isPotDown", true);
                 StartCoroutine(GetItemEffectWaitTime());
                 break;
 
@@ -451,7 +463,9 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isLadderUp", false);
                 anim.SetBool("isLeftGetItem", false);
                 anim.SetBool("isRightGetItem", true);
-                pot_anim.SetBool("isIdle", true);
+                pot_anim.SetBool("isIdle", false);
+                pot_anim.SetBool("isMove", false);
+                pot_anim.SetBool("isPotDown", true);
                 StartCoroutine(GetItemEffectWaitTime());
                 break;
         }
@@ -471,10 +485,9 @@ public class AnimController : MonoBehaviour {
     /// <returns></returns>
     public IEnumerator GetItemEffectWaitTime()
     {
-        pot_anim.SetBool("isPotDown", true);
         yield return new WaitForSeconds(0.35f);
-        //アイテムのある位置にエフェクトの位置を合わせて呼ぶ
         pot_anim.SetBool("isPotDown", false);
+        //アイテムのある位置にエフェクトの位置を合わせて呼ぶ
         GameObject EffectObj = effect_mng.PlayEffect(0, Itemtarget.transform.position, 10, Itemtarget, false).gameObject;
         EffectObj.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
         //Effectのスケールとアイテムのスケールをだんだん小さくしていく処理
@@ -484,14 +497,14 @@ public class AnimController : MonoBehaviour {
         Itemtarget.SetActive(false);
         yield return new WaitForSeconds(0.2f);
         //ツボの上に移動させてツボにはいってるように移動させる
-        Itemtarget.transform.position = new Vector2(pot_anim.transform.position.x, pot_anim.transform.position.y + 3f);
+        Itemtarget.transform.position = new Vector2(pot_anim.transform.position.x, pot_anim.transform.position.y + 10);
         EffectObj.transform.position = Itemtarget.transform.position;
         EffectObj.SetActive(true);
         Itemtarget.SetActive(true);
-        EffectObj.transform.DOScale(new Vector3(6, 6, 6), 0.4f);
+        EffectObj.transform.DOScale(new Vector3(7, 7, 7), 0.3f);
         Itemtarget.transform.DOScale(new Vector3(1, 1, 1), 0.4f);
         yield return new WaitForSeconds(0.4f);
-        EffectObj.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
+        EffectObj.transform.DOScale(new Vector3(0, 0, 0), 0.3f);
         yield return new WaitForSeconds(0.4f);
         //ツボの中に入る瞬間にどんどん小さくなってく
         Itemtarget.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
@@ -506,7 +519,6 @@ public class AnimController : MonoBehaviour {
         anim.SetBool("isLeftGetItem", false);
         player_ctr.AllCommandActive = true;
     }
-
 
     /// <summary>
     /// PotアニメーションのisGetItemを変更

@@ -1787,7 +1787,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 6
 --- !u!23 &23748683559581968
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -1858,14 +1858,14 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1336020161432504}
-  m_Mesh: {fileID: 43847362591862394, guid: a2a39d68e01f4d942b1f764fa04420cd, type: 2}
+  m_Mesh: {fileID: 43117564449523758, guid: 5d63949aebc6f5f448396a8f75f3e32e, type: 2}
 --- !u!33 &33390755044307540
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1250238765990920}
-  m_Mesh: {fileID: 43647999540122624, guid: 06768d0badd081d43ad01655be5b197c, type: 2}
+  m_Mesh: {fileID: 43872862764755562, guid: e4078a6d18e401d448629fbc8ef04fd2, type: 2}
 --- !u!33 &33493645979795106
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -2659,7 +2659,7 @@ MonoBehaviour:
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Bones: []
   m_BoneTransforms:
   - {fileID: 4110122314555834}
@@ -2695,7 +2695,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ec17ceaa560940e9bf0dbeafc3a1971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SpriteMesh: {fileID: 11400000, guid: 06768d0badd081d43ad01655be5b197c, type: 2}
+  m_SpriteMesh: {fileID: 11400000, guid: e4078a6d18e401d448629fbc8ef04fd2, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
@@ -2731,7 +2731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 1.0000008
+  m_Length: 1.0000004
   m_Child: {fileID: 0}
   m_ChildTransform: {fileID: 4113689370301358}
   m_AttachedIK: {fileID: 0}
@@ -2763,7 +2763,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.9999998
+  m_Length: 1.0000002
   m_Child: {fileID: 0}
   m_ChildTransform: {fileID: 4007576890892034}
   m_AttachedIK: {fileID: 0}
@@ -2889,7 +2889,7 @@ MonoBehaviour:
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 6
   m_Bones: []
   m_BoneTransforms:
   - {fileID: 4715822176223480}
@@ -3008,7 +3008,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 1.0000001
+  m_Length: 1.0000004
   m_Child: {fileID: 0}
   m_ChildTransform: {fileID: 4198103747300296}
   m_AttachedIK: {fileID: 0}
@@ -3118,7 +3118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 1.0000004
+  m_Length: 0.9999998
   m_Child: {fileID: 0}
   m_ChildTransform: {fileID: 4910674649262880}
   m_AttachedIK: {fileID: 0}
@@ -3133,7 +3133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ec17ceaa560940e9bf0dbeafc3a1971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SpriteMesh: {fileID: 11400000, guid: a2a39d68e01f4d942b1f764fa04420cd, type: 2}
+  m_SpriteMesh: {fileID: 11400000, guid: 5d63949aebc6f5f448396a8f75f3e32e, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
@@ -3156,6 +3156,7 @@ MonoBehaviour:
   m_Frames:
   - {fileID: 11400000, guid: e40db35314e7b0643a490cb9a0583c00, type: 2}
   - {fileID: 11400000, guid: 6e63b1f2c5ffbd64da7ce66a6b008617, type: 2}
+  - {fileID: 11400000, guid: 9b4e2c3a21befc146838ec910d644f6f, type: 2}
 --- !u!114 &114936230304342984
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3742,7 +3743,7 @@ SkinnedMeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
