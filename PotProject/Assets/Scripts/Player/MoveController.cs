@@ -214,6 +214,7 @@ public class MoveController : MonoBehaviour
     void Start()
     {
         direc = Direction.LEFT;
+        status = FindObjectOfType<PlayerManager>().Status;
         PotObject = GameObject.FindObjectOfType<PotController>().gameObject;
         rig = gameObject.transform.parent.GetComponent<Rigidbody2D>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();

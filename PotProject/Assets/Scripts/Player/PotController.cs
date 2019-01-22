@@ -147,7 +147,7 @@ public class PotController : MonoBehaviour {
 
             Destroy(col.gameObject);
             MonsterController mInfo = col.gameObject.GetComponent<MonsterController>();
-            switch (mInfo.GetMStatus.type)
+            switch (mInfo.Status.type)
             {
                 case MonsterStatus.MonsterType.WATER:
                     player_ctr.setItemList(ItemStatus.Type.CLAY);
@@ -158,10 +158,10 @@ public class PotController : MonoBehaviour {
                     break;
 
                 default:
-                    Debug.Log("Type: " + mInfo.GetMStatus.type);
+                    Debug.Log("Type: " + mInfo.Status.type);
                     break;
             }
-            Debug.Log("Type: " + mInfo.GetMStatus.type);
+            Debug.Log("Type: " + mInfo.Status.type);
         }
     }
 }

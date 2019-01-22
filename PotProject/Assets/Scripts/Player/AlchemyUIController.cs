@@ -75,6 +75,7 @@ public class AlchemyUIController : MonoBehaviour {
     {
         try
         {
+            status = FindObjectOfType<PlayerManager>().Status;
             player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
             move_ctr = GameObject.FindObjectOfType<MoveController>();
             crossAxisdown = move_ctr.gameObject.GetComponent<CrossAxisDown>();

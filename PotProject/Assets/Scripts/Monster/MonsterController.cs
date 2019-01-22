@@ -14,7 +14,7 @@ public struct MonsterStatus
     public int HP
     {
         get { return hp; }
-        set { value = hp; }
+        set { hp = value; }
     }
 
     public int GetAttack
@@ -69,7 +69,7 @@ public class MonsterController : MonoBehaviour
     private string itemFolder = "Prefabs/Items/Drop/";
 
     [SerializeField]
-    private MonsterStatus status;
+    private MonsterStatus status = new MonsterStatus();
 
     public MonsterStatus Status
     {
@@ -101,9 +101,9 @@ public class MonsterController : MonoBehaviour
 
     private GameObject clearPanel;
 
-    public MonsterStatus GetMStatus
+    void Start()
     {
-        get { return status; }
+        status = GetComponent<MonsterController>().Status;
     }
 
     /// <summary>

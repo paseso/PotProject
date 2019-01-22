@@ -12,6 +12,7 @@ public class PlayerBarrier : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
+        status = FindObjectOfType<PlayerManager>().Status;
         timeLimit = status.GetBarrierTime;
         status.ActiveBarrier = true;
 	}

@@ -75,6 +75,7 @@ public class PlayerController : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        status = FindObjectOfType<PlayerManager>().Status;
         hearts = new GameObject[status.GetMaxHP];
         lifePoint = GameObject.FindGameObjectWithTag("LifePoint");
         for(int i = 0; i < status.GetMaxHP; i++)

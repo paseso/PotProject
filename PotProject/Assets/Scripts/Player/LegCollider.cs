@@ -45,6 +45,7 @@ public class LegCollider : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        status = FindObjectOfType<PlayerManager>().Status;
         falldistance = gameObject.transform.position.y;
         move_ctr = transform.parent.GetComponentInChildren<MoveController>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();

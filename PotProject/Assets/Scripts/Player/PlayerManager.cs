@@ -106,8 +106,10 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>{
     private PlayerStatus status;
     private PlayerController player_ctr;
 
+
     public PlayerStatus Status {
-        get;set;
+        get { return status; }
+        set { status = value; }
     }
 
     public PlayerStatus.SWORDTYPE GetSwordType
