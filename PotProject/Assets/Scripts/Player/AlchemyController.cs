@@ -580,7 +580,7 @@ public class AlchemyController : MonoBehaviour {
 
                 break;
             case CreateItemStatus.Type.Ladder:
-
+                item_ctr.LadderCreate();
                 break;
             case CreateItemStatus.Type.Lamp:
 
