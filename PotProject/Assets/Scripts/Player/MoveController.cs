@@ -308,7 +308,7 @@ public class MoveController : MonoBehaviour
         switch (btn)
         {
             case ButtonType.JUMP:
-                if (player_ctr.AlchemyWindow)
+                if (player_ctr.GetAlchemyUIFlag)
                 {
                     Debug.Log("捨てます");
                     alchemyUI_ctr.deleteItemBox(alchemyUI_ctr.getNowBox);
@@ -356,6 +356,8 @@ public class MoveController : MonoBehaviour
                 if (_notRight || !_ActiveRightLeft)
                     return;
 
+                if (player_ctr.GetAlchemyUIFlag) { return; }
+
                 if (leg_col.isLanding && !Jumping)
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_WALK);
@@ -389,28 +391,28 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.RIGHTJOYSTICK_LEFT:
-                if (!player_ctr.AlchemyWindow)
+                if (!player_ctr.GetAlchemyUIFlag)
                     return;
 
                 _onRJoystickLeft = true;
                 break;
 
             case ButtonType.RIGHTJOYSTICK_RIGHT:
-                if (!player_ctr.AlchemyWindow)
+                if (!player_ctr.GetAlchemyUIFlag)
                     return;
 
                 _onRJoystickRight = true;
                 break;
 
             case ButtonType.RIGHTJOYSTICK_UP:
-                if (!player_ctr.AlchemyWindow)
+                if (!player_ctr.GetAlchemyUIFlag)
                     return;
 
                 _onRJoystickUp = true;
                 break;
 
             case ButtonType.RIGHTJOYSTICK_DOWN:
-                if (!player_ctr.AlchemyWindow)
+                if (!player_ctr.GetAlchemyUIFlag)
                     return;
 
                 _onRJoystickDown = true;
@@ -419,7 +421,7 @@ public class MoveController : MonoBehaviour
             case ButtonType.CIRCLE:
                 _onCircle = true;
                 
-                if (player_ctr.AlchemyWindow)
+                if (player_ctr.GetAlchemyUIFlag)
                 {
                     alchemyUI_ctr.PickItem();
                 }
@@ -482,7 +484,7 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.CROSSX_RIGTH:
-                if (!player_ctr.AlchemyWindow)
+                if (!player_ctr.GetAlchemyUIFlag)
                 {
                     player_ctr.SwordTypeChange(player_ctr.GetSwordList[1]);
                     status.swordtype = player_ctr.GetSwordList[1];
@@ -493,7 +495,7 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.CROSSX_LEFT:
-                if (!player_ctr.AlchemyWindow)
+                if (!player_ctr.GetAlchemyUIFlag)
                 {
                     player_ctr.SwordTypeChange(player_ctr.GetSwordList[3]);
                     status.swordtype = player_ctr.GetSwordList[3];
@@ -505,7 +507,7 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.CROSSY_UP:
-                if (!player_ctr.AlchemyWindow)
+                if (!player_ctr.GetAlchemyUIFlag)
                 {
                     player_ctr.SwordTypeChange(player_ctr.GetSwordList[0]);
                     status.swordtype = player_ctr.GetSwordList[0];
@@ -516,7 +518,7 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.CROSSY_DOWN:
-                if (!player_ctr.AlchemyWindow)
+                if (!player_ctr.GetAlchemyUIFlag)
                 {
                     player_ctr.SwordTypeChange(player_ctr.GetSwordList[2]);
                     status.swordtype = player_ctr.GetSwordList[2];

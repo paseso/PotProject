@@ -160,14 +160,15 @@ public class AlchemyController : MonoBehaviour {
         switch (item)
         {
             case ItemStatus.Type.CLAY:
-                //木が成長
-                gimmick_ctr = FindObjectOfType<GimmickController>();
+                
                 mInfo = transform.root.GetComponent<MapInfo>();
                 gimmick_ctr.Grow();
                 break;
             case ItemStatus.Type.WOOD:
-                //たいまつ
-                player_ctr.setCreateItemList(CreateItemStatus.Type.Torch);
+                //木が成長
+                //player_ctr.setCreateItemList(CreateItemStatus.Type.Torch);
+                gimmick_ctr = FindObjectOfType<GimmickController>();
+                gimmick_ctr.Grow();
                 break;
             case ItemStatus.Type.LAMP:
                 //ランプ

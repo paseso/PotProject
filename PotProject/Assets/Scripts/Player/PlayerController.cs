@@ -36,13 +36,13 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private RectTransform Pot_UI;
     //錬金UIが開いてるかどうか
-    private bool _alchemyUi = false;
+    private bool alchemyUIFlag = false;
     //アイテムボックスがMaxかどうか
     private bool _itemMax = false;
 
-    public bool AlchemyWindow
+    public bool GetAlchemyUIFlag
     {
-        get { return _alchemyUi; }
+        get { return alchemyUIFlag; }
     }
 
     // 操作可能か
@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour {
         createItemBox = new List<CreateItemStatus.Type>();
         getHeartChildren();
         _itemMax = false;
-        _alchemyUi = false;
+        alchemyUIFlag = false;
         for(int i = 0; i < status.PlayerHP; i++)
         {
             hearts[i].SetActive(true);
@@ -347,18 +347,18 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     public void OpenAlchemy()
     {
-        if (!_alchemyUi)
+        if (!alchemyUIFlag)
         {
             alchemyUI_ctr.setItemboxImage();
             alchemyUI_ctr.ItemFrameReSet();
             alchemyUI_ctr.ReSetMaterialsBox(player_ctr.status.ItemList);
             Pot_UI.DOLocalMoveX(0, 0.3f).SetEase(Ease.Linear);
-            _alchemyUi = true;
+            alchemyUIFlag = true;
         }
         else
         {
             Pot_UI.DOLocalMoveX(1920, 0.3f).SetEase(Ease.Linear);   //1745
-            _alchemyUi = false;
+            alchemyUIFlag = false;
         }
     }
 
