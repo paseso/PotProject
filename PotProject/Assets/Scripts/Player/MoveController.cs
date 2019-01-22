@@ -316,6 +316,9 @@ public class MoveController : MonoBehaviour
                 }
                 if (!leg_col.isLanding)
                     return;
+
+                if (player_ctr.GetAlchemyUIFlag) { return; }
+
                 if (direc == Direction.RIGHT)
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTJUMP);
@@ -324,9 +327,9 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTJUMP);
                 }
-                //rig.velocity = new Vector2(transform.position.x + 1f * Time.deltaTime, transform.position.y + 1f * Time.deltaTime + speed);
+
                 rig.velocity = new Vector2(sidemove, 1f * speed);  //rig.velocity.x
-                //rig.AddForce(new Vector2(rig.velocity.x, 50f * speed), ForceMode2D.Force);
+
                 _jumping = true;
                 break;
 
@@ -336,6 +339,8 @@ public class MoveController : MonoBehaviour
 
                 if (_notLeft || !_ActiveRightLeft)
                     return;
+
+                if (player_ctr.GetAlchemyUIFlag) { return; }
 
                 if (leg_col.isLanding && !Jumping)
                 {
@@ -372,8 +377,10 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.LEFTJOYSTICK_UP:
                 _onUp = true;
-                
-                if(InLadderCount > 0) {
+
+                if (player_ctr.GetAlchemyUIFlag) { return; }
+
+                if (InLadderCount > 0) {
                     Ladder(ladderSpeed, 1);
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LADDER_UP);
                 }
@@ -383,7 +390,9 @@ public class MoveController : MonoBehaviour
             case ButtonType.LEFTJOYSTICK_DOWN:
                 _onDown = true;
 
-                if(InLadderCount > 0) {
+                if (player_ctr.GetAlchemyUIFlag) { return; }
+
+                if (InLadderCount > 0) {
                     Ladder(ladderSpeed, -1);
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LADDER_UP);
                 }

@@ -20,7 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4226191459060056}
   - component: {fileID: 212960681584245598}
-  m_Layer: 0
+  - component: {fileID: 114425356036648694}
+  - component: {fileID: 58428236694267988}
+  m_Layer: 19
   m_Name: Barrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,12 +36,38 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1551307974226358}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.25, y: 0.4, z: 90}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &58428236694267988
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1551307974226358}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0090277195, y: -0.45138693}
+  serializedVersion: 2
+  m_Radius: 2.1176403
+--- !u!114 &114425356036648694
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1551307974226358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae9ab650e6187dc42a626d670f11eb1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212960681584245598
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -71,13 +99,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1154f87a8d8316c4f913bd1c43539ee2, type: 3}
+  m_SortingOrder: 104
+  m_Sprite: {fileID: 21300000, guid: 9a3dd48578b43b14b9b4098b5e46cbac, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.38, y: 0.39}
+  m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
