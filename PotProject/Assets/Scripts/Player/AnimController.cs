@@ -469,14 +469,15 @@ public class AnimController : MonoBehaviour {
         yield return new WaitForSeconds(0.2f);
         //ツボの上に移動させてツボにはいってるように移動させる
         Itemtarget.transform.localPosition = new Vector2(pot_anim.transform.position.x, pot_anim.transform.position.y + 3f);
-        EffectObj.transform.position = Itemtarget.transform.localPosition;
+        EffectObj.transform.position = new Vector2(pot_anim.gameObject.transform.localPosition.x, pot_anim.gameObject.transform.localPosition.y + 3f);
         EffectObj.SetActive(true);
         Itemtarget.SetActive(true);
-        EffectObj.transform.DOScale(new Vector3(1, 1, 1), 0.4f);
+        EffectObj.transform.DOScale(new Vector3(6, 6, 6), 0.2f);
         Itemtarget.transform.DOScale(new Vector3(1, 1, 1), 0.4f);
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.2f);
         //ツボの中に入る瞬間にどんどん小さくなってく
-        EffectObj.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
+        EffectObj.transform.DOScale(new Vector3(0, 0, 0), 0.2f);
+        yield return new WaitForSeconds(0.2f);
         Itemtarget.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
         Itemtarget.transform.DOMoveY(pot_anim.transform.position.y + 1, 0.4f);
         PotAnimSetBool();
