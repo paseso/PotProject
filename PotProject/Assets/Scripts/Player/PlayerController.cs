@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour {
     private int maxHP;
     private const int maxItemBox = 3;
 
-    public PlayerStatus status;
+    private PlayerStatus status;
     private AlchemyController alchemy_ctr;
     private AlchemyUIController alchemyUI_ctr;
     private PlayerController player_ctr;

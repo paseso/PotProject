@@ -34,6 +34,7 @@ public class AlchemyUIController : MonoBehaviour {
     private Sprite[] ItemImage;
 
     private PlayerController player_ctr;
+    private PlayerStatus status;
 
     private GameObject ItemFrame;
     private GameObject PotFrame;
@@ -194,8 +195,8 @@ public class AlchemyUIController : MonoBehaviour {
         Box_item[num].GetComponent<Image>().sprite = null;
         Box_item[num] = null;
         //持ち物リストからも削除
-        player_ctr.deleteItemList(player_ctr.status.ItemList[num]);
-        Materials_item.Remove(player_ctr.status.ItemList[num]);
+        player_ctr.deleteItemList(status.ItemList[num]);
+        Materials_item.Remove(status.ItemList[num]);
     }
 
     /// <summary>

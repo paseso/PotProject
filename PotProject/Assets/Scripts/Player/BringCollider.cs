@@ -62,6 +62,8 @@ public class BringCollider : MonoBehaviour {
             return;
         Debug.Log("きてる");
         //アイテムを拾う
+        //プレイヤーの操作制限
+        player_ctr.AllCommandActive = false;
         player_ctr.setItemList(target.GetComponent<ItemManager>().getItemStatus());
         GameObject vec = target;
         anim_ctr.setItemtaget = vec;

@@ -33,6 +33,7 @@ public class AnimController : MonoBehaviour {
     private BringCollider bring_col;
     private Animator pot_anim;
     private EffectManager effect_mng;
+    private PlayerController player_ctr;
 
     //拾うアニメーションの時に使う
     private GameObject Itemtarget;
@@ -45,6 +46,7 @@ public class AnimController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         anim = gameObject.GetComponent<Animator>();
         pot_anim = gameObject.transform.parent.GetComponentInChildren<PotController>().gameObject.GetComponent<Animator>();
         attack_ctr = gameObject.transform.parent.GetComponentInChildren<AttackZoneController>();
@@ -459,7 +461,7 @@ public class AnimController : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.35f);
         //アイテムのある位置にエフェクトの位置を合わせて呼ぶ
-        GameObject EffectObj = effect_mng.PlayEffect(0, Itemtarget.transform.localPosition, 10, Itemtarget, false).gameObject;
+        GameObject EffectObj = effect_mng.PlayEffect(0, Itemtarget.transform.position, 10, Itemtarget, false).gameObject;
         EffectObj.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
         //Effectのスケールとアイテムのスケールをだんだん小さくしていく処理
         Itemtarget.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
@@ -468,16 +470,16 @@ public class AnimController : MonoBehaviour {
         Itemtarget.SetActive(false);
         yield return new WaitForSeconds(0.2f);
         //ツボの上に移動させてツボにはいってるように移動させる
-        Itemtarget.transform.localPosition = new Vector2(pot_anim.transform.position.x, pot_anim.transform.position.y + 3f);
-        EffectObj.transform.position = new Vector2(pot_anim.gameObject.transform.localPosition.x, pot_anim.gameObject.transform.localPosition.y + 3f);
+        Itemtarget.transform.position = new Vector2(pot_anim.transform.position.x, pot_anim.transform.position.y + 3f);
+        EffectObj.transform.position = Itemtarget.transform.position;
         EffectObj.SetActive(true);
         Itemtarget.SetActive(true);
-        EffectObj.transform.DOScale(new Vector3(6, 6, 6), 0.2f);
+        EffectObj.transform.DOScale(new Vector3(6, 6, 6), 0.4f);
         Itemtarget.transform.DOScale(new Vector3(1, 1, 1), 0.4f);
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.4f);
+        EffectObj.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
+        yield return new WaitForSeconds(0.4f);
         //ツボの中に入る瞬間にどんどん小さくなってく
-        EffectObj.transform.DOScale(new Vector3(0, 0, 0), 0.2f);
-        yield return new WaitForSeconds(0.2f);
         Itemtarget.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
         Itemtarget.transform.DOMoveY(pot_anim.transform.position.y + 1, 0.4f);
         PotAnimSetBool();
@@ -488,6 +490,7 @@ public class AnimController : MonoBehaviour {
         PotAnimSetBool();
         anim.SetBool("isRightGetItem", false);
         anim.SetBool("isLeftGetItem", false);
+        player_ctr.AllCommandActive = true;
     }
 
 

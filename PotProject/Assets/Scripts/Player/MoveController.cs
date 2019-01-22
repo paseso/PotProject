@@ -71,7 +71,6 @@ public class MoveController : MonoBehaviour
     private PlayerStatus status;
     private MiniMapController miniMap_ctr;
     private LegCollider leg_col;
-    
 
     #region ボタンFlagのget
 
@@ -244,7 +243,7 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void EventStateCheck()
     {
-        switch (player_ctr.status.event_state)
+        switch (status.event_state)
         {
             case PlayerStatus.EventState.NORMAL:
                 BtnCheck();
