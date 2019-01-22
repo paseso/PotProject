@@ -7,9 +7,10 @@ public class MoveCloud : MonoBehaviour {
     private float distance;
     private int direction = 1;
     private int speed = 5;
+    private CloudCol cloudCol;
 	// Use this for initialization
 	void Start () {
-        
+        cloudCol = transform.GetChild(0).GetComponent<CloudCol>();
     }
 	
 	// Update is called once per frame
@@ -18,7 +19,8 @@ public class MoveCloud : MonoBehaviour {
     }
 
     public void OnCollisionEnter2D(Collision2D col) {
-        if(col.gameObject.layer == LayerMask.NameToLayer("Block")){
+
+        if (col.gameObject.layer == LayerMask.NameToLayer("Block")) {
             direction *= -1;
         }
     }
