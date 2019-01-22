@@ -233,6 +233,7 @@ public class PlayerController : MonoBehaviour {
             return;
 
         createItemBox.Add(type);
+        alchemy_ctr.setGeneratedImg(type);
     }
 
     /// <summary>
@@ -249,6 +250,7 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     public void deleteCreateItemList(int num)
     {
+        alchemy_ctr.deleteGeneratedImg();
         createItemBox.RemoveAt(num);
     }
 
