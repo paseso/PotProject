@@ -29,6 +29,7 @@ public struct CreateItemStatus
         Inclubator,
         Speaker,
         Venom,
+        TreePotion,
         Dast,
     };
     public CreateItemStatus.Type createItem;
@@ -79,14 +80,14 @@ public class AlchemyController : MonoBehaviour {
      * 20.培養器
      * 21.拡声器
      * 22.毒液
-     * 23.ゴミ
+     * 23.木を成長させるポーション
+     * 24.ゴミ
      */
 
 
     //生成アイテム
     private Sprite[] CreateItem;
     private TextAsset csvFile;
-    private GimmickController gimmick_ctr;
     private MapInfo mInfo;
     //フレームの右下のImage
     private Image GeneratedImg;
@@ -152,6 +153,14 @@ public class AlchemyController : MonoBehaviour {
     }
 
     /// <summary>
+    /// 右下のフレームにある生成したアイテム画像を削除する処理
+    /// </summary>
+    public void deleteGeneratedImg()
+    {
+        GeneratedImg.sprite = null;
+    }
+
+    /// <summary>
     /// アイテム錬金
     /// </summary>
     /// <param name="item">錬金したいアイテム</param>
@@ -160,15 +169,12 @@ public class AlchemyController : MonoBehaviour {
         switch (item)
         {
             case ItemStatus.Type.CLAY:
-                
-                mInfo = transform.root.GetComponent<MapInfo>();
-                gimmick_ctr.Grow();
+                //たいまつ
+                //player_ctr.setCreateItemList(CreateItemStatus.Type.Torch);
                 break;
             case ItemStatus.Type.WOOD:
                 //木が成長
-                //player_ctr.setCreateItemList(CreateItemStatus.Type.Torch);
-                gimmick_ctr = FindObjectOfType<GimmickController>();
-                gimmick_ctr.Grow();
+                player_ctr.setCreateItemList(CreateItemStatus.Type.TreePotion);
                 break;
             case ItemStatus.Type.LAMP:
                 //ランプ
@@ -553,7 +559,7 @@ public class AlchemyController : MonoBehaviour {
                 item_ctr.ATKPortion();
                 break;
             case CreateItemStatus.Type.Barrier:
-
+                item_ctr.CreateBarrier();
                 break;
             case CreateItemStatus.Type.Boomerang:
 
@@ -608,6 +614,9 @@ public class AlchemyController : MonoBehaviour {
                 break;
             case CreateItemStatus.Type.Watter:
 
+                break;
+            case CreateItemStatus.Type.TreePotion:
+                item_ctr.TreePortion();
                 break;
         }
     }
