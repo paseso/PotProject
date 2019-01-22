@@ -88,7 +88,7 @@ public class MonsterController : MonoBehaviour
         {MonsterStatus.MonsterType.LAMP,"Lamp" },
         {MonsterStatus.MonsterType.ROBOT,"Pothook" },
         {MonsterStatus.MonsterType.SLIME,"" },
-        {MonsterStatus.MonsterType.SNAKE,"RopePrefab" },
+        {MonsterStatus.MonsterType.SNAKE,"Exuvia" },
         {MonsterStatus.MonsterType.LUKEWARM,"" },
         {MonsterStatus.MonsterType.WOOD,"Roots" },
         {MonsterStatus.MonsterType.HAMSTAR,"" },
