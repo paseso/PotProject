@@ -13,6 +13,7 @@ public class PlayerBarrier : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
         timeLimit = status.GetBarrierTime;
+        status.ActiveBarrier = true;
 	}
 
     void Update()
@@ -22,6 +23,7 @@ public class PlayerBarrier : MonoBehaviour {
             timeLimit -= Time.deltaTime;
         }else if(timeLimit < 0)
         {
+            status.ActiveBarrier = false;
             Destroy(gameObject);
         }
 
