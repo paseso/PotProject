@@ -44,6 +44,11 @@ public struct MonsterStatus
         HARB,
         FATHER,
         MAGIC,
+        CLAY_N,
+        CLAY_F,
+        CLAY_D,
+        CLAY_T,
+        CLAY_I,
     }
     public MonsterType type;
 

@@ -405,7 +405,7 @@ public class AlchemyUIController : MonoBehaviour {
 
             switch (items[i])
             {
-                case ItemStatus.Type.CLAY:
+                case ItemStatus.Type.CLAY_N:
                     item_img.sprite = ItemImage[0];
                     break;
                 case ItemStatus.Type.LAMP:

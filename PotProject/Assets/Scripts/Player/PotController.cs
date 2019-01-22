@@ -92,8 +92,8 @@ public class PotController : MonoBehaviour {
     {
         switch (type)
         {
-            case ItemStatus.Type.CLAY:
-                player_ctr.setItemList(ItemStatus.Type.CLAY);
+            case ItemStatus.Type.CLAY_N:
+                player_ctr.setItemList(ItemStatus.Type.CLAY_N);
                 break;
             case ItemStatus.Type.CLOUD:
                 player_ctr.setItemList(ItemStatus.Type.CLOUD);
@@ -150,7 +150,7 @@ public class PotController : MonoBehaviour {
             switch (mInfo.Status.type)
             {
                 case MonsterStatus.MonsterType.WATER:
-                    player_ctr.setItemList(ItemStatus.Type.CLAY);
+                    player_ctr.setItemList(ItemStatus.Type.CLAY_N);
                     break;
 
                 case MonsterStatus.MonsterType.SNAKE:
