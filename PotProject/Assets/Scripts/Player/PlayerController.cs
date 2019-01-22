@@ -53,6 +53,14 @@ public class PlayerController : MonoBehaviour {
         set { isCommandActive = value; }
     }
 
+    private bool allCommandActive = true;
+
+    public bool AllCommandActive {
+        get { return allCommandActive; }
+        set { allCommandActive = value; }
+    }
+
+
     private bool isMiniMap = false;
 
     public bool IsMiniMap {
@@ -102,6 +110,7 @@ public class PlayerController : MonoBehaviour {
         {
             HPDown(3);
         }
+        Debug.Log("PConSword="+status.swordtype);
     }
 
     /// <summary>
@@ -111,6 +120,7 @@ public class PlayerController : MonoBehaviour {
     {
         //剣は最大４つまで持てる
         swordList = new PlayerStatus.SWORDTYPE[4];
+        swordList[1] = PlayerStatus.SWORDTYPE.KEY;
     }
 
     /// <summary>
@@ -258,12 +268,15 @@ public class PlayerController : MonoBehaviour {
         sword = GameObject.FindObjectOfType<AnimController>().transform.GetChild(4).GetComponent<SpriteRenderer>();
     }
 
+    int count = 0;
+
     /// <summary>
     /// 剣の属性を変える処理
     /// </summary>
     /// <param name="s_type">FIRE=火、</param>
     public void SwordTypeChange(PlayerStatus.SWORDTYPE s_type)
     {
+        count++;
         switch (s_type)
         {
             case PlayerStatus.SWORDTYPE.NORMAL:
@@ -299,6 +312,7 @@ public class PlayerController : MonoBehaviour {
                 status.PlayerAttack = 2;
                 break;
         }
+        status.swordtype = s_type;
     }
 
     /// <summary>

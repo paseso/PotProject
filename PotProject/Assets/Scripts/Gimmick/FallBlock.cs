@@ -57,9 +57,9 @@ public class FallBlock : MonoBehaviour {
         if (timer > createTime && state == fallState.fall)
         {
             timer = 0;
-            GameObject fallBlock = Instantiate(Resources.Load<GameObject>(blockPrefab));
-            fallBlock.transform.SetParent(transform.root.transform);
-            fallBlock.transform.localPosition = defaultPos;
+            //GameObject fallBlock = Instantiate(Resources.Load<GameObject>(blockPrefab));
+            //fallBlock.transform.SetParent(transform.root.transform);
+            //fallBlock.transform.localPosition = defaultPos;
             Destroy(gameObject);
         }
 

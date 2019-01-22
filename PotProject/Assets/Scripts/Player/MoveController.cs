@@ -7,15 +7,14 @@ using DG.Tweening;
 [DefaultExecutionOrder(-1)]
 public class MoveController : MonoBehaviour
 {
-    [HideInInspector]
+    //[HideInInspector]
     public float speed = 0f;
 
     private bool _jumping = false;
 
-    public bool IsLadder
-    {
-        get; set;
-    }
+    public bool IsLadder{ get; set; }
+
+    public bool keyDoorFlag { get; set; }
 
     [SerializeField]
     private float ladderSpeed;
@@ -230,6 +229,7 @@ public class MoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("SwordType=" + status.swordtype);
         //はしご処理してる時、ツボのtransformをプレイヤーと同じ位置にする
         if (_laddernow)
         {
@@ -420,6 +420,14 @@ public class MoveController : MonoBehaviour
                 }
                 else
                 {
+
+                    if(status.swordtype == PlayerStatus.SWORDTYPE.KEY && keyDoorFlag) {
+                        Debug.Log("Call!!!!");
+                        GameObject keySwitch = GameObject.FindGameObjectWithTag("KeyDoor");
+                        keySwitch.GetComponent<GimmickController>().UnlockKeyDoor();
+                        return;
+                    }
+
                     if(direc == Direction.LEFT)
                         anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.SORDATTACK_LEFT);
                     else
@@ -472,6 +480,7 @@ public class MoveController : MonoBehaviour
                 if (!player_ctr.AlchemyWindow)
                 {
                     player_ctr.SwordTypeChange(player_ctr.GetSwordList[1]);
+                    status.swordtype = player_ctr.GetSwordList[1];
                     return;
                 }
 
@@ -482,6 +491,7 @@ public class MoveController : MonoBehaviour
                 if (!player_ctr.AlchemyWindow)
                 {
                     player_ctr.SwordTypeChange(player_ctr.GetSwordList[3]);
+                    status.swordtype = player_ctr.GetSwordList[3];
                     return;
                 }
 
@@ -493,6 +503,7 @@ public class MoveController : MonoBehaviour
                 if (!player_ctr.AlchemyWindow)
                 {
                     player_ctr.SwordTypeChange(player_ctr.GetSwordList[0]);
+                    status.swordtype = player_ctr.GetSwordList[0];
                     return;
                 }
 
@@ -503,6 +514,7 @@ public class MoveController : MonoBehaviour
                 if (!player_ctr.AlchemyWindow)
                 {
                     player_ctr.SwordTypeChange(player_ctr.GetSwordList[2]);
+                    status.swordtype = player_ctr.GetSwordList[2];
                     return;
                 }
                 _onCrossDown = true;
@@ -518,6 +530,8 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void BtnCheck()
     {
+        if (!player_ctr.AllCommandActive) { return; }
+
         if (Input.GetButtonDown("L2") || Input.GetKeyDown(KeyCode.P)) {// L2ボタン or キーボードの「P」
             Move(ButtonType.L2);
         }

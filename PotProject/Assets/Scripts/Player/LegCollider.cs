@@ -148,7 +148,6 @@ public class LegCollider : MonoBehaviour {
                 return;
             }
 
-            Debug.Log("GroundCountOut = " + onGroundCount);
         if (onGroundCount <= 0)
         {
             onGroundCount = 0;

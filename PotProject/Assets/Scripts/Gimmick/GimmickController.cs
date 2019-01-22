@@ -14,24 +14,43 @@ public class GimmickController :MonoBehaviour {
     private GimmickInfo gInfo;
     private MiniMapController mMapController;
     private BossController bossCon;
+    private PlayerController pController;
     private int inFireZone = 0;
 
-    // Use this for initialization
-    void Start() {
-        if (GameObject.Find("Controller") != null)
-        {
+    public bool switchFlag() {
+        if (gInfo.type == GimmickInfo.GimmickType.WATER) { return false; }
+        if (gInfo.type == GimmickInfo.GimmickType.WATER) { return false; }
+        if (gInfo.type == GimmickInfo.GimmickType.WATER) { return false; }
+        if (gInfo.type == GimmickInfo.GimmickType.WATER) { return false; }
+        return true;
+    }
+
+    private void Awake() {
+        if (GameObject.Find("Controller") != null) {
             sController = GameObject.Find("Controller").GetComponent<StageController>();
         }
 
-        if (FindObjectOfType<BossController>())
-        {
+        
+    }
+
+    void Start() {
+        gInfo = GetComponent<GimmickInfo>();
+        if (gInfo.type == GimmickInfo.GimmickType.WATER) {
+            sController.Waters.Add(gameObject);
+        }
+
+        if (FindObjectOfType<BossController>()) {
             bossCon = FindObjectOfType<BossController>();
         }
 
         mMapController = FindObjectOfType<MiniMapController>();
         mInfo = transform.root.GetComponent<MapInfo>();
-        gInfo = GetComponent<GimmickInfo>();
+
+        if (switchFlag()) {
+            pController = GameObject.Find("Controller").GetComponent<PlayerController>();
+        }
     }
+
 
     /// <summary>
     /// あたり判定(OnCollisionEnter)
@@ -42,20 +61,16 @@ public class GimmickController :MonoBehaviour {
         if (col.gameObject.layer != LayerMask.NameToLayer("Player")) { return; }
         switch (gInfo.type) {
             case GimmickInfo.GimmickType.UP:
-                transform.parent.transform.parent.DOLocalMoveY(transform.parent.transform.parent.localPosition.y - 0.25f, 1f);
-                sController.Sride(objInfo.MapNumX, StageController.Direction.UP);
+                StartCoroutine(SrideCroutine(objInfo.MapNumX, StageController.Direction.UP));
                 break;
             case GimmickInfo.GimmickType.DOWN:
-                transform.parent.transform.parent.DOLocalMoveY(transform.parent.transform.parent.localPosition.y - 0.25f, 1f);
-                sController.Sride(objInfo.MapNumX, StageController.Direction.DOWN);
+                StartCoroutine(SrideCroutine(objInfo.MapNumX, StageController.Direction.DOWN));
                 break;
             case GimmickInfo.GimmickType.LEFT:
-                transform.parent.transform.parent.DOLocalMoveY(transform.parent.transform.parent.localPosition.y - 0.25f, 1f);
-                sController.Sride(objInfo.MapNumY, StageController.Direction.LEFT);
+                StartCoroutine(SrideCroutine(objInfo.MapNumY, StageController.Direction.LEFT));
                 break;
             case GimmickInfo.GimmickType.RIGHT:
-                transform.parent.transform.parent.DOLocalMoveY(transform.parent.transform.parent.localPosition.y - 0.25f, 1f);
-                sController.Sride(objInfo.MapNumY, StageController.Direction.RIGHT);
+                StartCoroutine(SrideCroutine(objInfo.MapNumY, StageController.Direction.RIGHT));
                 break;
             case GimmickInfo.GimmickType.BAKETREE:
                 BakeTree(gameObject);
@@ -71,6 +86,15 @@ public class GimmickController :MonoBehaviour {
         }
     }
 
+    IEnumerator SrideCroutine(int infoDir,StageController.Direction dir) {
+        pController.AllCommandActive = false;
+        transform.DOLocalMoveY(transform.parent.transform.parent.localPosition.y - 0.25f, 1f);
+        yield return new WaitForSeconds(1f);
+        sController.Sride(infoDir, dir);
+        transform.DOLocalMoveY(transform.parent.transform.parent.localPosition.y, 1f);
+        yield return null;
+    }
+
     /// <summary>
     /// 判定(OnTriggerEnter)
     /// </summary>
@@ -84,6 +108,7 @@ public class GimmickController :MonoBehaviour {
                 mMapController.NowMap();
                 break;
             case GimmickInfo.GimmickType.FIREFIELD:
+                if (!col.GetComponent<MoveController>()) { return; }
                 bossCon.IsMagicAttack = true;
                 break;
             
@@ -100,7 +125,7 @@ public class GimmickController :MonoBehaviour {
         if (col.gameObject.layer != LayerMask.NameToLayer("Player")) { return; }
         switch (gInfo.type) {
             case GimmickInfo.GimmickType.FIREFIELD:
-                inFireZone--;
+                if (!col.GetComponent<MoveController>()) { return; }
                 bossCon.IsMagicAttack = false;
                 break;
             default:
@@ -112,20 +137,29 @@ public class GimmickController :MonoBehaviour {
         if (!mInfo.UpRockFlag) {
             mInfo.UpRockFlag = true;
             GameObject rock = GameObject.FindGameObjectWithTag("Rock");
-            StartCoroutine(DoorStep(rock));
+            StartCoroutine(SwitchDoorStep(rock));
         }
     }
 
     // ドアが開くコルーチン
-    public IEnumerator DoorStep(GameObject obj) {
+    public IEnumerator SwitchDoorStep(GameObject obj) {
         transform.parent.transform.parent.DOLocalMoveY(transform.parent.transform.parent.localPosition.y - 0.25f, 1f);
         yield return new WaitForSeconds(1.5f);
         obj.transform.DOScaleY(0f, 2.0f).SetEase(Ease.Linear);
-        while (true) {
+        StartCoroutine(DoorStep(obj));
+    }
+
+    public IEnumerator DoorStep(GameObject obj) {
+        bool flag = true;
+        obj.transform.DOScaleY(0f, 2.0f).SetEase(Ease.Linear);
+        while (flag) {
             obj.transform.localPosition = new Vector2(obj.transform.localPosition.x + 0.05f, obj.transform.localPosition.y);
             yield return new WaitForSeconds(0.05f);
             obj.transform.localPosition = new Vector2(obj.transform.localPosition.x - 0.05f, obj.transform.localPosition.y);
             yield return new WaitForSeconds(0.05f);
+            if(obj.transform.localScale.y <= 0) {
+                flag = false;
+            }
         }
     }
 
@@ -185,12 +219,7 @@ public class GimmickController :MonoBehaviour {
     /// </summary>
     public void UnlockKeyDoor()
     {
-        // 扉（仮）
-        PlayerManager manager = FindObjectOfType<PlayerManager>();
-        if(manager.Status.swordtype != PlayerStatus.SWORDTYPE.KEY) { return; }
-        GameObject door = GameObject.FindGameObjectWithTag("KeyDoor");
-        DoorStep(door);
-        //door.transform.DOScaleY(0f, 1.0f).SetEase(Ease.Linear);
+        StartCoroutine(DoorStep(gameObject));
     }
 
     public IEnumerator IsSpring()

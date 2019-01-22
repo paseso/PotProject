@@ -14,6 +14,8 @@ public class AttackZoneController : MonoBehaviour {
     private float Impalce_y = 6;
     private GameObject PlayerObject;
 
+    private bool keyFlag = false;
+
     private MoveController.Direction dir;
 
     //モンスターをアタックできるかどうか
@@ -35,6 +37,7 @@ public class AttackZoneController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         DirecControl();
+        Debug.Log("KeyFlag=" + move_ctr.keyDoorFlag);
     }
 
     /// <summary>
@@ -67,6 +70,8 @@ public class AttackZoneController : MonoBehaviour {
         Attack_Target.GetComponent<MonsterController>().Damage(status.PlayerAttack);
     }
 
+    
+
     /// <summary>
     /// オブジェクトが待つ処理
     /// </summary>
@@ -84,6 +89,7 @@ public class AttackZoneController : MonoBehaviour {
             _attackMonster = true;
             Attack_Target = col.gameObject;
             Debug.Log("はいったよ");
+            return;
         }
     }
 
@@ -93,6 +99,7 @@ public class AttackZoneController : MonoBehaviour {
         if(col.gameObject.tag == "Monster")
         {
             Attack_Target = null;
+            return;
         }
     }
 }
