@@ -49,4 +49,13 @@ public class ItemController : MonoBehaviour {
         GameObject prefab = Resources.Load("Prefabs/Items/Barrier") as GameObject;
         GameObject obj = Instantiate(prefab, BrotherObj.transform);
     }
+
+    /// <summary>
+    /// はしご生成
+    /// </summary>
+    public void LadderCreate()
+    {
+        playerController.OnBlock.AddComponent<CreateLadder>();
+        
+    }
 }
