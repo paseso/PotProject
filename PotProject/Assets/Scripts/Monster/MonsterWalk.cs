@@ -6,7 +6,7 @@ using DG.Tweening;
 public class MonsterWalk : MonoBehaviour {
     private Vector2 firstPos;
     private float randTime;
-    private float distance;
+    private float distance = 2;
     private float time;
     private int direction;
 
@@ -40,5 +40,7 @@ public class MonsterWalk : MonoBehaviour {
             direction = 0;
             transform.DOLocalMoveX(firstPos.x, 1f).SetEase(Ease.Linear);
         }
+        time = 0;
+        randTime = Random.Range(1, 5);
     }
 }

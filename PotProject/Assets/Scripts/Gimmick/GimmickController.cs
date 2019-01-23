@@ -72,9 +72,6 @@ public class GimmickController :MonoBehaviour {
             case GimmickInfo.GimmickType.RIGHT:
                 StartCoroutine(SrideCroutine(objInfo.MapNumY, StageController.Direction.RIGHT));
                 break;
-            case GimmickInfo.GimmickType.BAKETREE:
-                BakeTree(gameObject);
-                break;
             case GimmickInfo.GimmickType.ROCK:
                 RockDoorOpen();
                 break;
@@ -226,7 +223,7 @@ public class GimmickController :MonoBehaviour {
     {
         GetComponent<BoxCollider2D>().enabled = false;   
         GameObject obj = FindObjectOfType<PlayerController>().gameObject;
-        obj.GetComponent<PlayerController>().IsCommandActive = false;
+        obj.GetComponent<PlayerController>().AllCommandActive = false;
 
         transform.parent.transform.parent.DOLocalMoveY(transform.parent.transform.parent.localPosition.y - 0.25f, 1f);
         yield return new WaitForSeconds(1.5f);
