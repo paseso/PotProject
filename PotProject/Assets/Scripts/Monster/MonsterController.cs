@@ -48,10 +48,9 @@ public struct MonsterStatus
         CLAY_F,
         CLAY_D,
         CLAY_T,
-        CLAY_I,
+        CLAY_W,
     }
     public MonsterType type;
-
 
     // 属性
     public enum MonsterAttribute
@@ -102,6 +101,11 @@ public class MonsterController : MonoBehaviour
         {MonsterStatus.MonsterType.TURTLE,"Crystal" },
         {MonsterStatus.MonsterType.FAIRY,"" },
         {MonsterStatus.MonsterType.HARB,"Weed" },
+        {MonsterStatus.MonsterType.CLAY_N,"Clay_N" },
+        {MonsterStatus.MonsterType.CLAY_F,"Clay_F" },
+        {MonsterStatus.MonsterType.CLAY_D,"Clay_D" },
+        {MonsterStatus.MonsterType.CLAY_T,"Clay_T" },
+        {MonsterStatus.MonsterType.CLAY_W,"Clay_W" },
     };
 
     private GameObject clearPanel;

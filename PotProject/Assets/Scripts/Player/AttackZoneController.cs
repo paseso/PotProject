@@ -13,7 +13,7 @@ public class AttackZoneController : MonoBehaviour {
     private float Impalce_y = 6;
     private GameObject PlayerObject;
 
-    private PlayerStatus status;
+    private PlayerManager pManager;
 
     private bool keyFlag = false;
 
@@ -29,7 +29,7 @@ public class AttackZoneController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        status = FindObjectOfType<PlayerManager>().Status;
+        pManager = FindObjectOfType<PlayerManager>();
         move_ctr = gameObject.transform.parent.GetComponentInChildren<MoveController>();
         PlayerObject = gameObject.transform.parent.gameObject;
         Attack_Target = null;
@@ -39,6 +39,7 @@ public class AttackZoneController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         DirecControl();
+        Debug.Log("AttackZoneStatus = " + pManager.GetSwordType);
     }
 
     /// <summary>
@@ -65,10 +66,10 @@ public class AttackZoneController : MonoBehaviour {
     /// </summary>
     public void Attack()
     {
-        Debug.Log("attack=" + status.PlayerAttack);
+        Debug.Log(pManager.GetSwordType);
         if (Attack_Target == null) { return; }
         MonsterController MonsterController = Attack_Target.GetComponent<MonsterController>();
-        MonsterController.Damage(status.PlayerAttack);
+        MonsterController.Damage(pManager.Status.PlayerAttack);
     }
 
     /// <summary>

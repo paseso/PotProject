@@ -136,10 +136,9 @@ public class LegCollider : MonoBehaviour {
             move_ctr.InLadderCount--;
             if (move_ctr.InLadderCount <= 0) {
                 move_ctr.InLadderCount = 0;
-                player_ctr.ChangeLayer();
+                if(gameObject.layer == LayerMask.NameToLayer("LadderPlayer"))
+                    player_ctr.ChangeLayer();
             }
         }
     }
-
-   
 }

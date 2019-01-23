@@ -65,7 +65,7 @@ public class MoveController : MonoBehaviour
     private AttackZoneController atc_ctr;
     private AlchemyUIController alchemyUI_ctr;
     private AnimController anim_ctr;
-    private PlayerStatus status;
+    private PlayerManager pManager;
     private MiniMapController miniMap_ctr;
     private LegCollider leg_col;
 
@@ -209,7 +209,7 @@ public class MoveController : MonoBehaviour
     void Start()
     {
         direc = Direction.LEFT;
-        status = FindObjectOfType<PlayerManager>().Status;
+        pManager = FindObjectOfType<PlayerManager>();
         PotObject = GameObject.FindObjectOfType<PotController>().gameObject;
         rig = gameObject.transform.parent.GetComponent<Rigidbody2D>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
@@ -224,6 +224,7 @@ public class MoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("MoveController = " + pManager.Status.swordtype);
         //はしご処理してる時、ツボのtransformをプレイヤーと同じ位置にする
         if (_laddernow)
         {
@@ -239,7 +240,7 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void EventStateCheck()
     {
-        switch (status.event_state)
+        switch (pManager.Status.event_state)
         {
             case PlayerStatus.EventState.NORMAL:
                 BtnCheck();
@@ -342,7 +343,7 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
                 }
-                if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !leg_col.isLanding)
+                if (pManager.Status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !leg_col.isLanding)
                 {
                     return;
                 }
@@ -364,7 +365,7 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_WALK);
                 }
-                if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !leg_col.isLanding)
+                if (pManager.Status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !leg_col.isLanding)
                 {
                     return;
                 }
@@ -434,7 +435,7 @@ public class MoveController : MonoBehaviour
                 else
                 {
 
-                    if(status.swordtype == PlayerStatus.SWORDTYPE.KEY && keyDoorFlag) {
+                    if(pManager.Status.swordtype == PlayerStatus.SWORDTYPE.KEY && keyDoorFlag) {
                         Debug.Log("Call!!!!");
                         GameObject keySwitch = GameObject.FindGameObjectWithTag("KeyDoor");
                         keySwitch.GetComponent<GimmickController>().UnlockKeyDoor();
@@ -493,7 +494,7 @@ public class MoveController : MonoBehaviour
                 if (!player_ctr.GetAlchemyUIFlag)
                 {
                     player_ctr.SwordTypeChange(player_ctr.GetSwordList[1]);
-                    status.swordtype = player_ctr.GetSwordList[1];
+                    pManager.SetSwordType = player_ctr.GetSwordList[1];
                     return;
                 }
 
@@ -504,7 +505,7 @@ public class MoveController : MonoBehaviour
                 if (!player_ctr.GetAlchemyUIFlag)
                 {
                     player_ctr.SwordTypeChange(player_ctr.GetSwordList[3]);
-                    status.swordtype = player_ctr.GetSwordList[3];
+                    pManager.SetSwordType = player_ctr.GetSwordList[3];
                     return;
                 }
 
@@ -516,7 +517,7 @@ public class MoveController : MonoBehaviour
                 if (!player_ctr.GetAlchemyUIFlag)
                 {
                     player_ctr.SwordTypeChange(player_ctr.GetSwordList[0]);
-                    status.swordtype = player_ctr.GetSwordList[0];
+                    pManager.SetSwordType = player_ctr.GetSwordList[0];
                     return;
                 }
 
@@ -527,7 +528,7 @@ public class MoveController : MonoBehaviour
                 if (!player_ctr.GetAlchemyUIFlag)
                 {
                     player_ctr.SwordTypeChange(player_ctr.GetSwordList[2]);
-                    status.swordtype = player_ctr.GetSwordList[2];
+                    pManager.SetSwordType = player_ctr.GetSwordList[2];
                     return;
                 }
                 _onCrossDown = true;
@@ -579,7 +580,7 @@ public class MoveController : MonoBehaviour
             {
                 anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTIDLE);
             }
-            if(InLadderCount > 0 && status.gimmick_state == PlayerStatus.GimmickState.ONLADDER) {
+            if(InLadderCount > 0 && gameObject.layer == LayerMask.NameToLayer("LadderPlayer")) {
                 transform.parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 PotObject.transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 transform.parent.GetComponent<Rigidbody2D>().isKinematic = true;
@@ -700,6 +701,7 @@ public class MoveController : MonoBehaviour
     /// <param name="dir"></param>
     public void Ladder(float speed, float dir)
     {
+        PlayerStatus status = pManager.Status;
         status.gimmick_state = PlayerStatus.GimmickState.ONLADDER;
 
         transform.parent.GetComponent<Rigidbody2D>().isKinematic = false;
@@ -724,7 +726,8 @@ public class MoveController : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.tag == "Item")
+        PlayerStatus status = pManager.Status;
+        if (col.gameObject.tag == "Item")
         {
             target = col.gameObject;
         }
@@ -734,7 +737,7 @@ public class MoveController : MonoBehaviour
             switch (col.GetComponent<GimmickInfo>().type)
             {
                 case GimmickInfo.GimmickType.GROWTREE:
-                    status.gimmick_state = PlayerStatus.GimmickState.ONTREE;
+                   status.gimmick_state = PlayerStatus.GimmickState.ONTREE;
                     break;
                 default:
                     break;
