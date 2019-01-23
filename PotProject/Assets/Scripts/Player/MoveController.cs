@@ -757,7 +757,20 @@ public class MoveController : MonoBehaviour
             _hitmonster = true;
             Debug.Log(atk);
             player_ctr.HPDown(atk);
+            StartCoroutine(PlayerNockBackWaitTime());
         }
+    }
+
+    /// <summary>
+    /// モンスターに当たった時のプレイヤーのノックバック
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator PlayerNockBackWaitTime()
+    {
+        player_ctr.AllCommandActive = false;
+        rig.AddForce(new Vector2(rig.velocity.x * -2f, 1.5f), ForceMode2D.Impulse);
+        yield return new WaitForSeconds(0.4f);
+        player_ctr.AllCommandActive = true;
     }
 
     private void OnCollisionExit2D(Collision2D col)

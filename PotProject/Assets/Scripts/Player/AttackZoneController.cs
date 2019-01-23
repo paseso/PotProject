@@ -71,8 +71,6 @@ public class AttackZoneController : MonoBehaviour {
         MonsterController.Damage(status.PlayerAttack);
     }
 
-    
-
     /// <summary>
     /// オブジェクトが待つ処理
     /// </summary>

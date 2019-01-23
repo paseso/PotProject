@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour {
     private PlayerController player_ctr;
     private GameObject BrotherObj;
     private GameObject PotObject;
+    private AnimController anim_ctr;
+    private MoveController move_ctr;
+
     //錬金したアイテムのボックス　最大3つ
     private List<CreateItemStatus.Type> createItemBox;
 
@@ -75,42 +78,57 @@ public class PlayerController : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        status = FindObjectOfType<PlayerManager>().Status;
-        hearts = new GameObject[status.GetMaxHP];
-        lifePoint = GameObject.FindGameObjectWithTag("LifePoint");
-        for(int i = 0; i < status.GetMaxHP; i++)
+        try
         {
-            hearts[i] = lifePoint.transform.GetChild(i).gameObject;
+            status = FindObjectOfType<PlayerManager>().Status;
+            status.ItemList = new List<ItemStatus.Type>();
+            alchemy_ctr = FindObjectOfType<AlchemyController>();
+            alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
+            BrotherObj = FindObjectOfType<MoveController>().gameObject;
+            move_ctr = BrotherObj.GetComponent<MoveController>();
+            PotObject = FindObjectOfType<PotController>().gameObject;
+            HeartObject = GameObject.Find("Canvas/Heart");
+            player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
+            createItemBox = new List<CreateItemStatus.Type>();
+            anim_ctr = BrotherObj.transform.parent.GetComponent<AnimController>();
+            lifePoint = GameObject.FindGameObjectWithTag("LifePoint");
         }
-
-        if (status.PlayerHP == 0)
+        catch (UnityException e)
         {
-            status.PlayerHP = status.GetMaxHP;
+            Debug.Log(e + "がないんご");
         }
+        StartHeart();
         setSwordSpriteList();
-        status.ItemList = new List<ItemStatus.Type>();
-        alchemy_ctr = FindObjectOfType<AlchemyController>();
-        alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
-        BrotherObj = FindObjectOfType<MoveController>().gameObject;
-        PotObject = FindObjectOfType<PotController>().gameObject;
-        HeartObject = GameObject.Find("Canvas/Heart");
-        player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
-        createItemBox = new List<CreateItemStatus.Type>();
-        getHeartChildren();
         _itemMax = false;
         alchemyUIFlag = false;
-        for(int i = 0; i < status.PlayerHP; i++)
-        {
-            hearts[i].SetActive(true);
-        }
 	}
 
     private void Update()
     {
+        //デバッグ用　HP減らす処理
         if (Input.GetKeyDown(KeyCode.T))
         {
             HPDown(3);
         }
+    }
+
+    /// <summary>
+    /// ハートの初期化
+    /// </summary>
+    private void StartHeart()
+    {
+        status.PlayerHP = status.GetMaxHP;
+        hearts = new GameObject[status.GetMaxHP];
+        for (int i = 0; i < status.GetMaxHP; i++)
+        {
+            hearts[i] = lifePoint.transform.GetChild(i).gameObject;
+        }
+
+        for (int i = 0; i < status.PlayerHP; i++)
+        {
+            hearts[i].SetActive(true);
+        }
+        getHeartChildren();
     }
 
     /// <summary>
@@ -401,6 +419,16 @@ public class PlayerController : MonoBehaviour {
         status.PlayerHP -= point;
         // ダメージエフェクトの生成
         EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Damage, BrotherObj.transform.position, 5, BrotherObj, true);
+        //ダメージを受けるアニメーション
+        if (move_ctr.direc == MoveController.Direction.LEFT)
+        {
+            anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_SUFFERDAMAGE);
+        }
+        else
+        {
+            anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_SUFFERDAMAGE);
+        }
+
         for(int i = status.GetMaxHP - 1; i > status.PlayerHP - 1; i--)
         {
             hearts[i].SetActive(false);
