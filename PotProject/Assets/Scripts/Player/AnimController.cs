@@ -609,7 +609,7 @@ public class AnimController : MonoBehaviour {
     /// <param name="effect"></param>
     private void PotOnMoveAnim(GameObject effect)
     {
-        Itemtarget.transform.position = new Vector3(pot_anim.transform.position.x, pot_anim.transform.position.y - 10, Itemtarget.transform.position.z);
+        Itemtarget.transform.position = new Vector3(pot_anim.transform.position.x, pot_anim.transform.position.y + 2.5f, Itemtarget.transform.position.z);
         effect.transform.position = Itemtarget.transform.position;
         effect.SetActive(true);
         Itemtarget.SetActive(true);

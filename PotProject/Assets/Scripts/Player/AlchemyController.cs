@@ -18,7 +18,6 @@ public struct CreateItemStatus
         Lasso,
         SmokeScreen,
         SmokeBall,
-        Explosive,
         RainCloud,
         Vajura,
         Lamp,
@@ -69,7 +68,7 @@ public class AlchemyController : MonoBehaviour {
      * 8.投げ縄
      * 9.煙幕
      * 10.煙玉
-     * 11.火薬
+     * 11.爆薬
      * 12.雨雲
      * 13.ヴァジュラ
      * 14.ランプ
@@ -178,7 +177,7 @@ public class AlchemyController : MonoBehaviour {
                 break;
             case ItemStatus.Type.SMOKE:
                 //爆薬
-                player_ctr.setCreateItemList(CreateItemStatus.Type.Explosive);
+                player_ctr.setItemList(ItemStatus.Type.EXPLOSIVE);
                 break;
             case ItemStatus.Type.CRYSTAL:
                 //水
@@ -415,6 +414,10 @@ public class AlchemyController : MonoBehaviour {
                         //闇の剣
                         player_ctr.setSwordList(PlayerStatus.SWORDTYPE.DARK);
                         break;
+                    case ItemStatus.Type.LAMP:
+                        //爆薬
+                        player_ctr.setItemList(ItemStatus.Type.EXPLOSIVE);
+                        break;
                     default:
                         //ゴミ
                         player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
@@ -448,6 +451,20 @@ public class AlchemyController : MonoBehaviour {
                     case ItemStatus.Type.CRYSTAL:
                         //毒液
                         player_ctr.setCreateItemList(CreateItemStatus.Type.Venom);
+                        break;
+                    default:
+                        //ゴミ
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
+                        break;
+                }
+                break;
+
+            case ItemStatus.Type.LAMP:
+                switch (item_1)
+                {
+                    case ItemStatus.Type.SMOKE:
+                        //爆薬
+                        player_ctr.setItemList(ItemStatus.Type.EXPLOSIVE);
                         break;
                     default:
                         //ゴミ
@@ -491,49 +508,18 @@ public class AlchemyController : MonoBehaviour {
                         //闇の剣
                         player_ctr.setSwordList(PlayerStatus.SWORDTYPE.DARK);
                         break;
+                    case ItemStatus.Type.EXPLOSIVE:
+                        //火の剣
+                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.FIRE);
+                        break;
                     default:
                         //ゴミ
                         player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
                         break;
                 }
                 break;
-        }
-    }
 
-    /// <summary>
-    /// アイテム錬金
-    /// </summary>
-    /// <param name="item_0">ItemStatus.Type型のアイテム</param>
-    /// <param name="item_1">CreateItem型のアイテム</param>
-    public void MadeItem(ItemStatus.Type item_0, CreateItemStatus.Type item_1)
-    {
-        switch (item_0)
-        {
-            case ItemStatus.Type.CLAY_N:
-                switch (item_1)
-                {
-                    case CreateItemStatus.Type.Explosive:
-                        //火の剣
-                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.FIRE);
-                        break;
-                    default:
-                        player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
-                        break;
-                }
-            break;
-        }
-    }
-
-    /// <summary>
-    /// アイテム錬金
-    /// </summary>
-    /// <param name="item_0"></param>
-    /// <param name="item_1"></param>
-    public void MadeItem(CreateItemStatus.Type item_0, ItemStatus.Type item_1)
-    {
-        switch (item_0)
-        {
-            case CreateItemStatus.Type.Explosive:
+            case ItemStatus.Type.EXPLOSIVE:
                 switch (item_1)
                 {
                     case ItemStatus.Type.CLAY_N:
@@ -541,8 +527,8 @@ public class AlchemyController : MonoBehaviour {
                         player_ctr.setSwordList(PlayerStatus.SWORDTYPE.FIRE);
                         break;
                     default:
+                        //ゴミ
                         player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
-                        Debug.Log("ゴミ");
                         break;
                 }
                 break;
@@ -566,9 +552,6 @@ public class AlchemyController : MonoBehaviour {
 
                 break;
             case CreateItemStatus.Type.Drill:
-
-                break;
-            case CreateItemStatus.Type.Explosive:
 
                 break;
             case CreateItemStatus.Type.FlyCloud:

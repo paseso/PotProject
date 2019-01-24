@@ -276,6 +276,7 @@ public class PlayerController : MonoBehaviour {
     {
         alchemy_ctr.AlchemyItem(getCreateItemList()[alchemyUI_ctr.getNowAlchemyItem]);
         deleteCreateItemList(num);
+        alchemyUI_ctr.setNowAlchemyItem();
     }
 
     /// <summary>

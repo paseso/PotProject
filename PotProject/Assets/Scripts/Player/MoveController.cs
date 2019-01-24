@@ -459,7 +459,6 @@ public class MoveController : MonoBehaviour
                 //錬金したアイテム使用
                 if (player_ctr.getCreateItemList().Count <= 0)
                     return;
-                Debug.Log("アイテム使用");
                 player_ctr.UseAlchemyItem(alchemyUI_ctr.getNowAlchemyItem);
                 break;
 
