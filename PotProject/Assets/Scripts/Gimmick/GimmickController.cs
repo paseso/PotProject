@@ -15,6 +15,7 @@ public class GimmickController :MonoBehaviour {
     private MiniMapController mMapController;
     private BossController bossCon;
     private PlayerController pController;
+    private PlayerManager pManager;
     private int inFireZone = 0;
 
     public bool switchFlag() {
@@ -30,7 +31,9 @@ public class GimmickController :MonoBehaviour {
             sController = GameObject.Find("Controller").GetComponent<StageController>();
         }
 
-        
+        if (FindObjectOfType<PlayerManager>()) {
+            pManager = FindObjectOfType<PlayerManager>();
+        }       
     }
 
     void Start() {
@@ -185,6 +188,7 @@ public class GimmickController :MonoBehaviour {
     /// <param name="obj"></param>
     public void BakeTree(GameObject obj)
     {
+        if(pManager.GetSwordType != PlayerStatus.SWORDTYPE.FIRE) { return; }
         StartCoroutine(Bake(obj));
     }
 
@@ -197,18 +201,17 @@ public class GimmickController :MonoBehaviour {
     {
         for (int i = 2; i >= 0; i--)
         {
-            Debug.Log("bake" + i);
             Sprite sp_tree = Resources.Load<Sprite>("Textures/Gimmicks/fire" + i);
             gameObject.GetComponent<SpriteRenderer>().sprite = sp_tree;
+            Debug.Log("sp_tree=" + "Textures/Gimmicks/fire" + i);
             yield return new WaitForSeconds(1f);
             if (i == 2)
             {
                 // 燃えるエフェクト
+                //EffectManager.Instance.PlayEffect(EffectManager.EffectName.);
             }
         }
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
-        yield return new WaitForSeconds(1f);
-        // Destroy
     }
 
     /// <summary>

@@ -8,7 +8,6 @@ using UnityEngine;
 public class ItemController : MonoBehaviour {
 
     private PlayerController playerController;
-    private GimmickController gimmick_ctr;
 
     private GameObject BrotherObj;
 
@@ -37,8 +36,7 @@ public class ItemController : MonoBehaviour {
     /// </summary>
     public void TreePortion()
     {
-        gimmick_ctr = FindObjectOfType<GimmickController>();
-        gimmick_ctr.Grow();
+        FindObjectOfType<TreeGrow>().Grow();
     }
 
     /// <summary>
