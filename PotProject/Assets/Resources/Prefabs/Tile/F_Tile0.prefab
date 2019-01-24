@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4825361708908034}
   - component: {fileID: 212152930234346622}
   - component: {fileID: 61959284366421828}
+  - component: {fileID: 114847969866533134}
   m_Layer: 15
   m_Name: F_Tile0
   m_TagString: Untagged
@@ -66,6 +67,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &114847969866533134
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1511314359711684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 340f4c903b890784aabbb17183464d9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212152930234346622
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -97,7 +109,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: ece12e6da2765ed4d9f5a00548b5cb0a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

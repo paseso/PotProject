@@ -39,7 +39,6 @@ public class AttackZoneController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         DirecControl();
-        Debug.Log("AttackZoneStatus = " + pManager.GetSwordType);
     }
 
     /// <summary>
@@ -66,7 +65,6 @@ public class AttackZoneController : MonoBehaviour {
     /// </summary>
     public void Attack()
     {
-        Debug.Log(pManager.GetSwordType);
         if (Attack_Target == null) { return; }
         MonsterController MonsterController = Attack_Target.GetComponent<MonsterController>();
         MonsterController.Damage(pManager.Status.PlayerAttack);
@@ -91,6 +89,10 @@ public class AttackZoneController : MonoBehaviour {
             Debug.Log("はいったよ");
             return;
         }
+
+        if(col.GetComponent<GimmickInfo>() && col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.BAKETREE) {
+            Attack_Target = col.gameObject;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D col)
@@ -100,6 +102,10 @@ public class AttackZoneController : MonoBehaviour {
         {
             Attack_Target = null;
             return;
+        }
+
+        if (col.GetComponent<GimmickInfo>() && col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.BAKETREE) {
+            Attack_Target = null;
         }
     }
 }

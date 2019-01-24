@@ -4,19 +4,13 @@ using UnityEngine;
 
 public class DrillController : MonoBehaviour {
     MoveController mController;
+
     void Start()
     {
         mController = FindObjectOfType<MoveController>();
-        StartCoroutine(Drill(gameObject));
-    }
-
-    bool BlockCheck(GameObject obj)
-    {
-        if (obj.GetComponent<GimmickInfo>()) { return true; }
         
-            return false;
     }
-
+ 
     /// <summary>
     /// ドリルコルーチン
     /// </summary>

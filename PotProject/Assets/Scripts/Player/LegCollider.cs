@@ -52,6 +52,7 @@ public class LegCollider : MonoBehaviour {
     public bool JumpCheck(GameObject col)
     {
         if (col.gameObject.layer == 2) { return false; }
+        if (col.GetComponent<KeyBlockCol>()) { return false; }
         if (!col.GetComponent<GimmickInfo>()) { return true; }
         GimmickInfo info = col.GetComponent<GimmickInfo>();
         if (info.type == GimmickInfo.GimmickType.LADDER) { return false; }
