@@ -122,15 +122,13 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>{
         set
         {
             status.swordtype = value;
-            player_ctr.setSwordList(GetSwordType);
+            player_ctr.SwordTypeChange(value);
+            Debug.Log("Sword type = " + value);
         }
     }
 
     void Awake()
     {
-        player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
-        player_ctr.setStartSwordList();
-        InitStatus();
         if (this != Instance)
         {
             Destroy(this.gameObject);
@@ -141,6 +139,8 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>{
 
     public void InitStatus()
     {
+        player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
+        player_ctr.setStartSwordList();
         status.PlayerHP = status.GetMaxHP;
         status.PlayerAttack = 1;
         SetSwordType = PlayerStatus.SWORDTYPE.NORMAL;
@@ -151,7 +151,7 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>{
 
     private void Start()
     {
-        player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
+        InitStatus();
     }
 }
 

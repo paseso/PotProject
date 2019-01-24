@@ -9,7 +9,6 @@ public struct CreateItemStatus
     {
         Ladder = 0,
         Barrier,
-        Key,
         HPPotion,
         FlyCloud,
         Tornado,
@@ -18,6 +17,7 @@ public struct CreateItemStatus
         Lasso,
         SmokeScreen,
         SmokeBall,
+        Explosive,
         RainCloud,
         Vajura,
         Lamp,
@@ -28,7 +28,6 @@ public struct CreateItemStatus
         Inclubator,
         Speaker,
         Venom,
-        TreePotion,
         Dast,
     };
     public CreateItemStatus.Type createItem;
@@ -59,28 +58,26 @@ public class AlchemyController : MonoBehaviour {
     /*  
      * 0.はしご
      * 1.バリア
-     * 2.鍵
-     * 3.HPポーション
-     * 4.飛べる雲
-     * 5.竜巻
-     * 6.たいまつ
-     * 7.攻撃ポーション
-     * 8.投げ縄
-     * 9.煙幕
-     * 10.煙玉
-     * 11.爆薬
-     * 12.雨雲
-     * 13.ヴァジュラ
-     * 14.ランプ
-     * 15.水
-     * 16.磁石
-     * 18.ブーメラン
-     * 19.ドリル
-     * 20.培養器
-     * 21.拡声器
-     * 22.毒液
-     * 23.木を成長させるポーション
-     * 24.ゴミ
+     * 2.HPポーション
+     * 3.飛べる雲
+     * 4.竜巻
+     * 5.たいまつ
+     * 6.攻撃ポーション
+     * 7.投げ縄
+     * 8.煙幕
+     * 9.煙玉
+     * 10.爆薬
+     * 11.雨雲
+     * 12.ヴァジュラ
+     * 13.ランプ
+     * 14.水
+     * 15.磁石
+     * 16.ブーメラン
+     * 17.ドリル
+     * 18.培養器
+     * 19.拡声器
+     * 20.毒液
+     * 21.ゴミ
      */
 
 
@@ -123,7 +120,7 @@ public class AlchemyController : MonoBehaviour {
     /// </summary>
     private void setCreateItem()
     {
-        CreateItem = new Sprite[25];
+        CreateItem = new Sprite[22];
         for(int i = 0; i < CreateItem.Length; i++)
         {
             CreateItem[i] = Resources.Load<Sprite>("Textures/CreateItems/CreateItem_" + i);
@@ -168,8 +165,7 @@ public class AlchemyController : MonoBehaviour {
         switch (item)
         {
             case ItemStatus.Type.WOOD:
-                //木が成長
-                player_ctr.setCreateItemList(CreateItemStatus.Type.TreePotion);
+                
                 break;
             case ItemStatus.Type.LAMP:
                 //ランプ
@@ -222,7 +218,7 @@ public class AlchemyController : MonoBehaviour {
                 {
                     case ItemStatus.Type.KEYROD:
                         //鍵
-                        player_ctr.setCreateItemList(CreateItemStatus.Type.Key);
+                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.KEY);
                         break;
                     case ItemStatus.Type.CLAY_N:
                         //磁石
@@ -305,7 +301,7 @@ public class AlchemyController : MonoBehaviour {
                 switch (item_1)
                 {
                     case ItemStatus.Type.CRYSTAL:
-                        //培養液
+                        //培養液//木が成長
                         player_ctr.setCreateItemList(CreateItemStatus.Type.Inclubator);
                         break;
                     default:
@@ -381,7 +377,7 @@ public class AlchemyController : MonoBehaviour {
                         player_ctr.setCreateItemList(CreateItemStatus.Type.RainCloud);
                         break;
                     case ItemStatus.Type.WOOD:
-                        //培養液
+                        //培養液//木が成長
                         player_ctr.setCreateItemList(CreateItemStatus.Type.Inclubator);
                         break;
                     case ItemStatus.Type.POWDER:
@@ -561,7 +557,7 @@ public class AlchemyController : MonoBehaviour {
                 item_ctr.HPPortion();
                 break;
             case CreateItemStatus.Type.Inclubator:
-
+                item_ctr.TreePortion();
                 break;
             case CreateItemStatus.Type.Ladder:
                 item_ctr.LadderCreate();
@@ -598,9 +594,6 @@ public class AlchemyController : MonoBehaviour {
                 break;
             case CreateItemStatus.Type.Watter:
 
-                break;
-            case CreateItemStatus.Type.TreePotion:
-                item_ctr.TreePortion();
                 break;
         }
     }

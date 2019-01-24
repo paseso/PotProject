@@ -136,7 +136,8 @@ public class PlayerController : MonoBehaviour {
     {
         //剣は最大４つまで持てる
         swordList = new PlayerStatus.SWORDTYPE[4];
-        swordList[1] = PlayerStatus.SWORDTYPE.KEY;
+        swordList[0] = PlayerStatus.SWORDTYPE.NORMAL;
+        sword = FindObjectOfType<AnimController>().transform.Find("Sword").GetComponent<SpriteRenderer>();
     }
 
     /// <summary>
@@ -280,7 +281,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     /// <summary>
-    /// sowrdSpriteListに画像をセットする処理
+    /// swordSpriteListに画像をセットする処理
     /// </summary>
     private void setSwordSpriteList()
     {
@@ -290,7 +291,6 @@ public class PlayerController : MonoBehaviour {
             Sprite img = Resources.Load<Sprite>("Textures/SwordImage_" + i);
             swordSpriteList.Add(img);
         }
-        sword = GameObject.FindObjectOfType<AnimController>().transform.GetChild(4).GetComponent<SpriteRenderer>();
     }
 
     int count = 0;
