@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour {
     {
         //剣は最大４つまで持てる
         swordList = new PlayerStatus.SWORDTYPE[4];
-        swordList[1] = PlayerStatus.SWORDTYPE.KEY;
+        //swordList[1] = PlayerStatus.SWORDTYPE.KEY;
     }
 
     /// <summary>
