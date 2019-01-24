@@ -415,7 +415,7 @@ public class AlchemyUIController : MonoBehaviour {
         {
             if (!NullCheckImage(i))
             {
-                img = Resources.Load<Sprite>("Textures/AlchemyUI_item/AlchemyUI_item" + i);
+                img = Resources.Load<Sprite>("Textures/AlchemyUI_items/AlchemyUI_item" + i);
                 ItemImage[i] = img;
             }
             else
