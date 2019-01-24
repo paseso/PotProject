@@ -322,8 +322,20 @@ public class AlchemyUIController : MonoBehaviour {
         if (move_ctr.OnRJoystickDown)
             _three = true;
 
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
+        float h, v;
+
+        var controllerNames = Input.GetJoystickNames();
+        if (controllerNames[0] == "")
+        {
+            h = Input.GetAxis("Horizontal");
+            v = Input.GetAxis("Vertical");
+        }
+        else
+        {
+            h = Input.GetAxis("RightHorizontal_ps4");
+            v = Input.GetAxis("RightVertical_ps4");
+        }
+
         float total = Mathf.Atan2(v, h);
         total *= Mathf.Rad2Deg;
         
