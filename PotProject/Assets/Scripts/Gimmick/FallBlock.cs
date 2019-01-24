@@ -20,18 +20,8 @@ public class FallBlock : MonoBehaviour {
     private float timer;
     private bool fallFlag = false;
 
-    public float SetTime {
-        set { timer = value; }
-    }
-
     public bool SetFallFlag {
         set { fallFlag = value; }
-    }
-
-    private bool shakeFlag = false;
-
-    public bool SetShakeFlag {
-        set { shakeFlag = value; }
     }
     
     private Vector2 defaultPos;
@@ -54,18 +44,12 @@ public class FallBlock : MonoBehaviour {
             if (timer > fallTime / 2 && state == fallState.normal)
             {
                 state = fallState.reach;
-                if (!shakeFlag) {
-                    StartCoroutine(Shake());
-                    shakeFlag = true;
-                }
             }
             else if (timer > fallTime && state == fallState.reach)
             {
                 timer = 0;
                 state = fallState.fall;
-                fallFlag = true;
                 transform.GetComponent<Rigidbody2D>().isKinematic = false;
-                
                 gameObject.layer = LayerMask.NameToLayer("FallBlock");
             }
         }
@@ -78,14 +62,6 @@ public class FallBlock : MonoBehaviour {
             //fallBlock.transform.localPosition = defaultPos;
             Destroy(gameObject);
         }
-    }
 
-    IEnumerator Shake() {
-        while (fallFlag) {
-            transform.localPosition = new Vector2(transform.localPosition.x + 0.05f, transform.localPosition.y);
-            yield return new WaitForSeconds(0.05f);
-            transform.localPosition = new Vector2(transform.localPosition.x - 0.05f, transform.localPosition.y);
-            yield return new WaitForSeconds(0.05f);
-        }
     }
 }
