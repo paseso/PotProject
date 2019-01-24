@@ -8,6 +8,11 @@ using UnityEngine;
 public class CreateLadder : MonoBehaviour {
     private string ladderPrefab = "Prefabs/GimmickTiles/Ladder";
 
+    void Start()
+    {
+        PutOnLadder(gameObject);
+    }
+
     /// <summary>
     /// はしご生成
     /// </summary>
@@ -42,7 +47,7 @@ public class CreateLadder : MonoBehaviour {
         obj.gameObject.layer = LayerMask.NameToLayer("LadderBlock");
 
         // 生成するはしごの数を指定
-        var ladderCount = (hit.distance + 0.1f) / height + 1;
+        var ladderCount = (hit.distance + 0.1f) / height;
 
         // 生成
         for (int i = 0; i < ladderCount; i++) {

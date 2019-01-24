@@ -9,7 +9,11 @@ public struct ItemStatus {
         MIC,
         LAMP,
         KEYROD,
-        CLAY,
+        CLAY_N,
+        CLAY_D,
+        CLAY_F,
+        CLAY_T,
+        CLAY_W,
         SNAKE,
         LIZARD,
         WOOD,
@@ -28,7 +32,7 @@ public struct ItemStatus {
 public class ItemManager : MonoBehaviour {
 
     [SerializeField]
-    private ItemStatus.Type item_status = ItemStatus.Type.CLAY;
+    private ItemStatus.Type item_status = ItemStatus.Type.CLAY_N;
     
     /// <summary>
     /// Item Status取得

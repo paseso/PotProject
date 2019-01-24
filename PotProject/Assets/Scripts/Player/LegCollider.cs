@@ -17,7 +17,6 @@ public class LegCollider : MonoBehaviour {
         get { return landingFlag; }
         set
         {
-            //Debug.Log("Call " + value);
             if (value)
             {
                 if (jumpPos - transform.position.y >= 2.5f)
@@ -41,39 +40,14 @@ public class LegCollider : MonoBehaviour {
     private float now = 0f;
     private float falldistance = 0f;
 
-    
-
 	// Use this for initialization
 	void Start () {
+        status = FindObjectOfType<PlayerManager>().Status;
         falldistance = gameObject.transform.position.y;
         move_ctr = transform.parent.GetComponentInChildren<MoveController>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         _legFloor = false;
 	}
-    
-    
-    /// <summary>
-    /// ジャンプ中の左右移動制限
-    /// </summary>
-    public void JumpingMove(MoveController.Direction dir)
-    {
-        if (!move_ctr.Jumping)
-        {
-            move_ctr._notLeft = false;
-            move_ctr._notRight = false;
-            return;
-        }
-        if (dir == MoveController.Direction.LEFT)
-        {
-            move_ctr._notLeft = true;
-            move_ctr._notRight = false;
-        }
-        else
-        {
-            move_ctr._notLeft = false;
-            move_ctr._notRight = true;
-        }
-    }
 
     public bool JumpCheck(GameObject col)
     {
@@ -148,7 +122,6 @@ public class LegCollider : MonoBehaviour {
                 return;
             }
 
-            Debug.Log("GroundCountOut = " + onGroundCount);
         if (onGroundCount <= 0)
         {
             onGroundCount = 0;
@@ -163,10 +136,9 @@ public class LegCollider : MonoBehaviour {
             move_ctr.InLadderCount--;
             if (move_ctr.InLadderCount <= 0) {
                 move_ctr.InLadderCount = 0;
-                player_ctr.ChangeLayer();
+                if(gameObject.layer == LayerMask.NameToLayer("LadderPlayer"))
+                    player_ctr.ChangeLayer();
             }
         }
     }
-
-   
 }

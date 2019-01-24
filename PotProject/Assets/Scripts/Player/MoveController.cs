@@ -7,15 +7,14 @@ using DG.Tweening;
 [DefaultExecutionOrder(-1)]
 public class MoveController : MonoBehaviour
 {
-    [HideInInspector]
+    //[HideInInspector]
     public float speed = 0f;
 
     private bool _jumping = false;
 
-    public bool IsLadder
-    {
-        get; set;
-    }
+    public bool IsLadder{ get; set; }
+
+    public bool keyDoorFlag { get; set; }
 
     [SerializeField]
     private float ladderSpeed;
@@ -53,9 +52,6 @@ public class MoveController : MonoBehaviour
     private bool _onCrossLeft = false;
     private bool _onR2 = false;
     //---------------------------------------------
-    //左右押しても反応しなくなるフラグ
-    public bool _notLeft = false;
-    public bool _notRight = false;
 
     [HideInInspector]
     public GameObject target;
@@ -69,10 +65,9 @@ public class MoveController : MonoBehaviour
     private AttackZoneController atc_ctr;
     private AlchemyUIController alchemyUI_ctr;
     private AnimController anim_ctr;
-    private PlayerStatus status;
+    private PlayerManager pManager;
     private MiniMapController miniMap_ctr;
     private LegCollider leg_col;
-    
 
     #region ボタンFlagのget
 
@@ -207,8 +202,6 @@ public class MoveController : MonoBehaviour
         _jumping = false;
         _hitmonster = false;
         _laddernow = false;
-        _notLeft = false;
-        _notRight = false;
         ClearBtnFlg();
     }
 
@@ -216,6 +209,7 @@ public class MoveController : MonoBehaviour
     void Start()
     {
         direc = Direction.LEFT;
+        pManager = FindObjectOfType<PlayerManager>();
         PotObject = GameObject.FindObjectOfType<PotController>().gameObject;
         rig = gameObject.transform.parent.GetComponent<Rigidbody2D>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
@@ -230,6 +224,7 @@ public class MoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("MoveController = " + pManager.Status.swordtype);
         //はしご処理してる時、ツボのtransformをプレイヤーと同じ位置にする
         if (_laddernow)
         {
@@ -245,7 +240,7 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void EventStateCheck()
     {
-        switch (player_ctr.status.event_state)
+        switch (pManager.Status.event_state)
         {
             case PlayerStatus.EventState.NORMAL:
                 BtnCheck();
@@ -309,14 +304,18 @@ public class MoveController : MonoBehaviour
         switch (btn)
         {
             case ButtonType.JUMP:
-                if (player_ctr.AlchemyWindow)
+
+                if (player_ctr.GetAlchemyUIFlag)
                 {
                     Debug.Log("捨てます");
-                    
+                    alchemyUI_ctr.deleteItemBox(alchemyUI_ctr.getNowBox);
                     return;
                 }
                 if (!leg_col.isLanding)
                     return;
+
+                if (player_ctr.GetAlchemyUIFlag) { return; }
+
                 if (direc == Direction.RIGHT)
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTJUMP);
@@ -325,24 +324,26 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTJUMP);
                 }
-                //rig.velocity = new Vector2(transform.position.x + 1f * Time.deltaTime, transform.position.y + 1f * Time.deltaTime + speed);
+
                 rig.velocity = new Vector2(sidemove, 1f * speed);  //rig.velocity.x
-                //rig.AddForce(new Vector2(rig.velocity.x, 50f * speed), ForceMode2D.Force);
+
                 _jumping = true;
                 break;
 
             case ButtonType.LEFTJOYSTICK_LEFT:
-                direc = Direction.LEFT;
-                leg_col.JumpingMove(direc);
-
-                if (_notLeft || !_ActiveRightLeft)
+                if (direc != Direction.LEFT && Jumping)
                     return;
+                direc = Direction.LEFT;
+                if (!_ActiveRightLeft)
+                    return;
+
+                if (player_ctr.GetAlchemyUIFlag) { return; }
 
                 if (leg_col.isLanding && !Jumping)
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
                 }
-                if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !leg_col.isLanding)
+                if (pManager.Status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !leg_col.isLanding)
                 {
                     return;
                 }
@@ -351,17 +352,20 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.LEFTJOYSTICK_RIGHT:
-                direc = Direction.RIGHT;
-                leg_col.JumpingMove(direc);
-
-                if (_notRight || !_ActiveRightLeft)
+                if (direc != Direction.RIGHT && Jumping)
                     return;
+                direc = Direction.RIGHT;
+
+                if (!_ActiveRightLeft)
+                    return;
+
+                if (player_ctr.GetAlchemyUIFlag) { return; }
 
                 if (leg_col.isLanding && !Jumping)
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_WALK);
                 }
-                if (status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !leg_col.isLanding)
+                if (pManager.Status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !leg_col.isLanding)
                 {
                     return;
                 }
@@ -371,8 +375,10 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.LEFTJOYSTICK_UP:
                 _onUp = true;
-                
-                if(InLadderCount > 0) {
+
+                if (player_ctr.GetAlchemyUIFlag) { return; }
+
+                if (InLadderCount > 0) {
                     Ladder(ladderSpeed, 1);
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LADDER_UP);
                 }
@@ -382,7 +388,9 @@ public class MoveController : MonoBehaviour
             case ButtonType.LEFTJOYSTICK_DOWN:
                 _onDown = true;
 
-                if(InLadderCount > 0) {
+                if (player_ctr.GetAlchemyUIFlag) { return; }
+
+                if (InLadderCount > 0) {
                     Ladder(ladderSpeed, -1);
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LADDER_UP);
                 }
@@ -390,28 +398,28 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.RIGHTJOYSTICK_LEFT:
-                if (!player_ctr.AlchemyWindow)
+                if (!player_ctr.GetAlchemyUIFlag)
                     return;
 
                 _onRJoystickLeft = true;
                 break;
 
             case ButtonType.RIGHTJOYSTICK_RIGHT:
-                if (!player_ctr.AlchemyWindow)
+                if (!player_ctr.GetAlchemyUIFlag)
                     return;
 
                 _onRJoystickRight = true;
                 break;
 
             case ButtonType.RIGHTJOYSTICK_UP:
-                if (!player_ctr.AlchemyWindow)
+                if (!player_ctr.GetAlchemyUIFlag)
                     return;
 
                 _onRJoystickUp = true;
                 break;
 
             case ButtonType.RIGHTJOYSTICK_DOWN:
-                if (!player_ctr.AlchemyWindow)
+                if (!player_ctr.GetAlchemyUIFlag)
                     return;
 
                 _onRJoystickDown = true;
@@ -420,12 +428,20 @@ public class MoveController : MonoBehaviour
             case ButtonType.CIRCLE:
                 _onCircle = true;
                 
-                if (player_ctr.AlchemyWindow)
+                if (player_ctr.GetAlchemyUIFlag)
                 {
                     alchemyUI_ctr.PickItem();
                 }
                 else
                 {
+
+                    if(pManager.Status.swordtype == PlayerStatus.SWORDTYPE.KEY && keyDoorFlag) {
+                        Debug.Log("Call!!!!");
+                        GameObject keySwitch = GameObject.FindGameObjectWithTag("KeyDoor");
+                        keySwitch.GetComponent<GimmickController>().UnlockKeyDoor();
+                        return;
+                    }
+
                     if(direc == Direction.LEFT)
                         anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.SORDATTACK_LEFT);
                     else
@@ -475,9 +491,10 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.CROSSX_RIGTH:
-                if (!player_ctr.AlchemyWindow)
+                if (!player_ctr.GetAlchemyUIFlag)
                 {
                     player_ctr.SwordTypeChange(player_ctr.GetSwordList[1]);
+                    pManager.SetSwordType = player_ctr.GetSwordList[1];
                     return;
                 }
 
@@ -485,9 +502,10 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.CROSSX_LEFT:
-                if (!player_ctr.AlchemyWindow)
+                if (!player_ctr.GetAlchemyUIFlag)
                 {
                     player_ctr.SwordTypeChange(player_ctr.GetSwordList[3]);
+                    pManager.SetSwordType = player_ctr.GetSwordList[3];
                     return;
                 }
 
@@ -496,9 +514,10 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.CROSSY_UP:
-                if (!player_ctr.AlchemyWindow)
+                if (!player_ctr.GetAlchemyUIFlag)
                 {
                     player_ctr.SwordTypeChange(player_ctr.GetSwordList[0]);
+                    pManager.SetSwordType = player_ctr.GetSwordList[0];
                     return;
                 }
 
@@ -506,9 +525,10 @@ public class MoveController : MonoBehaviour
                 break;
 
             case ButtonType.CROSSY_DOWN:
-                if (!player_ctr.AlchemyWindow)
+                if (!player_ctr.GetAlchemyUIFlag)
                 {
                     player_ctr.SwordTypeChange(player_ctr.GetSwordList[2]);
+                    pManager.SetSwordType = player_ctr.GetSwordList[2];
                     return;
                 }
                 _onCrossDown = true;
@@ -524,6 +544,8 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void BtnCheck()
     {
+        if (!player_ctr.AllCommandActive) { return; }
+
         if (Input.GetButtonDown("L2") || Input.GetKeyDown(KeyCode.P)) {// L2ボタン or キーボードの「P」
             Move(ButtonType.L2);
         }
@@ -558,7 +580,7 @@ public class MoveController : MonoBehaviour
             {
                 anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTIDLE);
             }
-            if(InLadderCount > 0 && status.gimmick_state == PlayerStatus.GimmickState.ONLADDER) {
+            if(InLadderCount > 0 && gameObject.layer == LayerMask.NameToLayer("LadderPlayer")) {
                 transform.parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 PotObject.transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 transform.parent.GetComponent<Rigidbody2D>().isKinematic = true;
@@ -679,6 +701,7 @@ public class MoveController : MonoBehaviour
     /// <param name="dir"></param>
     public void Ladder(float speed, float dir)
     {
+        PlayerStatus status = pManager.Status;
         status.gimmick_state = PlayerStatus.GimmickState.ONLADDER;
 
         transform.parent.GetComponent<Rigidbody2D>().isKinematic = false;
@@ -703,7 +726,8 @@ public class MoveController : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.tag == "Item")
+        PlayerStatus status = pManager.Status;
+        if (col.gameObject.tag == "Item")
         {
             target = col.gameObject;
         }
@@ -713,7 +737,7 @@ public class MoveController : MonoBehaviour
             switch (col.GetComponent<GimmickInfo>().type)
             {
                 case GimmickInfo.GimmickType.GROWTREE:
-                    status.gimmick_state = PlayerStatus.GimmickState.ONTREE;
+                   status.gimmick_state = PlayerStatus.GimmickState.ONTREE;
                     break;
                 default:
                     break;
@@ -736,7 +760,20 @@ public class MoveController : MonoBehaviour
             _hitmonster = true;
             Debug.Log(atk);
             player_ctr.HPDown(atk);
+            StartCoroutine(PlayerNockBackWaitTime());
         }
+    }
+
+    /// <summary>
+    /// モンスターに当たった時のプレイヤーのノックバック
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator PlayerNockBackWaitTime()
+    {
+        player_ctr.AllCommandActive = false;
+        rig.AddForce(new Vector2(rig.velocity.x * -2f, 1.5f), ForceMode2D.Impulse);
+        yield return new WaitForSeconds(0.4f);
+        player_ctr.AllCommandActive = true;
     }
 
     private void OnCollisionExit2D(Collision2D col)

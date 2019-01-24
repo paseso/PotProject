@@ -46,12 +46,14 @@ public class BossController : MonoBehaviour {
     float moveTime = 4f;
     private CameraController cController;
 
+    void Awake() {
+        clearPanel = FindObjectOfType<GameClear>().gameObject;
+    }
+
     void Start()
     {
         cController = FindObjectOfType<CameraController>();
         size = GetComponent<SpriteRenderer>().bounds.size;
-        clearPanel = FindObjectOfType<GameClear>().gameObject;
-        clearPanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -63,7 +65,7 @@ public class BossController : MonoBehaviour {
             if(mTime > status.magicTime)
             {
                 // 魔法飛ばす処理
-                playerPos = GameObject.FindGameObjectWithTag("Player").transform.localPosition;
+                playerPos = FindObjectOfType<MoveController>().gameObject.transform.position;
                 Debug.Log("PlayerPos=" + playerPos);
                 GetComponentInChildren<MagicShoot>().Shoot(playerPos);
                 mTime = 0;

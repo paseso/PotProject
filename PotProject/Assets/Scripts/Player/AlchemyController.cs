@@ -29,6 +29,7 @@ public struct CreateItemStatus
         Inclubator,
         Speaker,
         Venom,
+        TreePotion,
         Dast,
     };
     public CreateItemStatus.Type createItem;
@@ -79,14 +80,14 @@ public class AlchemyController : MonoBehaviour {
      * 20.培養器
      * 21.拡声器
      * 22.毒液
-     * 23.ゴミ
+     * 23.木を成長させるポーション
+     * 24.ゴミ
      */
 
 
     //生成アイテム
     private Sprite[] CreateItem;
     private TextAsset csvFile;
-    private GimmickController gimmick_ctr;
     private MapInfo mInfo;
     //フレームの右下のImage
     private Image GeneratedImg;
@@ -152,6 +153,14 @@ public class AlchemyController : MonoBehaviour {
     }
 
     /// <summary>
+    /// 右下のフレームにある生成したアイテム画像を削除する処理
+    /// </summary>
+    public void deleteGeneratedImg()
+    {
+        GeneratedImg.sprite = null;
+    }
+
+    /// <summary>
     /// アイテム錬金
     /// </summary>
     /// <param name="item">錬金したいアイテム</param>
@@ -159,15 +168,13 @@ public class AlchemyController : MonoBehaviour {
     {
         switch (item)
         {
-            case ItemStatus.Type.CLAY:
-                //木が成長
-                gimmick_ctr = FindObjectOfType<GimmickController>();
-                mInfo = transform.root.GetComponent<MapInfo>();
-                gimmick_ctr.Grow();
+            case ItemStatus.Type.CLAY_N:
+                //たいまつ
+                //player_ctr.setCreateItemList(CreateItemStatus.Type.Torch);
                 break;
             case ItemStatus.Type.WOOD:
-                //たいまつ
-                player_ctr.setCreateItemList(CreateItemStatus.Type.Torch);
+                //木が成長
+                player_ctr.setCreateItemList(CreateItemStatus.Type.TreePotion);
                 break;
             case ItemStatus.Type.LAMP:
                 //ランプ
@@ -201,7 +208,7 @@ public class AlchemyController : MonoBehaviour {
             case ItemStatus.Type.SNAKE:
                 switch (item_1)
                 {
-                    case ItemStatus.Type.CLAY:
+                    case ItemStatus.Type.CLAY_N:
                         //はしご
                         player_ctr.setCreateItemList(CreateItemStatus.Type.Ladder);
                         break;
@@ -223,7 +230,7 @@ public class AlchemyController : MonoBehaviour {
                         //鍵
                         player_ctr.setCreateItemList(CreateItemStatus.Type.Key);
                         break;
-                    case ItemStatus.Type.CLAY:
+                    case ItemStatus.Type.CLAY_N:
                         //磁石
                         player_ctr.setCreateItemList(CreateItemStatus.Type.Magnet);
                         break;
@@ -263,7 +270,7 @@ public class AlchemyController : MonoBehaviour {
                         //HPポーション
                         player_ctr.setCreateItemList(CreateItemStatus.Type.HPPotion);
                         break;
-                    case ItemStatus.Type.CLAY:
+                    case ItemStatus.Type.CLAY_N:
                         //攻撃ポーション
                         player_ctr.setCreateItemList(CreateItemStatus.Type.ATKPotion);
                         break;
@@ -277,7 +284,7 @@ public class AlchemyController : MonoBehaviour {
             case ItemStatus.Type.LIZARD:
                 switch (item_0)
                 {
-                    case ItemStatus.Type.CLAY:
+                    case ItemStatus.Type.CLAY_N:
                         //バリア
                         player_ctr.setCreateItemList(CreateItemStatus.Type.Barrier);
                         break;
@@ -317,7 +324,7 @@ public class AlchemyController : MonoBehaviour {
             case ItemStatus.Type.VAJURA:
                 switch (item_1)
                 {
-                    case ItemStatus.Type.CLAY:
+                    case ItemStatus.Type.CLAY_N:
                         //バジュラ（電撃武器）
                         player_ctr.setCreateItemList(CreateItemStatus.Type.Vajura);
                         break;
@@ -339,7 +346,7 @@ public class AlchemyController : MonoBehaviour {
             case ItemStatus.Type.MIC:
                 switch (item_1)
                 {
-                    case ItemStatus.Type.CLAY:
+                    case ItemStatus.Type.CLAY_N:
                         //拡声器
                         player_ctr.setCreateItemList(CreateItemStatus.Type.Speaker);
                         break;
@@ -387,7 +394,7 @@ public class AlchemyController : MonoBehaviour {
                         //毒液
                         player_ctr.setCreateItemList(CreateItemStatus.Type.Venom);
                         break;
-                    case ItemStatus.Type.CLAY:
+                    case ItemStatus.Type.CLAY_N:
                         //氷の剣
                         player_ctr.setSwordList(PlayerStatus.SWORDTYPE.FROZEN);
                         break;
@@ -409,7 +416,7 @@ public class AlchemyController : MonoBehaviour {
                         //煙幕
                         player_ctr.setItemList(ItemStatus.Type.SMOKESCREEN);
                         break;
-                    case ItemStatus.Type.CLAY:
+                    case ItemStatus.Type.CLAY_N:
                         //闇の剣
                         player_ctr.setSwordList(PlayerStatus.SWORDTYPE.DARK);
                         break;
@@ -454,7 +461,7 @@ public class AlchemyController : MonoBehaviour {
                 }
                 break;
 
-            case ItemStatus.Type.CLAY:
+            case ItemStatus.Type.CLAY_N:
                 switch (item_1)
                 {
                     case ItemStatus.Type.FLOWER:
@@ -508,7 +515,7 @@ public class AlchemyController : MonoBehaviour {
     {
         switch (item_0)
         {
-            case ItemStatus.Type.CLAY:
+            case ItemStatus.Type.CLAY_N:
                 switch (item_1)
                 {
                     case CreateItemStatus.Type.Explosive:
@@ -532,7 +539,7 @@ public class AlchemyController : MonoBehaviour {
             case CreateItemStatus.Type.Explosive:
                 switch (item_1)
                 {
-                    case ItemStatus.Type.CLAY:
+                    case ItemStatus.Type.CLAY_N:
                         //火の剣
                         player_ctr.setSwordList(PlayerStatus.SWORDTYPE.FIRE);
                         break;
@@ -552,7 +559,7 @@ public class AlchemyController : MonoBehaviour {
                 item_ctr.ATKPortion();
                 break;
             case CreateItemStatus.Type.Barrier:
-
+                item_ctr.CreateBarrier();
                 break;
             case CreateItemStatus.Type.Boomerang:
 
@@ -573,7 +580,7 @@ public class AlchemyController : MonoBehaviour {
 
                 break;
             case CreateItemStatus.Type.Ladder:
-
+                item_ctr.LadderCreate();
                 break;
             case CreateItemStatus.Type.Lamp:
 
@@ -607,6 +614,9 @@ public class AlchemyController : MonoBehaviour {
                 break;
             case CreateItemStatus.Type.Watter:
 
+                break;
+            case CreateItemStatus.Type.TreePotion:
+                item_ctr.TreePortion();
                 break;
         }
     }

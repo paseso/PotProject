@@ -45,12 +45,37 @@ public class StageController : MonoBehaviour
 
     private CameraManager cManager;
 
+    private GameObject[] aaa;
+
+    private List<GameObject> waters;
+
+    public List<GameObject> Waters {
+        get {return waters; }
+        set { waters = value; }
+    }
+
+    private GameObject clearPanel;
+
     void Start()
     {
         SetList();
+        clearPanel = FindObjectOfType<GameClear>().gameObject;
+        clearPanel.SetActive(false);
+
         pController = FindObjectOfType<PlayerController>();
         mMapController = FindObjectOfType<MiniMapController>();
         cManager = FindObjectOfType<CameraManager>();
+        if (waters != null) {
+            foreach (var i in Waters) {
+                i.SetActive(false);
+            }
+        }
+    }
+
+    void ActiveWater() {
+        foreach (var i in Waters) {
+            i.SetActive(true);
+        }
     }
 
     /// <summary>
@@ -86,7 +111,6 @@ public class StageController : MonoBehaviour
     /// <param name="size"></param>
     public void Sride(int num, Direction dir) {
         if (isMove) { return; }
-        pController.IsCommandActive = false;
         StartCoroutine(SrideInFade(num,dir, GetMaps[1][1].transform.localPosition));
     }
 
@@ -107,7 +131,7 @@ public class StageController : MonoBehaviour
         SrideStage(num, dir);
         mMapController.NowMap();
         yield return new WaitForSeconds(4.5f);
-        pController.IsCommandActive = true;
+        pController.AllCommandActive = true;
 
     }
 

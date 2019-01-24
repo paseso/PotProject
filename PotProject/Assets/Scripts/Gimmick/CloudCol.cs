@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CloudCol : MonoBehaviour {
-    private bool onCloud = false;
     private GameObject player;
 
     void SetColParent(GameObject player) {

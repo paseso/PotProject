@@ -14,7 +14,7 @@ public struct MonsterStatus
     public int HP
     {
         get { return hp; }
-        set { value = hp; }
+        set { hp = value; }
     }
 
     public int GetAttack
@@ -44,9 +44,13 @@ public struct MonsterStatus
         HARB,
         FATHER,
         MAGIC,
+        CLAY_N,
+        CLAY_F,
+        CLAY_D,
+        CLAY_T,
+        CLAY_W,
     }
     public MonsterType type;
-
 
     // 属性
     public enum MonsterAttribute
@@ -69,7 +73,7 @@ public class MonsterController : MonoBehaviour
     private string itemFolder = "Prefabs/Items/Drop/";
 
     [SerializeField]
-    private MonsterStatus status;
+    private MonsterStatus status = new MonsterStatus();
 
     public MonsterStatus Status
     {
@@ -88,7 +92,7 @@ public class MonsterController : MonoBehaviour
         {MonsterStatus.MonsterType.LAMP,"Lamp" },
         {MonsterStatus.MonsterType.ROBOT,"Pothook" },
         {MonsterStatus.MonsterType.SLIME,"" },
-        {MonsterStatus.MonsterType.SNAKE,"RopePrefab" },
+        {MonsterStatus.MonsterType.SNAKE,"Exuvia" },
         {MonsterStatus.MonsterType.LUKEWARM,"" },
         {MonsterStatus.MonsterType.WOOD,"Roots" },
         {MonsterStatus.MonsterType.HAMSTAR,"" },
@@ -97,13 +101,18 @@ public class MonsterController : MonoBehaviour
         {MonsterStatus.MonsterType.TURTLE,"Crystal" },
         {MonsterStatus.MonsterType.FAIRY,"" },
         {MonsterStatus.MonsterType.HARB,"Weed" },
+        {MonsterStatus.MonsterType.CLAY_N,"Clay_N" },
+        {MonsterStatus.MonsterType.CLAY_F,"Clay_F" },
+        {MonsterStatus.MonsterType.CLAY_D,"Clay_D" },
+        {MonsterStatus.MonsterType.CLAY_T,"Clay_T" },
+        {MonsterStatus.MonsterType.CLAY_W,"Clay_W" },
     };
 
     private GameObject clearPanel;
 
-    public MonsterStatus GetMStatus
+    void Start()
     {
-        get { return status; }
+        status = GetComponent<MonsterController>().Status;
     }
 
     /// <summary>

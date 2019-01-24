@@ -23,6 +23,7 @@ public class MiniMapController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         int count = 0;
+        status = FindObjectOfType<PlayerManager>().Status;
         for (int i = 0; i < 3; i++) {
             List<Image> tempList = new List<Image>();
             for(int j = 0; j < 3; j++) {

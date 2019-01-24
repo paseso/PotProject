@@ -10,6 +10,9 @@ public struct PlayerStatus
 
     private const int maxHP = 6;
 
+    /// <summary>
+    /// 最大HP
+    /// </summary>
     public int GetMaxHP{
         get { return maxHP; }
     }
@@ -18,17 +21,37 @@ public struct PlayerStatus
     [SerializeField]
     private const float barrierTime = 10;
 
+    /// <summary>
+    /// バリア制限時間
+    /// </summary>
     public float GetBarrierTime
     {
         get { return barrierTime; }
     }
 
+    private bool activeBarrier;
+
+    /// <summary>
+    /// バリアフラグ
+    /// </summary>
+    public bool ActiveBarrier
+    {
+        get { return activeBarrier; }
+        set { activeBarrier = value; }
+    }
+
+    /// <summary>
+    /// 現在のHP
+    /// </summary>
     public int PlayerHP
     {
         get { return hp; }
         set { hp = value; }
     }
 
+    /// <summary>
+    /// 現在の攻撃力
+    /// </summary>
     public int PlayerAttack
     {
         get { return atk; }
@@ -83,8 +106,10 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>{
     private PlayerStatus status;
     private PlayerController player_ctr;
 
+
     public PlayerStatus Status {
-        get;set;
+        get { return status; }
+        set { status = value; }
     }
 
     public PlayerStatus.SWORDTYPE GetSwordType

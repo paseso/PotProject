@@ -10,6 +10,10 @@ public class PotController : MonoBehaviour {
 
     private Sprite[] PotImages;
 
+    private Sprite ototo_left;
+    private Sprite ototo_right;
+    private GameObject OtotoHead;
+
     private bool _onece = false;
 
     private enum Direction
@@ -23,6 +27,9 @@ public class PotController : MonoBehaviour {
     void Start () {
         try
         {
+            OtotoHead = gameObject.transform.GetChild(1).gameObject;
+            ototo_left = Resources.Load("Textures/Charactor/Ototo_Head_Left") as Sprite;
+            ototo_right = Resources.Load("Textures/Charactor/Ototo_Head_Right") as Sprite;
             player_ctr = GameObject.FindObjectOfType<PlayerController>();
             bring_col = GameObject.FindObjectOfType<BringCollider>();
             move_ctr = GameObject.FindObjectOfType<MoveController>();
@@ -92,8 +99,8 @@ public class PotController : MonoBehaviour {
     {
         switch (type)
         {
-            case ItemStatus.Type.CLAY:
-                player_ctr.setItemList(ItemStatus.Type.CLAY);
+            case ItemStatus.Type.CLAY_N:
+                player_ctr.setItemList(ItemStatus.Type.CLAY_N);
                 break;
             case ItemStatus.Type.CLOUD:
                 player_ctr.setItemList(ItemStatus.Type.CLOUD);
@@ -147,10 +154,10 @@ public class PotController : MonoBehaviour {
 
             Destroy(col.gameObject);
             MonsterController mInfo = col.gameObject.GetComponent<MonsterController>();
-            switch (mInfo.GetMStatus.type)
+            switch (mInfo.Status.type)
             {
                 case MonsterStatus.MonsterType.WATER:
-                    player_ctr.setItemList(ItemStatus.Type.CLAY);
+                    player_ctr.setItemList(ItemStatus.Type.CLAY_N);
                     break;
 
                 case MonsterStatus.MonsterType.SNAKE:
@@ -158,10 +165,25 @@ public class PotController : MonoBehaviour {
                     break;
 
                 default:
-                    Debug.Log("Type: " + mInfo.GetMStatus.type);
+                    Debug.Log("Type: " + mInfo.Status.type);
                     break;
             }
-            Debug.Log("Type: " + mInfo.GetMStatus.type);
+            Debug.Log("Type: " + mInfo.Status.type);
+        }
+    }
+
+    /// <summary>
+    /// 方向によって弟の画像切り替えする処理
+    /// </summary>
+    public void OtotoChangeSprite()
+    {
+        if (move_ctr.direc == MoveController.Direction.LEFT)
+        {
+            OtotoHead.GetComponent<Anima2D.SpriteMeshAnimation>().frame = 0;
+        }
+        else
+        {
+            OtotoHead.GetComponent<Anima2D.SpriteMeshAnimation>().frame = 1;
         }
     }
 }

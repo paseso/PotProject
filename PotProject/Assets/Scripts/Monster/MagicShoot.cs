@@ -9,7 +9,6 @@ public class MagicShoot : MonoBehaviour {
         GameObject magic = Instantiate(Resources.Load<GameObject>("Prefabs/MagicPrefab"));
         magic.transform.SetParent(transform.parent.transform);
         magic.transform.localPosition = transform.localPosition;
-        //magic.GetComponent<Rigidbody2D>().velocity = pos;
-        magic.GetComponent<MagicBallcontroller>().Pos = pos;
+        magic.GetComponent<MagicBallController>().Pos = pos;
     }
 }

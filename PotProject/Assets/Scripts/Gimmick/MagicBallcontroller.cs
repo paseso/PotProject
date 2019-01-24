@@ -2,15 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagicBallcontroller : MonoBehaviour {
+public class MagicBallController : MonoBehaviour {
     private float time;
+    private Vector2 pos;
 
     public Vector2 Pos {
-        get;set;
+        get { return pos; }
+        set {
+            pos = value;
+            pos = new Vector2(Pos.x - transform.position.x, Pos.y - transform.position.y);
+        }
     }
 
-	// Update is called once per frame
-	void Update () {
+    void Start() {
+        
+    }
+
+    // Update is called once per frame
+    void Update () {
         GetComponent<Rigidbody2D>().velocity = Pos;
         time += Time.deltaTime;
         if(time > 5) {
@@ -19,9 +28,11 @@ public class MagicBallcontroller : MonoBehaviour {
 	}
 
     private void OnTriggerEnter2D(Collider2D col) {
-        if(col.gameObject.layer == LayerMask.NameToLayer("Player")) {
+        if(col.GetComponent<MoveController>()) {
             PlayerController pcon = FindObjectOfType<PlayerController>();
             pcon.HPDown(transform.GetComponent<MonsterController>().Status.GetAttack);
+            Destroy(gameObject);
+        } else if (col.GetComponent<BoxCollider2D>() && !col.GetComponent<BoxCollider2D>().isTrigger) {
             Destroy(gameObject);
         }
     }
