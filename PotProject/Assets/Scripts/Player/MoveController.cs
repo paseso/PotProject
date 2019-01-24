@@ -457,6 +457,9 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.TRIANGLE:
                 //錬金したアイテム使用
+                if (player_ctr.getCreateItemList().Count <= 0)
+                    return;
+                Debug.Log("アイテム使用");
                 player_ctr.UseAlchemyItem(alchemyUI_ctr.getNowAlchemyItem);
                 break;
 
@@ -466,6 +469,8 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.R1:
                 Debug.Log("R1");
+                if (player_ctr.getCreateItemList().Count <= 1)
+                    return;
                 alchemyUI_ctr.setNowAlchemyItem();
                 break;
 

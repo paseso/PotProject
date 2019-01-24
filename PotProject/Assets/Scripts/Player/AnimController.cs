@@ -568,7 +568,6 @@ public class AnimController : MonoBehaviour {
     public IEnumerator GetItemEffectWaitTime()
     {
         yield return new WaitForSeconds(0.35f);
-        pot_anim.SetBool("isPotDown", false);
         //アイテムのある位置にエフェクトの位置を合わせて呼ぶ
         GameObject EffectObj = effect_mng.PlayEffect(0, Itemtarget.transform.position, 10, Itemtarget, false).gameObject;
         EffectObj.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
@@ -585,11 +584,12 @@ public class AnimController : MonoBehaviour {
         yield return new WaitForSeconds(0.4f);
         //ツボの中に入る瞬間にどんどん小さくなってく
         Itemtarget.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
-        Itemtarget.transform.DOMoveY(pot_anim.transform.position.y + 1, 0.4f);
+        Itemtarget.transform.DOMoveY(pot_anim.transform.position.y + 0.5f, 0.4f);
         PotAnimSetBool();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         //エフェクトとアイテムのオブジェクトはもう使わないので削除、フラグをfalseにする
         GetItemEndAnim(EffectObj);
+        pot_anim.SetBool("isPotDown", false);
     }
 
     /// <summary>
@@ -609,7 +609,7 @@ public class AnimController : MonoBehaviour {
     /// <param name="effect"></param>
     private void PotOnMoveAnim(GameObject effect)
     {
-        Itemtarget.transform.position = new Vector2(pot_anim.transform.position.x, pot_anim.transform.position.y + 10);
+        Itemtarget.transform.position = new Vector3(pot_anim.transform.position.x, pot_anim.transform.position.y - 10, Itemtarget.transform.position.z);
         effect.transform.position = Itemtarget.transform.position;
         effect.SetActive(true);
         Itemtarget.SetActive(true);
