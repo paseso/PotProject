@@ -24,9 +24,9 @@ public class TitleController : MonoBehaviour
         if (GameObject.Find("PlayerStatus"))
         {
             pInfo = GameObject.Find("PlayerStatus").GetComponent<PlayerManager>();
+            pInfo.InitStatus();
         }
 
-        pInfo.InitStatus();
         LogoAnimatino();
         LoopCharaAnimation();
     }
@@ -50,7 +50,18 @@ public class TitleController : MonoBehaviour
 
     private void LoopCharaAnimation()
     {
-        CharaObject.GetComponent<AnimController>().ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
+        Animator anim = CharaObject.GetComponent<Animator>();
+        anim.SetBool("isRightJump", false);
+        anim.SetBool("isLeftJump", false);
+        anim.SetBool("isLeftWalk", true);
+        anim.SetBool("isRightWalk", false);
+        anim.SetBool("isLeftIdle", false);
+        anim.SetBool("isRightIdle", false);
+        anim.SetBool("isSordAttackLeft", false);
+        anim.SetBool("isSordAttackRight", false);
+        anim.SetBool("isLadderUp", false);
+        anim.SetBool("isLeftGetItem", false);
+        anim.SetBool("isRightGetItem", false);
     }
 
     /// <summary>
