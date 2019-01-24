@@ -95,12 +95,20 @@ public class AlchemyController : MonoBehaviour {
     private ItemController item_ctr;
     private PlayerManager player_mng;
 
+    private Sprite AlphaSprite;
+
+    public Sprite[] getCreateItem
+    {
+        get { return CreateItem; }
+    }
+
     // Use this for initialization
     void Start () {
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         GeneratedImg = GameObject.Find("Canvas/Panel/Image").GetComponent<Image>();
         item_ctr = GameObject.Find("Controller").GetComponent<ItemController>();
         player_mng = GameObject.Find("PlayerStatus").GetComponent<PlayerManager>();
+        AlphaSprite = Resources.Load<Sprite>("Textures/UI/AlphaImage");
         ReSetGeneratedImg();
         setCreateItem();
         mInfo = transform.root.GetComponent<MapInfo>();
@@ -116,10 +124,10 @@ public class AlchemyController : MonoBehaviour {
     /// </summary>
     private void setCreateItem()
     {
-        CreateItem = new Sprite[23];
+        CreateItem = new Sprite[25];
         for(int i = 0; i < CreateItem.Length; i++)
         {
-            CreateItem[i] = Resources.Load<Sprite>("Textures/CreateItem_" + i);
+            CreateItem[i] = Resources.Load<Sprite>("Textures/CreateItems/CreateItem_" + i);
         }
     }
 
@@ -137,11 +145,11 @@ public class AlchemyController : MonoBehaviour {
     }
 
     /// <summary>
-    /// 右下のフレームにある生成したアイテム画像をnullにする処理
+    /// 右下のフレームにある生成したアイテム画像を消す処理
     /// </summary>
     public void ReSetGeneratedImg()
     {
-        GeneratedImg.sprite = null;
+        GeneratedImg.sprite = AlphaSprite;
     }
 
     /// <summary>
@@ -153,14 +161,6 @@ public class AlchemyController : MonoBehaviour {
     }
 
     /// <summary>
-    /// 右下のフレームにある生成したアイテム画像を削除する処理
-    /// </summary>
-    public void deleteGeneratedImg()
-    {
-        GeneratedImg.sprite = null;
-    }
-
-    /// <summary>
     /// アイテム錬金
     /// </summary>
     /// <param name="item">錬金したいアイテム</param>
@@ -168,10 +168,6 @@ public class AlchemyController : MonoBehaviour {
     {
         switch (item)
         {
-            case ItemStatus.Type.CLAY_N:
-                //たいまつ
-                //player_ctr.setCreateItemList(CreateItemStatus.Type.Torch);
-                break;
             case ItemStatus.Type.WOOD:
                 //木が成長
                 player_ctr.setCreateItemList(CreateItemStatus.Type.TreePotion);
@@ -193,7 +189,6 @@ public class AlchemyController : MonoBehaviour {
                 player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
                 break;
         }
-        Debug.Log(item.ToString());
     }
     
     /// <summary>
@@ -503,7 +498,6 @@ public class AlchemyController : MonoBehaviour {
                 }
                 break;
         }
-        Debug.Log(item_0.ToString() + "×" + item_1.ToString());
     }
 
     /// <summary>
@@ -521,6 +515,9 @@ public class AlchemyController : MonoBehaviour {
                     case CreateItemStatus.Type.Explosive:
                         //火の剣
                         player_ctr.setSwordList(PlayerStatus.SWORDTYPE.FIRE);
+                        break;
+                    default:
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
                         break;
                 }
             break;
@@ -542,6 +539,10 @@ public class AlchemyController : MonoBehaviour {
                     case ItemStatus.Type.CLAY_N:
                         //火の剣
                         player_ctr.setSwordList(PlayerStatus.SWORDTYPE.FIRE);
+                        break;
+                    default:
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Dast);
+                        Debug.Log("ゴミ");
                         break;
                 }
                 break;

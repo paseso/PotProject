@@ -147,17 +147,14 @@ public class PlayerController : MonoBehaviour {
     /// <param name="type"></param>
     public void setSwordList(PlayerStatus.SWORDTYPE type)
     {
-        Debug.Log("剣のtype:" + type.ToString());
-        //nullのところに錬金した剣をいれる
+        //2番目以降のNORMALタイプのところに錬金した剣をいれる
         for(int i = 1; i < 3; i++)
         {
             if (swordList[i] != PlayerStatus.SWORDTYPE.NORMAL)
             {
                 continue;
             }
-            Debug.Log("swordList = " + swordList[i]);
             swordList[i] = type;
-            Debug.Log(i + "番目にセット:" + type.ToString());
             break;
         }
     }
@@ -269,7 +266,7 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     public void deleteCreateItemList(int num)
     {
-        alchemy_ctr.deleteGeneratedImg();
+        alchemy_ctr.ReSetGeneratedImg();
         createItemBox.RemoveAt(num);
     }
 

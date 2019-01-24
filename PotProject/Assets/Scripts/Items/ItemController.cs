@@ -56,6 +56,5 @@ public class ItemController : MonoBehaviour {
     public void LadderCreate()
     {
         playerController.OnBlock.AddComponent<CreateLadder>();
-        
     }
 }

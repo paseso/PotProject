@@ -60,7 +60,6 @@ public class BringCollider : MonoBehaviour {
     {
         if (!_setTarget)
             return;
-        Debug.Log("きてる");
         //アイテムを拾う
         //プレイヤーの操作制限
         player_ctr.AllCommandActive = false;
