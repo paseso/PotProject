@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour {
     private PlayerStatus status;
     private AlchemyController alchemy_ctr;
     private AlchemyUIController alchemyUI_ctr;
-    private PlayerController player_ctr;
     private GameObject BrotherObj;
     private GameObject PotObject;
     private AnimController anim_ctr;
@@ -88,7 +87,6 @@ public class PlayerController : MonoBehaviour {
             move_ctr = BrotherObj.GetComponent<MoveController>();
             PotObject = FindObjectOfType<PotController>().gameObject;
             HeartObject = GameObject.Find("Canvas/Heart");
-            player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
             createItemBox = new List<CreateItemStatus.Type>();
             anim_ctr = BrotherObj.transform.parent.GetComponent<AnimController>();
             lifePoint = GameObject.FindGameObjectWithTag("LifePoint");
@@ -276,7 +274,7 @@ public class PlayerController : MonoBehaviour {
     /// <param name="num"></param>
     public void UseAlchemyItem(int num)
     {
-        alchemy_ctr.AlchemyItem(player_ctr.getCreateItemList()[alchemyUI_ctr.getNowAlchemyItem]);
+        alchemy_ctr.AlchemyItem(getCreateItemList()[alchemyUI_ctr.getNowAlchemyItem]);
         deleteCreateItemList(num);
     }
 
@@ -369,7 +367,7 @@ public class PlayerController : MonoBehaviour {
         {
             alchemyUI_ctr.setItemboxImage();
             alchemyUI_ctr.ItemFrameReSet();
-            alchemyUI_ctr.ReSetMaterialsBox(player_ctr.status.ItemList);
+            alchemyUI_ctr.ReSetMaterialsBox(status.ItemList);
             Pot_UI.DOLocalMoveX(0, 0.3f).SetEase(Ease.Linear);
             alchemyUIFlag = true;
         }
