@@ -95,7 +95,7 @@ public class MonsterController : MonoBehaviour
         {MonsterStatus.MonsterType.SNAKE,"Exuvia" },
         {MonsterStatus.MonsterType.LUKEWARM,"" },
         {MonsterStatus.MonsterType.WOOD,"Roots" },
-        {MonsterStatus.MonsterType.HAMSTAR,"" },
+        {MonsterStatus.MonsterType.HAMSTAR,"Eye" },
         {MonsterStatus.MonsterType.SHADOW,"" },
         {MonsterStatus.MonsterType.CLOUD,"Cloud" },
         {MonsterStatus.MonsterType.TURTLE,"Crystal" },

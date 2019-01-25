@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4321892039179340}
   - component: {fileID: 212801386887361490}
   - component: {fileID: 50245173494033926}
-  - component: {fileID: 114678365232561586}
   - component: {fileID: 58404472254118666}
   - component: {fileID: 114337082107048400}
+  - component: {fileID: 114823999610055096}
   m_Layer: 13
   m_Name: MagicPrefab
   m_TagString: Untagged
@@ -96,7 +96,7 @@ MonoBehaviour:
     barrier: 0
     type: 16
     attribute: 1
---- !u!114 &114678365232561586
+--- !u!114 &114823999610055096
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
