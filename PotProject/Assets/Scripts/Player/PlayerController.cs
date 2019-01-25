@@ -191,7 +191,7 @@ public class PlayerController : MonoBehaviour {
                 break;
         }
     }
-	
+
     /// <summary>
     /// 持ち物リストの情報
     /// </summary>

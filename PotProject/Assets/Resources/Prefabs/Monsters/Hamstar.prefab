@@ -20,10 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4635255761639470}
   - component: {fileID: 212235673278103790}
-  - component: {fileID: 114610031800598382}
+  - component: {fileID: 114909130205522640}
   - component: {fileID: 61632854038615982}
   - component: {fileID: 50837073238841848}
-  - component: {fileID: 114269012772878682}
   m_Layer: 18
   m_Name: Hamstar
   m_TagString: Monster
@@ -31,35 +30,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1398864528179460
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4522692429942614}
-  - component: {fileID: 114806241317878906}
-  m_Layer: 18
-  m_Name: MagicPos
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4522692429942614
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1398864528179460}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4635255761639470}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4635255761639470
 Transform:
   m_ObjectHideFlags: 1
@@ -69,8 +39,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
-  m_Children:
-  - {fileID: 4522692429942614}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -119,7 +88,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.12, y: 3.9020815}
   m_EdgeRadius: 0
---- !u!114 &114269012772878682
+--- !u!114 &114909130205522640
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -127,37 +96,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1247499424015016}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07248d3644de7c04bb141b22a7672932, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114610031800598382
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1247499424015016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a802581286094749928bb7507100bf5, type: 3}
+  m_Script: {fileID: 11500000, guid: fd229fd54d0c8d241846c6b53edd4566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   status:
-    HP: 0
-    ATTACK: 0
-    INT: 0
-    magicTime: 3
+    hp: 2
+    atk: 1
+    barrier: 0
+    type: 9
     attribute: 0
---- !u!114 &114806241317878906
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1398864528179460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbf27ee7189b89e419a55d8c82610093, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &212235673278103790
 SpriteRenderer:
   m_ObjectHideFlags: 1
