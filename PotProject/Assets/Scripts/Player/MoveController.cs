@@ -304,11 +304,15 @@ public class MoveController : MonoBehaviour
         switch (btn)
         {
             case ButtonType.JUMP:
-
+                if (alchemyUI_ctr.ChooseWindow)
+                {
+                    alchemyUI_ctr.ChooseThrow(false);
+                    return;
+                }
                 if (player_ctr.GetAlchemyUIFlag)
                 {
                     Debug.Log("捨てます");
-                    //alchemyUI_ctr.deleteItemBox(alchemyUI_ctr.getNowBox);
+                    alchemyUI_ctr.ActiveThrowItemUI();
                     return;
                 }
                 if (!leg_col.isLanding)
@@ -427,7 +431,12 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.CIRCLE:
                 _onCircle = true;
-                
+                if (alchemyUI_ctr.ChooseWindow)
+                {
+                    alchemyUI_ctr.ChooseThrow(true);
+                    return;
+                }
+
                 if (player_ctr.GetAlchemyUIFlag)
                 {
                     alchemyUI_ctr.PickItem();
@@ -436,7 +445,6 @@ public class MoveController : MonoBehaviour
                 {
 
                     if(pManager.Status.swordtype == PlayerStatus.SWORDTYPE.KEY && keyDoorFlag) {
-                        Debug.Log("Call!!!!");
                         GameObject keySwitch = GameObject.FindGameObjectWithTag("KeyDoor");
                         keySwitch.GetComponent<GimmickController>().UnlockKeyDoor();
                         return;
