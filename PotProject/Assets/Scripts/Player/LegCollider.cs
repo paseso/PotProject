@@ -6,14 +6,8 @@ public class LegCollider : MonoBehaviour {
     private PlayerController player_ctr;
     private PlayerStatus status;
     private bool landingFlag = false;
-    //タイル一個分の大きさ
-    private const float TILESIZE = 2;
     float jumpPos;
     int onGroundCount;
-    //落下で即死する高さ
-    private int deadFallHeight = 3;
-    //落下でダメージを受ける高さ
-    private int damageFallHeight = 2;
 
     /// <summary>
     /// ジャンプフラグ(落下判定)
@@ -25,14 +19,9 @@ public class LegCollider : MonoBehaviour {
         {
             if (value)
             {
-                if (jumpPos - transform.position.y >= TILESIZE * deadFallHeight)
+                if (jumpPos - transform.position.y >= 2.5f)
                 {
-                    player_ctr.HPDown(6);
-                    jumpPos = transform.position.y;
-                }
-                else if (jumpPos - transform.position.y >= TILESIZE * damageFallHeight)
-                {
-                    player_ctr.HPDown(1);
+                    player_ctr.HPDown(2);
                     jumpPos = transform.position.y;
                 }
                 landingFlag = value;
@@ -60,15 +49,20 @@ public class LegCollider : MonoBehaviour {
         _legFloor = false;
 	}
 
+    /// <summary>
+    /// ジャンプ判定
+    /// </summary>
+    /// <param name="col">足元のObject</param>
+    /// <returns></returns>
     public bool JumpCheck(GameObject col)
     {
-        if (col.gameObject.layer == 2) { return false; }
-        if (col.GetComponent<KeyBlockCol>()) { return false; }
-        if (!col.GetComponent<GimmickInfo>()) { return true; }
+        if (col.GetComponent<DropItemManager>()) { return false; }// Item
+        if (col.gameObject.layer == 2) { return false; }// BackGround
+        if (col.GetComponent<KeyBlockCol>()) { return false; } // 鍵ActiveCollider
+        if (!col.GetComponent<GimmickInfo>()) { return true; } // Gimmick
         GimmickInfo info = col.GetComponent<GimmickInfo>();
-        if (info.type == GimmickInfo.GimmickType.LADDER) { return false; }
-        if (info.type == GimmickInfo.GimmickType.FIREFIELD) { return false; }
-
+        if (info.type == GimmickInfo.GimmickType.LADDER) { return false; } // はしご
+        if (info.type == GimmickInfo.GimmickType.FIREFIELD) { return false; } // 敵攻撃範囲
         return true;
     }
 
@@ -91,7 +85,6 @@ public class LegCollider : MonoBehaviour {
             isLanding = true;
         }
         
-        
         if (move_ctr.Jumping)
         {
             move_ctr.setJumping = false;
@@ -101,11 +94,19 @@ public class LegCollider : MonoBehaviour {
             _legFloor = true;
         }
 
+        if(col.gameObject.layer == LayerMask.NameToLayer("Block"))
+        {
+            transform.parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
+
         if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer") && col.gameObject.layer == LayerMask.NameToLayer("Block")) {
             
             player_ctr.ChangeLayer();
             move_ctr.InLadderCount = 0;
         }
+
+        
+
         if (col.gameObject.layer == LayerMask.NameToLayer("Block")) {
             player_ctr.OnBlock = col.gameObject;
         }
@@ -152,10 +153,5 @@ public class LegCollider : MonoBehaviour {
                     player_ctr.ChangeLayer();
             }
         }
-    }
-
-    private void OnTriggerStay2D(Collider2D col)
-    {
-        
     }
 }

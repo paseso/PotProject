@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour {
     private const int maxItemBox = 3;
 
     private PlayerStatus status;
+    private PlayerManager pManager;
     private AlchemyController alchemy_ctr;
     private AlchemyUIController alchemyUI_ctr;
     private GameObject BrotherObj;
@@ -79,8 +80,9 @@ public class PlayerController : MonoBehaviour {
     {
         try
         {
-            status = FindObjectOfType<PlayerManager>().Status;
-            status.ItemList = new List<ItemStatus.Type>();
+            pManager = FindObjectOfType<PlayerManager>();
+            status = pManager.Status;
+            //status.ItemList = new List<ItemStatus.Type>();
             alchemy_ctr = FindObjectOfType<AlchemyController>();
             alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
             BrotherObj = FindObjectOfType<MoveController>().gameObject;

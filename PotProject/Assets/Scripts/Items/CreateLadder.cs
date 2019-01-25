@@ -27,10 +27,10 @@ public class CreateLadder : MonoBehaviour {
     /// <param name="obj"></param>
     IEnumerator Create(GameObject obj) {
         // かけるブロックがないならReturn
-        if(obj == null) { yield return null; }
+        if(obj == null) { yield break; }
 
         // BlockじゃないならReturn
-        if(obj.layer != LayerMask.NameToLayer("Block")) { yield return null; }
+        if(obj.layer != LayerMask.NameToLayer("Block")) { yield break; }
         // Rayの始点を設定--------------------------------------------------------------
         var height = obj.GetComponent<SpriteRenderer>().bounds.size.y;
         var radius = height * 0.5f + 0.1f;
@@ -40,8 +40,10 @@ public class CreateLadder : MonoBehaviour {
         // Rayを飛ばす
         RaycastHit2D hit = Physics2D.Raycast(startPos, Vector2.down, Mathf.Infinity);
 
+        if(hit.distance < height) { yield break; }
+
         // あたったObjectがBlockじゃないならReturn
-        if(hit.collider.gameObject.layer != LayerMask.NameToLayer("Block")) { yield return null; }
+        if(hit.collider.gameObject.layer != LayerMask.NameToLayer("Block")) { yield break; }
 
         // objのレイヤーを変更
         obj.gameObject.layer = LayerMask.NameToLayer("LadderBlock");

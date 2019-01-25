@@ -13,7 +13,7 @@ public class MonsterResporn : MonoBehaviour {
         {MonsterStatus.MonsterType.CLAY_W,"Slime_W"},
         {MonsterStatus.MonsterType.CLOUD,"Cloud"},
         {MonsterStatus.MonsterType.FAIRY,"Fairy"},
-        {MonsterStatus.MonsterType.HAMSTAR,"Hamster"},
+        {MonsterStatus.MonsterType.HAMSTAR,"Hamstar"},
         {MonsterStatus.MonsterType.HARB,"Grass"},
         {MonsterStatus.MonsterType.LION,"Lion"},
         {MonsterStatus.MonsterType.LUKEWARM,"Lukewarm"},
@@ -27,9 +27,18 @@ public class MonsterResporn : MonoBehaviour {
     private MonsterStatus.MonsterType mType;
 
     private string folderPass = "Prefabs/Monsters/";
-    [SerializeField]
-    private float createTime;
+
+    private float createTime = 60;
     private float time;
+    private bool countFlag = false;
+    public bool CountFlag
+    {
+        get { return countFlag; }
+        set {
+            time = 0;
+            countFlag = value;
+        }
+    }
 
     /// <summary>
     /// 生成するモンスターの種類
@@ -41,9 +50,13 @@ public class MonsterResporn : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        time += Time.deltaTime;
-        if(time > createTime) {
-            Resporn();
+        if (countFlag)
+        {
+            time += Time.deltaTime;
+            if (time > createTime)
+            {
+                Resporn();
+            }
         }
 	}
 
@@ -52,8 +65,9 @@ public class MonsterResporn : MonoBehaviour {
     /// </summary>
     void Resporn() {
         GameObject monster = Instantiate(Resources.Load<GameObject>(folderPass + pass[mType]));
-        monster.transform.SetParent(transform.root.gameObject.transform);
+        monster.transform.SetParent(transform.parent.gameObject.transform);
         monster.transform.localPosition = transform.localPosition;
+        CountFlag = false;
         Destroy(gameObject);
     }
 }

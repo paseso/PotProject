@@ -623,7 +623,7 @@ public class AnimController : MonoBehaviour {
     private void GetItemEndAnim(GameObject effect)
     {
         Destroy(effect.gameObject);
-        Destroy(Itemtarget.gameObject);
+        Destroy(Itemtarget.transform.parent.gameObject);
         PotAnimSetBool();
         anim.SetBool("isRightGetItem", false);
         anim.SetBool("isLeftGetItem", false);
