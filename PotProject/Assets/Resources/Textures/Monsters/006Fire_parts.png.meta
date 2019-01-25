@@ -1,11 +1,11 @@
 fileFormatVersion: 2
 guid: 835907f6012502e47a2fcea9c389c150
-timeCreated: 1548165847
-licenseType: Free
+timeCreated: 1548395647
+licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
-    21300000: "006\u706B-P_0"
-    21300002: "006\u706B-P_1"
+    21300000: 006Fire_Head_small
+    21300002: 006Fire_head_big
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -72,7 +72,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "006\u706B-P_0"
+      name: 006Fire_Head_small
       rect:
         serializedVersion: 2
         x: 161
@@ -85,7 +85,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: "006\u706B-P_1"
+      name: 006Fire_head_big
       rect:
         serializedVersion: 2
         x: 146
@@ -93,7 +93,7 @@ TextureImporter:
         width: 199
         height: 184
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
