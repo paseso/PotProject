@@ -89,8 +89,8 @@ public class AlchemyUIController : MonoBehaviour {
 
             ItemFrame = gameObject.transform.Find("SelectFrame").gameObject;
             PotFrame = gameObject.transform.Find("AlchemyPotFrame").gameObject;
-            mtr_0 = PotFrame.transform.Find("Material/material_0").gameObject.transform.GetChild(0).gameObject;
-            mtr_1 = PotFrame.transform.Find("Material/material_1").gameObject.transform.GetChild(0).gameObject;
+            mtr_0 = PotFrame.transform.Find("AlchemyPotin/Material/material_0").gameObject.transform.GetChild(0).gameObject;
+            mtr_1 = PotFrame.transform.Find("AlchemyPotin/Material/material_1").gameObject.transform.GetChild(0).gameObject;
             AlphaSprite = Resources.Load<Sprite>("Textures/UI/AlphaImage");
         }
         catch (Exception e)
@@ -210,8 +210,8 @@ public class AlchemyUIController : MonoBehaviour {
     /// <param name="num"></param>
     public void deleteItemBox(int num)
     {
-        Debug.Log("Boxitem = " + Box_item[num].GetComponent<Image>());
-        if (Box_item[num].GetComponent<Image>().sprite == AlphaSprite)
+        Debug.Log("Boxitem = " + Box_item[0]);
+        if (Box_item[num].GetComponent<Image>().sprite == AlphaSprite || Box_item[num].GetComponent<Image>().sprite == null)
             return;
         //画像を消す
         Box_item[num].GetComponent<Image>().sprite = AlphaSprite;
