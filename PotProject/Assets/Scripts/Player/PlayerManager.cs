@@ -121,9 +121,10 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>{
     {
         set
         {
+            Debug.Log("1Sword type = " + value);
             status.swordtype = value;
             player_ctr.SwordTypeChange(value);
-            Debug.Log("Sword type = " + value);
+            Debug.Log("2Sword type = " + value);
         }
     }
 

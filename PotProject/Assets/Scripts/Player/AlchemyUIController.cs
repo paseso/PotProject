@@ -210,6 +210,7 @@ public class AlchemyUIController : MonoBehaviour {
     /// <param name="num"></param>
     public void deleteItemBox(int num)
     {
+        Debug.Log("Boxitem = " + Box_item[num].GetComponent<Image>());
         if (Box_item[num].GetComponent<Image>().sprite == AlphaSprite)
             return;
         //画像を消す

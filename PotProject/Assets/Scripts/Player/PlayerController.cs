@@ -337,7 +337,6 @@ public class PlayerController : MonoBehaviour {
                 status.PlayerAttack = 2;
                 break;
         }
-        status.swordtype = s_type;
     }
 
     /// <summary>
