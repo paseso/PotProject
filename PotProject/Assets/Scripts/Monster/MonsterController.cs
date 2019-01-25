@@ -150,7 +150,8 @@ public class MonsterController : MonoBehaviour
 
         GameObject item = Instantiate(Resources.Load<GameObject>(itemFolder + ItemList[status.type]));
         item.transform.SetParent(dropPos.transform);
-        dropPos.AddComponent<DropItemTimer>();
+        item.transform.position = dropPos.transform.position;
+        item.AddComponent<DropItemTimer>();
         
         resPoint.GetComponent<MonsterResporn>().CountFlag = true;
         Destroy(gameObject);
