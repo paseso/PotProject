@@ -46,7 +46,9 @@ public class MapCreator : MonoBehaviour
     {
         if (!this.Map)
         {
+            #if UNITY_EDITOR
             EditorUtility.DisplayDialog("Error", "マップデータがセットされていません", "OK");
+            #endif
             return;
         }
         //  配列の長さを取得

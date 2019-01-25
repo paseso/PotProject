@@ -142,6 +142,11 @@ public class MonsterController : MonoBehaviour
         item.AddComponent<DropItemMove>();
         item.transform.SetParent(transform.parent.transform);
         item.transform.localPosition = transform.localPosition;
+
+        GameObject resPoint = Instantiate(Resources.Load<GameObject>("Prefabs/Monsters/MResPos"));
+        resPoint.transform.SetParent(transform.parent.transform);
+        resPoint.transform.localPosition = transform.localPosition;
+        resPoint.GetComponent<MonsterResporn>().MType = status.type;
         Destroy(gameObject);
     }
 }
