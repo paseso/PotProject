@@ -7,7 +7,7 @@ using DG.Tweening;
 public class TitleController : MonoBehaviour
 {
     [SerializeField]
-    private GameObject CharaObject;
+    private GameObject CharaObject,PotObject;
     [SerializeField]
     private GameObject logoObject;
     private FadeManager fade_m;
@@ -62,6 +62,8 @@ public class TitleController : MonoBehaviour
         anim.SetBool("isLadderUp", false);
         anim.SetBool("isLeftGetItem", false);
         anim.SetBool("isRightGetItem", false);
+        Animator potanim = PotObject.GetComponent<Animator>();
+        potanim.SetBool("isIdle", true);
     }
 
     /// <summary>
