@@ -43,6 +43,11 @@ public class PlayerController : MonoBehaviour {
     //アイテムボックスがMaxかどうか
     private bool _itemMax = false;
 
+    public bool ItemMax
+    {
+        get { return _itemMax; }
+    }
+
     public bool GetAlchemyUIFlag
     {
         get { return alchemyUIFlag; }

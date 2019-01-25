@@ -60,6 +60,11 @@ public class BringCollider : MonoBehaviour {
     {
         if (!_setTarget)
             return;
+        if (player_ctr.ItemMax)
+        {
+            //UIアニメーション
+            return;
+        }
         //アイテムを拾う
         //プレイヤーの操作制限
         player_ctr.AllCommandActive = false;
@@ -85,6 +90,19 @@ public class BringCollider : MonoBehaviour {
             target = col.gameObject;
             col.gameObject.transform.GetChild(0).gameObject.SetActive(true);
             _setTarget = true;
+            //アイテムボックスが最大数だった時
+            if (player_ctr.ItemMax)
+            {
+                //バツUIを出す処理
+                if (!col.gameObject.transform.GetChild(0).GetChild(0).gameObject.activeSelf)
+                    col.gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+            }
+            else
+            {
+                //バツUIを消す処理
+                if (col.gameObject.transform.GetChild(0).GetChild(0).gameObject.activeSelf)
+                    col.gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+            }
         }
     }
 
