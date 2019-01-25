@@ -217,6 +217,7 @@ public class PlayerController : MonoBehaviour {
         }
         else
         {
+            _itemMax = false;
             status.ItemList.Add(Item_Id);
         }
     }

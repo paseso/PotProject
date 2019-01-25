@@ -40,6 +40,7 @@ public class AlchemyUIController : MonoBehaviour {
     private GameObject ItemFrame;
     private GameObject PotFrame;
     private GameObject PotMain;
+    private GameObject ChooseObj;
     //---錬金に使う素材欄のオブジェクト---------
     private GameObject mtr_0;
     private GameObject mtr_1;
@@ -66,6 +67,14 @@ public class AlchemyUIController : MonoBehaviour {
     private int RotationCount = 0;
     //------------------------------------------
 
+    //捨てる捨てないのobjectがでてるかでてないかの判定
+    private bool _chooseWindow = false;
+
+    public bool ChooseWindow
+    {
+        get { return _chooseWindow; }
+    }
+
     private int nowAlchemyItem;
     public int getNowAlchemyItem
     {
@@ -87,6 +96,8 @@ public class AlchemyUIController : MonoBehaviour {
             crossAxisdown = move_ctr.gameObject.GetComponent<CrossAxisDown>();
             alchemy_ctr = GameObject.FindObjectOfType<AlchemyController>();
 
+            ChooseObj = gameObject.transform.Find("ThrowChoose").gameObject;
+            ChooseObj.SetActive(false);
             ItemFrame = gameObject.transform.Find("SelectFrame").gameObject;
             PotFrame = gameObject.transform.Find("AlchemyPotFrame").gameObject;
             mtr_0 = PotFrame.transform.Find("AlchemyPotin/Material/material_0").gameObject.transform.GetChild(0).gameObject;
@@ -99,7 +110,7 @@ public class AlchemyUIController : MonoBehaviour {
         }
         nowAlchemyItem = 0;
         nowBox = 0;
-
+        _chooseWindow = false;
         setItembox();
         setItemImageList();
         StartCreateItemBox();
@@ -205,17 +216,53 @@ public class AlchemyUIController : MonoBehaviour {
     }
 
     /// <summary>
+    /// アイテムを捨てるかどうか選択するUIを表示処理
+    /// </summary>
+    public void ActiveThrowItemUI()
+    {
+        if (Box_item[nowBox].GetComponent<Image>().sprite == AlphaSprite)
+            return;
+        
+        ChooseObj.transform.Find("ThrowItem").GetComponent<Image>().sprite = Box_item[nowBox].GetComponent<Image>().sprite;
+        ChooseObj.SetActive(true);
+        _chooseWindow = true;
+    }
+
+    /// <summary>
+    /// 捨てるか捨てないかの選択処理
+    /// </summary>
+    /// <returns></returns>
+    public void ChooseThrow(bool _choose)
+    {
+        if (_choose)
+        {
+            deleteItemBox(getNowBox);
+        }
+        ChooseObj.SetActive(false);
+        _chooseWindow = false;
+    }
+
+    /// <summary>
     /// 取得した素材一覧にある素材を一つ削除
     /// </summary>
     /// <param name="num"></param>
     public void deleteItemBox(int num)
     {
-        Debug.Log("Boxitem = " + Box_item[0]);
         if (Box_item[num].GetComponent<Image>().sprite == AlphaSprite || Box_item[num].GetComponent<Image>().sprite == null)
             return;
         //画像を消す
         Box_item[num].GetComponent<Image>().sprite = AlphaSprite;
         Box_item[num] = null;
+
+        if (mtr_0 == Box_item[num])
+        {
+            ReSetMaterialsBox(0);
+        }
+        else if(mtr_1 == Box_item[num])
+        {
+            ReSetMaterialsBox(1);
+        }
+
         //持ち物リストからも削除
         player_ctr.deleteItemList(status.ItemList[num]);
         Materials_item.Remove(status.ItemList[num]);
@@ -250,7 +297,7 @@ public class AlchemyUIController : MonoBehaviour {
     /// </summary>
     private void ItemFrameMove()
     {
-        if (crossAxisdown.getKeepDown)
+        if (crossAxisdown.getKeepDown || _chooseWindow)
         {
             return;
         }
