@@ -216,6 +216,26 @@ public class AlchemyUIController : MonoBehaviour {
     }
 
     /// <summary>
+    /// 素材アイテム欄のリセット
+    /// </summary>
+    /// <param name="type"></param>
+    public void ReSetMaterialsBox(ItemStatus.Type type)
+    {
+        //押したボックスの画像に何か入っていれば通る
+        if (Box_item[nowBox].GetComponent<Image>().sprite == AlphaSprite)
+            return;
+        Box_item[nowBox].GetComponent<Image>().sprite = AlphaSprite;
+        //もし素材ボックスに2個アイテムを入れてた場合2個目の画像を1個目のボックスに移す
+        //Materials_itemがリストなので1個目をRemoveして2個目もRemoveしようとした場合エラーが起きるため
+        if (Materials_item.Count == 2)
+        {
+            mtr_0.GetComponent<Image>().sprite = mtr_1.GetComponent<Image>().sprite;
+            mtr_1.GetComponent<Image>().sprite = AlphaSprite;
+        }
+        Materials_item.Remove(type);
+    }
+
+    /// <summary>
     /// アイテムを捨てるかどうか選択するUIを表示処理
     /// </summary>
     public void ActiveThrowItemUI()
@@ -248,24 +268,24 @@ public class AlchemyUIController : MonoBehaviour {
     /// <param name="num"></param>
     public void deleteItemBox(int num)
     {
-        if (Box_item[num].GetComponent<Image>().sprite == AlphaSprite || Box_item[num].GetComponent<Image>().sprite == null)
+        if (Itembox[num].GetComponent<Image>().sprite == AlphaSprite)
             return;
-        //画像を消す
-        Box_item[num].GetComponent<Image>().sprite = AlphaSprite;
-        Box_item[num] = null;
 
-        if (mtr_0 == Box_item[num])
+        if (mtr_0.GetComponent<Image>().sprite == Itembox[num].GetComponent<Image>().sprite)
         {
             ReSetMaterialsBox(0);
         }
-        else if(mtr_1 == Box_item[num])
+        else if (mtr_1.GetComponent<Image>().sprite == Itembox[num].GetComponent<Image>().sprite)
         {
             ReSetMaterialsBox(1);
         }
+        //画像を消す
+        Itembox[num].GetComponent<Image>().sprite = AlphaSprite;
 
         //持ち物リストからも削除
+        if(Materials_item.Count > 0)
+            Materials_item.Remove(status.ItemList[num]);
         player_ctr.deleteItemList(status.ItemList[num]);
-        Materials_item.Remove(status.ItemList[num]);
     }
 
     /// <summary>
