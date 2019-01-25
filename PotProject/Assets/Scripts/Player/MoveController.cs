@@ -459,7 +459,6 @@ public class MoveController : MonoBehaviour
                 //錬金したアイテム使用
                 if (player_ctr.getCreateItemList().Count <= 0)
                     return;
-                Debug.Log("アイテム使用");
                 player_ctr.UseAlchemyItem(alchemyUI_ctr.getNowAlchemyItem);
                 break;
 
@@ -498,7 +497,6 @@ public class MoveController : MonoBehaviour
             case ButtonType.CROSSX_RIGTH:
                 if (!player_ctr.GetAlchemyUIFlag)
                 {
-                    player_ctr.SwordTypeChange(player_ctr.GetSwordList[1]);
                     pManager.SetSwordType = player_ctr.GetSwordList[1];
                     return;
                 }
@@ -509,7 +507,6 @@ public class MoveController : MonoBehaviour
             case ButtonType.CROSSX_LEFT:
                 if (!player_ctr.GetAlchemyUIFlag)
                 {
-                    player_ctr.SwordTypeChange(player_ctr.GetSwordList[3]);
                     pManager.SetSwordType = player_ctr.GetSwordList[3];
                     return;
                 }

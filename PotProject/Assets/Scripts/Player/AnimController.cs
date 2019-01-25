@@ -586,7 +586,7 @@ public class AnimController : MonoBehaviour {
         Itemtarget.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
         Itemtarget.transform.DOMoveY(pot_anim.transform.position.y + 0.5f, 0.4f);
         PotAnimSetBool();
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.3f);
         //エフェクトとアイテムのオブジェクトはもう使わないので削除、フラグをfalseにする
         GetItemEndAnim(EffectObj);
         pot_anim.SetBool("isPotDown", false);
@@ -609,7 +609,7 @@ public class AnimController : MonoBehaviour {
     /// <param name="effect"></param>
     private void PotOnMoveAnim(GameObject effect)
     {
-        Itemtarget.transform.position = new Vector3(pot_anim.transform.position.x, pot_anim.transform.position.y - 10, Itemtarget.transform.position.z);
+        Itemtarget.transform.position = new Vector3(pot_anim.transform.position.x, pot_anim.transform.position.y + 2.5f, Itemtarget.transform.position.z);
         effect.transform.position = Itemtarget.transform.position;
         effect.SetActive(true);
         Itemtarget.SetActive(true);
@@ -628,5 +628,16 @@ public class AnimController : MonoBehaviour {
         anim.SetBool("isRightGetItem", false);
         anim.SetBool("isLeftGetItem", false);
         player_ctr.AllCommandActive = true;
+    }
+
+    /// <summary>
+    /// どこをおしても動かないようにする
+    /// </summary>
+    public void CommandStop()
+    {
+        if (player_ctr.AllCommandActive)
+            player_ctr.AllCommandActive = false;
+        else
+            player_ctr.AllCommandActive = true;
     }
 }

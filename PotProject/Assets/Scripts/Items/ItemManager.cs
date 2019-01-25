@@ -24,6 +24,7 @@ public struct ItemStatus {
         POWDER,
         FLOWER,
         SMOKESCREEN,
+        EXPLOSIVE,
     };
 
     public Type type;
