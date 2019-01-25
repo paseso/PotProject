@@ -55,6 +55,7 @@ GameObject:
   - component: {fileID: 114607191041872504}
   - component: {fileID: 61827206901391424}
   - component: {fileID: 114741770421411152}
+  - component: {fileID: 95779917823457656}
   m_Layer: 0
   m_Name: Collar
   m_TagString: Item
@@ -128,6 +129,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
+--- !u!95 &95779917823457656
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1849978789195786}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0a7701b67ec8b254fa58be1a96c7b96f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114607191041872504
 MonoBehaviour:
   m_ObjectHideFlags: 1

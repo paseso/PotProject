@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 114577327451140950}
   - component: {fileID: 61977130715123830}
   - component: {fileID: 114725010814288960}
+  - component: {fileID: 95970222641047660}
   m_Layer: 0
   m_Name: Clay_W
   m_TagString: Item
@@ -128,6 +129,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
+--- !u!95 &95970222641047660
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1807603486561172}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0a7701b67ec8b254fa58be1a96c7b96f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114577327451140950
 MonoBehaviour:
   m_ObjectHideFlags: 1

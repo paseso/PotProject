@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class FallBlock : MonoBehaviour {
     private string blockPrefab = ("Prefabs/GimmickTiles/FallBlockPrefab");
@@ -45,6 +46,8 @@ public class FallBlock : MonoBehaviour {
         if (createTime < fallTime) {
             createTime = fallTime * 2;
         }
+
+        StartCoroutine(Floating());
     }
 
     void Update() {
@@ -86,6 +89,18 @@ public class FallBlock : MonoBehaviour {
             yield return new WaitForSeconds(0.05f);
             transform.localPosition = new Vector2(transform.localPosition.x - 0.05f, transform.localPosition.y);
             yield return new WaitForSeconds(0.05f);
+        }
+    }
+
+    IEnumerator Floating()
+    {
+        while (!fallFlag)
+        {
+            transform.DOMoveY(transform.position.y + 0.1f, 0.5f).SetEase(Ease.Linear);
+            yield return new WaitForSeconds(0.5f);
+            transform.DOMoveY(transform.position.y - 0.1f, 0.5f).SetEase(Ease.Linear);
+            yield return new WaitForSeconds(0.5f);
+            yield return null;
         }
     }
 }
