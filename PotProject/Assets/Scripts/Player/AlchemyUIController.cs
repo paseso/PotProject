@@ -29,7 +29,7 @@ public class AlchemyUIController : MonoBehaviour {
 
     //錬金UIにある持っている素材一覧の欄オブジェクト
     private GameObject[] Itembox;
-
+    //錬金してできたアイテムボックス欄のオブジェクト
     private GameObject[] createItembox;
     //アイテムの画像
     private Sprite[] ItemImage;
@@ -385,14 +385,15 @@ public class AlchemyUIController : MonoBehaviour {
     /// <summary>
     /// 錬金UIにある錬金されたアイテムボックスに画像をセットする処理
     /// </summary>
-    private void setCreateItemUI()
+    private void setCreateItemUI(CreateItemStatus.Type createType)
     {
-        if (player_ctr.getCreateItemList().Count == 0)
-            return;
-        for(int i = 0; i < player_ctr.getCreateItemList().Count; i++)
+        for(int i = 0; i < 3; i++)
         {
             CreateItemStatus.Type type = player_ctr.getCreateItemList()[i];
-            createItembox[i].GetComponent<Image>().sprite = alchemy_ctr.getCreateItem[(int)type];
+            if(type == null)
+                createItembox[i].GetComponent<Image>().sprite = AlphaSprite;
+            else
+                createItembox[i].GetComponent<Image>().sprite = alchemy_ctr.getCreateItem[(int)type];
         }
     }
 

@@ -6,8 +6,14 @@ public class LegCollider : MonoBehaviour {
     private PlayerController player_ctr;
     private PlayerStatus status;
     private bool landingFlag = false;
+    //タイル一個分の大きさ
+    private const float TILESIZE = 2;
     float jumpPos;
     int onGroundCount;
+    //落下で即死する高さ
+    private int deadFallHeight = 3;
+    //落下でダメージを受ける高さ
+    private int damageFallHeight = 2;
 
     /// <summary>
     /// ジャンプフラグ(落下判定)
@@ -19,9 +25,14 @@ public class LegCollider : MonoBehaviour {
         {
             if (value)
             {
-                if (jumpPos - transform.position.y >= 2.5f)
+                if (jumpPos - transform.position.y >= TILESIZE * deadFallHeight)
                 {
-                    player_ctr.HPDown(2);
+                    player_ctr.HPDown(6);
+                    jumpPos = transform.position.y;
+                }
+                else if (jumpPos - transform.position.y >= TILESIZE * damageFallHeight)
+                {
+                    player_ctr.HPDown(1);
                     jumpPos = transform.position.y;
                 }
                 landingFlag = value;
@@ -141,5 +152,10 @@ public class LegCollider : MonoBehaviour {
                     player_ctr.ChangeLayer();
             }
         }
+    }
+
+    private void OnTriggerStay2D(Collider2D col)
+    {
+        
     }
 }
