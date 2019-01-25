@@ -64,6 +64,8 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
         if (FadeManager.Instance != null)
         {
             FadeManager.Instance.LoadScene(0, 1f);
+            isPause = false;
+            pauseCanvasObj.SetActive(false);
         }
         else if (FadeManager.Instance == null)
         {
@@ -76,6 +78,8 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
         if (FadeManager.Instance != null)
         {
             FadeManager.Instance.LoadScene(1, 1f);
+            isPause = false;
+            pauseCanvasObj.SetActive(false);
         }
         else if (FadeManager.Instance == null)
         {
@@ -86,9 +90,9 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
     public void EscapeGame()
     {
     #if UNITY_EDITOR
-            EditorApplication.isPlaying = false;
+        EditorApplication.isPlaying = false;
     #elif UNITY_STANDALONE
-            Application.Quit();
+        Application.Quit();
     #endif
     }
 
