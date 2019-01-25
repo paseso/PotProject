@@ -49,9 +49,16 @@ public class LegCollider : MonoBehaviour {
         _legFloor = false;
 	}
 
+    /// <summary>
+    /// ジャンプ判定
+    /// </summary>
+    /// <param name="col">足元のObject</param>
+    /// <returns></returns>
     public bool JumpCheck(GameObject col)
     {
-        if (col.gameObject.layer == 2) { return false; }
+        
+        if (col.GetComponent<DropItemManager>()) { return false; }// Item
+        if (col.gameObject.layer == 2) { return false; }// BackGround
         if (col.GetComponent<KeyBlockCol>()) { return false; }
         if (!col.GetComponent<GimmickInfo>()) { return true; }
         GimmickInfo info = col.GetComponent<GimmickInfo>();
@@ -80,7 +87,6 @@ public class LegCollider : MonoBehaviour {
             isLanding = true;
         }
         
-        
         if (move_ctr.Jumping)
         {
             move_ctr.setJumping = false;
@@ -90,11 +96,19 @@ public class LegCollider : MonoBehaviour {
             _legFloor = true;
         }
 
+        if(col.gameObject.layer == LayerMask.NameToLayer("Block"))
+        {
+            transform.parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
+
         if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer") && col.gameObject.layer == LayerMask.NameToLayer("Block")) {
             
             player_ctr.ChangeLayer();
             move_ctr.InLadderCount = 0;
         }
+
+        
+
         if (col.gameObject.layer == LayerMask.NameToLayer("Block")) {
             player_ctr.OnBlock = col.gameObject;
         }

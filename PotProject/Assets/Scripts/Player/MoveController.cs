@@ -436,7 +436,6 @@ public class MoveController : MonoBehaviour
                 {
 
                     if(pManager.Status.swordtype == PlayerStatus.SWORDTYPE.KEY && keyDoorFlag) {
-                        Debug.Log("Call!!!!");
                         GameObject keySwitch = GameObject.FindGameObjectWithTag("KeyDoor");
                         keySwitch.GetComponent<GimmickController>().UnlockKeyDoor();
                         return;

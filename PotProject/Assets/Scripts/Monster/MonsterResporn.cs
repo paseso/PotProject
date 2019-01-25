@@ -13,7 +13,7 @@ public class MonsterResporn : MonoBehaviour {
         {MonsterStatus.MonsterType.CLAY_W,"Slime_W"},
         {MonsterStatus.MonsterType.CLOUD,"Cloud"},
         {MonsterStatus.MonsterType.FAIRY,"Fairy"},
-        {MonsterStatus.MonsterType.HAMSTAR,"Hamster"},
+        {MonsterStatus.MonsterType.HAMSTAR,"Hamstar"},
         {MonsterStatus.MonsterType.HARB,"Grass"},
         {MonsterStatus.MonsterType.LION,"Lion"},
         {MonsterStatus.MonsterType.LUKEWARM,"Lukewarm"},
