@@ -232,9 +232,10 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     public void deleteItemList(List<ItemStatus.Type> items)
     {
-        foreach (var _item in items)
+        status.ItemList.Remove(items[0]);
+        if (items.Count == 2)
         {
-            status.ItemList.Remove(_item);
+            status.ItemList.Remove(items[1]);
         }
     }
 

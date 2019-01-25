@@ -304,9 +304,14 @@ public class MoveController : MonoBehaviour
         switch (btn)
         {
             case ButtonType.JUMP:
+                bool _onece = true;
                 if (alchemyUI_ctr.ChooseWindow)
                 {
-                    alchemyUI_ctr.ChooseThrow(false);
+                    if (_onece)
+                    {
+                        alchemyUI_ctr.ChooseThrow(false);
+
+                    }
                     return;
                 }
                 if (player_ctr.GetAlchemyUIFlag)
@@ -562,7 +567,7 @@ public class MoveController : MonoBehaviour
 
         if (!player_ctr.IsCommandActive) { return; }
 
-        if (Input.GetButton("Jump") || Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space)) //Input.GetButton("Jump")
         {//×ボタン or キーボードの「W」
             Move(ButtonType.JUMP);
         }

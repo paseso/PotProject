@@ -9,7 +9,6 @@ public class BringCollider : MonoBehaviour {
     private GameObject target;
     private bool _setTarget = false;
     private AnimController anim_ctr;
-    private bool _onece = false;
 
     public bool getSetTarget
     {
@@ -22,7 +21,6 @@ public class BringCollider : MonoBehaviour {
     void Start ()
     {
         _setTarget = false;
-        _onece = false;
         move_ctr = gameObject.transform.parent.GetComponentInChildren<MoveController>();
         pot_ctr = GameObject.FindObjectOfType<PotController>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
@@ -60,9 +58,10 @@ public class BringCollider : MonoBehaviour {
     {
         if (!_setTarget)
             return;
-        if (player_ctr.ItemMax)
+        if (player_ctr.getItemList().Count >= 3)
         {
             //UIアニメーション
+            Debug.Log("マックス");
             return;
         }
         //アイテムを拾う
@@ -92,7 +91,7 @@ public class BringCollider : MonoBehaviour {
             col.gameObject.transform.GetChild(0).gameObject.SetActive(true);
             _setTarget = true;
             //アイテムボックスが最大数だった時
-            if (player_ctr.ItemMax)
+            if (player_ctr.getItemList().Count >= 3)
             {
                 //バツUIを出す処理
                 if (!col.gameObject.transform.GetChild(0).GetChild(0).gameObject.activeSelf)
