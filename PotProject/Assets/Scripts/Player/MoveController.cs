@@ -590,11 +590,11 @@ public class MoveController : MonoBehaviour
 
             rig.velocity = new Vector2(0, rig.velocity.y);
         }
-        if (Input.GetAxis("Horizontal_ps4") >= 0.15f || Input.GetKey(KeyCode.W))
+        if (Input.GetAxis("Horizontal_ps4") >= 0.8f || Input.GetKey(KeyCode.W))
         {
             Move(ButtonType.LEFTJOYSTICK_UP);
         }
-        else if (Input.GetAxis("Horizontal_ps4") <= -0.15f || Input.GetKey(KeyCode.S))
+        else if (Input.GetAxis("Horizontal_ps4") <= -0.8f || Input.GetKey(KeyCode.S))
         {
             Move(ButtonType.LEFTJOYSTICK_DOWN);
         }

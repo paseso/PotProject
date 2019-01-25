@@ -71,6 +71,7 @@ public struct MonsterStatus
 public class MonsterController : MonoBehaviour
 {
     private string itemFolder = "Prefabs/Items/Drop/";
+    private GameObject resPoint;
 
     [SerializeField]
     private MonsterStatus status = new MonsterStatus();
@@ -113,6 +114,11 @@ public class MonsterController : MonoBehaviour
     void Start()
     {
         status = GetComponent<MonsterController>().Status;
+        resPoint = new GameObject(Status.type.ToString() + "Resporn");
+        resPoint.transform.SetParent(transform.parent);
+        resPoint.transform.position = transform.position;
+        resPoint.AddComponent<MonsterResporn>();
+        resPoint.GetComponent<MonsterResporn>().MType = status.type;
     }
 
     /// <summary>
@@ -138,15 +144,15 @@ public class MonsterController : MonoBehaviour
             return;
         }
 
-        GameObject item = Instantiate(Resources.Load<GameObject>(itemFolder + ItemList[status.type]));
-        item.AddComponent<DropItemMove>();
-        item.transform.SetParent(transform.parent.transform);
-        item.transform.localPosition = transform.localPosition;
+        GameObject dropPos = new GameObject("DropPos");
+        dropPos.transform.SetParent(transform.parent.transform);
+        dropPos.transform.position = transform.position;
 
-        GameObject resPoint = Instantiate(Resources.Load<GameObject>("Prefabs/Monsters/MResPos"));
-        resPoint.transform.SetParent(transform.parent.transform);
-        resPoint.transform.localPosition = transform.localPosition;
-        resPoint.GetComponent<MonsterResporn>().MType = status.type;
+        GameObject item = Instantiate(Resources.Load<GameObject>(itemFolder + ItemList[status.type]));
+        item.transform.SetParent(dropPos.transform);
+        dropPos.AddComponent<DropItemTimer>();
+        
+        resPoint.GetComponent<MonsterResporn>().CountFlag = true;
         Destroy(gameObject);
     }
 }
