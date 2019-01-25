@@ -27,7 +27,8 @@ public class MonsterResporn : MonoBehaviour {
     private MonsterStatus.MonsterType mType;
 
     private string folderPass = "Prefabs/Monsters/";
-    private float createTime = 10;
+    [SerializeField]
+    private float createTime;
     private float time;
 
     /// <summary>
