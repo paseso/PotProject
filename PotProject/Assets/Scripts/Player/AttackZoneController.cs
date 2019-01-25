@@ -66,6 +66,12 @@ public class AttackZoneController : MonoBehaviour {
     public void Attack()
     {
         if (Attack_Target == null) { return; }
+
+        if (Attack_Target.GetComponent<GimmickController>()) {
+            Attack_Target.GetComponent<GimmickController>().BakeTree(Attack_Target);
+            return;
+        }
+
         MonsterController MonsterController = Attack_Target.GetComponent<MonsterController>();
         MonsterController.Damage(pManager.Status.PlayerAttack);
     }
