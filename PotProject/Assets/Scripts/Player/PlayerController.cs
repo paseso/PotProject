@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour {
     private GameObject[] hearts;
 
     private GameObject HeartObject;
-    private GameObject[] HeartChild;
     private int maxHP;
     private const int maxItemBox = 3;
 
@@ -133,7 +132,6 @@ public class PlayerController : MonoBehaviour {
         {
             hearts[i].SetActive(true);
         }
-        getHeartChildren();
     }
 
     /// <summary>
@@ -162,19 +160,6 @@ public class PlayerController : MonoBehaviour {
             }
             swordList[i] = type;
             break;
-        }
-    }
-
-    /// <summary>
-    /// HaertChildに子供を入れる処理
-    /// </summary>
-    private void getHeartChildren()
-    {
-       HeartChild = new GameObject[maxHP];
-        int num = maxHP - 1;
-       for(int i = 0; i < maxHP; i++)
-        {
-            HeartChild[num - i] = HeartObject.transform.GetChild(i).gameObject;
         }
     }
 

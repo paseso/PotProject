@@ -13,8 +13,15 @@ public class ItemController : MonoBehaviour {
 
     private void Start()
     {
-        playerController = GameObject.Find("Controller").GetComponent<PlayerController>();
-        BrotherObj = FindObjectOfType<AnimController>().gameObject;
+        playerController = GetComponent<PlayerController>();
+        BrotherObj = FindObjectOfType<MoveController>().gameObject;
+    }
+
+
+    void Update() {
+        if (Input.GetMouseButtonDown(0)) {
+            CreateBarrier();
+        }
     }
 
     /// <summary>

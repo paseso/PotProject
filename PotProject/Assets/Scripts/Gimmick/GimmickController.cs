@@ -16,44 +16,34 @@ public class GimmickController :MonoBehaviour {
     private BossController bossCon;
     private PlayerController pController;
     private PlayerManager pManager;
+    private StageController.Direction direction;
     private int inFireZone = 0;
 
-    public bool switchFlag() {
-        if (gInfo.type == GimmickInfo.GimmickType.WATER) { return false; }
-        if (gInfo.type == GimmickInfo.GimmickType.WATER) { return false; }
-        if (gInfo.type == GimmickInfo.GimmickType.WATER) { return false; }
-        if (gInfo.type == GimmickInfo.GimmickType.WATER) { return false; }
-        return true;
-    }
-
-    private void Awake() {
-        if (GameObject.Find("Controller") != null) {
+    void Awake() {
+        if (GameObject.Find("Controller")) {
             sController = GameObject.Find("Controller").GetComponent<StageController>();
+            pController = GameObject.Find("Controller").GetComponent<PlayerController>();
         }
 
-        if (FindObjectOfType<PlayerManager>()) {
-            pManager = FindObjectOfType<PlayerManager>();
-        }       
-    }
-
-    void Start() {
-        gInfo = GetComponent<GimmickInfo>();
-        if (gInfo.type == GimmickInfo.GimmickType.WATER) {
-            sController.Waters.Add(gameObject);
+        if (GameObject.Find("PlayerStatus")) {
+            pManager = GameObject.Find("PlayerStatus").GetComponent<PlayerManager>();
         }
-
         if (FindObjectOfType<BossController>()) {
             bossCon = FindObjectOfType<BossController>();
         }
 
-        mMapController = FindObjectOfType<MiniMapController>();
-        mInfo = transform.root.GetComponent<MapInfo>();
-
-        if (switchFlag()) {
-            pController = GameObject.Find("Controller").GetComponent<PlayerController>();
+        if (GameObject.Find("MiniMap")) {
+            mMapController = GameObject.Find("MiniMap").GetComponent<MiniMapController>();
         }
+        mInfo = transform.root.GetComponent<MapInfo>();
+        gInfo = GetComponent<GimmickInfo>();
     }
 
+    void Start() {
+        if (gInfo.type == GimmickInfo.GimmickType.WATER) {
+            sController.Waters.Add(gameObject);
+        }  
+    }
 
     /// <summary>
     /// あたり判定(OnCollisionEnter)

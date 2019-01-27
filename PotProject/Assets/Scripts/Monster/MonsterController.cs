@@ -71,6 +71,7 @@ public struct MonsterStatus
 public class MonsterController : MonoBehaviour
 {
     private string itemFolder = "Prefabs/Items/Drop/";
+    private MoveController mController;
     private GameObject resPoint;
 
     [SerializeField]
@@ -113,6 +114,7 @@ public class MonsterController : MonoBehaviour
 
     void Start()
     {
+        mController = FindObjectOfType<MoveController>();
         status = GetComponent<MonsterController>().Status;
         resPoint = new GameObject(Status.type.ToString() + "Resporn");
         resPoint.transform.SetParent(transform.parent);
@@ -133,8 +135,18 @@ public class MonsterController : MonoBehaviour
             DropItem(status);
             return;
         }
+
+        KnockBack(mController.direc);
+    }
+
+    public void KnockBack(MoveController.Direction dir) {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        rb.AddForce(new Vector2(knockback.x, rb.velocity.y + knockback.y), ForceMode2D.Impulse);
+        Vector2 knock = new Vector2(knockback.x, knockback.y);
+        
+        if (dir == MoveController.Direction.LEFT) {
+            knock.x *= -1;
+        }
+        rb.AddForce(knock, ForceMode2D.Impulse);
     }
 
     public void DropItem(MonsterStatus status)
