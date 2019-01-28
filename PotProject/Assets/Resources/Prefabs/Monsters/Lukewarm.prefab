@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114108504515511874}
   - component: {fileID: 61594402751792086}
   - component: {fileID: 50409640570342562}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Lukewarm
   m_TagString: Monster
   m_Icon: {fileID: 0}
@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   status:
-    HP: 2
-    ATK: 2
+    hp: 0
+    atk: 0
     barrier: 0
     type: 7
     attribute: 0

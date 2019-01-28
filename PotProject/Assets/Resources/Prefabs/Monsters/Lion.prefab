@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114511289988097372}
   - component: {fileID: 61550687601788092}
   - component: {fileID: 50443520142864354}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Lion
   m_TagString: Monster
   m_Icon: {fileID: 0}
@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   status:
-    HP: 3
-    ATK: 3
+    hp: 0
+    atk: 0
     barrier: 0
     type: 1
     attribute: 3
