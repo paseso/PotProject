@@ -85,6 +85,13 @@ public class BringCollider : MonoBehaviour {
             target = col.gameObject;
             col.gameObject.transform.GetChild(0).gameObject.SetActive(true);
             _setTarget = true;
+            //アイテム拾うアニメーション中は×UIを非表示
+            if(anim_ctr.animstate.animtype == AnimController.AnimState.AnimType.LEFT_GETITEM || 
+                anim_ctr.animstate.animtype == AnimController.AnimState.AnimType.RIGHT_GETITEM)
+            {
+                col.gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+                return;
+            }
             //アイテムボックスが最大数だった時
             if (player_ctr.getItemList().Count >= 3)
             {
