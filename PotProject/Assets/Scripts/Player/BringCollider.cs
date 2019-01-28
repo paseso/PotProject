@@ -10,11 +10,6 @@ public class BringCollider : MonoBehaviour {
     private bool _setTarget = false;
     private AnimController anim_ctr;
 
-    public bool getSetTarget
-    {
-        get { return _setTarget; }
-    }
-
     private MoveController.Direction direction;
 
     // Use this for initialization

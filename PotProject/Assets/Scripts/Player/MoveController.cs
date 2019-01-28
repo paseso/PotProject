@@ -143,7 +143,7 @@ public class MoveController : MonoBehaviour
         get { return _onCrossDown; }
     }
 
-    public bool OnCrossRigtht
+    public bool OnCrossRight
     {
         get { return _onCrossRight; }
     }
@@ -451,11 +451,11 @@ public class MoveController : MonoBehaviour
                 else
                 {
 
-                    if(pManager.Status.swordtype == PlayerStatus.SWORDTYPE.KEY && keyDoorFlag) {
-                        GameObject keySwitch = GameObject.FindGameObjectWithTag("KeyDoor");
-                        keySwitch.GetComponent<GimmickController>().UnlockKeyDoor();
-                        return;
-                    }
+                    //if(player_ctr.getCreateItemList(CreateItemStatus.Type.Key) && keyDoorFlag) {
+                    //    GameObject keySwitch = GameObject.FindGameObjectWithTag("KeyDoor");
+                    //    keySwitch.GetComponent<GimmickController>().UnlockKeyDoor();
+                    //    return;
+                    //}
 
                     if(direc == Direction.LEFT)
                         anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.SORDATTACK_LEFT);

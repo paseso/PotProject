@@ -52,7 +52,7 @@ public class CrossAxisDown : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (move_ctr.OnCrossUp || move_ctr.OnCrossDown || move_ctr.OnCrossRigtht || move_ctr.OnCrossLeft)
+        if (move_ctr.OnCrossUp || move_ctr.OnCrossDown || move_ctr.OnCrossRight || move_ctr.OnCrossLeft)
         {
             afterValue = 1;
         }
@@ -88,7 +88,7 @@ public class CrossAxisDown : MonoBehaviour {
         {
             Bit_flag_cross = CrossDownInput;
         }
-        else if (move_ctr.OnCrossRigtht)
+        else if (move_ctr.OnCrossRight)
         {
             Bit_flag_cross = CrossRightInput;
         }
