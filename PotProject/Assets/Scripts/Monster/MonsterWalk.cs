@@ -10,8 +10,13 @@ public class MonsterWalk : MonoBehaviour {
     private float time;
     private int direction;
 
-	// Use this for initialization
-	void Start () {
+    public float Distance
+    {
+        get { return distance; }
+    }
+
+    // Use this for initialization
+    void Start () {
         firstPos = transform.localPosition;
         
         randTime = Random.Range(1, 5);
@@ -30,10 +35,10 @@ public class MonsterWalk : MonoBehaviour {
         if(direction == 0) {
             int dir = Random.Range(0, 2);
             if (dir == 0) {
-                transform.DOLocalMoveX(firstPos.x + distance, 1f).SetEase(Ease.Linear);
+                transform.DOLocalMoveX(firstPos.x + Distance, 1f).SetEase(Ease.Linear);
                 direction = 1;
             } else {
-                transform.DOLocalMoveX(firstPos.x - distance, 1f).SetEase(Ease.Linear);
+                transform.DOLocalMoveX(firstPos.x - Distance, 1f).SetEase(Ease.Linear);
                 direction = -1;
             }
         } else {
