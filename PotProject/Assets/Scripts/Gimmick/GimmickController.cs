@@ -9,6 +9,8 @@ using DG.Tweening;
 /// </summary>
 [RequireComponent(typeof(GimmickInfo))]
 public class GimmickController :MonoBehaviour {
+
+    // 各クラス-----------------------
     private StageController sController;
     private MapInfo mInfo;
     private GimmickInfo gInfo;
@@ -16,8 +18,10 @@ public class GimmickController :MonoBehaviour {
     private BossController bossCon;
     private PlayerController pController;
     private PlayerManager pManager;
-    private StageController.Direction direction;
-    private int inFireZone = 0;
+    // -------------------------------
+
+    // マップの位置
+    private Vector2 mapPos;
 
     void Awake() {
         if (GameObject.Find("Controller")) {
@@ -35,11 +39,13 @@ public class GimmickController :MonoBehaviour {
         if (GameObject.Find("MiniMap")) {
             mMapController = GameObject.Find("MiniMap").GetComponent<MiniMapController>();
         }
-        mInfo = transform.root.GetComponent<MapInfo>();
-        gInfo = GetComponent<GimmickInfo>();
+        
     }
 
     void Start() {
+
+        mInfo = transform.root.GetComponent<MapInfo>();
+        gInfo = GetComponent<GimmickInfo>();
         if (gInfo.type == GimmickInfo.GimmickType.WATER) {
             sController.Waters.Add(gameObject);
         }  
@@ -50,21 +56,9 @@ public class GimmickController :MonoBehaviour {
     /// </summary>
     /// <param name="col"></param>
     public void OnCollisionEnter2D(Collision2D col) {
-        MapInfo objInfo = col.transform.root.gameObject.GetComponent<MapInfo>();
+        MapInfo mInfo = col.transform.root.gameObject.GetComponent<MapInfo>();
         if (col.gameObject.layer != LayerMask.NameToLayer("Player")) { return; }
         switch (gInfo.type) {
-            case GimmickInfo.GimmickType.UP:
-                StartCoroutine(SrideCroutine(objInfo.MapNumX, StageController.Direction.UP));
-                break;
-            case GimmickInfo.GimmickType.DOWN:
-                StartCoroutine(SrideCroutine(objInfo.MapNumX, StageController.Direction.DOWN));
-                break;
-            case GimmickInfo.GimmickType.LEFT:
-                StartCoroutine(SrideCroutine(objInfo.MapNumY, StageController.Direction.LEFT));
-                break;
-            case GimmickInfo.GimmickType.RIGHT:
-                StartCoroutine(SrideCroutine(objInfo.MapNumY, StageController.Direction.RIGHT));
-                break;
             case GimmickInfo.GimmickType.ROCK:
                 RockDoorOpen();
                 break;
@@ -72,6 +66,29 @@ public class GimmickController :MonoBehaviour {
                 StartCoroutine(IsSpring());
                 break;
             default:
+                break;
+        }
+    }
+
+    /// <summary>
+    /// スライド処理（□で呼び出し）
+    /// </summary>
+    public void StartSride()
+    {
+        mapPos = new Vector2(mInfo.MapNumX, mInfo.MapNumY);
+        switch (gInfo.type)
+        {
+            case GimmickInfo.GimmickType.UP:
+                StartCoroutine(SrideCroutine((int)mapPos.x, StageController.Direction.UP));
+                break;
+            case GimmickInfo.GimmickType.DOWN:
+                StartCoroutine(SrideCroutine((int)mapPos.x, StageController.Direction.DOWN));
+                break;
+            case GimmickInfo.GimmickType.LEFT:
+                StartCoroutine(SrideCroutine((int)mapPos.y, StageController.Direction.LEFT));
+                break;
+            case GimmickInfo.GimmickType.RIGHT:
+                StartCoroutine(SrideCroutine((int)mapPos.y, StageController.Direction.RIGHT));
                 break;
         }
     }

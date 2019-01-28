@@ -54,7 +54,7 @@ public class LegCollider : MonoBehaviour {
     /// </summary>
     /// <param name="col">足元のObject</param>
     /// <returns></returns>
-    public bool JumpCheck(GameObject col)
+    bool JumpCheck(GameObject col)
     {
         if (col.GetComponent<DropItemManager>()) { return false; }// Item
         if (col.gameObject.layer == 2) { return false; }// BackGround
@@ -66,8 +66,23 @@ public class LegCollider : MonoBehaviour {
         return true;
     }
 
+    bool SwitchCheck(GameObject col)
+    {
+        if (!col.GetComponent<GimmickInfo>()) { return false; }
+        if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.UP) { return true; }
+        if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.DOWN) { return true; }
+        if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LEFT) { return true; }
+        if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.RIGHT) { return true; }
+        return false;
+    }
+
     private void OnTriggerEnter2D(Collider2D col) {
-        
+
+        if (SwitchCheck(col.gameObject))
+        {
+            move_ctr.switchGimmick = col.gameObject;
+        }
+
         if (col.gameObject.layer != 2 && JumpCheck(col.gameObject))
         {
             onGroundCount++;
@@ -123,7 +138,11 @@ public class LegCollider : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        
+        if (SwitchCheck(col.gameObject))
+        {
+            move_ctr.switchGimmick = null;
+        }
+
         if (col.gameObject.layer != 2 && JumpCheck(col.gameObject))
         {
             onGroundCount--;

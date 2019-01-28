@@ -25,6 +25,8 @@ public class MoveController : MonoBehaviour
 
     public int InLadderCount { get; set; }
 
+    public GameObject switchGimmick { get; set; }
+
     //左右動かしてもいいかどうか
     [HideInInspector]
     public bool _ActiveRightLeft = false;
@@ -464,6 +466,12 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.SQUARE:
                 _onSquare = true;
+                if(switchGimmick != null)
+                {
+                    GimmickController gCon = switchGimmick.GetComponent<GimmickController>();
+                    gCon.StartSride();
+                    return;
+                }
                 bringctr.SquereButton();
                 target = null;
                 break;

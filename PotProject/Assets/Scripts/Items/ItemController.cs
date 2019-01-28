@@ -17,13 +17,6 @@ public class ItemController : MonoBehaviour {
         BrotherObj = FindObjectOfType<MoveController>().gameObject;
     }
 
-
-    void Update() {
-        if (Input.GetMouseButtonDown(0)) {
-            CreateBarrier();
-        }
-    }
-
     /// <summary>
     /// 回復ポーション
     /// </summary>
