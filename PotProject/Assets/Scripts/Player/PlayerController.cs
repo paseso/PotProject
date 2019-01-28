@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour {
 
     private SpriteRenderer sword;
 
-    [SerializeField]
     private List<Sprite> swordSpriteList = new List<Sprite>();
 
     private GameObject[] hearts;
@@ -80,6 +79,11 @@ public class PlayerController : MonoBehaviour {
 
     private GameObject lifePoint;
 
+    private void Awake()
+    {
+        
+    }
+
     // Use this for initialization
     void Start ()
     {
@@ -87,7 +91,6 @@ public class PlayerController : MonoBehaviour {
         {
             pManager = FindObjectOfType<PlayerManager>();
             status = pManager.Status;
-            //status.ItemList = new List<ItemStatus.Type>();
             alchemy_ctr = FindObjectOfType<AlchemyController>();
             alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
             BrotherObj = FindObjectOfType<MoveController>().gameObject;
@@ -103,7 +106,6 @@ public class PlayerController : MonoBehaviour {
             Debug.Log(e + "がないんご");
         }
         StartHeart();
-        setSwordSpriteList();
         _itemMax = false;
         alchemyUIFlag = false;
 	}
@@ -139,12 +141,11 @@ public class PlayerController : MonoBehaviour {
     /// <summary>
     /// スタート時に剣のセットをする処理
     /// </summary>
-    public void setStartSwordList()
+    private void setStartSwordList()
     {
         //剣は最大４つまで持てる
         swordList = new PlayerStatus.SWORDTYPE[4];
         swordList[0] = PlayerStatus.SWORDTYPE.NORMAL;
-        sword = FindObjectOfType<AnimController>().transform.Find("Sword").GetComponent<SpriteRenderer>();
     }
 
     /// <summary>
@@ -254,10 +255,25 @@ public class PlayerController : MonoBehaviour {
     public void setCreateItemList(CreateItemStatus.Type type)
     {
         if (createItemBox.Count >= 3)
+        {
+            Debug.Log("アイテムがマックスです");
+            alchemyUI_ctr.ActiveThrowItemUI();
             return;
+        }
 
         createItemBox.Add(type);
         alchemy_ctr.setGeneratedImg(type);
+    }
+
+    /// <summary>
+    /// 錬金したアイテムボックスのアイテムを一つ消す処理
+    /// </summary>
+    /// <param name="type">消したいアイテムのタイプ</param>
+    public void deleteCreateItemList(CreateItemStatus.Type type)
+    {
+        if (createItemBox.Count <= 0)
+            return;
+        createItemBox.Remove(type);
     }
 
     /// <summary>
@@ -294,6 +310,9 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     private void setSwordSpriteList()
     {
+        if(sword == null)
+            sword = FindObjectOfType<AnimController>().transform.transform.Find("Sword").GetComponent<SpriteRenderer>();
+
         swordSpriteList = new List<Sprite>();
         for (int i = 0; i < 7; i++)
         {
@@ -307,38 +326,25 @@ public class PlayerController : MonoBehaviour {
     /// <summary>
     /// 剣の属性を変える処理
     /// </summary>
-    /// <param name="s_type">FIRE=火、</param>
+    /// <param name="s_type"></param>
     public void SwordTypeChange(PlayerStatus.SWORDTYPE s_type)
     {
+        if (swordSpriteList.Count == 0)
+            setSwordSpriteList();
         count++;
+        int s_num = (int)s_type;
+        sword.sprite = swordSpriteList[s_num];
         switch (s_type)
         {
             case PlayerStatus.SWORDTYPE.NORMAL:
-                sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.NORMAL];
-                status.PlayerAttack = 1;
-                break;
             case PlayerStatus.SWORDTYPE.FIRE:
-                sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.FIRE];
-                status.PlayerAttack = 1;
-                break;
             case PlayerStatus.SWORDTYPE.FROZEN:
-                sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.FROZEN];
-                status.PlayerAttack = 1;
-                break;
             case PlayerStatus.SWORDTYPE.DARK:
-                sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.DARK];
                 status.PlayerAttack = 1;
                 break;
             case PlayerStatus.SWORDTYPE.SPEAR:
-                sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.SPEAR];
-                status.PlayerAttack = 2;
-                break;
             case PlayerStatus.SWORDTYPE.AXE:
-                sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.AXE];
-                status.PlayerAttack = 2;
-                break;
             case PlayerStatus.SWORDTYPE.TORCH:
-                sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.TORCH];
                 status.PlayerAttack = 2;
                 break;
         }
@@ -372,6 +378,7 @@ public class PlayerController : MonoBehaviour {
         {
             alchemyUI_ctr.setItemboxImage();
             alchemyUI_ctr.ItemFrameReSet();
+            alchemyUI_ctr.setCreateItemUI();
             alchemyUI_ctr.ReSetMaterialsBox(status.ItemList);
             Pot_UI.DOLocalMoveX(0, 0.3f).SetEase(Ease.Linear);
             alchemyUIFlag = true;

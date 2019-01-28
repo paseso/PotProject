@@ -120,10 +120,8 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>{
     {
         set
         {
-            Debug.Log("1Sword type = " + value);
             status.swordtype = value;
             player_ctr.SwordTypeChange(value);
-            Debug.Log("2Sword type = " + value);
         }
     }
 
@@ -140,7 +138,7 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>{
     public void InitStatus()
     {
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
-        player_ctr.setStartSwordList();
+        //player_ctr.setStartSwordList();
         status.PlayerHP = status.GetMaxHP;
         status.PlayerAttack = 1;
         SetSwordType = PlayerStatus.SWORDTYPE.NORMAL;

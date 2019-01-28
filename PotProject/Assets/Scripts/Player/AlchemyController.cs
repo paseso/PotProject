@@ -122,7 +122,7 @@ public class AlchemyController : MonoBehaviour {
     /// </summary>
     private void setCreateItem()
     {
-        CreateItem = new Sprite[22];
+        CreateItem = new Sprite[(int)CreateItemStatus.Type.Key + 1];
         for(int i = 0; i < CreateItem.Length; i++)
         {
             CreateItem[i] = Resources.Load<Sprite>("Textures/CreateItems/CreateItem_" + i);
@@ -595,6 +595,9 @@ public class AlchemyController : MonoBehaviour {
 
                 break;
             case CreateItemStatus.Type.Watter:
+
+                break;
+            case CreateItemStatus.Type.Key:
 
                 break;
         }

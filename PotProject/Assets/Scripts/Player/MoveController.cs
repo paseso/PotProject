@@ -141,7 +141,7 @@ public class MoveController : MonoBehaviour
         get { return _onCrossDown; }
     }
 
-    public bool OnCrossRigtht
+    public bool OnCrossRight
     {
         get { return _onCrossRight; }
     }
