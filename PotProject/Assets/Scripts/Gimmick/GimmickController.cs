@@ -32,9 +32,6 @@ public class GimmickController :MonoBehaviour {
         if (GameObject.Find("PlayerStatus")) {
             pManager = GameObject.Find("PlayerStatus").GetComponent<PlayerManager>();
         }
-        if (FindObjectOfType<BossController>()) {
-            bossCon = FindObjectOfType<BossController>();
-        }
 
         if (GameObject.Find("MiniMap")) {
             mMapController = GameObject.Find("MiniMap").GetComponent<MiniMapController>();
@@ -48,7 +45,11 @@ public class GimmickController :MonoBehaviour {
         gInfo = GetComponent<GimmickInfo>();
         if (gInfo.type == GimmickInfo.GimmickType.WATER) {
             sController.Waters.Add(gameObject);
-        }  
+        }
+        if (FindObjectOfType<BossController>())
+        {
+            bossCon = FindObjectOfType<BossController>();
+        }
     }
 
     /// <summary>

@@ -150,7 +150,7 @@ public class MapCreator : MonoBehaviour
             //  背景オブジェクトの生成
             GameObject backGroundObject = new GameObject("BG");
             backGroundObject.layer = 2;
-            backGroundObject.AddComponent<MapChange>();
+            
             backGroundObject.AddComponent<SpriteRenderer>();
             backGroundObject.GetComponent<SpriteRenderer>().sortingOrder = -1;
             backGroundObject.AddComponent<BoxCollider2D>();
@@ -163,6 +163,7 @@ public class MapCreator : MonoBehaviour
             if (backGroundObject.GetComponent<SpriteRenderer>().sprite.name != "Empty" && backGroundObject.GetComponent<SpriteRenderer>().sprite.name != "Empty2")
             {
                 backGroundObject.GetComponent<BoxCollider2D>().isTrigger = true;
+                backGroundObject.AddComponent<MapChange>();
             }            
 
             //  オブジェクトの生成

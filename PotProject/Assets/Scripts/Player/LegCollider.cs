@@ -88,13 +88,6 @@ public class LegCollider : MonoBehaviour {
             onGroundCount++;
         }
 
-        // 魔法攻撃範囲内ならReturn
-        if (col.GetComponent<GimmickInfo>())
-            if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.FIREFIELD && onGroundCount <= 0)
-            {
-                return;
-            }
-
         if (onGroundCount > 0)
         {
             isLanding = true;
@@ -111,7 +104,8 @@ public class LegCollider : MonoBehaviour {
 
         if(col.gameObject.layer == LayerMask.NameToLayer("Block"))
         {
-            transform.parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            Rigidbody2D rb = transform.parent.GetComponent<Rigidbody2D>();
+            rb.velocity = new Vector2(rb.velocity.x,0);
         }
 
         if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer") && col.gameObject.layer == LayerMask.NameToLayer("Block")) {

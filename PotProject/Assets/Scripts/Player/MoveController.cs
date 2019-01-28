@@ -354,10 +354,10 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
                 }
-                if (pManager.Status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !leg_col.isLanding)
-                {
-                    return;
-                }
+                //if (pManager.Status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !leg_col.isLanding)
+                //{
+                //    return;
+                //}
                 sidemove = -5f;
                 rig.velocity = new Vector2(-5f, rig.velocity.y);
                 break;
@@ -376,10 +376,10 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_WALK);
                 }
-                if (pManager.Status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !leg_col.isLanding)
-                {
-                    return;
-                }
+                //if (pManager.Status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !leg_col.isLanding)
+                //{
+                //    return;
+                //}
                 sidemove = 5f;
                 rig.velocity = new Vector2(5f, rig.velocity.y);
                 break;
@@ -606,8 +606,8 @@ public class MoveController : MonoBehaviour
             if(InLadderCount > 0 && gameObject.layer == LayerMask.NameToLayer("LadderPlayer")) {
                 transform.parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 PotObject.transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                transform.parent.GetComponent<Rigidbody2D>().isKinematic = true;
-                PotObject.GetComponent<Rigidbody2D>().isKinematic = true;
+                //transform.parent.GetComponent<Rigidbody2D>().isKinematic = true;
+                //PotObject.GetComponent<Rigidbody2D>().isKinematic = true;
             }
 
             rig.velocity = new Vector2(0, rig.velocity.y);
@@ -742,9 +742,9 @@ public class MoveController : MonoBehaviour
         PotObject.layer = LayerMask.NameToLayer("Trans");
         transform.parent.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed * dir);
         _laddernow = true;
-        if(InLadderCount < 0) {
-            player_ctr.ChangeLayer();
-        }
+        //if(InLadderCount < 0) {
+        //    player_ctr.ChangeLayer();
+        //}
     }
     
     private void OnTriggerEnter2D(Collider2D col)

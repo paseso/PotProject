@@ -116,11 +116,14 @@ public class MonsterController : MonoBehaviour
     {
         mController = FindObjectOfType<MoveController>();
         status = GetComponent<MonsterController>().Status;
-        resPoint = new GameObject(Status.type.ToString() + "Resporn");
-        resPoint.transform.SetParent(transform.parent);
-        resPoint.transform.position = transform.position;
-        resPoint.AddComponent<MonsterResporn>();
-        resPoint.GetComponent<MonsterResporn>().MType = status.type;
+        if (status.type != MonsterStatus.MonsterType.MAGIC)
+        {
+            resPoint = new GameObject(Status.type.ToString() + "Resporn");
+            resPoint.transform.SetParent(transform.parent);
+            resPoint.transform.position = transform.position;
+            resPoint.AddComponent<MonsterResporn>();
+            resPoint.GetComponent<MonsterResporn>().MType = status.type;
+        }
     }
 
     /// <summary>
