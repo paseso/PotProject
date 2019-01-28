@@ -35,9 +35,11 @@ public class MonsterWalk : MonoBehaviour {
         if(direction == 0) {
             int dir = Random.Range(0, 2);
             if (dir == 0) {
+                transform.eulerAngles = new Vector3(0, 180, 0);
                 transform.DOLocalMoveX(firstPos.x + Distance, 1f).SetEase(Ease.Linear);
                 direction = 1;
             } else {
+                transform.eulerAngles = new Vector3(0, 0, 0);
                 transform.DOLocalMoveX(firstPos.x - Distance, 1f).SetEase(Ease.Linear);
                 direction = -1;
             }

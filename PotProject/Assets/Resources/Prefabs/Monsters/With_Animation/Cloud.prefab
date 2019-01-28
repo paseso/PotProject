@@ -121,6 +121,7 @@ GameObject:
   - component: {fileID: 95023365326212770}
   - component: {fileID: 114033472859690940}
   - component: {fileID: 114903628084888616}
+  - component: {fileID: 114750560436272428}
   m_Layer: 0
   m_Name: Cloud
   m_TagString: Untagged
@@ -248,7 +249,7 @@ Transform:
   m_GameObject: {fileID: 1484838235392374}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -27.13, y: 0.1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4960936655814348}
   - {fileID: 4579294456096658}
@@ -413,6 +414,17 @@ MonoBehaviour:
   m_Bones: []
   m_BoneTransforms:
   - {fileID: 4850650868161704}
+--- !u!114 &114750560436272428
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1484838235392374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77499af2912ce384b8d256b10e82ca0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114903628084888616
 MonoBehaviour:
   m_ObjectHideFlags: 1
