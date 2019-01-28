@@ -67,7 +67,6 @@ public struct PlayerStatus
         DARK,
         SPEAR,
         AXE,
-        KEY,
         TORCH,
     }
 
@@ -155,4 +154,3 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>{
         InitStatus();
     }
 }
-

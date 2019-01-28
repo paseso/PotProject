@@ -329,10 +329,6 @@ public class PlayerController : MonoBehaviour {
                 sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.DARK];
                 status.PlayerAttack = 1;
                 break;
-            case PlayerStatus.SWORDTYPE.KEY:
-                sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.KEY];
-                status.PlayerAttack = 0;
-                break;
             case PlayerStatus.SWORDTYPE.SPEAR:
                 sword.sprite = swordSpriteList[(int)PlayerStatus.SWORDTYPE.SPEAR];
                 status.PlayerAttack = 2;

@@ -29,6 +29,7 @@ public struct CreateItemStatus
         Speaker,
         Venom,
         Dast,
+        Key,
     };
     public CreateItemStatus.Type createItem;
 }
@@ -78,6 +79,7 @@ public class AlchemyController : MonoBehaviour {
      * 19.拡声器
      * 20.毒液
      * 21.ゴミ
+     * 22.鍵
      */
 
 
@@ -218,7 +220,7 @@ public class AlchemyController : MonoBehaviour {
                 {
                     case ItemStatus.Type.KEYROD:
                         //鍵
-                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.KEY);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Key);
                         break;
                     case ItemStatus.Type.CLAY_N:
                         //磁石
@@ -236,7 +238,7 @@ public class AlchemyController : MonoBehaviour {
                 {
                     case ItemStatus.Type.CROWN:
                         //鍵
-                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.KEY);
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.Key);
                         break;
                     case ItemStatus.Type.VAJURA:
                         //槍
