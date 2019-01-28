@@ -121,6 +121,7 @@ GameObject:
   - component: {fileID: 95776618170891840}
   - component: {fileID: 114589631207223094}
   - component: {fileID: 114125067248018528}
+  - component: {fileID: 114591663648904750}
   m_Layer: 0
   m_Name: Fairy
   m_TagString: Untagged
@@ -164,7 +165,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1386650124762702}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.3900003, y: 4.67, z: 0}
+  m_LocalPosition: {x: 1.26, y: 1.41, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4441151380587934}
@@ -178,7 +179,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1443266284234392}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.740001, y: 4.69, z: 0}
+  m_LocalPosition: {x: -1.0900002, y: 1.4299998, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4083535384507560}
@@ -219,7 +220,7 @@ Transform:
   m_GameObject: {fileID: 1788872560219068}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4797045240988458}
   - {fileID: 4644896433576232}
@@ -235,7 +236,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1987420537885552}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.6300006, y: 4, z: 0}
+  m_LocalPosition: {x: 0.01999998, y: 0.7399998, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4538039547198654}
@@ -248,7 +249,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1359540083959394}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.56, y: 5.71, z: 0}
+  m_LocalPosition: {x: 0.09000063, y: 2.4499998, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4238084931127980}
@@ -396,6 +397,17 @@ MonoBehaviour:
   m_SortingOrder: 0
   m_Bones: []
   m_BoneTransforms: []
+--- !u!114 &114591663648904750
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1788872560219068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77499af2912ce384b8d256b10e82ca0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114949409829096552
 MonoBehaviour:
   m_ObjectHideFlags: 1
