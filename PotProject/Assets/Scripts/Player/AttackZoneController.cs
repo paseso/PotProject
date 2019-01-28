@@ -68,7 +68,7 @@ public class AttackZoneController : MonoBehaviour {
         if (Attack_Target == null) { return; }
 
         if (Attack_Target.GetComponent<GimmickController>()) {
-            Attack_Target.GetComponent<GimmickController>().BakeTree(Attack_Target);
+            Attack_Target.GetComponent<GimmickController>().BakeTree();
             return;
         }
 

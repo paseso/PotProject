@@ -32,15 +32,9 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
     #endregion Singleton
 
     [SerializeField]
-    private GameObject Effect_PickUp;
-    [SerializeField]
-    private GameObject Effect_AttackIce;
-    [SerializeField]
-    private GameObject Effect_Damage;
-    [SerializeField]
-    private GameObject Effect_Heal;
-    [SerializeField]
-    private GameObject Effect_Respawn;
+    private GameObject Effect_PickUp, Effect_AttackIce, Effect_Damage,
+        Effect_Heal,Effect_Respawn, Effect_RespawnPosition, Effect_HeartBurst, Effect_Fire,
+        Effect_KeyDoor, Effect_Water, Effect_Grow;
 
     public void Awake()
     {
@@ -54,7 +48,13 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
         Effect_AttackIce,
         Effect_Damage,
         Effect_Heal,
-        Effect_Respawn
+        Effect_Respawn,
+        Effect_RespawnPosition,
+        Effect_HeartBurst,
+        Effect_Fire,
+        Effect_KeyDoor,
+        Effect_Water,
+        Effect_Grow
     };
 
     /// <summary>
@@ -105,6 +105,24 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
                 break;
             case 4:
                 PlayEffect = Instantiate(Effect_Respawn) as GameObject;
+                break;
+            case 5:
+                PlayEffect = Instantiate(Effect_RespawnPosition) as GameObject;
+                break;
+            case 6:
+                PlayEffect = Instantiate(Effect_HeartBurst) as GameObject;
+                break;
+            case 7:
+                PlayEffect = Instantiate(Effect_Fire) as GameObject;
+                break;
+            case 8:
+                PlayEffect = Instantiate(Effect_KeyDoor) as GameObject;
+                break;
+            case 9:
+                PlayEffect = Instantiate(Effect_Water) as GameObject;
+                break;
+            case 10:
+                PlayEffect = Instantiate(Effect_Grow) as GameObject;
                 break;
             default:
                 Debug.Log("Effectmanagerのエラー");
