@@ -462,14 +462,7 @@ public class MoveController : MonoBehaviour
                 }
                 else
                 {
-
-                    //if(player_ctr.getCreateItemList(CreateItemStatus.Type.Key) && keyDoorFlag) {
-                    //    GameObject keySwitch = GameObject.FindGameObjectWithTag("KeyDoor");
-                    //    keySwitch.GetComponent<GimmickController>().UnlockKeyDoor();
-                    //    return;
-                    //}
-
-                    if(direc == Direction.LEFT)
+                    if (direc == Direction.LEFT)
                         anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.SORDATTACK_LEFT);
                     else
                         anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.SORDATTACK_RIGHT);

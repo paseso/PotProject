@@ -55,4 +55,17 @@ public class ItemController : MonoBehaviour {
     {
         playerController.OnBlock.AddComponent<CreateLadder>();
     }
+
+    /// <summary>
+    /// 鍵の処理
+    /// </summary>
+    public void OpenKeyDoor()
+    {
+        if (BrotherObj.GetComponent<MoveController>().keyDoorFlag)
+        {
+            GameObject keySwitch = GameObject.FindGameObjectWithTag("KeyDoor");
+            keySwitch.GetComponent<GimmickController>().UnlockKeyDoor();
+            return;
+        }
+    }
 }
