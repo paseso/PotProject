@@ -14,8 +14,8 @@ public class TextBalloon : MonoBehaviour {
     private string[] trueMassages = new string[5];
     [SerializeField]
     private GameObject balloonPrefab;
-    [SerializeField,Range(0, 0.3f)]
-    float intervalForCharDisplay = 0.2f;           // 1文字の表示にかける時間
+    [SerializeField,Range(0, 0.2f)]
+    float intervalForCharDisplay = 0.08f;           // 1文字の表示にかける時間
 
     private GameObject canvas;
     private GameObject massageUI;
@@ -29,6 +29,7 @@ public class TextBalloon : MonoBehaviour {
         canvas = GameObject.Find("Canvas");
         AddBlank(massages);
         playerController = FindObjectOfType<PlayerController>();
+        BeginTalk();
     }
 	
 	void Update () {
