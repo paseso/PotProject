@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class PotController : MonoBehaviour {
+public class PotController : MonoBehaviour
+{
 
     private PlayerController player_ctr;
     private BringCollider bring_col;
@@ -14,6 +15,9 @@ public class PotController : MonoBehaviour {
     private Sprite ototo_right;
     private GameObject OtotoHead;
 
+    private GameObject BrotherObj;
+    private Vector2 beforePosion;
+
     private bool _onece = false;
 
     private enum Direction
@@ -24,7 +28,8 @@ public class PotController : MonoBehaviour {
     private Direction direction;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         try
         {
             OtotoHead = gameObject.transform.GetChild(1).gameObject;
@@ -34,41 +39,38 @@ public class PotController : MonoBehaviour {
             bring_col = GameObject.FindObjectOfType<BringCollider>();
             move_ctr = GameObject.FindObjectOfType<MoveController>();
             rig = gameObject.GetComponent<Rigidbody2D>();
-        }catch(UnityException e)
+            BrotherObj = move_ctr.transform.parent.gameObject;
+        }
+        catch (UnityException e)
         {
             Debug.Log("お兄ちゃんが見当たらない");
         }
         direction = Direction.LEFT;
         _onece = false;
+        beforePosion = new Vector2(0, 0);
     }
-	
-	// Update is called once per frame
-	void Update () {
-        PotJump();
-	}
 
-    /// <summary>
-    /// 壺の画像変更処理
-    /// </summary>
-    private void ChangePotImage()
+    // Update is called once per frame
+    void Update()
     {
-        if (move_ctr.OnLeft || direction == Direction.RIGHT)
-        {
-
-            direction = Direction.LEFT;
-        }
-        else if (move_ctr.OnLeft || direction == Direction.LEFT)
-        {
-
-            direction = Direction.RIGHT;
-        }
+        FollowPot();
     }
 
     /// <summary>
-    /// プレイヤーがジャンプした時壺も一緒にジャンプする処理
+    /// ツボがお兄ちゃんについていく処理
     /// </summary>
-    private void PotJump()
+    private void FollowPot()
     {
+        if (beforePosion == new Vector2(BrotherObj.transform.position.x, BrotherObj.transform.position.y))
+            return;
+        if (move_ctr.direc == MoveController.Direction.RIGHT)
+        {
+            rig.velocity = new Vector2(5f, rig.velocity.y);
+        }
+        else if (move_ctr.direc == MoveController.Direction.LEFT)
+        {
+            rig.velocity = new Vector2(-5f, rig.velocity.y);
+        }
         if (move_ctr.Jumping)
         {
             if (!_onece)
@@ -80,7 +82,22 @@ public class PotController : MonoBehaviour {
         else
         {
             _onece = false;
-            //rig.velocity = new Vector2(0, 1f * move_ctr.speed);
+        }
+        beforePosion = BrotherObj.transform.position;
+    }
+
+    /// <summary>
+    /// 壺の画像変更処理
+    /// </summary>
+    private void ChangePotImage()
+    {
+        if (move_ctr.OnLeft || direction == Direction.RIGHT)
+        {
+            direction = Direction.LEFT;
+        }
+        else if (move_ctr.OnLeft || direction == Direction.LEFT)
+        {
+            direction = Direction.RIGHT;
         }
     }
 

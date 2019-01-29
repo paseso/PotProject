@@ -369,6 +369,9 @@ public class MoveController : MonoBehaviour
             case ButtonType.LEFTJOYSTICK_LEFT:
                 if (direc != Direction.LEFT && Jumping)
                     return;
+                else if (direc == Direction.LEFT && Jumping) { }
+                //右ジョイスティックとジャンプ同時押し
+
                 direc = Direction.LEFT;
                 if (!_ActiveRightLeft)
                     return;
@@ -387,6 +390,9 @@ public class MoveController : MonoBehaviour
             case ButtonType.LEFTJOYSTICK_RIGHT:
                 if (direc != Direction.RIGHT && Jumping)
                     return;
+                else if (direc == Direction.RIGHT && Jumping) { }
+                //右ジョイスティックとジャンプ同時押し
+
                 direc = Direction.RIGHT;
 
                 if (!_ActiveRightLeft)
