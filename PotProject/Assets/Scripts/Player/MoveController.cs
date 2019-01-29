@@ -226,7 +226,6 @@ public class MoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("MoveController = " + pManager.Status.swordtype);
         //はしご処理してる時、ツボのtransformをプレイヤーと同じ位置にする
         if (_laddernow)
         {
@@ -577,21 +576,22 @@ public class MoveController : MonoBehaviour
 
         if (!player_ctr.IsCommandActive) { return; }
 
-        if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space)) //Input.GetButton("Jump")
+        if (Input.GetButton("Jump") || Input.GetKeyDown(KeyCode.Space)) //Input.GetButton("Jump")
         {//×ボタン or キーボードの「W」
             Move(ButtonType.JUMP);
         }
-        if (Input.GetAxis("Vertical_ps4") >= 0.15f || Input.GetKey(KeyCode.A))
+        if (Input.GetAxis("Horizontal_ps4") >= 0.3f || Input.GetKey(KeyCode.A))
         {//左ジョイスティックを左にたおす or キーボードの「A」
             if(gameObject.layer == LayerMask.NameToLayer("LadderPlayer")) { return; }
+            Debug.Log("移動");
             Move(ButtonType.LEFTJOYSTICK_LEFT);
         }
-        else if (Input.GetAxis("Vertical_ps4") <= -0.15f || Input.GetKey(KeyCode.D))
+        else if (Input.GetAxis("Horizontal_ps4") <= -0.3f || Input.GetKey(KeyCode.D))
         {//左ジョイスティックを右にたおす or キーボードの「D」
             if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer")) { return; }
             Move(ButtonType.LEFTJOYSTICK_RIGHT);
         }
-        else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
+        else if (Input.GetAxis("Horizontal_ps4") >= -0.3f && Input.GetAxis("Horizontal_ps4") <= 0.3f)
         {//左ジョイスティックを押してない時
             if (leg_col.isLanding) {
                 _laddernow = false;
@@ -614,15 +614,15 @@ public class MoveController : MonoBehaviour
 
             rig.velocity = new Vector2(0, rig.velocity.y);
         }
-        if (Input.GetAxis("Horizontal_ps4") >= 0.8f || Input.GetKey(KeyCode.W))
+        if (Input.GetAxis("Vertical_ps4") >= 0.8f || Input.GetKey(KeyCode.W))
         {
             Move(ButtonType.LEFTJOYSTICK_UP);
         }
-        else if (Input.GetAxis("Horizontal_ps4") <= -0.8f || Input.GetKey(KeyCode.S))
+        else if (Input.GetAxis("Vertical_ps4") <= -0.8f || Input.GetKey(KeyCode.S))
         {
             Move(ButtonType.LEFTJOYSTICK_DOWN);
         }
-        else if (Input.GetAxis("Horizontal_ps4") <= 0.15f && Input.GetAxis("Horizontal_ps4") >= -0.15f)
+        else if (Input.GetAxis("Vertical_ps4") >= -0.8f && Input.GetAxis("Vertical_ps4") <= 0.8f)
         {
             if (!_ActiveRightLeft)
             {

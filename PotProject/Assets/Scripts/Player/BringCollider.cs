@@ -89,6 +89,7 @@ public class BringCollider : MonoBehaviour {
             if(anim_ctr.animstate.animtype == AnimController.AnimState.AnimType.LEFT_GETITEM || 
                 anim_ctr.animstate.animtype == AnimController.AnimState.AnimType.RIGHT_GETITEM)
             {
+                col.gameObject.transform.GetChild(0).gameObject.SetActive(false);
                 col.gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
                 return;
             }

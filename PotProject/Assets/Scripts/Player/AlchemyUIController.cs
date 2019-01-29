@@ -322,7 +322,7 @@ public class AlchemyUIController : MonoBehaviour
         Array.Copy(Itembox, Box_item, Itembox.Length);
         ItemFrame.transform.position = Box_item[0].transform.position;
         _boxRight = true;
-        frameLine = frame_left;
+        frameLine = frame_right;
     }
 
     /// <summary>
@@ -430,12 +430,10 @@ public class AlchemyUIController : MonoBehaviour
             if (move_ctr.OnCrossRight)
             {
                 BoxItemChange(BitFrameLine(true));
-                Debug.Log("Frame Change = " + frameLine);
             }
             else if(move_ctr.OnCrossLeft)
             {
                 BoxItemChange(BitFrameLine(false));
-                Debug.Log("Frame Change = " + frameLine);
             }
 
             nowBox = 0;
@@ -454,7 +452,8 @@ public class AlchemyUIController : MonoBehaviour
         {
             ClearJoystickRotation();
         }
-        if (Materials_item == null)
+
+        if (Materials_item.Count == 0)
             return;
 
         if (move_ctr.OnRJoystickUp)
@@ -531,7 +530,7 @@ public class AlchemyUIController : MonoBehaviour
         int item_num = player_ctr.getCreateItemList().Count;
         if (item_num < 3)
         {
-            for (int i = item_num; 3 - i < 3; i--)
+            for (int i = item_num; 0 <= i; i--)
             {
                 createItembox[i].GetComponent<Image>().sprite = AlphaSprite;
             }
