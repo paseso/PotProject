@@ -74,6 +74,8 @@ public class AlchemyUIController : MonoBehaviour
     private int RotationCount = 0;
     //------------------------------------------
 
+    private bool _onClick = false;
+
     //捨てる捨てないのobjectがでてるかでてないかの判定
     private bool _chooseWindow = false;
 
@@ -118,6 +120,7 @@ public class AlchemyUIController : MonoBehaviour
         nowAlchemyItem = 0;
         nowBox = 0;
         _chooseWindow = false;
+        _onClick = false;
         setItembox();
         setItemImageList();
         StartCreateItemBox();
@@ -152,10 +155,14 @@ public class AlchemyUIController : MonoBehaviour
     /// </summary>
     public void PickItem()
     {
-        if (_boxRight)
+        if (frameLine == frame_right)
+        {
             setMaterialsBox();
-        else
+        }
+        else if(frameLine == frame_center)
+        {
             ReSetMaterialsBox(nowBox);
+        }
     }
 
     /// <summary>
@@ -395,13 +402,12 @@ public class AlchemyUIController : MonoBehaviour
     private void ItemFrameMove()
     {
         if (crossAxisdown.getKeepDown || _chooseWindow)
-        {
             return;
-        }
 
         //上下押した時
         while (move_ctr.OnCrossUp || move_ctr.OnCrossDown)
         {
+            _onClick = true;
             if (!move_ctr.OnCrossUp && !move_ctr.OnCrossDown)
                 break;
             if (move_ctr.OnCrossUp)
@@ -424,6 +430,7 @@ public class AlchemyUIController : MonoBehaviour
         //左右押した時
         while (move_ctr.OnCrossRight || move_ctr.OnCrossLeft)
         {
+            _onClick = true;
             if (!move_ctr.OnCrossRight && !move_ctr.OnCrossLeft)
                 break;
 

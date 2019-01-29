@@ -44,9 +44,10 @@ public class MoveController : MonoBehaviour
     [HideInInspector]
     public bool _hitmonster = false;
 
-    
+
 
     //-------アクションボタンを押してるかどうか----------
+    private bool _onCrossCross = false;
     private bool _onRight = false;
     private bool _onLeft = false;
     private bool _onUp = false;
@@ -79,7 +80,7 @@ public class MoveController : MonoBehaviour
     private PlayerManager pManager;
     private MiniMapController miniMap_ctr;
     private LegCollider leg_col;
-    
+    private CrossAxisDown crossAxisDown;
 
     #region ボタンFlagのget
 
@@ -88,9 +89,15 @@ public class MoveController : MonoBehaviour
     {
         get { return _jumping; }
     }
+
     public bool setJumping
     {
         set { _jumping = value; }
+    }
+
+    public bool CrossCross
+    {
+        get { return _onCrossCross; }
     }
 
     public bool OnRight
@@ -240,6 +247,7 @@ public class MoveController : MonoBehaviour
         miniMap_ctr = GameObject.Find("Canvas/MiniMap").GetComponent<MiniMapController>();
         anim_ctr = gameObject.transform.parent.GetComponent<AnimController>();
         leg_col = gameObject.transform.parent.GetComponentInChildren<LegCollider>();
+        crossAxisDown = gameObject.GetComponent<CrossAxisDown>();
     }
 
     // Update is called once per frame
@@ -297,6 +305,7 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void ClearBtnFlg()
     {
+        _onCrossCross = false;
         _onUp = false;
         _onDown = false;
         _onRight = false;
@@ -324,18 +333,17 @@ public class MoveController : MonoBehaviour
         switch (btn)
         {
             case ButtonType.JUMP:
-                bool _onece = true;
+                _onCrossCross = true;
+                if (crossAxisDown.getKeepDown)
+                    return;
+
                 if (alchemyUI_ctr.ChooseWindow)
                 {
-                    if (_onece)
-                    {
-                        alchemyUI_ctr.ChooseThrow(false);
-                    }
+                    alchemyUI_ctr.ChooseThrow(false);
                     return;
                 }
                 if (player_ctr.GetAlchemyUIFlag)
                 {
-                    Debug.Log("捨てます");
                     alchemyUI_ctr.ActiveThrowItemUI();
                     return;
                 }
@@ -353,7 +361,7 @@ public class MoveController : MonoBehaviour
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTJUMP);
                 }
 
-                rig.velocity = new Vector2(sidemove, 1f * speed);  //rig.velocity.x
+                rig.velocity = new Vector2(sidemove, 1f * speed);
 
                 _jumping = true;
                 break;
@@ -463,14 +471,7 @@ public class MoveController : MonoBehaviour
                 }
                 else
                 {
-
-                    //if(player_ctr.getCreateItemList(CreateItemStatus.Type.Key) && keyDoorFlag) {
-                    //    GameObject keySwitch = GameObject.FindGameObjectWithTag("KeyDoor");
-                    //    keySwitch.GetComponent<GimmickController>().UnlockKeyDoor();
-                    //    return;
-                    //}
-
-                    if(direc == Direction.LEFT)
+                    if (direc == Direction.LEFT)
                         anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.SORDATTACK_LEFT);
                     else
                         anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.SORDATTACK_RIGHT);
@@ -546,7 +547,6 @@ public class MoveController : MonoBehaviour
                     pManager.SetSwordType = player_ctr.GetSwordList[3];
                     return;
                 }
-
 
                 _onCrossLeft = true;
                 break;
