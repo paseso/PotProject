@@ -89,9 +89,11 @@ public class LegCollider : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D col) {
 
+        // switchの上にいるか判定
         if (SwitchCheck(col.gameObject))
         {
             move_ctr.switchGimmick = col.gameObject;
+            move_ctr.switchFlag = true;
         }
 
         if (col.gameObject.layer != 2 && JumpCheck(col.gameObject))
@@ -119,19 +121,10 @@ public class LegCollider : MonoBehaviour {
             rb.velocity = new Vector2(rb.velocity.x,0);
         }
 
-        if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer") && col.gameObject.layer == LayerMask.NameToLayer("Block")) {
-            
-            player_ctr.ChangeLayer();
-            move_ctr.InLadderCount = 0;
-        }
-
-        
-
         if (col.gameObject.layer == LayerMask.NameToLayer("Block")) {
             player_ctr.OnBlock = col.gameObject;
         }
         
-
         if (!col.GetComponent<GimmickInfo>()) { return; }
         GimmickInfo info = col.GetComponent<GimmickInfo>();
         if (info.type == GimmickInfo.GimmickType.LADDER)
@@ -141,11 +134,22 @@ public class LegCollider : MonoBehaviour {
         player_ctr.OnBlock = null;
     }
 
+    private void OnTriggerStay2D(Collider2D col)
+    {
+        if (!col.GetComponent<GimmickInfo>()) { return; }
+        GimmickInfo info = col.GetComponent<GimmickInfo>();
+        if (info.type == GimmickInfo.GimmickType.LADDER)
+        {
+            move_ctr.InLadderCount = 1;
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D col)
     {
         if (SwitchCheck(col.gameObject))
         {
             move_ctr.switchGimmick = null;
+            move_ctr.switchFlag = false;
         }
 
         if (col.gameObject.layer != 2 && JumpCheck(col.gameObject))
@@ -173,8 +177,10 @@ public class LegCollider : MonoBehaviour {
             move_ctr.InLadderCount--;
             if (move_ctr.InLadderCount <= 0) {
                 move_ctr.InLadderCount = 0;
-                if(gameObject.layer == LayerMask.NameToLayer("LadderPlayer"))
+                if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer"))
+                {
                     player_ctr.ChangeLayer();
+                }
             }
         }
     }
