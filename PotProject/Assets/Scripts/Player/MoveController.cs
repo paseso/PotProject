@@ -397,6 +397,7 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.LEFTJOYSTICK_UP:
                 _onUp = true;
+                ladderDownFlag = false;
 
                 if (player_ctr.GetAlchemyUIFlag) { return; }
 
