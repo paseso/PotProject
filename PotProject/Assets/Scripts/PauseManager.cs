@@ -12,6 +12,7 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
     public GameObject pauseCanvasPrefab;
     private GameObject pauseCanvasObj;
     private EventSystem eventSystem;
+    PlayerManager pManager;
 
     private bool isPause;
     public void Awake()
@@ -66,6 +67,7 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
             FadeManager.Instance.LoadScene(0, 1f);
             isPause = false;
             pauseCanvasObj.SetActive(false);
+            pManager = GameObject.Find("PlayerStatus").GetComponent<PlayerManager>();
         }
         else if (FadeManager.Instance == null)
         {
@@ -79,6 +81,8 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
         {
             FadeManager.Instance.LoadScene(1, 1f);
             isPause = false;
+            pManager = GameObject.Find("PlayerStatus").GetComponent<PlayerManager>();
+            pManager.InitStatus();
             pauseCanvasObj.SetActive(false);
         }
         else if (FadeManager.Instance == null)
