@@ -518,6 +518,7 @@ public class MoveController : MonoBehaviour
             case ButtonType.CROSSX_RIGTH:
                 if (!player_ctr.GetAlchemyUIFlag)
                 {
+                    player_ctr.SwordTypeChange(player_ctr.GetSwordList[1]);
                     pManager.SetSwordType = player_ctr.GetSwordList[1];
                     return;
                 }
@@ -528,6 +529,7 @@ public class MoveController : MonoBehaviour
             case ButtonType.CROSSX_LEFT:
                 if (!player_ctr.GetAlchemyUIFlag)
                 {
+                    player_ctr.SwordTypeChange(player_ctr.GetSwordList[3]);
                     pManager.SetSwordType = player_ctr.GetSwordList[3];
                     return;
                 }

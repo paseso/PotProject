@@ -315,6 +315,10 @@ public class AlchemyUIController : MonoBehaviour
     public void ItemFrameReSet()
     {
         nowBox = 0;
+        if(Box_item.Length == 2)
+        {
+            Box_item = new GameObject[Itembox.Length];
+        }
         Array.Copy(Itembox, Box_item, Itembox.Length);
         ItemFrame.transform.position = Box_item[0].transform.position;
         _boxRight = true;
@@ -426,10 +430,12 @@ public class AlchemyUIController : MonoBehaviour
             if (move_ctr.OnCrossRight)
             {
                 BoxItemChange(BitFrameLine(true));
+                Debug.Log("Frame Change = " + frameLine);
             }
-            else
+            else if(move_ctr.OnCrossLeft)
             {
                 BoxItemChange(BitFrameLine(false));
+                Debug.Log("Frame Change = " + frameLine);
             }
 
             nowBox = 0;

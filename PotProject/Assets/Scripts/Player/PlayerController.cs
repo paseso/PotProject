@@ -65,8 +65,7 @@ public class PlayerController : MonoBehaviour {
         get { return allCommandActive; }
         set { allCommandActive = value; }
     }
-
-
+    
     private bool isMiniMap = false;
 
     public bool IsMiniMap {
@@ -77,11 +76,6 @@ public class PlayerController : MonoBehaviour {
     public GameObject OnBlock { get; set; }
 
     private GameObject lifePoint;
-
-    private void Awake()
-    {
-        
-    }
 
     // Use this for initialization
     void Start ()
@@ -105,6 +99,7 @@ public class PlayerController : MonoBehaviour {
             Debug.Log(e + "がないんご");
         }
         StartHeart();
+        setStartSwordList();
         _itemMax = false;
         alchemyUIFlag = false;
 	}
@@ -153,7 +148,7 @@ public class PlayerController : MonoBehaviour {
     public void setSwordList(PlayerStatus.SWORDTYPE type)
     {
         //2番目以降のNORMALタイプのところに錬金した剣をいれる
-        for(int i = 1; i < 3; i++)
+        for(int i = 1; i < 4; i++)
         {
             if (swordList[i] != PlayerStatus.SWORDTYPE.NORMAL)
             {
