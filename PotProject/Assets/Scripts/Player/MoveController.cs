@@ -330,7 +330,6 @@ public class MoveController : MonoBehaviour
                     if (_onece)
                     {
                         alchemyUI_ctr.ChooseThrow(false);
-
                     }
                     return;
                 }
@@ -594,11 +593,11 @@ public class MoveController : MonoBehaviour
         {//×ボタン or キーボードの「W」
             Move(ButtonType.JUMP);
         }
-        if (Input.GetAxis("Horizontal_ps4") >= 0.3f || Input.GetKey(KeyCode.A))
+        if (Input.GetAxis("Horizontal_ps4") <= -0.3f || Input.GetKey(KeyCode.A))
         {//左ジョイスティックを左にたおす or キーボードの「A」
             Move(ButtonType.LEFTJOYSTICK_LEFT);
         }
-        else if (Input.GetAxis("Horizontal_ps4") <= -0.3f || Input.GetKey(KeyCode.D))
+        else if (Input.GetAxis("Horizontal_ps4") >= 0.3f || Input.GetKey(KeyCode.D))
         {//左ジョイスティックを右にたおす or キーボードの「D」
             Move(ButtonType.LEFTJOYSTICK_RIGHT);
         }
@@ -626,11 +625,11 @@ public class MoveController : MonoBehaviour
 
             rig.velocity = new Vector2(0, rig.velocity.y);
         }
-        if (Input.GetAxis("Vertical_ps4") >= 0.8f || Input.GetKey(KeyCode.W))
+        if (Input.GetAxis("Vertical_ps4") <= -0.8f || Input.GetKey(KeyCode.W))
         {
             Move(ButtonType.LEFTJOYSTICK_UP);
         }
-        else if (Input.GetAxis("Vertical_ps4") <= -0.8f || Input.GetKey(KeyCode.S))
+        else if (Input.GetAxis("Vertical_ps4") >= 0.8f || Input.GetKey(KeyCode.S))
         {
             Move(ButtonType.LEFTJOYSTICK_DOWN);
         }
