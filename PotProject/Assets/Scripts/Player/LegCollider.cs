@@ -129,13 +129,21 @@ public class LegCollider : MonoBehaviour {
                 return;
             }
         }
-        
+
+        if (col.gameObject.layer == 2 && !col.GetComponent<MapChange>())
+        {
+            move_ctr.InLadderCount++;
+            move_ctr.ladderDownFlag = true;
+        }
+
         if (!col.GetComponent<GimmickInfo>()) { return; }
         GimmickInfo info = col.GetComponent<GimmickInfo>();
         if (info.type == GimmickInfo.GimmickType.LADDER)
         {
             move_ctr.InLadderCount++;
         }
+
+        
         player_ctr.OnBlock = null;
     }
 
@@ -172,6 +180,12 @@ public class LegCollider : MonoBehaviour {
         {
             onGroundCount = 0;
             isLanding = false;
+        }
+
+        if (col.gameObject.layer == 2 && !col.GetComponent<MapChange>())
+        {
+            move_ctr.InLadderCount--;
+            move_ctr.ladderDownFlag = false;
         }
 
         falldistance = gameObject.transform.position.y;
