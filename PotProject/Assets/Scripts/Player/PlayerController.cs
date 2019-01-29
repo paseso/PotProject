@@ -459,10 +459,7 @@ public class PlayerController : MonoBehaviour {
         {
             status.gimmick_state = PlayerStatus.GimmickState.NORMAL;
             PotObject.layer = LayerMask.NameToLayer("Pot");
-            BrotherObj.transform.parent.GetComponent<Rigidbody2D>().isKinematic = false;
-            PotObject.GetComponent<Rigidbody2D>().isKinematic = false;
-            BrotherObj.transform.parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            PotObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            
             var children = BrotherObj.transform.parent.transform;
             foreach (Transform child in children)
             {
@@ -472,6 +469,10 @@ public class PlayerController : MonoBehaviour {
                 }
             }
             BrotherObj.transform.parent.gameObject.layer = LayerMask.NameToLayer("Player");
+            BrotherObj.transform.parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            BrotherObj.transform.parent.GetComponent<Rigidbody2D>().gravityScale = 1;
+            PotObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            PotObject.GetComponent<Rigidbody2D>().gravityScale = 1;
         }
     }
 }

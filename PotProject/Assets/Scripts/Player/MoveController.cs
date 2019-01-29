@@ -23,9 +23,16 @@ public class MoveController : MonoBehaviour
     //はしご中かどうか
     private bool _laddernow = false;
 
+    // はしご内にいるカウント
     public int InLadderCount { get; set; }
 
+    // switchオブジェクト
     public GameObject switchGimmick { get; set; }
+
+    // switchの上にいるか
+    public bool switchFlag { get; set; }
+
+    public bool ladderDownFlag { get; set; }
 
     //左右動かしてもいいかどうか
     [HideInInspector]
@@ -36,6 +43,8 @@ public class MoveController : MonoBehaviour
     //モンスターに当たったかどうか
     [HideInInspector]
     public bool _hitmonster = false;
+
+    
 
     //-------アクションボタンを押してるかどうか----------
     private bool _onRight = false;
@@ -70,6 +79,7 @@ public class MoveController : MonoBehaviour
     private PlayerManager pManager;
     private MiniMapController miniMap_ctr;
     private LegCollider leg_col;
+    
 
     #region ボタンFlagのget
 
@@ -188,6 +198,15 @@ public class MoveController : MonoBehaviour
         CROSSY_DOWN,
     };
 
+    public enum LadderDirection
+    {
+        NONE,
+        UP,
+        DOWN,
+    }
+
+    public LadderDirection ladderDir;
+
     //プレイヤーの今向いてる方向
     public enum Direction
     {
@@ -211,8 +230,8 @@ public class MoveController : MonoBehaviour
     void Start()
     {
         direc = Direction.LEFT;
-        pManager = FindObjectOfType<PlayerManager>();
-        PotObject = GameObject.FindObjectOfType<PotController>().gameObject;
+        pManager = GameObject.Find("PlayerStatus").GetComponent<PlayerManager>();
+        PotObject = FindObjectOfType<PotController>().gameObject;
         rig = gameObject.transform.parent.GetComponent<Rigidbody2D>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         bringctr = gameObject.transform.parent.GetChild(0).GetComponent<BringCollider>();
@@ -311,7 +330,6 @@ public class MoveController : MonoBehaviour
                     if (_onece)
                     {
                         alchemyUI_ctr.ChooseThrow(false);
-
                     }
                     return;
                 }
@@ -353,10 +371,7 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
                 }
-                //if (pManager.Status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !leg_col.isLanding)
-                //{
-                //    return;
-                //}
+               
                 sidemove = -5f;
                 rig.velocity = new Vector2(-5f, rig.velocity.y);
                 break;
@@ -375,10 +390,7 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_WALK);
                 }
-                //if (pManager.Status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !leg_col.isLanding)
-                //{
-                //    return;
-                //}
+                
                 sidemove = 5f;
                 rig.velocity = new Vector2(5f, rig.velocity.y);
                 break;
@@ -399,6 +411,7 @@ public class MoveController : MonoBehaviour
                 _onDown = true;
 
                 if (player_ctr.GetAlchemyUIFlag) { return; }
+                if (ladderDownFlag) { return; }
 
                 if (InLadderCount > 0) {
                     Ladder(ladderSpeed, -1);
@@ -580,15 +593,12 @@ public class MoveController : MonoBehaviour
         {//×ボタン or キーボードの「W」
             Move(ButtonType.JUMP);
         }
-        if (Input.GetAxis("Horizontal_ps4") >= 0.3f || Input.GetKey(KeyCode.A))
+        if (Input.GetAxis("Horizontal_ps4") <= -0.3f || Input.GetKey(KeyCode.A))
         {//左ジョイスティックを左にたおす or キーボードの「A」
-            if(gameObject.layer == LayerMask.NameToLayer("LadderPlayer")) { return; }
-            Debug.Log("移動");
             Move(ButtonType.LEFTJOYSTICK_LEFT);
         }
-        else if (Input.GetAxis("Horizontal_ps4") <= -0.3f || Input.GetKey(KeyCode.D))
+        else if (Input.GetAxis("Horizontal_ps4") >= 0.3f || Input.GetKey(KeyCode.D))
         {//左ジョイスティックを右にたおす or キーボードの「D」
-            if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer")) { return; }
             Move(ButtonType.LEFTJOYSTICK_RIGHT);
         }
         else if (Input.GetAxis("Horizontal_ps4") >= -0.3f && Input.GetAxis("Horizontal_ps4") <= 0.3f)
@@ -608,17 +618,18 @@ public class MoveController : MonoBehaviour
             if(InLadderCount > 0 && gameObject.layer == LayerMask.NameToLayer("LadderPlayer")) {
                 transform.parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 PotObject.transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                //transform.parent.GetComponent<Rigidbody2D>().isKinematic = true;
-                //PotObject.GetComponent<Rigidbody2D>().isKinematic = true;
+
+                transform.parent.GetComponent<Rigidbody2D>().gravityScale = 0;
+                PotObject.transform.GetComponent<Rigidbody2D>().gravityScale = 0;
             }
 
             rig.velocity = new Vector2(0, rig.velocity.y);
         }
-        if (Input.GetAxis("Vertical_ps4") >= 0.8f || Input.GetKey(KeyCode.W))
+        if (Input.GetAxis("Vertical_ps4") <= -0.8f || Input.GetKey(KeyCode.W))
         {
             Move(ButtonType.LEFTJOYSTICK_UP);
         }
-        else if (Input.GetAxis("Vertical_ps4") <= -0.8f || Input.GetKey(KeyCode.S))
+        else if (Input.GetAxis("Vertical_ps4") >= 0.8f || Input.GetKey(KeyCode.S))
         {
             Move(ButtonType.LEFTJOYSTICK_DOWN);
         }
@@ -729,7 +740,6 @@ public class MoveController : MonoBehaviour
         PlayerStatus status = pManager.Status;
         status.gimmick_state = PlayerStatus.GimmickState.ONLADDER;
 
-        transform.parent.GetComponent<Rigidbody2D>().isKinematic = false;
         //プレイヤーの子供全部のレイヤーを変更
         var children = transform.parent.transform;
         foreach(Transform child in children)
@@ -744,9 +754,6 @@ public class MoveController : MonoBehaviour
         PotObject.layer = LayerMask.NameToLayer("Trans");
         transform.parent.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed * dir);
         _laddernow = true;
-        //if(InLadderCount < 0) {
-        //    player_ctr.ChangeLayer();
-        //}
     }
     
     private void OnTriggerEnter2D(Collider2D col)
