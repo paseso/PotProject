@@ -35,6 +35,7 @@ public class CrossAxisDown : MonoBehaviour {
     private int CrossRightKeep  = 0x0020;
     private int CrossLeftInput  = 0x0001;
     private int CrossLeftKeep   = 0x0002;
+    private int CrossCross      = 0x0003;
     //-------------------------------------
 
     public bool getKeepDown
@@ -52,7 +53,7 @@ public class CrossAxisDown : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (move_ctr.OnCrossUp || move_ctr.OnCrossDown || move_ctr.OnCrossRight || move_ctr.OnCrossLeft)
+        if (move_ctr.OnCrossUp || move_ctr.OnCrossDown || move_ctr.OnCrossRight || move_ctr.OnCrossLeft || move_ctr.CrossCross)
         {
             afterValue = 1;
         }
@@ -96,6 +97,10 @@ public class CrossAxisDown : MonoBehaviour {
         {
             Bit_flag_cross = CrossLeftInput;
         }
+        else if (move_ctr.CrossCross)
+        {
+            Bit_flag_cross = CrossCross;
+        }
 
         //今回の値を前回の値変数に入れる
         beforeValue = afterValue;
@@ -135,6 +140,10 @@ public class CrossAxisDown : MonoBehaviour {
             {
                 Bit_flag_cross -= CrossLeftInput;
                 Bit_flag_cross = CrossLeftKeep;
+            }
+            else if((Bit_flag_cross & CrossCross) != 0)
+            {
+                Bit_flag_cross -= CrossCross;
             }
         }
     }
