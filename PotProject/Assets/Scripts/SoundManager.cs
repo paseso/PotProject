@@ -30,24 +30,35 @@ public class SoundManager : MonoBehaviour {
     #endregion Singleton
 
 
-    public enum BGM_NAME {
-        Title,
-        Main,
-        Result
+    public enum BGMNAME {
+        BGM_TITLE,
+        BGM_MAIN,
+        BGM_MAINFAST
     };
-    public enum SE_NAME
+    public enum SENAME
     {
-        ButtonTap1 = 0,
-        ButtonTap2,
-        ButtonTap3,
+        SE_SLIDESTAGE = 0,
+        SE_MATCHSTAGE,
+        SE_GROWTREE,
+        SE_CHOICE,
+        SE_SWORD,
+        SE_SWORDHEAVY,
+        SE_SWORDSLIM,
+        SE_WATER,
+        SE_SELECT,
+        SE_FOOTSTEPS,
+        SE_DEMONKINGCLASH,
+        SE_DEMONFLYING,
+        SE_THUNDER,
+        SE_ALCHEMYMISS,
+        SE_ALCHEMYSUCCESS
     };
 
+    [SerializeField]
+    AudioClip[] BGM_LIST = new AudioClip[3];
 
     [SerializeField]
-    AudioClip[] BGMList = new AudioClip[3];
-
-    [SerializeField]
-    AudioClip[] SEList = new AudioClip[3];
+    AudioClip[] SE_LIST = new AudioClip[15];
 
     private AudioSource audioSource;
 
@@ -71,17 +82,17 @@ public class SoundManager : MonoBehaviour {
     }
     public void PlayBgm(int BGM_num)
     {
-        audioSource.clip = BGMList[BGM_num];
+        audioSource.clip = BGM_LIST[BGM_num];
         audioSource.Play();
     }
 
     public void PlaySe(int SEnum)
     {
-        audioSource.PlayOneShot(SEList[SEnum]);
+        audioSource.PlayOneShot(SE_LIST[SEnum]);
     }
     public void PlaySe(int SEnum, float vol = 1.0f)
     {
-        audioSource.PlayOneShot(SEList[SEnum], vol);
+        audioSource.PlayOneShot(SE_LIST[SEnum], vol);
     }
 
     public void FadeOutBGM()

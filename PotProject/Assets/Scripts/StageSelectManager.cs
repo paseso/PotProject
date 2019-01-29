@@ -26,28 +26,23 @@ public class StageSelectManager : MonoBehaviour {
     private void Init()
     {
         stageSelectNum = 0;
-        //  ボタンにイベントの追加
-        //for (int i = 0; i < buttons.Length; i++)
-        //{
-        //    Button btn = buttons[i].GetComponent<Button>();
-        //    btn.onClick.AddListener(() => { TapStageButton(btn.gameObject); });
-        //}
-        //gameObject.GetComponent<Button>().onClick.AddListener(TapNextButton);
         inputModules = eventSystem.GetComponents<StandaloneInputModule>();
         string[] controllerName = Input.GetJoystickNames();
         if (controllerName[0] == "")
         {
             inputModules[0].enabled = true;
+            inputModules[1].enabled = false;
         }
         else if (controllerName[0] != "")
         {
+            inputModules[0].enabled = false;
             inputModules[1].enabled = true;
         }
-
     }
     
     public void TapStageButton(GameObject obj)
     {
+        SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SELECT);
         for (int i = 0; i < buttons.Length; i++)
         {
             if (buttons[i].Equals(obj))

@@ -56,6 +56,7 @@ public class CreateLadder : MonoBehaviour {
             GameObject ladder = Instantiate(Resources.Load<GameObject>(ladderPrefab));
             ladder.transform.localPosition = new Vector2(startPos.x, obj.transform.position.y - (height * i));
             ladder.transform.SetParent(obj.transform.root.transform);
+            EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Grow, ladder.transform.position, 3, obj, true);
             yield return new WaitForSeconds(0.3f);
         }
     }
