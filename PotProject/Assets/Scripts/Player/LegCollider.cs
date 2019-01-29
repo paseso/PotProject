@@ -78,9 +78,11 @@ public class LegCollider : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D col) {
 
+        // switchの上にいるか判定
         if (SwitchCheck(col.gameObject))
         {
             move_ctr.switchGimmick = col.gameObject;
+            move_ctr.switchFlag = true;
         }
 
         if (col.gameObject.layer != 2 && JumpCheck(col.gameObject))
@@ -135,6 +137,7 @@ public class LegCollider : MonoBehaviour {
         if (SwitchCheck(col.gameObject))
         {
             move_ctr.switchGimmick = null;
+            move_ctr.switchFlag = false;
         }
 
         if (col.gameObject.layer != 2 && JumpCheck(col.gameObject))
@@ -162,8 +165,10 @@ public class LegCollider : MonoBehaviour {
             move_ctr.InLadderCount--;
             if (move_ctr.InLadderCount <= 0) {
                 move_ctr.InLadderCount = 0;
-                if(gameObject.layer == LayerMask.NameToLayer("LadderPlayer"))
+                if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer"))
+                {
                     player_ctr.ChangeLayer();
+                }
             }
         }
     }

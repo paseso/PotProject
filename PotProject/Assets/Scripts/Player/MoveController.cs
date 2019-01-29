@@ -23,9 +23,14 @@ public class MoveController : MonoBehaviour
     //はしご中かどうか
     private bool _laddernow = false;
 
+    // はしご内にいるカウント
     public int InLadderCount { get; set; }
 
+    // switchオブジェクト
     public GameObject switchGimmick { get; set; }
+
+    // switchの上にいるか
+    public bool switchFlag { get; set; }
 
     //左右動かしてもいいかどうか
     [HideInInspector]
@@ -226,7 +231,6 @@ public class MoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("MoveController = " + pManager.Status.swordtype);
         //はしご処理してる時、ツボのtransformをプレイヤーと同じ位置にする
         if (_laddernow)
         {
@@ -581,12 +585,10 @@ public class MoveController : MonoBehaviour
         }
         if (Input.GetAxis("Vertical_ps4") >= 0.15f || Input.GetKey(KeyCode.A))
         {//左ジョイスティックを左にたおす or キーボードの「A」
-            if(gameObject.layer == LayerMask.NameToLayer("LadderPlayer")) { return; }
             Move(ButtonType.LEFTJOYSTICK_LEFT);
         }
         else if (Input.GetAxis("Vertical_ps4") <= -0.15f || Input.GetKey(KeyCode.D))
         {//左ジョイスティックを右にたおす or キーボードの「D」
-            if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer")) { return; }
             Move(ButtonType.LEFTJOYSTICK_RIGHT);
         }
         else if (Input.GetAxis("Vertical_ps4") <= 0.15f && Input.GetAxis("Vertical_ps4") >= -0.15f)
@@ -606,8 +608,9 @@ public class MoveController : MonoBehaviour
             if(InLadderCount > 0 && gameObject.layer == LayerMask.NameToLayer("LadderPlayer")) {
                 transform.parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 PotObject.transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                //transform.parent.GetComponent<Rigidbody2D>().isKinematic = true;
-                //PotObject.GetComponent<Rigidbody2D>().isKinematic = true;
+
+                transform.parent.GetComponent<Rigidbody2D>().gravityScale = 0;
+                PotObject.transform.GetComponent<Rigidbody2D>().gravityScale = 0;
             }
 
             rig.velocity = new Vector2(0, rig.velocity.y);
@@ -727,7 +730,6 @@ public class MoveController : MonoBehaviour
         PlayerStatus status = pManager.Status;
         status.gimmick_state = PlayerStatus.GimmickState.ONLADDER;
 
-        transform.parent.GetComponent<Rigidbody2D>().isKinematic = false;
         //プレイヤーの子供全部のレイヤーを変更
         var children = transform.parent.transform;
         foreach(Transform child in children)
@@ -742,9 +744,6 @@ public class MoveController : MonoBehaviour
         PotObject.layer = LayerMask.NameToLayer("Trans");
         transform.parent.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed * dir);
         _laddernow = true;
-        //if(InLadderCount < 0) {
-        //    player_ctr.ChangeLayer();
-        //}
     }
     
     private void OnTriggerEnter2D(Collider2D col)
