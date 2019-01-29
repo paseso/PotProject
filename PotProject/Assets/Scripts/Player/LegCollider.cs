@@ -110,19 +110,10 @@ public class LegCollider : MonoBehaviour {
             rb.velocity = new Vector2(rb.velocity.x,0);
         }
 
-        if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer") && col.gameObject.layer == LayerMask.NameToLayer("Block")) {
-            
-            player_ctr.ChangeLayer();
-            move_ctr.InLadderCount = 0;
-        }
-
-        
-
         if (col.gameObject.layer == LayerMask.NameToLayer("Block")) {
             player_ctr.OnBlock = col.gameObject;
         }
         
-
         if (!col.GetComponent<GimmickInfo>()) { return; }
         GimmickInfo info = col.GetComponent<GimmickInfo>();
         if (info.type == GimmickInfo.GimmickType.LADDER)
@@ -130,6 +121,16 @@ public class LegCollider : MonoBehaviour {
             move_ctr.InLadderCount++;
         }
         player_ctr.OnBlock = null;
+    }
+
+    private void OnTriggerStay2D(Collider2D col)
+    {
+        if (!col.GetComponent<GimmickInfo>()) { return; }
+        GimmickInfo info = col.GetComponent<GimmickInfo>();
+        if (info.type == GimmickInfo.GimmickType.LADDER)
+        {
+            move_ctr.InLadderCount = 1;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D col)

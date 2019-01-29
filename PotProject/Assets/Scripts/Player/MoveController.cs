@@ -32,6 +32,8 @@ public class MoveController : MonoBehaviour
     // switchの上にいるか
     public bool switchFlag { get; set; }
 
+    public bool ladderDownFlag { get; set; }
+
     //左右動かしてもいいかどうか
     [HideInInspector]
     public bool _ActiveRightLeft = false;
@@ -41,6 +43,8 @@ public class MoveController : MonoBehaviour
     //モンスターに当たったかどうか
     [HideInInspector]
     public bool _hitmonster = false;
+
+    
 
     //-------アクションボタンを押してるかどうか----------
     private bool _onRight = false;
@@ -75,6 +79,7 @@ public class MoveController : MonoBehaviour
     private PlayerManager pManager;
     private MiniMapController miniMap_ctr;
     private LegCollider leg_col;
+    
 
     #region ボタンFlagのget
 
@@ -193,6 +198,15 @@ public class MoveController : MonoBehaviour
         CROSSY_DOWN,
     };
 
+    public enum LadderDirection
+    {
+        NONE,
+        UP,
+        DOWN,
+    }
+
+    public LadderDirection ladderDir;
+
     //プレイヤーの今向いてる方向
     public enum Direction
     {
@@ -216,8 +230,8 @@ public class MoveController : MonoBehaviour
     void Start()
     {
         direc = Direction.LEFT;
-        pManager = FindObjectOfType<PlayerManager>();
-        PotObject = GameObject.FindObjectOfType<PotController>().gameObject;
+        pManager = GameObject.Find("PlayerStatus").GetComponent<PlayerManager>();
+        PotObject = FindObjectOfType<PotController>().gameObject;
         rig = gameObject.transform.parent.GetComponent<Rigidbody2D>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         bringctr = gameObject.transform.parent.GetChild(0).GetComponent<BringCollider>();
@@ -231,6 +245,7 @@ public class MoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("LadderCount=" + InLadderCount);
         //はしご処理してる時、ツボのtransformをプレイヤーと同じ位置にする
         if (_laddernow)
         {
@@ -358,10 +373,7 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
                 }
-                //if (pManager.Status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !leg_col.isLanding)
-                //{
-                //    return;
-                //}
+               
                 sidemove = -5f;
                 rig.velocity = new Vector2(-5f, rig.velocity.y);
                 break;
@@ -380,10 +392,7 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_WALK);
                 }
-                //if (pManager.Status.gimmick_state == PlayerStatus.GimmickState.ONLADDER && !leg_col.isLanding)
-                //{
-                //    return;
-                //}
+                
                 sidemove = 5f;
                 rig.velocity = new Vector2(5f, rig.velocity.y);
                 break;
@@ -404,6 +413,7 @@ public class MoveController : MonoBehaviour
                 _onDown = true;
 
                 if (player_ctr.GetAlchemyUIFlag) { return; }
+                if (ladderDownFlag) { return; }
 
                 if (InLadderCount > 0) {
                     Ladder(ladderSpeed, -1);

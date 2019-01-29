@@ -92,7 +92,6 @@ public class AttackZoneController : MonoBehaviour {
         {
             _attackMonster = true;
             Attack_Target = col.gameObject;
-            Debug.Log("はいったよ");
             return;
         }
 
