@@ -407,7 +407,7 @@ public class PlayerController : MonoBehaviour {
         //  HPの減算
         status.PlayerHP -= point;
         //  ゲージ部分のハートにエフェクトを生成
-        EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_HeartBurst, hearts[status.PlayerHP].transform.position, 0.05f, hearts[0].transform.parent.gameObject, true);
+        EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_HeartBurst, hearts[status.PlayerHP].transform.position + new Vector3(0,-0.5f,0), 0.05f, hearts[0].transform.parent.gameObject, true);
         // ダメージエフェクトの生成
         EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Damage, BrotherObj.transform.position, 5, BrotherObj, true);
         //ダメージを受けるアニメーション
