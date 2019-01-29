@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class StageSelectManager : MonoBehaviour {
 
     [SerializeField]
     private GameObject[] buttons;
+    [SerializeField]
+    private GameObject eventSystem;
     private int stageSelectNum;
+
+    private StandaloneInputModule[] inputModules;
 
 
 	void Start () {
@@ -22,12 +27,23 @@ public class StageSelectManager : MonoBehaviour {
     {
         stageSelectNum = 0;
         //  ボタンにイベントの追加
-        for (int i = 0; i < buttons.Length; i++)
+        //for (int i = 0; i < buttons.Length; i++)
+        //{
+        //    Button btn = buttons[i].GetComponent<Button>();
+        //    btn.onClick.AddListener(() => { TapStageButton(btn.gameObject); });
+        //}
+        //gameObject.GetComponent<Button>().onClick.AddListener(TapNextButton);
+        inputModules = eventSystem.GetComponents<StandaloneInputModule>();
+        string[] controllerName = Input.GetJoystickNames();
+        if (controllerName[0] == "")
         {
-            Button btn = buttons[i].GetComponent<Button>();
-            btn.onClick.AddListener(() => { TapStageButton(btn.gameObject); });
+            inputModules[0].enabled = true;
         }
-        gameObject.GetComponent<Button>().onClick.AddListener(TapNextButton);
+        else if (controllerName[0] != "")
+        {
+            inputModules[1].enabled = true;
+        }
+
     }
     
     public void TapStageButton(GameObject obj)
