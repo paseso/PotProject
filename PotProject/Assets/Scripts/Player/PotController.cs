@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using DG.Tweening;
 
 public class PotController : MonoBehaviour
 {
@@ -18,14 +19,11 @@ public class PotController : MonoBehaviour
     private GameObject BrotherObj;
     private Vector2 beforePosion;
 
+    private float distance = 0f;
+
     private bool _onece = false;
 
-    private enum Direction
-    {
-        RIGHT = 0,
-        LEFT
-    }
-    private Direction direction;
+    private MoveController.Direction direction;
 
     // Use this for initialization
     void Start()
@@ -45,60 +43,74 @@ public class PotController : MonoBehaviour
         {
             Debug.Log("お兄ちゃんが見当たらない");
         }
-        direction = Direction.LEFT;
+        direction = move_ctr.direc;
         _onece = false;
         beforePosion = new Vector2(0, 0);
+        distance = BrotherObj.transform.position.x - gameObject.transform.position.x;
     }
 
     // Update is called once per frame
     void Update()
     {
-        FollowPot();
+        CheckDistance();
+        //PotDirection();
     }
 
     /// <summary>
-    /// ツボがお兄ちゃんについていく処理
+    /// お兄ちゃんの向きに合わせてツボをお兄ちゃんの後ろに移動させる
     /// </summary>
-    private void FollowPot()
+    public void PotDirection()
     {
-        if (beforePosion == new Vector2(BrotherObj.transform.position.x, BrotherObj.transform.position.y))
+        float dis = Mathf.Abs(BrotherObj.transform.position.x) - Mathf.Abs(gameObject.transform.position.x);
+        if (dis >= 0)
             return;
-        if (move_ctr.direc == MoveController.Direction.RIGHT)
-        {
-            rig.velocity = new Vector2(5f, rig.velocity.y);
-        }
-        else if (move_ctr.direc == MoveController.Direction.LEFT)
-        {
-            rig.velocity = new Vector2(-5f, rig.velocity.y);
-        }
-        if (move_ctr.Jumping)
-        {
-            if (!_onece)
-            {
-                rig.velocity = new Vector2(0, 1f * move_ctr.speed);
-                _onece = true;
-            }
-        }
-        else
-        {
-            _onece = false;
-        }
-        beforePosion = BrotherObj.transform.position;
+        Debug.Log("逆");
+        gameObject.transform.DOMoveX(gameObject.transform.position.x * 2, 0.2f).SetEase(Ease.Linear);
     }
 
     /// <summary>
-    /// 壺の画像変更処理
+    /// 右にツボが移動する
     /// </summary>
-    private void ChangePotImage()
+    public void RightMove()
     {
-        if (move_ctr.OnLeft || direction == Direction.RIGHT)
-        {
-            direction = Direction.LEFT;
-        }
-        else if (move_ctr.OnLeft || direction == Direction.LEFT)
-        {
-            direction = Direction.RIGHT;
-        }
+        direction = MoveController.Direction.RIGHT;
+        rig.velocity = new Vector2(5f, rig.velocity.y);
+    }
+
+    /// <summary>
+    /// 左にツボが移動する
+    /// </summary>
+    public void LeftMove()
+    {
+        direction = MoveController.Direction.LEFT;
+        rig.velocity = new Vector2(-5f, rig.velocity.y);
+    }
+
+    /// <summary>
+    /// ツボが止まる
+    /// </summary>
+    public void StopPot()
+    {
+        rig.velocity = new Vector2(0, rig.velocity.y);
+    }
+
+    /// <summary>
+    /// ツボがジャンプする
+    /// </summary>
+    public void JumpPot()
+    {
+        rig.velocity = new Vector2(0, 1f * move_ctr.speed);
+    }
+
+    /// <summary>
+    /// お兄ちゃんとツボの距離の処理
+    /// </summary>
+    private void CheckDistance()
+    {
+        //Debug.Log("distance = " + distance);
+        if (distance <= 20f)
+            return;
+        player_ctr.HPDown(6);
     }
 
     /// <summary>
