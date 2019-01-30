@@ -32,9 +32,27 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
     #endregion Singleton
 
     [SerializeField]
-    private GameObject Effect_PickUp, Effect_AttackIce, Effect_Damage,
-        Effect_Heal,Effect_Respawn, Effect_RespawnPosition, Effect_HeartBurst, Effect_Fire,
-        Effect_KeyDoor, Effect_Water, Effect_Grow;
+    private GameObject Effect_PickUp;
+    [SerializeField]
+    private GameObject Effect_AttackIce;
+    [SerializeField]
+    private GameObject Effect_Damage;
+    [SerializeField]
+    private GameObject Effect_Heal;
+    [SerializeField]
+    private GameObject Effect_Respawn;
+    [SerializeField]
+    private GameObject Effect_RespawnPosition;
+    [SerializeField]
+    private GameObject Effect_HeartBurst;
+    [SerializeField]
+    private GameObject Effect_Fire;
+    [SerializeField]
+    private GameObject Effect_KeyDoor;
+    [SerializeField]
+    private GameObject Effect_Water;
+    [SerializeField]
+    private GameObject Effect_Grow;
 
     public void Awake()
     {

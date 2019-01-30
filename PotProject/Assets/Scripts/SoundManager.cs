@@ -51,19 +51,20 @@ public class SoundManager : MonoBehaviour {
         SE_DEMONFLYING,
         SE_THUNDER,
         SE_ALCHEMYMISS,
-        SE_ALCHEMYSUCCESS
+        SE_ALCHEMYSUCCESS,
+        SE_STONEDOOR
     };
 
     [SerializeField]
     AudioClip[] BGM_LIST = new AudioClip[3];
 
     [SerializeField]
-    AudioClip[] SE_LIST = new AudioClip[15];
+    AudioClip[] SE_LIST = new AudioClip[16];
 
     private AudioSource audioSource;
 
-    [SerializeField]
-    AudioMixer bgmMixer;
+    //[SerializeField]
+    //AudioMixer bgmMixer;
 
     void Awake()
     {
@@ -95,39 +96,39 @@ public class SoundManager : MonoBehaviour {
         audioSource.PlayOneShot(SE_LIST[SEnum], vol);
     }
 
-    public void FadeOutBGM()
-    {
-        StartCoroutine(FadeOutBgm(1));
-    }
+    //public void FadeOutBGM()
+    //{
+    //    StartCoroutine(FadeOutBgm(1));
+    //}
 
-    public void FadeInBGM()
-    {
-        StartCoroutine(FadeOutBgm(1));
-    }
+    //public void FadeInBGM()
+    //{
+    //    StartCoroutine(FadeOutBgm(1));
+    //}
 
 
-    IEnumerator FadeOutBgm(float interval)
-    {
-        //だんだん小さく
-        float time = 0;
-        while (time <= interval)
-        {
-            bgmMixer.SetFloat("BGM", Mathf.Lerp(0, -40, time / interval));
-            time += Time.unscaledDeltaTime;
-            yield return 0;
-        }
-        yield break;
-    }
-    IEnumerator FadeInBgm(float interval)
-    {
-        //だんだん小さく
-        float time = 0;
-        while (time <= interval)
-        {
-            bgmMixer.SetFloat("BGM", Mathf.Lerp(-40, 0, time / interval));
-            time += Time.unscaledDeltaTime;
-            yield return 0;
-        }
-        yield break;
-    }
+    //IEnumerator FadeOutBgm(float interval)
+    //{
+    //    //だんだん小さく
+    //    float time = 0;
+    //    while (time <= interval)
+    //    {
+    //        bgmMixer.SetFloat("BGM", Mathf.Lerp(0, -40, time / interval));
+    //        time += Time.unscaledDeltaTime;
+    //        yield return 0;
+    //    }
+    //    yield break;
+    //}
+    //IEnumerator FadeInBgm(float interval)
+    //{
+    //    //だんだん小さく
+    //    float time = 0;
+    //    while (time <= interval)
+    //    {
+    //        bgmMixer.SetFloat("BGM", Mathf.Lerp(-40, 0, time / interval));
+    //        time += Time.unscaledDeltaTime;
+    //        yield return 0;
+    //    }
+    //    yield break;
+    //}
 }

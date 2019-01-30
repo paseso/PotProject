@@ -23,6 +23,7 @@ public class CameraManager : MonoBehaviour {
         isSwitchingMain = true;
         //  画面のマスク処理をしているクラスの参照
         fade = FindObjectOfType<FadeImage>();
+        fade.Range = 1;
     }
 
     /// <summary>
@@ -72,7 +73,7 @@ public class CameraManager : MonoBehaviour {
             time += Time.unscaledDeltaTime;
             yield return 0;
         }
-        fade.Range = 1;
+        fade.Range = 0;
 
         //  カメラの変更処理
         subCamera.transform.position = new Vector3(cameraPos.x, cameraPos.y, -10);

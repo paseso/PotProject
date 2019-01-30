@@ -112,9 +112,6 @@ public class MapCreator : MonoBehaviour
     /// <param name="datas"></param>
     public void CreateMap(MapData[] datas)
     {
-        //  プレイヤーの初期地点
-        GameObject startPositionObject = new GameObject();
-
         //  配列の長さを取得 再編集
         int xLength = datas[0].mapDate.Length;
         int yLength = datas[0].mapDate.Length;
@@ -217,8 +214,7 @@ public class MapCreator : MonoBehaviour
                         //  スタート位置の配置
                         if (enemyObj.tag == "StartPos")
                         {
-                            startPositionObject = enemyObj;
-                            SetParentPlayer(startPositionObject);
+                            SetParentPlayer(OtherObjectGroupe, startPos + new Vector2(tileSize * x, -tileSize * y) + new Vector2(tileSize * xLength * rem, -tileSize * yLength * quo));
                         }
                         enemyObj.transform.position = startPos + new Vector2(tileSize * x, -tileSize * y) + new Vector2(tileSize * xLength * rem, -tileSize * yLength * quo);
                         enemyObj.transform.parent = OtherObjectGroupe.transform;
@@ -235,9 +231,10 @@ public class MapCreator : MonoBehaviour
     /// プレイヤーをゲームスタート時に生成する
     /// </summary>
     /// <param name="parent"></param>
-    public void SetParentPlayer(GameObject parent)
+    public void SetParentPlayer(GameObject parent, Vector3 pos)
     {
         GameObject broOld = Instantiate(playerPrefab);
+        broOld.transform.position = pos;
         broOld.transform.SetParent(parent.transform);
     }
 }
