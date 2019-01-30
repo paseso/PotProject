@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using DG.Tweening;
+using System.Collections;
 
 public class PotController : MonoBehaviour
 {
@@ -23,7 +24,10 @@ public class PotController : MonoBehaviour
 
     private bool _onece = false;
 
+    private bool _potMoving = false;
+
     private MoveController.Direction direction;
+    private Rigidbody2D brother_rig;
 
     // Use this for initialization
     void Start()
@@ -38,6 +42,7 @@ public class PotController : MonoBehaviour
             move_ctr = GameObject.FindObjectOfType<MoveController>();
             rig = gameObject.GetComponent<Rigidbody2D>();
             BrotherObj = move_ctr.transform.parent.gameObject;
+            brother_rig = BrotherObj.GetComponent<Rigidbody2D>();
         }
         catch (UnityException e)
         {
@@ -46,6 +51,7 @@ public class PotController : MonoBehaviour
         direction = move_ctr.direc;
         _onece = false;
         beforePosion = new Vector2(0, 0);
+        _potMoving = false;
         distance = BrotherObj.transform.position.x - gameObject.transform.position.x;
     }
 
@@ -53,19 +59,29 @@ public class PotController : MonoBehaviour
     void Update()
     {
         CheckDistance();
-        //PotDirection();
+        PotDirection();
     }
 
     /// <summary>
     /// お兄ちゃんの向きに合わせてツボをお兄ちゃんの後ろに移動させる
     /// </summary>
-    public void PotDirection()
+    private void PotDirection()
     {
-        float dis = Mathf.Abs(BrotherObj.transform.position.x) - Mathf.Abs(gameObject.transform.position.x);
-        if (dis >= 0)
+        if (_potMoving)
             return;
-        Debug.Log("逆");
-        gameObject.transform.DOMoveX(gameObject.transform.position.x * 2, 0.2f).SetEase(Ease.Linear);
+        float dis = Mathf.Abs(BrotherObj.transform.position.x) - Mathf.Abs(gameObject.transform.position.x);
+        //お兄ちゃんよりも前にいたら
+        if (direction == MoveController.Direction.RIGHT && dis <= 0 && Mathf.Abs(distance) <= 6f)
+        {
+            _potMoving = true;
+            rig.velocity = new Vector2(-7, brother_rig.velocity.y);
+        }
+        else if (direction == MoveController.Direction.LEFT && dis >= 0 && distance <= 6f)
+        {
+            _potMoving = true;
+            rig.velocity = new Vector2(7, brother_rig.velocity.y);
+        }
+        _potMoving = false;
     }
 
     /// <summary>
@@ -107,7 +123,11 @@ public class PotController : MonoBehaviour
     /// </summary>
     private void CheckDistance()
     {
-        //Debug.Log("distance = " + distance);
+        distance = BrotherObj.transform.position.x - gameObject.transform.position.x;
+        if(distance >= 10f)
+        {
+            rig.velocity = new Vector2(brother_rig.velocity.x + 5f, rig.velocity.y);
+        }
         if (distance <= 20f)
             return;
         player_ctr.HPDown(6);
