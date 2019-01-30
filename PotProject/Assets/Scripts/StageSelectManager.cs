@@ -26,13 +26,16 @@ public class StageSelectManager : MonoBehaviour {
     private void Init()
     {
         stageSelectNum = 0;
+        //  ステージセレクト画面の操作を判定
         inputModules = eventSystem.GetComponents<StandaloneInputModule>();
         string[] controllerName = Input.GetJoystickNames();
-        if (controllerName[0] == "")
+        //  キーボード
+        if (controllerName.Length == 0 || controllerName[0] == "")
         {
             inputModules[0].enabled = true;
             inputModules[1].enabled = false;
         }
+        //  コントローラー
         else if (controllerName[0] != "")
         {
             inputModules[0].enabled = false;
