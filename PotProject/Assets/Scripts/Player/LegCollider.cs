@@ -119,18 +119,31 @@ public class LegCollider : MonoBehaviour {
         {
             Rigidbody2D rb = transform.parent.GetComponent<Rigidbody2D>();
             rb.velocity = new Vector2(rb.velocity.x,0);
+            player_ctr.OnBlock = col.gameObject;
+
+            if(gameObject.layer == LayerMask.NameToLayer("LadderPlayer"))
+            {
+                player_ctr.ChangeLayer();
+                move_ctr.ladderDownFlag = true;
+                move_ctr.InLadderCount = 0;
+                return;
+            }
         }
 
-        if (col.gameObject.layer == LayerMask.NameToLayer("Block")) {
-            player_ctr.OnBlock = col.gameObject;
+        if (col.gameObject.layer == 2 && !col.GetComponent<MapChange>())
+        {
+            move_ctr.InLadderCount++;
+            move_ctr.ladderDownFlag = true;
         }
-        
+
         if (!col.GetComponent<GimmickInfo>()) { return; }
         GimmickInfo info = col.GetComponent<GimmickInfo>();
         if (info.type == GimmickInfo.GimmickType.LADDER)
         {
             move_ctr.InLadderCount++;
         }
+
+        
         player_ctr.OnBlock = null;
     }
 
@@ -169,11 +182,17 @@ public class LegCollider : MonoBehaviour {
             isLanding = false;
         }
 
+        if (col.gameObject.layer == 2 && !col.GetComponent<MapChange>())
+        {
+            move_ctr.InLadderCount--;
+            move_ctr.ladderDownFlag = false;
+        }
+
         falldistance = gameObject.transform.position.y;
         if (!col.GetComponent<GimmickInfo>()) { return; }
         GimmickInfo info = col.GetComponent<GimmickInfo>();
         if (info.type == GimmickInfo.GimmickType.LADDER) {
-            
+            move_ctr.ladderDownFlag = false;
             move_ctr.InLadderCount--;
             if (move_ctr.InLadderCount <= 0) {
                 move_ctr.InLadderCount = 0;
