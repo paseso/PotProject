@@ -471,6 +471,7 @@ public class MoveController : MonoBehaviour
                 }
                 else
                 {
+                    if(gameObject.layer == LayerMask.NameToLayer("LadderPlayer")) { return; }
                     if (direc == Direction.LEFT)
                         anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.SORDATTACK_LEFT);
                     else
