@@ -23,9 +23,31 @@ public class CameraManager : MonoBehaviour {
         isSwitchingMain = true;
         //  画面のマスク処理をしているクラスの参照
         fade = FindObjectOfType<FadeImage>();
-        fade.Range = 1;
+        fade.enabled = true;
     }
 
+    void Start()
+    {
+        StartCoroutine(StartFade());
+    }
+
+    /// <summary>
+    /// スタート時の暗転解除
+    /// </summary>
+    private IEnumerator StartFade()
+    {
+        yield return new WaitForSeconds(0.5f);
+        float time = 0;
+        float interval = 0.5f;
+        while (time <= interval)
+        {
+            fade.Range = Mathf.Lerp(1f, 0f, time / interval);
+            time += Time.unscaledDeltaTime;
+            yield return 0;
+        }
+        fade.Range = 0;
+        yield break;
+    }
     /// <summary>
     /// 暗転して指定座標を写すカメラ
     /// </summary>

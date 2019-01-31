@@ -16,7 +16,8 @@ public class Fade : MonoBehaviour
 
 	void Init ()
 	{
-		fade = GetComponent<IFade> ();
+        cutoutRange = 1;
+        fade = GetComponent<IFade> ();
 	}
 
 	void OnValidate ()
