@@ -239,22 +239,22 @@ namespace Anima2D
 		ulong m_AssetTimeStamp = 0;
 #endif
 
-		void OnDestroy()
-		{
-			if(m_CurrentMesh)
-			{
-#if UNITY_EDITOR
-				if(Application.isPlaying)
-				{
-					Destroy(m_CurrentMesh);
-				}else{
-					DestroyImmediate(m_CurrentMesh);
-				}
-#else
-				Destroy(m_CurrentMesh);
-#endif
-			}
-		}
+//		void OnDestroy()
+//		{
+//			if(m_CurrentMesh)
+//			{
+//#if UNITY_EDITOR
+//				if(Application.isPlaying)
+//				{
+//					Destroy(m_CurrentMesh);
+//				}else{
+//                    DestroyImmediate(m_CurrentMesh);
+//				}
+//#else
+//				Destroy(m_CurrentMesh);
+//#endif
+//			}
+//		}
 	
 #if UNITY_EDITOR
 		void UpdateTimestamp()
