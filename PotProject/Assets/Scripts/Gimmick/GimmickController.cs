@@ -20,6 +20,14 @@ public class GimmickController :MonoBehaviour {
     private PlayerManager pManager;
     // -------------------------------
 
+    // プレイヤーがスイッチに乗ってるかフラグ----
+    private bool onPlayerFlag = false;
+    public bool OnPlayerFlag {
+        get { return onPlayerFlag; }
+        set { onPlayerFlag = value; }
+    }
+    // ------------------------------------------
+
     // マップの位置
     private Vector2 mapPos;
 
@@ -111,6 +119,13 @@ public class GimmickController :MonoBehaviour {
         
         if(col.gameObject.layer != LayerMask.NameToLayer("Player")) { return; }
         switch (gInfo.type) {
+            case GimmickInfo.GimmickType.UP:
+            case GimmickInfo.GimmickType.DOWN:
+            case GimmickInfo.GimmickType.LEFT:
+            case GimmickInfo.GimmickType.RIGHT:
+                Debug.Log("call");
+                onPlayerFlag = true;
+                break;
             case GimmickInfo.GimmickType.MAPCHANGE:
                 col.transform.parent.transform.parent.transform.SetParent(transform.root.gameObject.transform);
                 mMapController.NowMap();
@@ -132,6 +147,13 @@ public class GimmickController :MonoBehaviour {
     public void OnTriggerExit2D(Collider2D col) {
         if (col.gameObject.layer != LayerMask.NameToLayer("Player")) { return; }
         switch (gInfo.type) {
+            case GimmickInfo.GimmickType.UP:
+            case GimmickInfo.GimmickType.DOWN:
+            case GimmickInfo.GimmickType.LEFT:
+            case GimmickInfo.GimmickType.RIGHT:
+                Debug.Log("call");
+                onPlayerFlag = false;
+                break;
             case GimmickInfo.GimmickType.FIREFIELD:
                 if (!col.GetComponent<MoveController>()) { return; }
                 bossCon.IsMagicAttack = false;

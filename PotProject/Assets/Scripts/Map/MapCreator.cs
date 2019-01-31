@@ -151,7 +151,7 @@ public class MapCreator : MonoBehaviour
             backGroundObject.AddComponent<SpriteRenderer>();
             backGroundObject.GetComponent<SpriteRenderer>().sortingOrder = -1;
             backGroundObject.AddComponent<BoxCollider2D>();
-            backGroundObject.GetComponent<BoxCollider2D>().size = new Vector2(xLength * 0.5f, xLength * 0.5f);
+            backGroundObject.GetComponent<BoxCollider2D>().size = new Vector2(xLength * 0.5f + 0.25f, xLength * 0.5f + 0.25f);
             backGroundObject.transform.parent = rootObj.transform;
             backGroundObject.transform.localPosition = Vector3.zero + new Vector3(-tileSize * 0.5f, tileSize * 0.5f, 0);
             backGroundObject.GetComponent<SpriteRenderer>().sprite = backImages[datas[i].backGroundNum];

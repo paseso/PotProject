@@ -29,9 +29,6 @@ public class MoveController : MonoBehaviour
     // switchオブジェクト
     public GameObject switchGimmick { get; set; }
 
-    // switchの上にいるか
-    public bool switchFlag { get; set; }
-
     public bool ladderDownFlag { get; set; }
 
     //左右動かしてもいいかどうか
@@ -471,6 +468,7 @@ public class MoveController : MonoBehaviour
                 }
                 else
                 {
+                    if(gameObject.layer == LayerMask.NameToLayer("LadderPlayer")) { return; }
                     if (direc == Direction.LEFT)
                         anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.SORDATTACK_LEFT);
                     else

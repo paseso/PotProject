@@ -23,7 +23,7 @@ public class MiniMapController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         int count = 0;
-        status = FindObjectOfType<PlayerManager>().Status;
+        status = GameObject.Find("PlayerStatus").GetComponent<PlayerManager>().Status;
         for (int i = 0; i < 3; i++) {
             List<Image> tempList = new List<Image>();
             for(int j = 0; j < 3; j++) {
@@ -51,22 +51,31 @@ public class MiniMapController : MonoBehaviour {
     /// </summary>
     public void ActiveMiniMap()
     {
+        StartCoroutine(MiniMapCoroutine());
+    }
+
+    public IEnumerator MiniMapCoroutine() {
         PlayerStatus tempStatus = new PlayerStatus();
-        if (status.event_state != PlayerStatus.EventState.MINIMAP)
-        {
-            player_ctr.IsCommandActive = false;
+        if (status.event_state != PlayerStatus.EventState.MINIMAP) {
+            player_ctr.AllCommandActive = false;
             isMiniMap = true;
             tempStatus = status;
             status.event_state = PlayerStatus.EventState.MINIMAP;
             cManager.SwitchingCameraSub(sController.GetMaps[1][1].transform.localPosition, 70);
-        }
-        else
-        {
+            yield return new WaitForSeconds(1.2f);
+            player_ctr.IsCommandActive = false;
+            player_ctr.AllCommandActive = true;
+
+        } else {
+            player_ctr.AllCommandActive = false;
             cManager.SwitchingCameraMain();
             status.event_state = tempStatus.event_state;
             isMiniMap = false;
-            player_ctr.IsCommandActive = true;
             status.event_state = PlayerStatus.EventState.NORMAL;
+            yield return new WaitForSeconds(1.2f);
+            player_ctr.IsCommandActive = true;
+            player_ctr.AllCommandActive = true;
+
         }
     }
 }
