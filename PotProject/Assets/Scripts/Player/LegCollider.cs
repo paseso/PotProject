@@ -93,7 +93,7 @@ public class LegCollider : MonoBehaviour {
         if (SwitchCheck(col.gameObject))
         {
             move_ctr.switchGimmick = col.gameObject;
-            move_ctr.switchFlag = true;
+            col.GetComponent<GimmickController>().OnPlayerFlag = true;
         }
 
         if (col.gameObject.layer != 2 && JumpCheck(col.gameObject))
@@ -162,7 +162,7 @@ public class LegCollider : MonoBehaviour {
         if (SwitchCheck(col.gameObject))
         {
             move_ctr.switchGimmick = null;
-            move_ctr.switchFlag = false;
+            col.GetComponent<GimmickController>().OnPlayerFlag = false;
         }
 
         if (col.gameObject.layer != 2 && JumpCheck(col.gameObject))

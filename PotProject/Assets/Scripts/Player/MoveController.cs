@@ -29,9 +29,6 @@ public class MoveController : MonoBehaviour
     // switchオブジェクト
     public GameObject switchGimmick { get; set; }
 
-    // switchの上にいるか
-    public bool switchFlag { get; set; }
-
     public bool ladderDownFlag { get; set; }
 
     //左右動かしてもいいかどうか
