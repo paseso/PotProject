@@ -10,8 +10,15 @@ public class CameraController : MonoBehaviour {
     /// </summary>
     public GameObject target { get; set; }
 
-	// Use this for initialization
-	void Start () {
+    public Transform map { get; set; }
+
+    private float minSide;
+    private float maxSide;
+    private float minHeight;
+    private float maxHeight;
+
+    // Use this for initialization
+    void Start () {
         target = FindObjectOfType<MoveController>().gameObject;
 	}
 	
@@ -25,7 +32,20 @@ public class CameraController : MonoBehaviour {
     /// </summary>
     private void CameraMove(GameObject obj)
     {
-        gameObject.transform.position = new Vector3(obj.transform.position.x, obj.transform.position.y + 2.13f, -100);
+        gameObject.transform.position = new Vector3(obj.transform.position.x, obj.transform.position.y + 4f, -100);
+        Debug.Log("Pos = " + transform.position);
+        /*
+         画面中心より右(左)に来たらx座標追従
+         画面中心より上？に来たらy座標追従
+         今いるマップのカメラがいける最小最大座標をGlobalで取得(x,y)←どっかに保存したい
+         その座標まで来たらカメラのx(y)座標を固定
+         マップが切り替わったらその都度座標更新
+         はしごで下に降りるときは？？(仕様確認)
+         */
+
+
+
+
         //if (gameObject.transform.position.x < 0)
         //{
         //    gameObject.transform.position = new Vector3(0, AniObject.transform.position.y + 2.13f, -10);

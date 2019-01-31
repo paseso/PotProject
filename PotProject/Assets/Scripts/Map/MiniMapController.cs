@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class MiniMapController : MonoBehaviour {
     private MapInfo mInfo;
     private GameObject player;
+    private GameObject controller;
     private int mapNum;
     private int numX, numY;
     private List<List<Image>> miniMaps = new List<List<Image>>();
@@ -32,12 +33,18 @@ public class MiniMapController : MonoBehaviour {
             }
             miniMaps.Add(tempList);
         }
-        cManager = GameObject.Find("Controller").gameObject.GetComponent<CameraManager>();
-        sController = GameObject.Find("Controller").gameObject.GetComponent<StageController>();
-        player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
+        if (GameObject.Find("Controller")) {
+            controller = GameObject.Find("Controller");
+            cManager = controller.GetComponent<CameraManager>();
+            sController = controller.gameObject.GetComponent<StageController>();
+            player_ctr = controller.GetComponent<PlayerController>();
+        }
         player = GameObject.FindGameObjectWithTag("Player");
 	}
 
+    /// <summary>
+    /// 現在のマップに切り替え
+    /// </summary>
     public void NowMap() {
         miniMaps[numY][numX].color = Color.white;
         mInfo = player.transform.root.gameObject.GetComponent<MapInfo>();

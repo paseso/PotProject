@@ -130,6 +130,7 @@ public class LegCollider : MonoBehaviour {
             }
         }
 
+        // 壁ブロックなら
         if (col.gameObject.layer == 2 && !col.GetComponent<MapChange>())
         {
             move_ctr.InLadderCount++;

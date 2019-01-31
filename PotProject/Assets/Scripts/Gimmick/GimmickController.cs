@@ -123,7 +123,6 @@ public class GimmickController :MonoBehaviour {
             case GimmickInfo.GimmickType.DOWN:
             case GimmickInfo.GimmickType.LEFT:
             case GimmickInfo.GimmickType.RIGHT:
-                Debug.Log("call");
                 onPlayerFlag = true;
                 break;
             case GimmickInfo.GimmickType.MAPCHANGE:
@@ -151,7 +150,6 @@ public class GimmickController :MonoBehaviour {
             case GimmickInfo.GimmickType.DOWN:
             case GimmickInfo.GimmickType.LEFT:
             case GimmickInfo.GimmickType.RIGHT:
-                Debug.Log("call");
                 onPlayerFlag = false;
                 break;
             case GimmickInfo.GimmickType.FIREFIELD:
