@@ -73,7 +73,7 @@ public class CameraManager : MonoBehaviour {
             time += Time.unscaledDeltaTime;
             yield return 0;
         }
-        fade.Range = 0;
+        fade.Range = 1;
 
         //  カメラの変更処理
         subCamera.transform.position = new Vector3(cameraPos.x, cameraPos.y, -10);
