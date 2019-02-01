@@ -406,7 +406,7 @@ public class PlayerController : MonoBehaviour {
         EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_HeartBurst, hearts[status.PlayerHP].transform.position + new Vector3(0,-0.5f,0), 0.05f, hearts[0].transform.parent.gameObject, true);
         // ダメージエフェクトの生成
         EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Damage, BrotherObj.transform.position, 5, BrotherObj, true);
-        PotObject.GetComponent<PotController>().ChangePotFace(PotStatus.PotFace.Sad);
+        //PotObject.GetComponent<PotController>().ChangePotFace(PotStatus.PotFace.Sad);
         //ダメージを受けるアニメーション
         if (move_ctr.direc == MoveController.Direction.LEFT)
         {
