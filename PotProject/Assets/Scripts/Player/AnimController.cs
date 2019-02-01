@@ -586,7 +586,7 @@ public class AnimController : MonoBehaviour {
         Itemtarget.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
         Itemtarget.transform.DOMoveY(pot_anim.transform.position.y + 0.5f, 0.4f);
         PotAnimSetBool();
-        yield return new WaitForSeconds(1.3f);
+        yield return new WaitForSeconds(1.1f);
         //エフェクトとアイテムのオブジェクトはもう使わないので削除、フラグをfalseにする
         GetItemEndAnim(EffectObj);
         pot_anim.SetBool("isPotDown", false);
@@ -622,12 +622,12 @@ public class AnimController : MonoBehaviour {
     /// </summary>
     private void GetItemEndAnim(GameObject effect)
     {
+        player_ctr.AllCommandActive = true;
         Destroy(effect.gameObject);
         Destroy(Itemtarget.transform.parent.gameObject);
         PotAnimSetBool();
         anim.SetBool("isRightGetItem", false);
         anim.SetBool("isLeftGetItem", false);
-        player_ctr.AllCommandActive = true;
     }
 
     /// <summary>
