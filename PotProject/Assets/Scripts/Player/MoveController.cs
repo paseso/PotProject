@@ -71,7 +71,6 @@ public class MoveController : MonoBehaviour
 
     private PlayerController player_ctr;
     private BringCollider bringctr;
-    private AttackZoneController atc_ctr;
     private AlchemyUIController alchemyUI_ctr;
     private AnimController anim_ctr;
     private PlayerManager pManager;
@@ -239,7 +238,6 @@ public class MoveController : MonoBehaviour
         rig = gameObject.transform.parent.GetComponent<Rigidbody2D>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         bringctr = gameObject.transform.parent.GetChild(0).GetComponent<BringCollider>();
-        atc_ctr = gameObject.transform.parent.GetComponentInChildren<AttackZoneController>();
         alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
         miniMap_ctr = GameObject.Find("Canvas/MiniMap").GetComponent<MiniMapController>();
         anim_ctr = gameObject.transform.parent.GetComponent<AnimController>();
@@ -360,13 +358,16 @@ public class MoveController : MonoBehaviour
                 }
 
                 rig.velocity = new Vector2(sidemove, 1f * speed);
-
+                PotObject.GetComponent<PotController>().JumpPot();
                 _jumping = true;
                 break;
 
             case ButtonType.LEFTJOYSTICK_LEFT:
                 if (direc != Direction.LEFT && Jumping)
                     return;
+                else if (direc == Direction.LEFT && Jumping) { }
+                //右ジョイスティックとジャンプ同時押し
+
                 direc = Direction.LEFT;
                 if (!_ActiveRightLeft)
                     return;
@@ -381,11 +382,15 @@ public class MoveController : MonoBehaviour
                 sidemove = -5f;
                 if (CheckMoveable())
                     rig.velocity = new Vector2(-5f, rig.velocity.y);
+                PotObject.GetComponent<PotController>().LeftMove();
                 break;
 
             case ButtonType.LEFTJOYSTICK_RIGHT:
                 if (direc != Direction.RIGHT && Jumping)
                     return;
+                else if (direc == Direction.RIGHT && Jumping) { }
+                //右ジョイスティックとジャンプ同時押し
+
                 direc = Direction.RIGHT;
 
                 if (!_ActiveRightLeft)
@@ -402,6 +407,7 @@ public class MoveController : MonoBehaviour
 
                 if (CheckMoveable())
                     rig.velocity = new Vector2(5f, rig.velocity.y);
+                PotObject.GetComponent<PotController>().RightMove();
                 break;
 
             case ButtonType.LEFTJOYSTICK_UP:
@@ -627,6 +633,7 @@ public class MoveController : MonoBehaviour
             }
 
             rig.velocity = new Vector2(0, rig.velocity.y);
+            PotObject.GetComponent<PotController>().StopPot();
         }
         if (Input.GetAxis("Vertical_ps4") <= -0.8f || Input.GetKey(KeyCode.W))
         {

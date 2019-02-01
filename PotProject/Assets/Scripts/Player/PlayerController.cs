@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour {
 
     private GameObject[] hearts;
 
-    private GameObject HeartObject;
     private int maxHP;
     private const int maxItemBox = 3;
 
@@ -89,7 +88,6 @@ public class PlayerController : MonoBehaviour {
             BrotherObj = FindObjectOfType<MoveController>().gameObject;
             move_ctr = BrotherObj.GetComponent<MoveController>();
             PotObject = FindObjectOfType<PotController>().gameObject;
-            HeartObject = GameObject.Find("Canvas/Heart");
             createItemBox = new List<CreateItemStatus.Type>();
             anim_ctr = BrotherObj.transform.parent.GetComponent<AnimController>();
             lifePoint = GameObject.FindGameObjectWithTag("LifePoint");
@@ -147,7 +145,7 @@ public class PlayerController : MonoBehaviour {
     /// <param name="type"></param>
     public void setSwordList(PlayerStatus.SWORDTYPE type)
     {
-        //2番目以降のNORMALタイプのところに錬金した剣をいれる
+        //0番目以上のNORMALタイプのところに錬金した剣をいれる
         for(int i = 1; i < 4; i++)
         {
             if (swordList[i] != PlayerStatus.SWORDTYPE.NORMAL)
@@ -302,8 +300,6 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    int count = 0;
-
     /// <summary>
     /// 剣の属性を変える処理
     /// </summary>
@@ -311,10 +307,10 @@ public class PlayerController : MonoBehaviour {
     public void SwordTypeChange(PlayerStatus.SWORDTYPE s_type)
     {
         if (swordSpriteList.Count == 0)
+        {
             setSwordSpriteList();
-        count++;
-        int s_num = (int)s_type;
-        sword.sprite = swordSpriteList[s_num];
+        }
+        sword.sprite = swordSpriteList[(int)s_type];
         switch (s_type)
         {
             case PlayerStatus.SWORDTYPE.NORMAL:
@@ -410,6 +406,7 @@ public class PlayerController : MonoBehaviour {
         EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_HeartBurst, hearts[status.PlayerHP].transform.position + new Vector3(0,-0.5f,0), 0.05f, hearts[0].transform.parent.gameObject, true);
         // ダメージエフェクトの生成
         EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Damage, BrotherObj.transform.position, 5, BrotherObj, true);
+        PotObject.GetComponent<PotController>().ChangePotFace(PotStatus.PotFace.Sad);
         //ダメージを受けるアニメーション
         if (move_ctr.direc == MoveController.Direction.LEFT)
         {
