@@ -4,6 +4,8 @@ public class LegCollider : MonoBehaviour {
 
     private MoveController move_ctr;
     private PlayerController player_ctr;
+    private PlayerStatus status;
+    private GameObject inGameObject;
     private bool landingFlag = false;
     float jumpPos;
     int onGroundCount;
@@ -54,6 +56,14 @@ public class LegCollider : MonoBehaviour {
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         _legFloor = false;
 	}
+
+    //void Update()
+    //{
+    //    if(inGameObject != null && inGameObject.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
+    //    {
+
+    //    }
+    //}
 
     /// <summary>
     /// ジャンプ判定
