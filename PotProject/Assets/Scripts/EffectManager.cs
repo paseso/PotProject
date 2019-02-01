@@ -53,6 +53,12 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
     private GameObject Effect_Water;
     [SerializeField]
     private GameObject Effect_Grow;
+    [SerializeField]
+    private GameObject Effect_GetItem;
+    [SerializeField]
+    private GameObject Effect_CreateItemSuccece;
+    [SerializeField]
+    private GameObject Effect_Alchemy;
 
     public void Awake()
     {
@@ -72,7 +78,10 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
         Effect_Fire,
         Effect_KeyDoor,
         Effect_Water,
-        Effect_Grow
+        Effect_Grow,
+        Effect_GetItem,
+        Effect_CreateItemSuccece,
+        Effect_Alchemy,
     };
 
     /// <summary>
@@ -141,6 +150,15 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
                 break;
             case 10:
                 PlayEffect = Instantiate(Effect_Grow) as GameObject;
+                break;
+            case 11:
+                PlayEffect = Instantiate(Effect_GetItem) as GameObject;
+                break;
+            case 12:
+                PlayEffect = Instantiate(Effect_CreateItemSuccece) as GameObject;
+                break;
+            case 13:
+                PlayEffect = Instantiate(Effect_Alchemy) as GameObject;
                 break;
             default:
                 Debug.Log("Effectmanagerのエラー");

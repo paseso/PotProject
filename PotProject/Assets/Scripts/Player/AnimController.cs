@@ -569,7 +569,7 @@ public class AnimController : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.35f);
         //アイテムのある位置にエフェクトの位置を合わせて呼ぶ
-        GameObject EffectObj = effect_mng.PlayEffect(0, Itemtarget.transform.position, 10, Itemtarget, false).gameObject;
+        GameObject EffectObj = effect_mng.PlayEffect(11, Itemtarget.transform.position, 10, Itemtarget, false).gameObject;
         EffectObj.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
         //Effectのスケールとアイテムのスケールをだんだん小さくしていく処理
         Itemtarget.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
