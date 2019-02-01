@@ -49,13 +49,9 @@ public class LegCollider : MonoBehaviour {
     //足の部分にfloorがあったってるかどうか
     [HideInInspector]
     public bool _legFloor = false;
-    private float now = 0f;
-    private float falldistance = 0f;
 
 	// Use this for initialization
 	void Start () {
-        status = FindObjectOfType<PlayerManager>().Status;
-        falldistance = gameObject.transform.position.y;
         move_ctr = transform.parent.GetComponentInChildren<MoveController>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         _legFloor = false;
@@ -198,7 +194,6 @@ public class LegCollider : MonoBehaviour {
             move_ctr.ladderDownFlag = false;
         }
 
-        falldistance = gameObject.transform.position.y;
         if (!col.GetComponent<GimmickInfo>()) { return; }
         GimmickInfo info = col.GetComponent<GimmickInfo>();
         if (info.type == GimmickInfo.GimmickType.LADDER) {

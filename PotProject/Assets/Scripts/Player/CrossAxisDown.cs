@@ -15,12 +15,8 @@ public class CrossAxisDown : MonoBehaviour {
     private float beforeValue = 0f;
     //今回のAxis値
     private float afterValue = 0f;
-    //ダウンフラグ
-    private bool _inputDown = false;
     //押してるかどうか
     private bool _keepDown = false;
-    //CrossRightの上下左右のフラグ
-    private bool[] _crossFlag;
 
     private MoveController move_ctr;
     //  up  down right left
@@ -46,7 +42,6 @@ public class CrossAxisDown : MonoBehaviour {
     // Use this for initialization
     void Start () {
         move_ctr = GetComponent<MoveController>();
-        _crossFlag = new bool[4] { false, false, false, false };
         Bit_flag_cross = 0x0000;
         _keepDown = false;
     }

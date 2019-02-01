@@ -3,7 +3,6 @@
 public class BringCollider : MonoBehaviour {
 
     private MoveController move_ctr;
-    private PotController pot_ctr;
     private PlayerController player_ctr;
     //範囲内に入ったアイテムオブジェクト
     private GameObject target;
@@ -17,7 +16,6 @@ public class BringCollider : MonoBehaviour {
     {
         _setTarget = false;
         move_ctr = gameObject.transform.parent.GetComponentInChildren<MoveController>();
-        pot_ctr = GameObject.FindObjectOfType<PotController>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         anim_ctr = gameObject.transform.parent.GetComponent<AnimController>();
         direction = move_ctr.direc;

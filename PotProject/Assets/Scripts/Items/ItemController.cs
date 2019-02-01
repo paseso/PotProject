@@ -61,6 +61,7 @@ public class ItemController : MonoBehaviour {
     /// </summary>
     public void OpenKeyDoor()
     {
+        Debug.Log("OpenDoor key door flag = " + BrotherObj.GetComponent<MoveController>().keyDoorFlag);
         if (BrotherObj.GetComponent<MoveController>().keyDoorFlag)
         {
             GameObject keySwitch = GameObject.FindGameObjectWithTag("KeyDoor");
