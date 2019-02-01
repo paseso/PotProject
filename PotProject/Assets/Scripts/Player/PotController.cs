@@ -69,14 +69,14 @@ public class PotController : MonoBehaviour
     {
         if (_potMoving)
             return;
-        float dis = Mathf.Abs(BrotherObj.transform.position.x) - Mathf.Abs(gameObject.transform.position.x);
+        Debug.Log("Distance = " + distance);
         //お兄ちゃんよりも前にいたら
-        if (direction == MoveController.Direction.RIGHT && dis <= 0 && Mathf.Abs(distance) <= 6f)
+        if (direction == MoveController.Direction.RIGHT && distance <= 2f)
         {
             _potMoving = true;
             rig.velocity = new Vector2(-7, brother_rig.velocity.y);
         }
-        else if (direction == MoveController.Direction.LEFT && dis >= 0 && distance <= 6f)
+        else if (direction == MoveController.Direction.LEFT && distance >= -2f)
         {
             _potMoving = true;
             rig.velocity = new Vector2(7, brother_rig.velocity.y);
@@ -124,13 +124,31 @@ public class PotController : MonoBehaviour
     private void CheckDistance()
     {
         distance = BrotherObj.transform.position.x - gameObject.transform.position.x;
-        if(distance >= 10f)
+        if(distance >= 1f && distance <= 4f)
         {
-            rig.velocity = new Vector2(brother_rig.velocity.x + 5f, rig.velocity.y);
+            if(direction == MoveController.Direction.RIGHT)
+            {
+                rig.velocity = new Vector2(0, rig.velocity.y);
+            }
+        }else if(distance >= -4f && distance <= -1f)
+        {
+            if(direction == MoveController.Direction.LEFT)
+            {
+                rig.velocity = new Vector2(0, rig.velocity.y);
+            }
         }
-        if (distance <= 20f)
-            return;
-        player_ctr.HPDown(6);
+        if (distance >= 7f)
+        {
+            switch (direction)
+            {
+                case MoveController.Direction.RIGHT:
+                    rig.velocity = new Vector2(10, rig.velocity.y);
+                    break;
+                case MoveController.Direction.LEFT:
+                    rig.velocity = new Vector2(-10, rig.velocity.y);
+                    break;
+            }
+        }
     }
 
     /// <summary>
