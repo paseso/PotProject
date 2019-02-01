@@ -126,17 +126,17 @@ public class PotController : MonoBehaviour
     {
         if (_potMoving)
             return;
-        Debug.Log("Distance = " + distance);
+
         //お兄ちゃんよりも前にいたら
         if (direction == MoveController.Direction.RIGHT && distance <= 2f)
         {
             _potMoving = true;
-            rig.velocity = new Vector2(-7, brother_rig.velocity.y);
+            rig.velocity = new Vector2(-7, rig.velocity.y);
         }
         else if (direction == MoveController.Direction.LEFT && distance >= -2f)
         {
             _potMoving = true;
-            rig.velocity = new Vector2(7, brother_rig.velocity.y);
+            rig.velocity = new Vector2(7, rig.velocity.y);
         }
         _potMoving = false;
     }
@@ -199,7 +199,7 @@ public class PotController : MonoBehaviour
                     break;
             }
         }
-
+        //ツボが遠すぎたらワープしてプレイヤーの近くに来る
         if((BrotherObj.transform.position.y - gameObject.transform.position.y) >= 5f)
         {
             StartCoroutine(PotWarpAnimation());
@@ -264,7 +264,7 @@ public class PotController : MonoBehaviour
     /// <summary>
     /// ツボの顔を変更する処理
     /// </summary>
-    private void ChangePotFace(PotStatus.PotFace faceType)
+    public void ChangePotFace(PotStatus.PotFace faceType)
     {
         switch (faceType)
         {
@@ -376,6 +376,14 @@ public class PotController : MonoBehaviour
         else
         {
             OtotoHead.GetComponent<Anima2D.SpriteMeshAnimation>().frame = 1;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D col)
+    {
+        if(col.gameObject.layer != LayerMask.NameToLayer("Block"))
+        {
+            gameObject.transform.position = new Vector2(rig.velocity.x, BrotherObj.transform.position.y - 2);
         }
     }
 }

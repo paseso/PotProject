@@ -35,6 +35,7 @@ public class AnimController : MonoBehaviour {
     private Animator pot_anim;
     private EffectManager effect_mng;
     private PlayerController player_ctr;
+    private PlayerStatus playerstatus;
 
     //拾うアニメーションの時に使う
     private GameObject Itemtarget;
@@ -53,11 +54,6 @@ public class AnimController : MonoBehaviour {
         attack_ctr = gameObject.transform.parent.GetComponentInChildren<AttackZoneController>();
         effect_mng = GameObject.Find("EffectManager").GetComponent<EffectManager>();
         _attackStart = false;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 
     /// <summary>
@@ -567,7 +563,7 @@ public class AnimController : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.35f);
         //アイテムのある位置にエフェクトの位置を合わせて呼ぶ
-        GameObject EffectObj = effect_mng.PlayEffect(11, Itemtarget.transform.position, 10, Itemtarget, false).gameObject;
+        GameObject EffectObj = effect_mng.PlayEffect((int)EffectManager.EffectName.Effect_GetItem, Itemtarget.transform.position, 10, Itemtarget, false).gameObject;
         EffectObj.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
         //Effectのスケールとアイテムのスケールをだんだん小さくしていく処理
         Itemtarget.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
@@ -584,9 +580,10 @@ public class AnimController : MonoBehaviour {
         Itemtarget.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
         Itemtarget.transform.DOMoveY(pot_anim.transform.position.y + 0.5f, 0.4f);
         PotAnimSetBool();
-        yield return new WaitForSeconds(1.1f);
+        yield return new WaitForSeconds(1.2f);
         //エフェクトとアイテムのオブジェクトはもう使わないので削除、フラグをfalseにする
         GetItemEndAnim(EffectObj);
+        player_ctr.AllCommandActive = true;
         pot_anim.SetBool("isPotDown", false);
     }
 
@@ -620,7 +617,6 @@ public class AnimController : MonoBehaviour {
     /// </summary>
     private void GetItemEndAnim(GameObject effect)
     {
-        player_ctr.AllCommandActive = true;
         Destroy(effect.gameObject);
         Destroy(Itemtarget.transform.parent.gameObject);
         PotAnimSetBool();
@@ -637,5 +633,40 @@ public class AnimController : MonoBehaviour {
             player_ctr.AllCommandActive = false;
         else
             player_ctr.AllCommandActive = true;
+    }
+
+    /// <summary>
+    /// SEを鳴らす処理
+    /// </summary>
+    public void ChoiceSe(SoundManager.SENAME se_name)
+    {
+        switch (se_name)
+        {
+            case SoundManager.SENAME.SE_FOOTSTEPS:
+                SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_FOOTSTEPS);
+                break;
+            case SoundManager.SENAME.SE_FALL:
+                SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_FALL);
+                break;
+            default:
+                Debug.Log("セットされてません");
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 剣を振るSEの処理
+    /// </summary>
+    public void SwordSE()
+    {
+        //アックス、槍、たいまつは重い剣のSE
+        if (playerstatus.swordtype == PlayerStatus.SWORDTYPE.AXE || playerstatus.swordtype == PlayerStatus.SWORDTYPE.SPEAR || playerstatus.swordtype == PlayerStatus.SWORDTYPE.TORCH)
+        {
+            SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SWORDHEAVY);
+        }
+        else
+        {
+            SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SWORD);
+        }
     }
 }

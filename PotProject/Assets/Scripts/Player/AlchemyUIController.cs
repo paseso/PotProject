@@ -162,6 +162,7 @@ public class AlchemyUIController : MonoBehaviour
             ReSetMaterialsBox(nowBox);
         }
         beforeNowBox = nowBox;
+        SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_CHOICE);
     }
 
     /// <summary>
@@ -422,6 +423,7 @@ public class AlchemyUIController : MonoBehaviour
                     nowBox++;
             }
             ItemFrame.transform.position = Box_item[nowBox].transform.position;
+            SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SELECT);
             break;
         }
         //左右押した時
@@ -441,6 +443,7 @@ public class AlchemyUIController : MonoBehaviour
 
             nowBox = 0;
             ItemFrame.transform.position = Box_item[0].transform.position;
+            SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SELECT);
             break;
         }
     }
