@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
+using DG.Tweening;
+using System.Collections;
 
-public class PotController : MonoBehaviour {
+public class PotController : MonoBehaviour
+{
 
     private PlayerController player_ctr;
     private BringCollider bring_col;
@@ -14,17 +17,21 @@ public class PotController : MonoBehaviour {
     private Sprite ototo_right;
     private GameObject OtotoHead;
 
+    private GameObject BrotherObj;
+    private Vector2 beforePosion;
+
+    private float distance = 0f;
+
     private bool _onece = false;
 
-    private enum Direction
-    {
-        RIGHT = 0,
-        LEFT
-    }
-    private Direction direction;
+    private bool _potMoving = false;
+
+    private MoveController.Direction direction;
+    private Rigidbody2D brother_rig;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         try
         {
             OtotoHead = gameObject.transform.GetChild(1).gameObject;
@@ -34,53 +41,113 @@ public class PotController : MonoBehaviour {
             bring_col = GameObject.FindObjectOfType<BringCollider>();
             move_ctr = GameObject.FindObjectOfType<MoveController>();
             rig = gameObject.GetComponent<Rigidbody2D>();
-        }catch(UnityException e)
+            BrotherObj = move_ctr.transform.parent.gameObject;
+            brother_rig = BrotherObj.GetComponent<Rigidbody2D>();
+        }
+        catch (UnityException e)
         {
             Debug.Log("お兄ちゃんが見当たらない");
         }
-        direction = Direction.LEFT;
+        direction = move_ctr.direc;
         _onece = false;
+        beforePosion = new Vector2(0, 0);
+        _potMoving = false;
+        distance = BrotherObj.transform.position.x - gameObject.transform.position.x;
     }
-	
-	// Update is called once per frame
-	void Update () {
-        PotJump();
-	}
 
-    /// <summary>
-    /// 壺の画像変更処理
-    /// </summary>
-    private void ChangePotImage()
+    // Update is called once per frame
+    void Update()
     {
-        if (move_ctr.OnLeft || direction == Direction.RIGHT)
-        {
-
-            direction = Direction.LEFT;
-        }
-        else if (move_ctr.OnLeft || direction == Direction.LEFT)
-        {
-
-            direction = Direction.RIGHT;
-        }
+        CheckDistance();
+        PotDirection();
     }
 
     /// <summary>
-    /// プレイヤーがジャンプした時壺も一緒にジャンプする処理
+    /// お兄ちゃんの向きに合わせてツボをお兄ちゃんの後ろに移動させる
     /// </summary>
-    private void PotJump()
+    private void PotDirection()
     {
-        if (move_ctr.Jumping)
+        if (_potMoving)
+            return;
+        Debug.Log("Distance = " + distance);
+        //お兄ちゃんよりも前にいたら
+        if (direction == MoveController.Direction.RIGHT && distance <= 2f)
         {
-            if (!_onece)
+            _potMoving = true;
+            rig.velocity = new Vector2(-7, brother_rig.velocity.y);
+        }
+        else if (direction == MoveController.Direction.LEFT && distance >= -2f)
+        {
+            _potMoving = true;
+            rig.velocity = new Vector2(7, brother_rig.velocity.y);
+        }
+        _potMoving = false;
+    }
+
+    /// <summary>
+    /// 右にツボが移動する
+    /// </summary>
+    public void RightMove()
+    {
+        direction = MoveController.Direction.RIGHT;
+        rig.velocity = new Vector2(5f, rig.velocity.y);
+    }
+
+    /// <summary>
+    /// 左にツボが移動する
+    /// </summary>
+    public void LeftMove()
+    {
+        direction = MoveController.Direction.LEFT;
+        rig.velocity = new Vector2(-5f, rig.velocity.y);
+    }
+
+    /// <summary>
+    /// ツボが止まる
+    /// </summary>
+    public void StopPot()
+    {
+        rig.velocity = new Vector2(0, rig.velocity.y);
+    }
+
+    /// <summary>
+    /// ツボがジャンプする
+    /// </summary>
+    public void JumpPot()
+    {
+        rig.velocity = new Vector2(0, 1f * move_ctr.speed);
+    }
+
+    /// <summary>
+    /// お兄ちゃんとツボの距離の処理
+    /// </summary>
+    private void CheckDistance()
+    {
+        distance = BrotherObj.transform.position.x - gameObject.transform.position.x;
+        if(distance >= 1f && distance <= 4f)
+        {
+            if(direction == MoveController.Direction.RIGHT)
             {
-                rig.velocity = new Vector2(0, 1f * move_ctr.speed);
-                _onece = true;
+                rig.velocity = new Vector2(0, rig.velocity.y);
+            }
+        }else if(distance >= -4f && distance <= -1f)
+        {
+            if(direction == MoveController.Direction.LEFT)
+            {
+                rig.velocity = new Vector2(0, rig.velocity.y);
             }
         }
-        else
+        if (distance >= 7f)
         {
-            _onece = false;
-            //rig.velocity = new Vector2(0, 1f * move_ctr.speed);
+            switch (direction)
+            {
+                case MoveController.Direction.RIGHT:
+                    rig.velocity = new Vector2(10, rig.velocity.y);
+                    break;
+                case MoveController.Direction.LEFT:
+                    rig.velocity = new Vector2(-10, rig.velocity.y);
+                    break;
+            }
         }
     }
 
