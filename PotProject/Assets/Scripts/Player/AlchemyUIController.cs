@@ -75,6 +75,7 @@ public class AlchemyUIController : MonoBehaviour
     //------------------------------------------
 
     private bool _onClick = false;
+    private int beforeNowBox = -1;
 
     //捨てる捨てないのobjectがでてるかでてないかの判定
     private bool _chooseWindow = false;
@@ -119,6 +120,7 @@ public class AlchemyUIController : MonoBehaviour
         }
         nowAlchemyItem = 0;
         nowBox = 0;
+        beforeNowBox = -1;
         _chooseWindow = false;
         _onClick = false;
         setItembox();
@@ -155,6 +157,8 @@ public class AlchemyUIController : MonoBehaviour
     /// </summary>
     public void PickItem()
     {
+        if (beforeNowBox == nowBox)
+            return;
         if (frameLine == frame_right)
         {
             setMaterialsBox();
@@ -163,6 +167,7 @@ public class AlchemyUIController : MonoBehaviour
         {
             ReSetMaterialsBox(nowBox);
         }
+        beforeNowBox = nowBox;
     }
 
     /// <summary>
