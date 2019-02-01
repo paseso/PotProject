@@ -11,19 +11,20 @@ public class CameraController : MonoBehaviour {
     public GameObject target { get; set; }
 
     public Transform map { get; set; }
+    private Vector2 pos;
 
-    private float minSide;
-    private float maxSide;
-    private float minHeight;
-    private float maxHeight;
+    private Vector2 minPos;
+    private Vector2 maxPos;
 
     // Use this for initialization
     void Start () {
         target = FindObjectOfType<MoveController>().gameObject;
-	}
+        transform.position = new Vector3(target.transform.position.x, target.transform.position.y + 3.5f, -100);
+    }
 	
 	// Update is called once per frame
 	void Update () {
+        map = target.transform.root.gameObject.GetComponentInChildren<MapChange>().gameObject.transform;
         CameraMove(target);
 	}
 
@@ -32,8 +33,39 @@ public class CameraController : MonoBehaviour {
     /// </summary>
     private void CameraMove(GameObject obj)
     {
-        gameObject.transform.position = new Vector3(obj.transform.position.x, obj.transform.position.y + 4f, -100);
-        Debug.Log("Pos = " + transform.position);
+        if (obj.transform.position.x < Camera.main.transform.position.x || obj.transform.position.x > Camera.main.transform.position.x) 
+        {
+            pos.x = obj.transform.position.x;
+        }
+
+        if (obj.transform.position.y < Camera.main.transform.position.y || obj.transform.position.y > Camera.main.transform.position.y)
+        {
+            pos.y = obj.transform.position.y;
+        }
+
+        if (obj.transform.position.x > map.transform.position.x + (map.GetComponent<BoxCollider2D>().size.x * 0.7f))
+        {
+            pos.x = map.transform.position.x + (map.GetComponent<BoxCollider2D>().size.x * 0.7f);
+        }
+        if (obj.transform.position.x < map.transform.position.x - (map.GetComponent<BoxCollider2D>().size.x * 0.7f))
+        {
+            pos.x = map.transform.position.x - (map.GetComponent<BoxCollider2D>().size.x * 0.7f);
+        }
+        if (obj.transform.position.y > map.transform.position.y + (map.GetComponent<BoxCollider2D>().size.y) + 2f)
+        {
+            pos.y = map.transform.position.y + (map.GetComponent<BoxCollider2D>().size.y) + 2f;
+        }
+        if (obj.transform.position.y < map.transform.position.y - (map.GetComponent<BoxCollider2D>().size.y) - 2f)
+        {
+            pos.y = map.transform.position.y - (map.GetComponent<BoxCollider2D>().size.y) - 2f;
+        }
+
+        Debug.Log("Pos==" + pos);
+
+        gameObject.transform.position = new Vector3(pos.x,pos.y,-100);
+        //gameObject.transform.position = new Vector3(obj.transform.position.x, obj.transform.position.y + 3.5f, -100);
+        
+
         /*
          画面中心より右(左)に来たらx座標追従
          画面中心より上？に来たらy座標追従
