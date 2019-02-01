@@ -160,6 +160,7 @@ public class StageController : MonoBehaviour
         float mapSize = 40;
         int mapCount = 0;
 
+        mMapController.miniMapSride(dir);
         switch (dir)
         {
             // 上-------------------------------------------------------------------
@@ -271,8 +272,6 @@ public class StageController : MonoBehaviour
 
                     mapCount++;
                 }
-
-                Maps[num][0].transform.localPosition = turnPos;
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[num][0];

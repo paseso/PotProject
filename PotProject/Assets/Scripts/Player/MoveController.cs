@@ -747,7 +747,7 @@ public class MoveController : MonoBehaviour
     {
         PlayerStatus status = pManager.Status;
         status.gimmick_state = PlayerStatus.GimmickState.ONLADDER;
-
+        IsLadder = true;
         //プレイヤーの子供全部のレイヤーを変更
         var children = transform.parent.transform;
         foreach(Transform child in children)

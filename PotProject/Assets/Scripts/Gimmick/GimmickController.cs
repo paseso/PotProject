@@ -123,7 +123,10 @@ public class GimmickController :MonoBehaviour {
             case GimmickInfo.GimmickType.DOWN:
             case GimmickInfo.GimmickType.LEFT:
             case GimmickInfo.GimmickType.RIGHT:
-                onPlayerFlag = true;
+                if (col.gameObject.GetComponent<LegCollider>())
+                {
+                    onPlayerFlag = true;
+                }
                 break;
             case GimmickInfo.GimmickType.MAPCHANGE:
                 col.transform.parent.transform.parent.transform.SetParent(transform.root.gameObject.transform);
@@ -150,7 +153,10 @@ public class GimmickController :MonoBehaviour {
             case GimmickInfo.GimmickType.DOWN:
             case GimmickInfo.GimmickType.LEFT:
             case GimmickInfo.GimmickType.RIGHT:
-                onPlayerFlag = false;
+                if (col.gameObject.GetComponent<LegCollider>())
+                {
+                    onPlayerFlag = false;
+                }
                 break;
             case GimmickInfo.GimmickType.FIREFIELD:
                 if (!col.GetComponent<MoveController>()) { return; }
