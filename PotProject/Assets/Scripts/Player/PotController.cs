@@ -2,20 +2,71 @@
 using DG.Tweening;
 using System.Collections;
 
+[System.Serializable]
+public struct PotStatus
+{
+    //ツボの属性-------------------------------------
+    public enum PotType
+    {
+        Normal = 0,
+        Fire,
+        Ice,
+        Thunder,
+        Dark,
+    }
+    public PotType pottype;
+
+    public PotType getPotType
+    {
+        get { return pottype; }
+    }
+    public PotType setPotType
+    {
+        set { pottype = value; }
+    }
+    //-------------------------------------------------
+
+    //ツボの顔種類-------------------------------------
+    public enum PotFace
+    {
+        Normal = 0,
+        Angry,
+        Sad,
+        Smile
+    }
+    public PotFace potface;
+
+    public PotFace getPotFace
+    {
+        get { return potface; }
+    }
+    public PotFace setPotFace
+    {
+        set { potface = value; }
+    }
+    //----------------------------------------------------
+}
+
 public class PotController : MonoBehaviour
 {
 
     private PlayerController player_ctr;
     private BringCollider bring_col;
     private MoveController move_ctr;
+    private PotStatus pot_status;
+    //ツボの顔の画像が入る配列
+    private Sprite[] potFaceSprites;
+    //ツボの顔のSpriteObject
+    private SpriteRenderer PotFaceSpriteObj;
 
     private Rigidbody2D rig;
-
-    private Sprite[] PotImages;
 
     private Sprite ototo_left;
     private Sprite ototo_right;
     private GameObject OtotoHead;
+
+    //ツボの画像切り替えに使う
+    private Anima2D.SpriteMeshAnimation PotSprite;
 
     private GameObject BrotherObj;
     private Vector2 beforePosion;
@@ -43,6 +94,7 @@ public class PotController : MonoBehaviour
             rig = gameObject.GetComponent<Rigidbody2D>();
             BrotherObj = move_ctr.transform.parent.gameObject;
             brother_rig = BrotherObj.GetComponent<Rigidbody2D>();
+            PotFaceSpriteObj = gameObject.transform.GetChild(gameObject.transform.childCount - 1).GetComponent<SpriteRenderer>();
         }
         catch (UnityException e)
         {
@@ -52,6 +104,10 @@ public class PotController : MonoBehaviour
         _onece = false;
         beforePosion = new Vector2(0, 0);
         _potMoving = false;
+        pot_status.setPotType = PotStatus.PotType.Normal;
+        pot_status.setPotFace = PotStatus.PotFace.Normal;
+        PotSprite = gameObject.GetComponent<Anima2D.SpriteMeshAnimation>();
+        setStartPotFaceSprite();
         distance = BrotherObj.transform.position.x - gameObject.transform.position.x;
     }
 
@@ -60,6 +116,18 @@ public class PotController : MonoBehaviour
     {
         CheckDistance();
         PotDirection();
+    }
+
+    /// <summary>
+    /// potFaceSprites配列に画像を入れる処理
+    /// </summary>
+    private void setStartPotFaceSprite()
+    {
+        potFaceSprites = new Sprite[4];
+        for(int i = 0; i < potFaceSprites.Length; i++)
+        {
+            potFaceSprites[i] = Resources.Load<Sprite>("Textures/PotTextures/potface_" + i);
+        }
     }
 
     /// <summary>
@@ -124,19 +192,12 @@ public class PotController : MonoBehaviour
     private void CheckDistance()
     {
         distance = BrotherObj.transform.position.x - gameObject.transform.position.x;
-        if(distance >= 1f && distance <= 4f)
+        //ツボが近かった時の処理
+        if(Mathf.Abs(distance) >= 0f && Mathf.Abs(distance) <= 4f)
         {
-            if(direction == MoveController.Direction.RIGHT)
-            {
-                rig.velocity = new Vector2(0, rig.velocity.y);
-            }
-        }else if(distance >= -4f && distance <= -1f)
-        {
-            if(direction == MoveController.Direction.LEFT)
-            {
-                rig.velocity = new Vector2(0, rig.velocity.y);
-            }
+            rig.velocity = new Vector2(0, rig.velocity.y);
         }
+        //ツボが少し離れた時の処理
         if (distance >= 7f)
         {
             switch (direction)
@@ -149,6 +210,33 @@ public class PotController : MonoBehaviour
                     break;
             }
         }
+
+        if((BrotherObj.transform.position.y - gameObject.transform.position.y) >= 5f)
+        {
+            StartCoroutine(PotWarpAnimation());
+        }
+    }
+
+    /// <summary>
+    /// ツボが離れすぎている時にワープする処理
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator PotWarpAnimation()
+    {
+        //エフェクトを出してツボを小さくしていく
+        GameObject effectObj = EffectManager.Instance_Effect.PlayEffect(11, gameObject.transform.position, 10, gameObject, false);
+        effectObj.transform.DOScale(new Vector3(1, 1, 1), 0.5f);
+        yield return new WaitForSeconds(0.3f);
+        effectObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f);
+        gameObject.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
+        gameObject.transform.position = new Vector2(BrotherObj.transform.position.x - 1f, BrotherObj.transform.position.y);
+        effectObj.transform.position = gameObject.transform.position;
+        yield return new WaitForSeconds(0.5f);
+        //ツボを大きくしながらエフェクトを出す
+        effectObj.transform.DOScale(new Vector3(1, 1, 1), 0.3f);
+        gameObject.transform.DOScale(new Vector3(0.7f, 0.7f, 1), 0.3f);
+        yield return new WaitForSeconds(0.2f);
+        Destroy(effectObj.gameObject);
     }
 
     /// <summary>
@@ -157,6 +245,54 @@ public class PotController : MonoBehaviour
     public void ChangeLayer()
     {
         gameObject.layer = LayerMask.NameToLayer("Default");
+    }
+
+    /// <summary>
+    /// ツボの属性を変更する処理
+    /// </summary>
+    private void ChangePotType(PotStatus.PotType pot_type)
+    {
+        switch (pot_type)
+        {
+            case PotStatus.PotType.Normal:
+                PotSprite.frame = 0;
+                break;
+            case PotStatus.PotType.Fire:
+                PotSprite.frame = 1;
+                break;
+            case PotStatus.PotType.Ice:
+                PotSprite.frame = 2;
+                break;
+            case PotStatus.PotType.Thunder:
+                PotSprite.frame = 3;
+                break;
+            case PotStatus.PotType.Dark:
+                PotSprite.frame = 4;
+                break;
+        }
+    }
+
+    /// <summary>
+    /// ツボの顔を変更する処理
+    /// </summary>
+    private void ChangePotFace(PotStatus.PotFace faceType)
+    {
+        switch (faceType)
+        {
+            case PotStatus.PotFace.Normal:
+                pot_status.setPotFace = PotStatus.PotFace.Normal;
+                break;
+            case PotStatus.PotFace.Angry:
+                pot_status.setPotFace = PotStatus.PotFace.Angry;
+                break;
+            case PotStatus.PotFace.Sad:
+                pot_status.setPotFace = PotStatus.PotFace.Sad;
+                break;
+            case PotStatus.PotFace.Smile:
+                pot_status.setPotFace = PotStatus.PotFace.Smile;
+                break;
+        }
+        PotFaceSpriteObj.sprite = potFaceSprites[(int)faceType];
     }
 
     /// <summary>
