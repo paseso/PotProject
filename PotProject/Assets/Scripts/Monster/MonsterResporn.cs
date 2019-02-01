@@ -68,7 +68,7 @@ public class MonsterResporn : MonoBehaviour {
         GameObject monster = Instantiate(Resources.Load<GameObject>(folderPass + pass[mType]));
         monster.transform.SetParent(transform.parent.gameObject.transform);
         monster.transform.localPosition = transform.localPosition;
-        EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Respawn, transform.localPosition, 1, monster, true);
+        EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Respawn, transform.position, 2, monster, true);
         CountFlag = false;
         Destroy(gameObject);
         yield return null;
