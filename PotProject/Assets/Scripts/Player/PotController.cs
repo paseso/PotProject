@@ -79,7 +79,7 @@ public class PotController : MonoBehaviour
     {
         try
         {
-            OtotoHead = gameObject.transform.GetChild(1).gameObject;
+            OtotoHead = gameObject.transform.GetChild(0).gameObject;
             player_ctr = GameObject.FindObjectOfType<PlayerController>();
             move_ctr = GameObject.FindObjectOfType<MoveController>();
             rig = gameObject.GetComponent<Rigidbody2D>();
@@ -377,6 +377,11 @@ public class PotController : MonoBehaviour
         {
             OtotoHead.GetComponent<Anima2D.SpriteMeshAnimation>().frame = 1;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        
     }
 
     private void OnTriggerStay2D(Collider2D col)
