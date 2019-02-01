@@ -84,7 +84,6 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
     /// <param name="Target">親子付けするObject</param>
     private void EffectProcess(GameObject PlayEffect, Vector2 EffectPos, float Magnification, GameObject Target, bool isDestry)
     {
-        Debug.Log("InstanceEffects" + PlayEffect.transform.name);
         PlayEffect.transform.position = EffectPos;
         PlayEffect.transform.localScale = new Vector3(Magnification, Magnification, Magnification);
         PlayEffect.transform.SetParent(Target.transform);

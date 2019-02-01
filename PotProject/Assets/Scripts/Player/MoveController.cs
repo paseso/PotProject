@@ -250,6 +250,7 @@ public class MoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(IsLadder);
         //はしご処理してる時、ツボのtransformをプレイヤーと同じ位置にする
         if (_laddernow)
         {
@@ -376,9 +377,10 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
                 }
-               
+                //Debug.Log("ContactPoint:" + GetComponent<CapsuleCollider2D>().)
                 sidemove = -5f;
-                rig.velocity = new Vector2(-5f, rig.velocity.y);
+                if (CheckMoveable())
+                    rig.velocity = new Vector2(-5f, rig.velocity.y);
                 break;
 
             case ButtonType.LEFTJOYSTICK_RIGHT:
@@ -397,7 +399,9 @@ public class MoveController : MonoBehaviour
                 }
                 
                 sidemove = 5f;
-                rig.velocity = new Vector2(5f, rig.velocity.y);
+
+                if (CheckMoveable())
+                    rig.velocity = new Vector2(5f, rig.velocity.y);
                 break;
 
             case ButtonType.LEFTJOYSTICK_UP:
@@ -754,6 +758,42 @@ public class MoveController : MonoBehaviour
         transform.parent.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed * dir);
         _laddernow = true;
     }
+
+    private bool CheckMoveable()
+    {
+        if (leg_col.isLanding)
+            return true;
+        if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer"))
+        {
+            Debug.Log("Test");
+            return true;
+        }
+        
+        if (Jumping)
+        {
+            Vector3 startPos = gameObject.transform.position;
+            Vector2 dir = direc == Direction.RIGHT ? Vector2.right : Vector2.left;
+            // Rayを飛ばす
+            RaycastHit2D[] hit = Physics2D.RaycastAll(startPos, dir, GetComponent<CapsuleCollider2D>().size.x * 0.5f);
+            bool flag = true;
+            foreach (RaycastHit2D r in hit)
+            {
+                if (r.collider.gameObject.layer == LayerMask.NameToLayer("Block"))
+                {
+                    //Debug.Log("Block :" + r.collider.name);
+                    flag = false;
+                    break;
+                }
+                else
+                {
+                    //Debug.Log("Block Null :" + r.collider.name);
+                }
+            }
+            //Debug.Log("Flag : " + flag);
+            return flag;
+        }
+        return false;
+    }
     
     private void OnTriggerEnter2D(Collider2D col)
     {
@@ -805,6 +845,12 @@ public class MoveController : MonoBehaviour
         rig.AddForce(new Vector2(rig.velocity.x * -2f, 1.5f), ForceMode2D.Impulse);
         yield return new WaitForSeconds(0.4f);
         player_ctr.AllCommandActive = true;
+    }
+
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+
     }
 
     private void OnCollisionExit2D(Collision2D col)
