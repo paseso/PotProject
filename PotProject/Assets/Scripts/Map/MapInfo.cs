@@ -7,10 +7,6 @@ using UnityEngine;
 /// </summary>
 public class MapInfo : MonoBehaviour {
 
-    // どの場所にあるマップか
-    private int mapNumX;
-    private int mapNumY;
-
     // このマップが踏破済か
     private bool isAccessMap = false;
 
@@ -19,15 +15,9 @@ public class MapInfo : MonoBehaviour {
     private bool _tree;
     public bool GrowTreeFlag { get; set; }
 
-    public int MapNumX{
-        get { return mapNumX; }
-        set { mapNumX = value; }
-    }
+    public int MapNumX{ get; set; }
 
-    public int MapNumY {
-        get { return mapNumY; }
-        set { mapNumY = value; }
-    }
+    public int MapNumY { get; set; }
 
     public bool IsAccessMap
     {
@@ -38,4 +28,17 @@ public class MapInfo : MonoBehaviour {
     // スイッチ岩
     private bool _upRock;
     public bool UpRockFlag { get; set; }
+
+    // 属性
+    public enum Attribute
+    {
+        NORMAL,
+        FIRE,
+        THUNDER,
+        ICE,
+        DARK,
+        ROCK,
+    }
+
+    public Attribute attribute;
 }
