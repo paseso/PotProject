@@ -86,12 +86,10 @@ public class AlchemyController : MonoBehaviour {
     //生成アイテム
     private Sprite[] CreateItem;
     private TextAsset csvFile;
-    private MapInfo mInfo;
     //フレームの右下のImage
     private Image GeneratedImg;
     private PlayerController player_ctr;
     private ItemController item_ctr;
-    private PlayerManager player_mng;
 
     private Sprite AlphaSprite;
 
@@ -105,11 +103,9 @@ public class AlchemyController : MonoBehaviour {
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         GeneratedImg = GameObject.Find("Canvas/Panel/Image").GetComponent<Image>();
         item_ctr = GameObject.Find("Controller").GetComponent<ItemController>();
-        player_mng = GameObject.Find("PlayerStatus").GetComponent<PlayerManager>();
         AlphaSprite = Resources.Load<Sprite>("Textures/UI/AlphaImage");
         ReSetGeneratedImg();
         setCreateItem();
-        mInfo = transform.root.GetComponent<MapInfo>();
 	}
 	
 	// Update is called once per frame

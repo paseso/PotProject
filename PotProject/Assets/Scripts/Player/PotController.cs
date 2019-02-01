@@ -51,7 +51,6 @@ public class PotController : MonoBehaviour
 {
 
     private PlayerController player_ctr;
-    private BringCollider bring_col;
     private MoveController move_ctr;
     private PotStatus pot_status;
     //ツボの顔の画像が入る配列
@@ -61,19 +60,14 @@ public class PotController : MonoBehaviour
 
     private Rigidbody2D rig;
 
-    private Sprite ototo_left;
-    private Sprite ototo_right;
     private GameObject OtotoHead;
 
     //ツボの画像切り替えに使う
     private Anima2D.SpriteMeshAnimation PotSprite;
 
     private GameObject BrotherObj;
-    private Vector2 beforePosion;
 
     private float distance = 0f;
-
-    private bool _onece = false;
 
     private bool _potMoving = false;
 
@@ -86,10 +80,7 @@ public class PotController : MonoBehaviour
         try
         {
             OtotoHead = gameObject.transform.GetChild(1).gameObject;
-            ototo_left = Resources.Load("Textures/Charactor/Ototo_Head_Left") as Sprite;
-            ototo_right = Resources.Load("Textures/Charactor/Ototo_Head_Right") as Sprite;
             player_ctr = GameObject.FindObjectOfType<PlayerController>();
-            bring_col = GameObject.FindObjectOfType<BringCollider>();
             move_ctr = GameObject.FindObjectOfType<MoveController>();
             rig = gameObject.GetComponent<Rigidbody2D>();
             BrotherObj = move_ctr.transform.parent.gameObject;
@@ -98,11 +89,9 @@ public class PotController : MonoBehaviour
         }
         catch (UnityException e)
         {
-            Debug.Log("お兄ちゃんが見当たらない");
+            Debug.Log(e + "が見当たらない");
         }
         direction = move_ctr.direc;
-        _onece = false;
-        beforePosion = new Vector2(0, 0);
         _potMoving = false;
         pot_status.setPotType = PotStatus.PotType.Normal;
         pot_status.setPotFace = PotStatus.PotFace.Normal;

@@ -32,7 +32,6 @@ public class AnimController : MonoBehaviour {
 
     private Animator anim;
     private AttackZoneController attack_ctr;
-    private BringCollider bring_col;
     private Animator pot_anim;
     private EffectManager effect_mng;
     private PlayerController player_ctr;
@@ -52,7 +51,6 @@ public class AnimController : MonoBehaviour {
         anim = gameObject.GetComponent<Animator>();
         pot_anim = gameObject.transform.parent.GetComponentInChildren<PotController>().gameObject.GetComponent<Animator>();
         attack_ctr = gameObject.transform.parent.GetComponentInChildren<AttackZoneController>();
-        bring_col = gameObject.transform.GetComponentInChildren<BringCollider>();
         effect_mng = GameObject.Find("EffectManager").GetComponent<EffectManager>();
         _attackStart = false;
 	}

@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour {
 
     private GameObject[] hearts;
 
-    private GameObject HeartObject;
     private int maxHP;
     private const int maxItemBox = 3;
 
@@ -89,7 +88,6 @@ public class PlayerController : MonoBehaviour {
             BrotherObj = FindObjectOfType<MoveController>().gameObject;
             move_ctr = BrotherObj.GetComponent<MoveController>();
             PotObject = FindObjectOfType<PotController>().gameObject;
-            HeartObject = GameObject.Find("Canvas/Heart");
             createItemBox = new List<CreateItemStatus.Type>();
             anim_ctr = BrotherObj.transform.parent.GetComponent<AnimController>();
             lifePoint = GameObject.FindGameObjectWithTag("LifePoint");

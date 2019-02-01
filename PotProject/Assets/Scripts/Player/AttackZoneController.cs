@@ -7,15 +7,8 @@ public class AttackZoneController : MonoBehaviour {
     private MoveController move_ctr;
     [HideInInspector]
     public GameObject Attack_Target;
-    [SerializeField, Header("殴れるオブジェクトがx方向に飛ぶ距離")]
-    private float Impalce_x = 3;
-    [SerializeField, Header("殴れるオブジェクトがy方向に飛ぶ距離")]
-    private float Impalce_y = 6;
-    private GameObject PlayerObject;
 
     private PlayerManager pManager;
-
-    private bool keyFlag = false;
 
     private MoveController.Direction dir;
 
@@ -31,7 +24,6 @@ public class AttackZoneController : MonoBehaviour {
 	void Start () {
         pManager = FindObjectOfType<PlayerManager>();
         move_ctr = gameObject.transform.parent.GetComponentInChildren<MoveController>();
-        PlayerObject = gameObject.transform.parent.gameObject;
         Attack_Target = null;
         _attackMonster = false;
 	}

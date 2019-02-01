@@ -52,9 +52,6 @@ public class AlchemyUIController : MonoBehaviour
     private List<ItemStatus.Type> items = new List<ItemStatus.Type>();
     //
     private List<ItemStatus.Type> Materials_item = new List<ItemStatus.Type>();
-    //錬金されたアイテムをいれるボックス
-    private List<CreateItemStatus.Type> Create_item = new List<CreateItemStatus.Type>();
-    private bool _boxRight = true;
 
     private MoveController move_ctr;
     private CrossAxisDown crossAxisdown;
@@ -74,7 +71,6 @@ public class AlchemyUIController : MonoBehaviour
     private int RotationCount = 0;
     //------------------------------------------
 
-    private bool _onClick = false;
     private int beforeNowBox = -1;
 
     //捨てる捨てないのobjectがでてるかでてないかの判定
@@ -122,11 +118,9 @@ public class AlchemyUIController : MonoBehaviour
         nowBox = 0;
         beforeNowBox = -1;
         _chooseWindow = false;
-        _onClick = false;
         setItembox();
         setItemImageList();
         StartCreateItemBox();
-        _boxRight = true;
         Box_item = new GameObject[Itembox.Length];
         ClearJoystickRotation();
         Materials_item.Clear();
@@ -333,7 +327,6 @@ public class AlchemyUIController : MonoBehaviour
         }
         Array.Copy(Itembox, Box_item, Itembox.Length);
         ItemFrame.transform.position = Box_item[0].transform.position;
-        _boxRight = true;
         frameLine = frame_right;
     }
 
@@ -412,7 +405,6 @@ public class AlchemyUIController : MonoBehaviour
         //上下押した時
         while (move_ctr.OnCrossUp || move_ctr.OnCrossDown)
         {
-            _onClick = true;
             if (!move_ctr.OnCrossUp && !move_ctr.OnCrossDown)
                 break;
             if (move_ctr.OnCrossUp)
@@ -435,7 +427,6 @@ public class AlchemyUIController : MonoBehaviour
         //左右押した時
         while (move_ctr.OnCrossRight || move_ctr.OnCrossLeft)
         {
-            _onClick = true;
             if (!move_ctr.OnCrossRight && !move_ctr.OnCrossLeft)
                 break;
 
@@ -609,7 +600,6 @@ public class AlchemyUIController : MonoBehaviour
 
         if (items.Count < 3)
         {
-            int num = 3 - items.Count;
             for (int j = 2; items.Count <= j; j--)
             {
                 Image item_img = Itembox[j].GetComponent<Image>();
