@@ -155,7 +155,27 @@ public class MapCreator : MonoBehaviour
             backGroundObject.transform.parent = rootObj.transform;
             backGroundObject.transform.localPosition = Vector3.zero + new Vector3(-tileSize * 0.5f, tileSize * 0.5f, 0);
             backGroundObject.GetComponent<SpriteRenderer>().sprite = backImages[datas[i].backGroundNum];
-            
+            MiniMapController miniMapController = GameObject.Find("Canvas/MiniMap").GetComponent<MiniMapController>();
+            miniMapController.MSprite[i] = backGroundObject.GetComponent<SpriteRenderer>().sprite;
+            switch (datas[i].backGroundNum)
+            {
+                case 0: // Normal
+                    backGroundObject.transform.root.GetComponent<MapInfo>().attribute = MapInfo.Attribute.NORMAL;
+                    break;
+                case 1: // Fire
+                    backGroundObject.transform.root.GetComponent<MapInfo>().attribute = MapInfo.Attribute.FIRE;
+                    break;
+                case 2: // Thunder
+                    backGroundObject.transform.root.GetComponent<MapInfo>().attribute = MapInfo.Attribute.THUNDER;
+                    break;
+                case 3: // Rock(normal)
+                case 4: // Rock(under)
+                    backGroundObject.transform.root.GetComponent<MapInfo>().attribute = MapInfo.Attribute.ROCK;
+                    break;
+                default:
+                    break;
+            }
+
             backGroundObject.transform.localScale = new Vector3(stageSize / backGroundObject.GetComponent<SpriteRenderer>().size.x, stageSize / backGroundObject.GetComponent<SpriteRenderer>().size.y, 0);
             if (backGroundObject.GetComponent<SpriteRenderer>().sprite.name != "Empty" && backGroundObject.GetComponent<SpriteRenderer>().sprite.name != "Empty2")
             {

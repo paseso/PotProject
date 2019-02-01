@@ -37,6 +37,7 @@ public class MapInfo : MonoBehaviour {
         THUNDER,
         ICE,
         DARK,
+        ROCK,
     }
 
     public Attribute attribute;

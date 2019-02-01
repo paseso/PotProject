@@ -41,11 +41,20 @@ public class StageController : MonoBehaviour
         set { mapLists = value; }
     }
 
+    private int changeFlag;
+
+    /// <summary>
+    /// マップ切り替えフラグ
+    /// </summary>
+    public int ChangeFlag
+    {
+        get { return changeFlag; }
+        set { changeFlag = value; }
+    }
+
     private int stageLength = 3;
 
     private CameraManager cManager;
-
-    private GameObject[] aaa;
 
     private List<GameObject> waters;
 

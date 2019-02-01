@@ -60,8 +60,6 @@ public class CameraController : MonoBehaviour {
             pos.y = map.transform.position.y - (map.GetComponent<BoxCollider2D>().size.y) - 2f;
         }
 
-        Debug.Log("Pos==" + pos);
-
         gameObject.transform.position = new Vector3(pos.x,pos.y,-100);
         //gameObject.transform.position = new Vector3(obj.transform.position.x, obj.transform.position.y + 3.5f, -100);
         

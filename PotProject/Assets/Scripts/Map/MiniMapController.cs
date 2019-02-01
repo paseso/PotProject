@@ -10,6 +10,7 @@ public class MiniMapController : MonoBehaviour {
     private int mapNum;
     private int numX, numY;
     private List<List<Image>> miniMaps = new List<List<Image>>();
+    private Sprite[] mSprite = new Sprite[9];
     private PlayerStatus status;
     private PlayerController player_ctr;
     private CameraManager cManager;
@@ -21,6 +22,12 @@ public class MiniMapController : MonoBehaviour {
         get { return isMiniMap; }
     }
 
+    public Sprite[] MSprite
+    {
+        get { return mSprite; }
+        set { mSprite = value; }
+    }
+
     // Use this for initialization
     void Start () {
         int count = 0;
@@ -29,6 +36,7 @@ public class MiniMapController : MonoBehaviour {
             List<Image> tempList = new List<Image>();
             for(int j = 0; j < 3; j++) {
                 tempList.Add(transform.GetChild(count).GetComponent<Image>());
+                transform.GetChild(count).GetComponent<Image>().sprite = mSprite[count];
                 count++;
             }
             miniMaps.Add(tempList);
@@ -83,6 +91,55 @@ public class MiniMapController : MonoBehaviour {
             player_ctr.IsCommandActive = true;
             player_ctr.AllCommandActive = true;
 
+        }
+    }
+
+    public void miniMapSride(int num,StageController.Direction dir)
+    {
+        Sprite temp = new Sprite();
+        switch (dir)
+        {
+            case StageController.Direction.DOWN:
+                temp = miniMaps[2][mInfo.MapNumX].GetComponent<SpriteRenderer>().sprite;
+                for(int i = 2; i >= 0; i--)
+                {
+                    if(i == 0)
+                    {
+                        miniMaps[i][mInfo.MapNumX].GetComponent<SpriteRenderer>().sprite = temp;
+                        continue;
+                    }
+                    miniMaps[i][mInfo.MapNumX].GetComponent<SpriteRenderer>().sprite = miniMaps[i - 1][mInfo.MapNumX].GetComponent<SpriteRenderer>().sprite;
+                }
+                
+                break;
+            case StageController.Direction.UP:
+                temp = miniMaps[0][mInfo.MapNumX].GetComponent<SpriteRenderer>().sprite;
+                for (int i = 0; i < 3; i++)
+                {
+                    if (i == 2)
+                    {
+                        miniMaps[0][mInfo.MapNumX].GetComponent<SpriteRenderer>().sprite = temp;
+                        continue;
+                    }
+                    miniMaps[2 - i][mInfo.MapNumX].GetComponent<SpriteRenderer>().sprite = miniMaps[2 - 1 - i][mInfo.MapNumX].GetComponent<SpriteRenderer>().sprite;
+                }
+                break;
+            case StageController.Direction.LEFT:
+                temp = miniMaps[mInfo.MapNumY][0].GetComponent<SpriteRenderer>().sprite;
+                for (int i = 0; i < 3; i++)
+                {
+                    if (i == 2)
+                    {
+                        miniMaps[0][mInfo.MapNumX].GetComponent<SpriteRenderer>().sprite = temp;
+                        continue;
+                    }
+                    miniMaps[mInfo.MapNumX][2 - i].GetComponent<SpriteRenderer>().sprite = miniMaps[mInfo.MapNumX][2 - 1 - i].GetComponent<SpriteRenderer>().sprite;
+                }
+                break;
+            case StageController.Direction.RIGHT:
+                break;
+            default:
+                break;
         }
     }
 }
