@@ -1,12 +1,18 @@
 ﻿using UnityEngine;
 
-public class LegCollider : MonoBehaviour {
+public class LegCollider : MonoBehaviour
+{
 
     private MoveController move_ctr;
     private PlayerController player_ctr;
     private PlayerStatus status;
     private GameObject inGameObject;
+    private GameObject PotObj;
+
     private bool landingFlag = false;
+    //雲に乗ってるかどうか
+    private bool _onCloud = false;
+
     float jumpPos;
     int onGroundCount;
     //タイル一個分の大きさ
@@ -50,12 +56,23 @@ public class LegCollider : MonoBehaviour {
     [HideInInspector]
     public bool _legFloor = false;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         move_ctr = transform.parent.GetComponentInChildren<MoveController>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
+        PotObj = GameObject.FindObjectOfType<PotController>().gameObject;
         _legFloor = false;
-	}
+        _onCloud = false;
+    }
+
+    private void Update()
+    {
+        if (_onCloud)
+        {
+            PotObj.transform.position = gameObject.transform.parent.transform.position;
+        }
+    }
 
     //void Update()
     //{
@@ -92,7 +109,8 @@ public class LegCollider : MonoBehaviour {
         return false;
     }
 
-    private void OnTriggerEnter2D(Collider2D col) {
+    private void OnTriggerEnter2D(Collider2D col)
+    {
 
         // switchの上にいるか判定
         if (SwitchCheck(col.gameObject))
@@ -110,23 +128,24 @@ public class LegCollider : MonoBehaviour {
         {
             isLanding = true;
         }
-        
+
         if (move_ctr.Jumping)
         {
             move_ctr.setJumping = false;
         }
 
-        if (col.gameObject.tag == "floor") {
+        if (col.gameObject.tag == "floor")
+        {
             _legFloor = true;
         }
 
-        if(col.gameObject.layer == LayerMask.NameToLayer("Block"))
+        if (col.gameObject.layer == LayerMask.NameToLayer("Block"))
         {
             Rigidbody2D rb = transform.parent.GetComponent<Rigidbody2D>();
-            rb.velocity = new Vector2(rb.velocity.x,0);
+            rb.velocity = new Vector2(rb.velocity.x, 0);
             player_ctr.OnBlock = col.gameObject;
 
-            if(gameObject.layer == LayerMask.NameToLayer("LadderPlayer"))
+            if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer"))
             {
                 player_ctr.ChangeLayer();
                 move_ctr.ladderDownFlag = true;
@@ -149,12 +168,21 @@ public class LegCollider : MonoBehaviour {
             move_ctr.InLadderCount++;
         }
 
-        
+
         player_ctr.OnBlock = null;
     }
 
     private void OnTriggerStay2D(Collider2D col)
     {
+        //雲のスクリプトに当たったらツボをプレイヤーの場所に移動させる
+        if (col.gameObject.GetComponent<CloudCol>())
+        {
+            if (col.gameObject.GetComponent<CloudCol>().getLandingCloud)
+            {
+                PotObj.transform.position = gameObject.transform.parent.transform.position;
+                _onCloud = true;
+            }
+        }
         if (!col.GetComponent<GimmickInfo>()) { return; }
         GimmickInfo info = col.GetComponent<GimmickInfo>();
         if (info.type == GimmickInfo.GimmickType.LADDER)
@@ -170,14 +198,17 @@ public class LegCollider : MonoBehaviour {
             move_ctr.switchGimmick = null;
             col.GetComponent<GimmickController>().OnPlayerFlag = false;
         }
-
+        if (col.gameObject.GetComponent<CloudCol>())
+        {
+            _onCloud = false;
+        }
         if (col.gameObject.layer != 2 && JumpCheck(col.gameObject))
         {
             onGroundCount--;
         }
 
         if (col.GetComponent<GimmickInfo>())
-            if(col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.FIREFIELD && onGroundCount <= 0)
+            if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.FIREFIELD && onGroundCount <= 0)
             {
                 return;
             }
@@ -196,10 +227,12 @@ public class LegCollider : MonoBehaviour {
 
         if (!col.GetComponent<GimmickInfo>()) { return; }
         GimmickInfo info = col.GetComponent<GimmickInfo>();
-        if (info.type == GimmickInfo.GimmickType.LADDER) {
+        if (info.type == GimmickInfo.GimmickType.LADDER)
+        {
             move_ctr.ladderDownFlag = false;
             move_ctr.InLadderCount--;
-            if (move_ctr.InLadderCount <= 0) {
+            if (move_ctr.InLadderCount <= 0)
+            {
                 move_ctr.InLadderCount = 0;
                 if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer"))
                 {
