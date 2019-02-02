@@ -5,8 +5,6 @@ public class LegCollider : MonoBehaviour
 
     private MoveController move_ctr;
     private PlayerController player_ctr;
-    private PlayerStatus status;
-    private GameObject inGameObject;
     private GameObject PotObj;
 
     private bool landingFlag = false;
@@ -32,10 +30,14 @@ public class LegCollider : MonoBehaviour
         get { return landingFlag; }
         set
         {
-            if (_onFallBlock)
-                return;
             if (value)
             {
+                if (_onFallBlock)
+                {
+                    jumpPos = transform.position.y;
+                    landingFlag = value;
+                    return;
+                }
                 if (jumpPos - transform.position.y >= TILESIZE * deadFallHeight)
                 {
                     player_ctr.HPDown(6);
@@ -74,14 +76,6 @@ public class LegCollider : MonoBehaviour
             PotObj.transform.position = gameObject.transform.parent.transform.position;
         }
     }
-
-    //void Update()
-    //{
-    //    if(inGameObject != null && inGameObject.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.LADDER)
-    //    {
-
-    //    }
-    //}
 
     /// <summary>
     /// ジャンプ判定
@@ -207,6 +201,10 @@ public class LegCollider : MonoBehaviour
             onGroundCount--;
         }
 
+        if (col.gameObject.name == "FallCol")
+        {
+            _onFallBlock = false;
+        }
         if (col.GetComponent<GimmickInfo>())
             if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.FIREFIELD && onGroundCount <= 0)
             {
@@ -239,10 +237,6 @@ public class LegCollider : MonoBehaviour
                     player_ctr.ChangeLayer();
                 }
             }
-        }
-        if (col.gameObject.name == "FallCol")
-        {
-            _onFallBlock = false;
         }
     }
 }

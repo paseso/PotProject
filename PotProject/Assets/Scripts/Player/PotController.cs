@@ -181,8 +181,15 @@ public class PotController : MonoBehaviour
     private void CheckDistance()
     {
         distance = BrotherObj.transform.position.x - gameObject.transform.position.x;
+
+        //ツボが遠すぎたらワープしてプレイヤーの近くに来る
+        if ((BrotherObj.transform.position.y - gameObject.transform.position.y) >= 5f)
+        {
+            StartCoroutine(PotWarpAnimation());
+        }
+
         //ツボが近かった時の処理
-        if(Mathf.Abs(distance) >= 0f && Mathf.Abs(distance) <= 4f)
+        if (Mathf.Abs(distance) >= 0f && Mathf.Abs(distance) <= 4f)
         {
             rig.velocity = new Vector2(0, rig.velocity.y);
         }
@@ -198,11 +205,6 @@ public class PotController : MonoBehaviour
                     rig.velocity = new Vector2(-10, rig.velocity.y);
                     break;
             }
-        }
-        //ツボが遠すぎたらワープしてプレイヤーの近くに来る
-        if((BrotherObj.transform.position.y - gameObject.transform.position.y) >= 5f)
-        {
-            StartCoroutine(PotWarpAnimation());
         }
     }
 

@@ -374,7 +374,7 @@ public class MoveController : MonoBehaviour
 
                 if (player_ctr.GetAlchemyUIFlag) { return; }
 
-                if (leg_col.isLanding && !Jumping)
+                if (!Jumping)
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
                 }
