@@ -10,6 +10,8 @@ public class LegCollider : MonoBehaviour
     private bool landingFlag = false;
     //雲に乗ってるかどうか
     private bool _onCloud = false;
+    //ちくわブロックに乗ってるかどうか
+    private bool _onFallBlock = false;
 
     float jumpPos;
     int onGroundCount;
@@ -28,6 +30,8 @@ public class LegCollider : MonoBehaviour
         get { return landingFlag; }
         set
         {
+            if (_onFallBlock)
+                return;
             if (value)
             {
                 if (jumpPos - transform.position.y >= TILESIZE * deadFallHeight)
@@ -50,22 +54,19 @@ public class LegCollider : MonoBehaviour
         }
     }
 
-    //足の部分にfloorがあったってるかどうか
-    [HideInInspector]
-    public bool _legFloor = false;
-
     // Use this for initialization
     void Start()
     {
         move_ctr = transform.parent.GetComponentInChildren<MoveController>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         PotObj = GameObject.FindObjectOfType<PotController>().gameObject;
-        _legFloor = false;
         _onCloud = false;
+        _onFallBlock = false;
     }
 
     private void Update()
     {
+        //雲に乗ってる時は弟の場所をお兄ちゃんの場所と同じにする
         if (_onCloud)
         {
             PotObj.transform.position = gameObject.transform.parent.transform.position;
@@ -101,7 +102,6 @@ public class LegCollider : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-
         // switchの上にいるか判定
         if (SwitchCheck(col.gameObject))
         {
@@ -109,6 +109,11 @@ public class LegCollider : MonoBehaviour
             col.GetComponent<GimmickController>().OnPlayerFlag = true;
         }
 
+        //ちくわブロックに乗っかった時
+        if (col.gameObject.name == "FallCol")
+        {
+            _onFallBlock = true;
+        }
         if (col.gameObject.layer != 2 && JumpCheck(col.gameObject))
         {
             onGroundCount++;
@@ -118,17 +123,11 @@ public class LegCollider : MonoBehaviour
         {
             isLanding = true;
         }
-
+        
         if (move_ctr.Jumping)
         {
             move_ctr.setJumping = false;
         }
-
-        if (col.gameObject.tag == "floor")
-        {
-            _legFloor = true;
-        }
-
         if (col.gameObject.layer == LayerMask.NameToLayer("Block"))
         {
             Rigidbody2D rb = transform.parent.GetComponent<Rigidbody2D>();
@@ -158,7 +157,6 @@ public class LegCollider : MonoBehaviour
             move_ctr.InLadderCount++;
         }
 
-
         player_ctr.OnBlock = null;
     }
 
@@ -183,11 +181,13 @@ public class LegCollider : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D col)
     {
+        //スイッチから降りた時
         if (SwitchCheck(col.gameObject))
         {
             move_ctr.switchGimmick = null;
             col.GetComponent<GimmickController>().OnPlayerFlag = false;
         }
+        //雲から降りた時
         if (col.gameObject.GetComponent<CloudCol>())
         {
             _onCloud = false;
@@ -229,6 +229,10 @@ public class LegCollider : MonoBehaviour
                     player_ctr.ChangeLayer();
                 }
             }
+        }
+        if (col.gameObject.name == "FallCol")
+        {
+            _onFallBlock = false;
         }
     }
 }
