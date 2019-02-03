@@ -248,7 +248,6 @@ public class MoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(IsLadder);
         //はしご処理してる時、ツボのtransformをプレイヤーと同じ位置にする
         if (_laddernow)
         {
@@ -374,7 +373,7 @@ public class MoveController : MonoBehaviour
 
                 if (player_ctr.GetAlchemyUIFlag) { return; }
 
-                if (!Jumping)
+                if (leg_col.isLanding && !Jumping)
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
                 }
