@@ -94,8 +94,9 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
     private void EffectProcess(GameObject PlayEffect, Vector2 EffectPos, float Magnification, GameObject Target, bool isDestry)
     {
         PlayEffect.transform.position = EffectPos;
+        //PlayEffect.transform.SetParent(Target.transform);
         PlayEffect.transform.localScale = new Vector3(Magnification, Magnification, Magnification);
-        PlayEffect.transform.SetParent(Target.transform);
+        
         //  再生終わったら破棄するか
         if (isDestry)
         {

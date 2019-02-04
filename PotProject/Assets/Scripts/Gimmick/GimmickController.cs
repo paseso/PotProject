@@ -27,7 +27,8 @@ public class GimmickController :MonoBehaviour {
         set { onPlayerFlag = value; }
     }
     // ------------------------------------------
-
+    private int inFireCount = 0;
+    
     // マップの位置
     private Vector2 mapPos;
 

@@ -771,7 +771,6 @@ public class MoveController : MonoBehaviour
             return true;
         if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer"))
         {
-            Debug.Log("Test");
             return true;
         }
         
@@ -786,16 +785,10 @@ public class MoveController : MonoBehaviour
             {
                 if (r.collider.gameObject.layer == LayerMask.NameToLayer("Block"))
                 {
-                    //Debug.Log("Block :" + r.collider.name);
                     flag = false;
                     break;
                 }
-                else
-                {
-                    //Debug.Log("Block Null :" + r.collider.name);
-                }
             }
-            //Debug.Log("Flag : " + flag);
             return flag;
         }
         return false;
@@ -854,11 +847,6 @@ public class MoveController : MonoBehaviour
     }
 
 
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-
-    }
-
     private void OnCollisionExit2D(Collision2D col)
     {
         if (col.gameObject.tag == "Monster")
@@ -866,4 +854,4 @@ public class MoveController : MonoBehaviour
             _hitmonster = false;
         }
     }
-}//870
+}

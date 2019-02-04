@@ -116,8 +116,6 @@ public class StageController : MonoBehaviour
     /// </summary>
     /// <param name="num"></param>
     /// <param name="dir"></param>
-    /// <param name="pos"></param>
-    /// <param name="size"></param>
     public void Sride(int num, Direction dir) {
         if (isMove) { return; }
         StartCoroutine(SrideInFade(num,dir, GetMaps[1][1].transform.localPosition));
@@ -131,7 +129,6 @@ public class StageController : MonoBehaviour
     /// <param name="num"></param>
     /// <param name="dir"></param>
     /// <param name="pos"></param>
-    /// <param name="size"></param>
     /// <returns></returns>
     public IEnumerator SrideInFade(int num, Direction dir, Vector2 pos)
     {
@@ -176,7 +173,6 @@ public class StageController : MonoBehaviour
                     tempPos = Maps[i][num].transform.position;
                     tempPos.z = 90;
                     StartCoroutine(SrideAnimation(Maps[i][num], turnPos,new Vector2(tempPos.x,tempPos.y + mapSize),mapCount));
-                    //Maps[i][num].transform.localPosition = tempPos;
 
                     mapCount++;
                 }
@@ -223,7 +219,6 @@ public class StageController : MonoBehaviour
                 Maps[0][num] = temp;
 
                 Maps[0][num].GetComponent<MapInfo>().MapNumY = 0;
-
                 break;
 
             // 下-------------------------------------------------------------------＊
@@ -253,7 +248,6 @@ public class StageController : MonoBehaviour
                 Maps[num][0] = temp;
 
                 Maps[num][0].GetComponent<MapInfo>().MapNumX = 0;
-
                 break;
 
             // 右-------------------------------------------------------------------＊
@@ -321,7 +315,9 @@ public class StageController : MonoBehaviour
     /// スライドアニメーション
     /// </summary>
     /// <param name="obj"></param>
+    /// <param name="turn"></param>
     /// <param name="pos"></param>
+    /// <param name="count"></param>
     /// <returns></returns>
     public IEnumerator SrideAnimation(GameObject obj,Vector2 turn, Vector2 pos, int count)
     {   

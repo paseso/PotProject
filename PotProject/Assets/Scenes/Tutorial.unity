@@ -233,6 +233,7 @@ GameObject:
   - component: {fileID: 212547148}
   - component: {fileID: 212547150}
   - component: {fileID: 212547149}
+  - component: {fileID: 212547151}
   m_Layer: 5
   m_Name: NowPlayer
   m_TagString: Untagged
@@ -291,6 +292,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 212547147}
+--- !u!114 &212547151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 212547147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47bb1558d9aaf2c4bb766fa47b7e1ed7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &271159955
 GameObject:
   m_ObjectHideFlags: 0
@@ -791,7 +803,7 @@ RectTransform:
   - {fileID: 918000809}
   - {fileID: 212547148}
   m_Father: {fileID: 1730174692}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1393,7 +1405,7 @@ Prefab:
     - target: {fileID: 224889656121312794, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -150
       objectReference: {fileID: 0}
     - target: {fileID: 224339883101917340, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
@@ -1413,7 +1425,7 @@ Prefab:
     - target: {fileID: 224339883101917340, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -450
       objectReference: {fileID: 0}
     - target: {fileID: 224473385882564128, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
@@ -1433,7 +1445,7 @@ Prefab:
     - target: {fileID: 224473385882564128, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -750
       objectReference: {fileID: 0}
     - target: {fileID: 224392304070136172, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
@@ -1443,7 +1455,7 @@ Prefab:
     - target: {fileID: 224392304070136172, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 900
       objectReference: {fileID: 0}
     - target: {fileID: 224369260580713278, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
@@ -1463,7 +1475,7 @@ Prefab:
     - target: {fileID: 224369260580713278, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -150
       objectReference: {fileID: 0}
     - target: {fileID: 224686235188629336, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
@@ -1483,7 +1495,7 @@ Prefab:
     - target: {fileID: 224686235188629336, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -450
       objectReference: {fileID: 0}
     - target: {fileID: 224695265454405620, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
@@ -1503,12 +1515,12 @@ Prefab:
     - target: {fileID: 224695265454405620, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -750
       objectReference: {fileID: 0}
     - target: {fileID: 224231129181068484, guid: ba692b9aca076b1438470328adf05bc6,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 900
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ba692b9aca076b1438470328adf05bc6, type: 2}
@@ -2299,7 +2311,7 @@ RectTransform:
   m_Children:
   - {fileID: 1794395966}
   m_Father: {fileID: 1730174692}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3007,8 +3019,8 @@ RectTransform:
   m_Children:
   - {fileID: 1192618623}
   - {fileID: 1465905244}
-  - {fileID: 678254241}
   - {fileID: 1443199851}
+  - {fileID: 678254241}
   - {fileID: 545421728}
   - {fileID: 869206578}
   m_Father: {fileID: 0}
