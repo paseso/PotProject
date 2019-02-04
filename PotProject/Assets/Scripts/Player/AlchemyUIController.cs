@@ -322,6 +322,7 @@ public class AlchemyUIController : MonoBehaviour
     public void ItemFrameReSet()
     {
         nowBox = 0;
+        frameLine = 0001;
         if(Box_item.Length == 2)
         {
             Box_item = new GameObject[Itembox.Length];
@@ -431,7 +432,7 @@ public class AlchemyUIController : MonoBehaviour
         {
             if (!move_ctr.OnCrossRight && !move_ctr.OnCrossLeft)
                 break;
-
+            //配列の変更
             if (move_ctr.OnCrossRight)
             {
                 BoxItemChange(BitFrameLine(true));
@@ -579,16 +580,16 @@ public class AlchemyUIController : MonoBehaviour
     private void setItemImageList()
     {
         ItemImage = new Sprite[14];
-        Sprite img;
         for (int i = 0; i < ItemImage.Length; i++)
         {
             if (!NullCheckImage(i))
             {
-                img = Resources.Load<Sprite>("Textures/AlchemyUI_items/AlchemyUI_item" + i);
+                Sprite img = Resources.Load<Sprite>("Textures/AlchemyUI_items/AlchemyUI_item" + i);
                 ItemImage[i] = img;
             }
             else
             {
+                //画像が見当たらなかった時の処理
                 NullCheckImage(i);
             }
         }
@@ -613,7 +614,6 @@ public class AlchemyUIController : MonoBehaviour
         for (int i = 0; i < items.Count; i++)
         {
             Image item_img = Itembox[i].GetComponent<Image>();
-
             switch (items[i])
             {
                 case ItemStatus.Type.CLAY_N:
