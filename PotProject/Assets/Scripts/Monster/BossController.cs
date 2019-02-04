@@ -84,7 +84,7 @@ public class BossController : MonoBehaviour {
         GetComponent<Rigidbody2D>().isKinematic = true;
         GetComponent<BoxCollider2D>().enabled = false;
 
-        Vector2 pos = player.transform.position;
+        Vector2 pos = Camera.main.transform.position;
 
         sr.sortingOrder = 1000;
 

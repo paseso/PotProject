@@ -241,7 +241,6 @@ public class MoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(IsLadder);
         //はしご処理してる時、ツボのtransformをプレイヤーと同じ位置にする
         if (_laddernow)
         {
@@ -365,7 +364,7 @@ public class MoveController : MonoBehaviour
 
                 if (player_ctr.GetAlchemyUIFlag) { return; }
 
-                if (!Jumping)
+                if (leg_col.isLanding && !Jumping)
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
                 }
@@ -737,7 +736,6 @@ public class MoveController : MonoBehaviour
             return true;
         if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer"))
         {
-            Debug.Log("Test");
             return true;
         }
         
@@ -752,16 +750,10 @@ public class MoveController : MonoBehaviour
             {
                 if (r.collider.gameObject.layer == LayerMask.NameToLayer("Block"))
                 {
-                    //Debug.Log("Block :" + r.collider.name);
                     flag = false;
                     break;
                 }
-                else
-                {
-                    //Debug.Log("Block Null :" + r.collider.name);
-                }
             }
-            //Debug.Log("Flag : " + flag);
             return flag;
         }
         return false;
@@ -830,4 +822,4 @@ public class MoveController : MonoBehaviour
             _hitmonster = false;
         }
     }
-}//870
+}

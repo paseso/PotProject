@@ -75,6 +75,9 @@ public class LegCollider : MonoBehaviour
         {
             PotObj.transform.position = gameObject.transform.parent.transform.position;
         }
+        if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer") && move_ctr.InLadderCount <= 0) {
+            player_ctr.ChangeLayer();
+        }
     }
 
     /// <summary>
@@ -142,7 +145,7 @@ public class LegCollider : MonoBehaviour
             {
                 player_ctr.ChangeLayer();
                 move_ctr.ladderDownFlag = true;
-                move_ctr.InLadderCount = 0;
+                move_ctr.InLadderCount = 1;
                 return;
             }
         }
@@ -174,17 +177,12 @@ public class LegCollider : MonoBehaviour
                 _onLandding = true;
             }
         }
-        if (!col.GetComponent<GimmickInfo>()) { return; }
-        GimmickInfo info = col.GetComponent<GimmickInfo>();
-        
-        if (info.type == GimmickInfo.GimmickType.LADDER)
-        {
-            //はしごの時の処理
-            move_ctr.InLadderCount = 1;
-        }else if(info.type == GimmickInfo.GimmickType.GROWTREE)
-        {
-            _onLandding = true;
-        }
+        //if (!col.GetComponent<GimmickInfo>()) { return; }
+        //GimmickInfo info = col.GetComponent<GimmickInfo>();
+        //if (info.type == GimmickInfo.GimmickType.LADDER)
+        //{
+        //    move_ctr.InLadderCount = 1;
+        //}
     }
 
     private void OnTriggerExit2D(Collider2D col)
@@ -233,13 +231,8 @@ public class LegCollider : MonoBehaviour
         {
             move_ctr.ladderDownFlag = false;
             move_ctr.InLadderCount--;
-            if (move_ctr.InLadderCount <= 0)
-            {
+            if (move_ctr.InLadderCount <= 0) {
                 move_ctr.InLadderCount = 0;
-                if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer"))
-                {
-                    player_ctr.ChangeLayer();
-                }
             }
         }
         else if (info.type == GimmickInfo.GimmickType.GROWTREE)

@@ -27,7 +27,8 @@ public class GimmickController :MonoBehaviour {
         set { onPlayerFlag = value; }
     }
     // ------------------------------------------
-
+    private int inFireCount = 0;
+    
     // マップの位置
     private Vector2 mapPos;
 
@@ -186,6 +187,7 @@ public class GimmickController :MonoBehaviour {
     public IEnumerator DoorStep(GameObject obj) {
         bool flag = true;
         obj.transform.DOScaleY(0f, 2.0f).SetEase(Ease.Linear);
+        SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_STONEDOOR);
         while (flag) {
             obj.transform.localPosition = new Vector2(obj.transform.localPosition.x + 0.05f, obj.transform.localPosition.y);
             yield return new WaitForSeconds(0.05f);

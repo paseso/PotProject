@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 /// <summary>
 /// モンスターステータス
@@ -132,14 +133,14 @@ public class MonsterController : MonoBehaviour
     /// <param name="damage"></param>
     public void Damage(int damage)
     {
+        EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_AttackIce, transform.position, 4, gameObject, true);
+        KnockBack(mController.direc);
         status.HP -= damage;
         if(status.HP <= 0)
         {
-            DropItem(status);
+            StartCoroutine(Drop());
             return;
-        }
-
-        KnockBack(mController.direc);
+        }        
     }
 
     public void KnockBack(MoveController.Direction dir) {
@@ -152,23 +153,34 @@ public class MonsterController : MonoBehaviour
         rb.AddForce(knock, ForceMode2D.Impulse);
     }
 
-    public void DropItem(MonsterStatus status)
+    public IEnumerator Drop()
     {
-        if(ItemList[status.type] == "") {
+        if (ItemList[status.type] == "")
+        {
             Destroy(gameObject);
-            return;
+            yield break;
         }
+
+        if (GetComponent<MonsterWalk>())
+        {
+            Destroy(GetComponent<MonsterWalk>());
+        }
+
+        GetComponent<BoxCollider2D>().enabled = false;
+        GetComponent<SpriteRenderer>().DOFade(0f, 1f).SetEase(Ease.Linear);
 
         GameObject dropPos = new GameObject("DropPos");
         dropPos.transform.SetParent(transform.parent.transform);
         dropPos.transform.position = transform.position;
+        Transform trans = transform;
 
+        resPoint.GetComponent<MonsterResporn>().CountFlag = true;
+        yield return new WaitForSeconds(1f);
         GameObject item = Instantiate(Resources.Load<GameObject>(itemFolder + ItemList[status.type]));
         item.transform.SetParent(dropPos.transform);
-        item.transform.position = dropPos.transform.position;
+        item.transform.position = trans.position;
         item.AddComponent<DropItemTimer>();
         
-        resPoint.GetComponent<MonsterResporn>().CountFlag = true;
         Destroy(gameObject);
     }
 }
