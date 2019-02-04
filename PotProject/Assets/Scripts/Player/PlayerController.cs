@@ -319,7 +319,6 @@ public class PlayerController : MonoBehaviour {
             case PlayerStatus.SWORDTYPE.DARK:
                 status.PlayerAttack = 1;
                 break;
-            case PlayerStatus.SWORDTYPE.SPEAR:
             case PlayerStatus.SWORDTYPE.AXE:
             case PlayerStatus.SWORDTYPE.TORCH:
                 status.PlayerAttack = 2;

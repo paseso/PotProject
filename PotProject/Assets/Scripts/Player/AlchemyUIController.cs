@@ -336,7 +336,7 @@ public class AlchemyUIController : MonoBehaviour
     /// </summary>
     private int BitFrameLine(bool _right)
     {
-        if(frameLine == frame_left)
+        if((frameLine & frame_left) > 0)
         {
             if (_right)
             {
@@ -346,7 +346,7 @@ public class AlchemyUIController : MonoBehaviour
             {
                 frameLine = frame_right;
             }
-        }else if(frameLine == frame_center)
+        }else if((frameLine & frame_center) > 0)
         {
             if (_right)
             {
@@ -357,7 +357,7 @@ public class AlchemyUIController : MonoBehaviour
                 frameLine = frame_left;
             }
         }
-        else if(frameLine == frame_right)
+        else if((frameLine & frame_right) > 0)
         {
             if (_right)
             {
@@ -374,21 +374,21 @@ public class AlchemyUIController : MonoBehaviour
     /// <summary>
     /// フレームが左右に移動する時にBox_itemの中身も変更する処理
     /// </summary>
-    /// <param name="numLine">今の位置</param>
-    private void BoxItemChange(int numLine)
+    /// <param name="nowLine">今の位置</param>
+    private void BoxItemChange(int nowLine)
     {
-        if (numLine == frame_left)
+        if ((nowLine & frame_left) > 0)
         {
             Box_item = new GameObject[createItembox.Length];
             Array.Copy(createItembox, Box_item, createItembox.Length);
         }
-        else if (numLine == frame_center)
+        else if ((nowLine & frame_center) > 0)
         {
             Box_item = new GameObject[2];
             Box_item[0] = mtr_0;
             Box_item[1] = mtr_1;
         }
-        else if (numLine == frame_right)
+        else if ((nowLine & frame_right) > 0)
         {
             Box_item = new GameObject[Itembox.Length];
             Array.Copy(Itembox, Box_item, Itembox.Length);
