@@ -128,12 +128,12 @@ public class PotController : MonoBehaviour
             return;
 
         //お兄ちゃんよりも前にいたら
-        if (direction == MoveController.Direction.RIGHT && distance <= 2f)
+        if (direction == MoveController.Direction.RIGHT && distance <= 1f)
         {
             _potMoving = true;
             rig.velocity = new Vector2(-7, rig.velocity.y);
         }
-        else if (direction == MoveController.Direction.LEFT && distance >= -2f)
+        else if (direction == MoveController.Direction.LEFT && distance >= -1f)
         {
             _potMoving = true;
             rig.velocity = new Vector2(7, rig.velocity.y);

@@ -65,7 +65,6 @@ public struct PlayerStatus
         FIRE,
         FROZEN,
         DARK,
-        SPEAR,
         AXE,
         TORCH,
     }

@@ -660,7 +660,7 @@ public class AnimController : MonoBehaviour {
     public void SwordSE()
     {
         //アックス、槍、たいまつは重い剣のSE
-        if (playerstatus.swordtype == PlayerStatus.SWORDTYPE.AXE || playerstatus.swordtype == PlayerStatus.SWORDTYPE.SPEAR || playerstatus.swordtype == PlayerStatus.SWORDTYPE.TORCH)
+        if (playerstatus.swordtype == PlayerStatus.SWORDTYPE.AXE || playerstatus.swordtype == PlayerStatus.SWORDTYPE.TORCH)
         {
             SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SWORDHEAVY);
         }

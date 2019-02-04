@@ -9,7 +9,7 @@ public class LegCollider : MonoBehaviour
 
     private bool landingFlag = false;
     //雲に乗ってるかどうか
-    private bool _onCloud = false;
+    private bool _onLandding = false;
     //ちくわブロックに乗ってるかどうか
     private bool _onFallBlock = false;
 
@@ -64,14 +64,14 @@ public class LegCollider : MonoBehaviour
         move_ctr = transform.parent.GetComponentInChildren<MoveController>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         PotObj = GameObject.FindObjectOfType<PotController>().gameObject;
-        _onCloud = false;
+        _onLandding = false;
         _onFallBlock = false;
     }
 
     private void Update()
     {
-        //雲に乗ってる時は弟の場所をお兄ちゃんの場所と同じにする
-        if (_onCloud)
+        //ギミック(雲、木)に乗ってる時は弟の場所をお兄ちゃんの場所と同じにする
+        if (_onLandding)
         {
             PotObj.transform.position = gameObject.transform.parent.transform.position;
         }
@@ -174,8 +174,7 @@ public class LegCollider : MonoBehaviour
         {
             if (col.gameObject.GetComponent<CloudCol>().getLandingCloud)
             {
-                PotObj.transform.position = gameObject.transform.parent.transform.position;
-                _onCloud = true;
+                _onLandding = true;
             }
         }
         //if (!col.GetComponent<GimmickInfo>()) { return; }
@@ -197,7 +196,7 @@ public class LegCollider : MonoBehaviour
         //雲から降りた時
         if (col.gameObject.GetComponent<CloudCol>())
         {
-            _onCloud = false;
+            _onLandding = false;
         }
         if (col.gameObject.layer != 2 && JumpCheck(col.gameObject))
         {
@@ -235,6 +234,11 @@ public class LegCollider : MonoBehaviour
             if (move_ctr.InLadderCount <= 0) {
                 move_ctr.InLadderCount = 0;
             }
+        }
+        else if (info.type == GimmickInfo.GimmickType.GROWTREE)
+        {
+            //木のギミックから離れた時に弟の場所を元に戻す
+            _onLandding = false;
         }
     }
 }

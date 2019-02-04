@@ -254,11 +254,6 @@ public class AlchemyController : MonoBehaviour {
                         _succece = true;
                         player_ctr.setCreateItemList(CreateItemStatus.Type.Key);
                         break;
-                    case ItemStatus.Type.VAJURA:
-                        //槍
-                        _succece = true;
-                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.SPEAR);
-                        break;
                     case ItemStatus.Type.LIZARD:
                         //斧
                         _succece = true;
@@ -347,11 +342,6 @@ public class AlchemyController : MonoBehaviour {
                         //バジュラ（電撃武器）
                         _succece = true;
                         player_ctr.setCreateItemList(CreateItemStatus.Type.Vajura);
-                        break;
-                    case ItemStatus.Type.KEYROD:
-                        //槍
-                        _succece = true;
-                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.SPEAR);
                         break;
                     case ItemStatus.Type.LIZARD:
                         //ドリル
