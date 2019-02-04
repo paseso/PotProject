@@ -7,9 +7,11 @@ using UnityEngine;
 /// </summary>
 public class CreateLadder : MonoBehaviour {
     private string ladderPrefab = "Prefabs/GimmickTiles/Ladder";
+    private PlayerController pController;
 
     void Start()
     {
+        pController = GameObject.Find("Controller").GetComponent<PlayerController>();
         PutOnLadder(gameObject);
     }
 
@@ -27,10 +29,16 @@ public class CreateLadder : MonoBehaviour {
     /// <param name="obj"></param>
     IEnumerator Create(GameObject obj) {
         // かけるブロックがないならReturn
-        if(obj == null) { yield break; }
+        if(obj == null) {
+            pController.ItemUseFlag = false;
+            yield break;
+        }
 
         // BlockじゃないならReturn
-        if(obj.layer != LayerMask.NameToLayer("Block")) { yield break; }
+        if(obj.layer != LayerMask.NameToLayer("Block")) {
+            pController.ItemUseFlag = false;
+            yield break;
+        }
 
         // Rayの始点を設定--------------------------------------------------------------
         var height = obj.GetComponent<SpriteRenderer>().bounds.size.y;
@@ -42,10 +50,16 @@ public class CreateLadder : MonoBehaviour {
         RaycastHit2D hit = Physics2D.Raycast(startPos, Vector2.down, Mathf.Infinity);
 
         // 1ブロック分の幅がなければReturn
-        if(hit.distance < height) { yield break; }
+        if(hit.distance < height) {
+            pController.ItemUseFlag = false;
+            yield break;
+        }
 
         // あたったObjectがBlockじゃないならReturn
-        if(hit.collider.gameObject.layer != LayerMask.NameToLayer("Block")) { yield break; }
+        if(hit.collider.gameObject.layer != LayerMask.NameToLayer("Block")) {
+            pController.ItemUseFlag = false;
+            yield break;
+        }
 
         // objのレイヤーを変更
         obj.gameObject.layer = LayerMask.NameToLayer("LadderBlock");

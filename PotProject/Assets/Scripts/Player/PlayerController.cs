@@ -72,6 +72,13 @@ public class PlayerController : MonoBehaviour {
         set { isMiniMap = value; }
     }
 
+    private bool itemUseFlag = true;
+
+    public bool ItemUseFlag {
+        get {return itemUseFlag; }
+        set { itemUseFlag = value; }
+    }
+
     public GameObject OnBlock { get; set; }
 
     private GameObject lifePoint;
@@ -279,6 +286,10 @@ public class PlayerController : MonoBehaviour {
     public void UseAlchemyItem(int num)
     {
         alchemy_ctr.AlchemyItem(getCreateItemList()[alchemyUI_ctr.getNowAlchemyItem]);
+        if (!ItemUseFlag) {
+            itemUseFlag = true;
+            return;
+        }
         deleteCreateItemList(num);
         alchemyUI_ctr.setNowAlchemyItem();
         alchemyUI_ctr.setCreateItemUI();

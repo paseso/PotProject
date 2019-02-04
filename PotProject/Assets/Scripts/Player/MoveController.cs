@@ -377,7 +377,7 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
                 }
-                //Debug.Log("ContactPoint:" + GetComponent<CapsuleCollider2D>().)
+
                 sidemove = -5f;
                 if (CheckMoveable())
                     rig.velocity = new Vector2(-5f, rig.velocity.y);
