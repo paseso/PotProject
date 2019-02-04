@@ -52,9 +52,9 @@ public class GimmickController :MonoBehaviour {
 
         mInfo = transform.root.GetComponent<MapInfo>();
         gInfo = GetComponent<GimmickInfo>();
-        if (gInfo.type == GimmickInfo.GimmickType.WATER) {
-            sController.Waters.Add(gameObject);
-        }
+        //if (gInfo.type == GimmickInfo.GimmickType.WATER) {
+        //    sController.Waters.Add(gameObject);
+        //}
         if (FindObjectOfType<BossController>())
         {
             bossCon = FindObjectOfType<BossController>();

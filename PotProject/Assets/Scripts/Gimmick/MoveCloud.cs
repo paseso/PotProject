@@ -1,31 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 public class MoveCloud : MonoBehaviour {
     private float distance;
     private int direction = 1;
+
+    /// <summary>
+    /// 方向転換
+    /// </summary>
+    public void SetDirection() {
+        direction *= -1;
+    }
+
     private int speed = 5;
     private CloudCol cloudCol;
 	// Use this for initialization
 	void Start () {
-        cloudCol = transform.GetChild(0).GetComponent<CloudCol>();
+        cloudCol = transform.parent.transform.GetChild(0).GetComponent<CloudCol>();
     }
 	
 	// Update is called once per frame
 	void LateUpdate () {
-        Move(direction);
+        MoveUpDown();
+        //MoveSide();
     }
 
-    public void OnCollisionEnter2D(Collision2D col) {
+    public void OnTriggerEnter2D(Collider2D col) {
 
         if (col.gameObject.layer == LayerMask.NameToLayer("Block")) {
             direction *= -1;
         }
     }
 
-    public void Move(int dir) {
-        transform.localPosition = new Vector2(transform.localPosition.x + (Time.deltaTime * speed * dir), transform.localPosition.y);
+    public void MoveSide() {
+        transform.parent.localPosition = new Vector2(transform.parent.localPosition.x + (Time.deltaTime * speed * direction), transform.parent.localPosition.y);
+    }
+
+    public void MoveUpDown() {
+        transform.parent.localPosition = new Vector2(transform.parent.localPosition.x, transform.parent.localPosition.y + (Time.deltaTime * speed * direction));
     }
 }
