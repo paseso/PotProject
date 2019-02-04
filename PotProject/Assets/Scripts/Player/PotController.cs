@@ -72,7 +72,6 @@ public class PotController : MonoBehaviour
     private bool _potMoving = false;
 
     private MoveController.Direction direction;
-    private Rigidbody2D brother_rig;
 
     // Use this for initialization
     void Start()
@@ -84,7 +83,6 @@ public class PotController : MonoBehaviour
             move_ctr = GameObject.FindObjectOfType<MoveController>();
             rig = gameObject.GetComponent<Rigidbody2D>();
             BrotherObj = move_ctr.transform.parent.gameObject;
-            brother_rig = BrotherObj.GetComponent<Rigidbody2D>();
             PotFaceSpriteObj = gameObject.transform.GetChild(gameObject.transform.childCount - 1).GetComponent<SpriteRenderer>();
         }
         catch (UnityException e)
@@ -189,7 +187,7 @@ public class PotController : MonoBehaviour
         }
 
         //ツボが近かった時の処理
-        if (Mathf.Abs(distance) >= 0f && Mathf.Abs(distance) <= 4f)
+        if (Mathf.Abs(distance) >= 0f && Mathf.Abs(distance) <= 2.5f)
         {
             rig.velocity = new Vector2(0, rig.velocity.y);
         }
@@ -241,7 +239,7 @@ public class PotController : MonoBehaviour
     /// <summary>
     /// ツボの属性を変更する処理
     /// </summary>
-    private void ChangePotType(PotStatus.PotType pot_type)
+    public void ChangePotType(PotStatus.PotType pot_type)
     {
         switch (pot_type)
         {
@@ -345,7 +343,6 @@ public class PotController : MonoBehaviour
     {
         if (col.gameObject.GetComponent<MonsterController>())
         {
-
             Destroy(col.gameObject);
             MonsterController mInfo = col.gameObject.GetComponent<MonsterController>();
             switch (mInfo.Status.type)
@@ -362,7 +359,6 @@ public class PotController : MonoBehaviour
                     Debug.Log("Type: " + mInfo.Status.type);
                     break;
             }
-            Debug.Log("Type: " + mInfo.Status.type);
         }
     }
 
@@ -379,11 +375,6 @@ public class PotController : MonoBehaviour
         {
             OtotoHead.GetComponent<Anima2D.SpriteMeshAnimation>().frame = 1;
         }
-    }
-
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        
     }
 
     private void OnTriggerStay2D(Collider2D col)

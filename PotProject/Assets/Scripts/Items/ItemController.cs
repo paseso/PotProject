@@ -45,7 +45,7 @@ public class ItemController : MonoBehaviour {
     public void CreateBarrier()
     {
         GameObject prefab = Resources.Load("Prefabs/Items/Barrier") as GameObject;
-        GameObject obj = Instantiate(prefab, BrotherObj.transform);
+        Instantiate(prefab, BrotherObj.transform);
     }
 
     /// <summary>

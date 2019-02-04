@@ -98,8 +98,13 @@ public class PlayerController : MonoBehaviour {
         }
         StartHeart();
         setStartSwordList();
+        //剣のデバッグ
+        //swordList[1] = PlayerStatus.SWORDTYPE.AXE;
+        //swordList[2] = PlayerStatus.SWORDTYPE.DARK;
+        //swordList[3] = PlayerStatus.SWORDTYPE.TORCH;
         _itemMax = false;
         alchemyUIFlag = false;
+        
 	}
 
     private void Update()
@@ -298,6 +303,15 @@ public class PlayerController : MonoBehaviour {
             Sprite img = Resources.Load<Sprite>("Textures/SwordImage_" + i);
             swordSpriteList.Add(img);
         }
+    }
+
+    /// <summary>
+    /// 剣を変更
+    /// </summary>
+    public void SwordNumList(int num)
+    {
+        SwordTypeChange(GetSwordList[num]);
+        pManager.SetSwordType = GetSwordList[num];
     }
 
     /// <summary>
