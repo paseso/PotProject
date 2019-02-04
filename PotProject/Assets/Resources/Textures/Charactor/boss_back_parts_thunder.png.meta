@@ -1,12 +1,10 @@
 fileFormatVersion: 2
-guid: 23ce38756a7ab3a42b8569105b538ad5
-timeCreated: 1549301802
+guid: f2750b894c36a8942b1b927f72dda6cd
+timeCreated: 1549304347
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: boss_right_parts_ice_0
-    21300002: boss_right_parts_ice_1
-    21300004: boss_right_parts_ice_2
+    21300000: boss_back_parts_thunder_0
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -73,46 +71,20 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: boss_right_parts_ice_0
+      name: boss_back_parts_thunder_0
       rect:
         serializedVersion: 2
-        x: 268
-        y: 784
-        width: 196
-        height: 223
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: boss_right_parts_ice_1
-      rect:
-        serializedVersion: 2
-        x: 450
-        y: 685
-        width: 228
-        height: 332
+        x: 247
+        y: 649
+        width: 352
+        height: 358
       alignment: 9
-      pivot: {x: 0.50877196, y: 0.51054215}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: boss_right_parts_ice_2
-      rect:
-        serializedVersion: 2
-        x: 701
-        y: 778
-        width: 214
-        height: 203
-      alignment: 9
-      pivot: {x: 0.49999997, y: 0.49753693}
+      pivot: {x: 0.49573866, y: 0.50139666}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     outline: []
   spritePackingTag: 
-  userData: 101535024259186
+  userData: 101535187080192
   assetBundleName: 
   assetBundleVariant: 
