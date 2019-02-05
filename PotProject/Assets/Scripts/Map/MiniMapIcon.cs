@@ -8,6 +8,8 @@ using DG.Tweening;
 /// ミニマップアイコン点滅
 /// </summary>
 public class MiniMapIcon : MonoBehaviour {
+    [SerializeField]
+    private Sprite[] Images; 
     private float time = 0.5f;
 	// Use this for initialization
 	void Start () {
@@ -18,10 +20,9 @@ public class MiniMapIcon : MonoBehaviour {
     {
         while (true)
         {
-            GetComponent<Image>().DOColor(Color.red,time).SetEase(Ease.Linear);
-            //GetComponent<Image>().DOFade(0, time).SetEase(Ease.Linear);
+            GetComponent<Image>().sprite = Images[1];
             yield return new WaitForSeconds(time);
-            GetComponent<Image>().DOColor(Color.white, time).SetEase(Ease.Linear);
+            GetComponent<Image>().sprite = Images[0];
             yield return new WaitForSeconds(time);
         }
     }

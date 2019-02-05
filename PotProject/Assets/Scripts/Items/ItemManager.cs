@@ -13,7 +13,7 @@ public struct ItemStatus {
         CLAY_D,
         CLAY_F,
         CLAY_T,
-        CLAY_W,
+        CLAY_I,
         SNAKE,
         LIZARD,
         WOOD,
@@ -25,6 +25,7 @@ public struct ItemStatus {
         FLOWER,
         SMOKESCREEN,
         EXPLOSIVE,
+        FAIRY,
     };
 
     public Type type;
