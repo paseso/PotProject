@@ -19,7 +19,7 @@ public class MapCreator : MonoBehaviour
     [SerializeField]
     GameObject playerPrefab;
     [SerializeField]
-    [Header("背景画像 ノーマル、炎、氷、雷、闇、空用の順に")]
+    [Header("背景画像 ノーマル、氷、雷、空用1, 空用2の順に")]
     private Sprite[] backImages;
 
     private GameObject[] mapObjects = new GameObject[9];
