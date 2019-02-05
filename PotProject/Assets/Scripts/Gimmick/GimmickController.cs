@@ -180,23 +180,21 @@ public class GimmickController :MonoBehaviour {
     public IEnumerator SwitchDoorStep(GameObject obj) {
         transform.parent.transform.parent.DOLocalMoveY(transform.parent.transform.parent.localPosition.y - 0.25f, 1f);
         yield return new WaitForSeconds(1.5f);
-        StartCoroutine(DoorStep(obj));
+        DoorStep(obj);
     }
 
-    public IEnumerator DoorStep(GameObject obj) {
+    public void DoorStep(GameObject obj) {
         bool flag = true;
         //obj.transform.DOScaleY(0f, 2.0f).SetEase(Ease.Linear);
         obj.GetComponent<OpenDoor>().Open();
         SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_STONEDOOR);
-        while (flag) {
-            obj.transform.localPosition = new Vector2(obj.transform.localPosition.x + 0.05f, obj.transform.localPosition.y);
-            yield return new WaitForSeconds(0.05f);
-            obj.transform.localPosition = new Vector2(obj.transform.localPosition.x - 0.05f, obj.transform.localPosition.y);
-            yield return new WaitForSeconds(0.05f);
-            if(obj.transform.localScale.y <= 0) {
-                flag = false;
-            }
-        }
+        //while (true) {
+        //    obj.transform.localPosition = new Vector2(obj.transform.localPosition.x + 0.05f, obj.transform.localPosition.y);
+        //    yield return new WaitForSeconds(0.05f);
+        //    obj.transform.localPosition = new Vector2(obj.transform.localPosition.x - 0.05f, obj.transform.localPosition.y);
+        //    yield return new WaitForSeconds(0.05f);
+           
+        //}
     }
 
     public void IsWater() {
@@ -258,7 +256,7 @@ public class GimmickController :MonoBehaviour {
     /// </summary>
     public void UnlockKeyDoor()
     {
-        StartCoroutine(DoorStep(gameObject));
+        DoorStep(gameObject);
     }
 
     public IEnumerator IsSpring()

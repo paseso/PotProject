@@ -4,15 +4,31 @@ using UnityEngine;
 using DG.Tweening;
 
 public class OpenDoor : MonoBehaviour {
-
+    int count;
     public void Open() {
-        foreach(Transform i in transform) {
-            StartCoroutine(OpenColutine(i.gameObject));
-        }
+        StartCoroutine(OpenColutine());
     }
 
-    IEnumerator OpenColutine(GameObject obj) {
-        obj.transform.DOMoveY(transform.position.y, 2f).SetEase(Ease.Linear);
-        yield return null;
+    IEnumerator OpenColutine() {
+        
+        GameObject child = transform.GetChild(0).gameObject;
+        child.transform.DOMoveY(transform.position.y, 0.5f).SetEase(Ease.Linear).OnComplete(() => {
+            child = child.transform.GetChild(0).gameObject;
+            child.transform.DOMoveY(transform.position.y, 0.5f).SetEase(Ease.Linear).OnComplete(() => {
+                child = child.transform.GetChild(0).gameObject;
+                child.transform.DOMoveY(transform.position.y, 0.5f).SetEase(Ease.Linear).OnComplete(() => {
+                    child = child.transform.GetChild(0).gameObject;
+                    child.transform.DOMoveY(transform.position.y, 0.5f).SetEase(Ease.Linear).OnComplete(() => {
+                        Destroy(gameObject);
+                    });
+                });
+            });
+        });
+        while (true) {
+            transform.localPosition = new Vector2(transform.localPosition.x + 0.05f, transform.localPosition.y);
+            yield return new WaitForSeconds(0.05f);
+            transform.localPosition = new Vector2(transform.localPosition.x - 0.05f, transform.localPosition.y);
+            yield return new WaitForSeconds(0.05f);
+        }
     }
 }
