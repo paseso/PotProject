@@ -154,7 +154,7 @@ public class MapCreator : MonoBehaviour
             backGroundObject.GetComponent<BoxCollider2D>().size = new Vector2(xLength * 0.5f + 0.25f, xLength * 0.5f + 0.25f);
             backGroundObject.transform.parent = rootObj.transform;
             backGroundObject.transform.localPosition = Vector3.zero + new Vector3(-tileSize * 0.5f, tileSize * 0.5f, 0);
-            backGroundObject.GetComponent<SpriteRenderer>().sprite = backImages[datas[i].backGroundNum];
+            backGroundObject.GetComponent<SpriteRenderer>().sprite = backImages[datas[i].backGroundNum - 1];
             MiniMapController miniMapController = GameObject.Find("Canvas/MiniMap").GetComponent<MiniMapController>();
             miniMapController.MSprite[i] = backGroundObject.GetComponent<SpriteRenderer>().sprite;
             switch (datas[i].backGroundNum)

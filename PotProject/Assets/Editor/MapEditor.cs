@@ -199,6 +199,13 @@ public class MapEditor : EditorWindow {
             }
             //  値の代入
             //  背景の情報の代入
+            if (backGround == BackGround.NONE)
+            {
+                #if UNITY_EDITOR
+                EditorUtility.DisplayDialog("Error", "背景が設定されていません", "OK");
+                #endif
+                return;
+            }
             tmp.backGroundNum = (int)backGround;
             //  タイルの情報の代入
             for (int i = 0; i < tmp.mapDate.Length; i++)
