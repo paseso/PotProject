@@ -66,7 +66,6 @@ public class BossController : MonoBehaviour {
             {
                 // 魔法飛ばす処理
                 playerPos = FindObjectOfType<MoveController>().gameObject.transform.position;
-                Debug.Log("PlayerPos=" + playerPos);
                 GetComponentInChildren<MagicShoot>().Shoot(playerPos);
                 mTime = 0;
             }

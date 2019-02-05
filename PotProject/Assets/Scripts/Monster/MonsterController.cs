@@ -133,6 +133,10 @@ public class MonsterController : MonoBehaviour
     /// <param name="damage"></param>
     public void Damage(int damage)
     {
+        if(status.type == MonsterStatus.MonsterType.HARB) {
+            StartCoroutine(Drop());
+            return;
+        }
         EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_AttackIce, transform.position, 4, gameObject, true);
         KnockBack(mController.direc);
         status.HP -= damage;
@@ -143,6 +147,10 @@ public class MonsterController : MonoBehaviour
         }        
     }
 
+    /// <summary>
+    /// ノックバック
+    /// </summary>
+    /// <param name="dir"></param>
     public void KnockBack(MoveController.Direction dir) {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         Vector2 knock = new Vector2(knockback.x, knockback.y);

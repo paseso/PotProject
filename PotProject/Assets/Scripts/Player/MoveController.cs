@@ -41,6 +41,16 @@ public class MoveController : MonoBehaviour
     [HideInInspector]
     public bool _hitmonster = false;
 
+    public enum PlayerState {
+        Action,
+        Pause,
+        MiniMap,
+        MoveMap,
+        Clear,
+    }
+
+    public PlayerState playerState;
+
     //-------アクションボタンを押してるかどうか----------
     private bool _onCrossCross = false;
     private bool _onRight = false;
