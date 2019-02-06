@@ -645,8 +645,8 @@ public class AnimController : MonoBehaviour {
             case SoundManager.SENAME.SE_FOOTSTEPS:
                 SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_FOOTSTEPS);
                 break;
-            case SoundManager.SENAME.SE_FALL:
-                SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_FALL);
+            case SoundManager.SENAME.SE_JAMP:
+                SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_JAMP);
                 break;
             default:
                 Debug.Log("セットされてません");

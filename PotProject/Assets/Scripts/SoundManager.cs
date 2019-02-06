@@ -50,7 +50,7 @@ public class SoundManager : MonoBehaviour {
         SE_DEMONKINGCLASH,
         SE_DEMONFLYING,
         SE_THUNDER,
-        SE_FALL,
+        SE_JAMP,
         SE_ALCHEMYMISS,
         SE_ALCHEMYSUCCESS,
         SE_STONEDOOR,
