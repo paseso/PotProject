@@ -207,6 +207,12 @@ public class LegCollider : MonoBehaviour
         {
             _onFallBlock = false;
         }
+
+        if(col.gameObject.name == "Tree")
+        {
+            //木のギミックから離れた時に弟の場所を元に戻す
+            _onLandding = false;
+        }
         if (col.GetComponent<GimmickInfo>())
             if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.FIREFIELD && onGroundCount <= 0)
             {
