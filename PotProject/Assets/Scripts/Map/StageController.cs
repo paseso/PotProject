@@ -79,6 +79,7 @@ public class StageController : MonoBehaviour
                 i.SetActive(false);
             }
         }
+        SoundManager.Instance.PlayBgm((int)SoundManager.BGMNAME.BGM_MAINFAST);
     }
 
     void ActiveWater() {

@@ -80,7 +80,6 @@ public class SoundManager : MonoBehaviour {
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        PlayBgm(2);
     }
     public void PlayBgm(int BGM_num)
     {
