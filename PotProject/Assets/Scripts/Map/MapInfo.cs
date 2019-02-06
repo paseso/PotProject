@@ -33,9 +33,8 @@ public class MapInfo : MonoBehaviour {
     public enum Attribute
     {
         NORMAL,
-        FIRE,
-        THUNDER,
         ICE,
+        THUNDER,
         DARK,
         ROCK,
     }

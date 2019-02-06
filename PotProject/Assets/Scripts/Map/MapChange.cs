@@ -29,14 +29,8 @@ public class MapChange : MonoBehaviour {
             case MapInfo.Attribute.NORMAL:
                 pot_type = PotStatus.PotType.Normal;
                 break;
-            case MapInfo.Attribute.FIRE:
-                pot_type = PotStatus.PotType.Fire;
-                break;
             case MapInfo.Attribute.ICE:
                 pot_type = PotStatus.PotType.Ice;
-                break;
-            case MapInfo.Attribute.DARK:
-                pot_type = PotStatus.PotType.Dark;
                 break;
             case MapInfo.Attribute.THUNDER:
                 pot_type = PotStatus.PotType.Thunder;

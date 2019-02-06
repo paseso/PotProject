@@ -256,7 +256,9 @@ public class GimmickController :MonoBehaviour {
     /// </summary>
     public void UnlockKeyDoor()
     {
-        DoorStep(gameObject);
+        //DoorStep(gameObject);
+        GetComponent<OpenDoor>().OpenKey();
+        SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_STONEDOOR);
     }
 
     public IEnumerator IsSpring()

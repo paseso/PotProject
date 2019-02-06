@@ -44,7 +44,6 @@ public class OpenDoor : MonoBehaviour {
             child.transform.DOMoveY(transform.position.y, 0.5f).SetEase(Ease.Linear).OnComplete(() => {
                 child = child.transform.GetChild(0).gameObject;
                 child.transform.DOMoveY(transform.position.y, 0.5f).SetEase(Ease.Linear).OnComplete(() => {
-                    child = child.transform.GetChild(0).gameObject;
                     Destroy(gameObject);
                 });
             });

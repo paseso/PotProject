@@ -159,19 +159,22 @@ public class MapCreator : MonoBehaviour
             miniMapController.MSprite[i] = backGroundObject.GetComponent<SpriteRenderer>().sprite;
             switch (datas[i].backGroundNum)
             {
-                case 0: // Normal
+                case 0: // NONE
+                    break;
+                case 1: // Normal
                     backGroundObject.transform.root.GetComponent<MapInfo>().attribute = MapInfo.Attribute.NORMAL;
                     break;
-                case 1: // Fire
-                    backGroundObject.transform.root.GetComponent<MapInfo>().attribute = MapInfo.Attribute.FIRE;
+                case 2: // Ice
+                    backGroundObject.transform.root.GetComponent<MapInfo>().attribute = MapInfo.Attribute.ICE;
                     break;
-                case 2: // Thunder
+                case 3: // Thunder
                     backGroundObject.transform.root.GetComponent<MapInfo>().attribute = MapInfo.Attribute.THUNDER;
                     break;
-                case 3: // Rock(normal)
                 case 4: // Rock(under)
+                case 5: // Rock(under)
                     backGroundObject.transform.root.GetComponent<MapInfo>().attribute = MapInfo.Attribute.ROCK;
                     break;
+
                 default:
                     break;
             }

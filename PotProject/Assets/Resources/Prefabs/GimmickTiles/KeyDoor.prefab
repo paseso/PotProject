@@ -38,9 +38,11 @@ GameObject:
   - component: {fileID: 4068852822197644}
   - component: {fileID: 212093106202520080}
   - component: {fileID: 114256857414170192}
+  - component: {fileID: 114867482175339952}
+  - component: {fileID: 114529507102478922}
   m_Layer: 0
   m_Name: KeyDoor
-  m_TagString: Rock
+  m_TagString: KeyDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -288,6 +290,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9826352ad3fc5fe45886db8ed51d2137, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114529507102478922
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1260582389296948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9696294e9f29da043846bc1bdfa5a0bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114867482175339952
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1260582389296948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccb62d7c26706244e85525a82b6801f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 11
 --- !u!212 &212014526923968964
 SpriteRenderer:
   m_ObjectHideFlags: 1

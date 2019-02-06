@@ -134,6 +134,7 @@ public class StageController : MonoBehaviour
     {
         cManager.SwitchingCameraSub(pos, subCameraSize);
         yield return new WaitForSeconds(1.5f);
+        SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SLIDESTAGE);
         SrideStage(num, dir);
         mMapController.NowMap();
         yield return new WaitForSeconds(4.5f);

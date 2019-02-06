@@ -89,6 +89,7 @@ public class BossController : MonoBehaviour {
 
         transform.DOLocalMoveY(transform.localPosition.y - 0.5f, 0.5f).SetEase(Ease.Linear).OnComplete(() =>
         {
+            SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_DEMONFLYING);
             Sequence s = DOTween.Sequence();
             s.Append(transform.DORotate(new Vector3(0, 0, 365 * 4), 1f, RotateMode.FastBeyond360).SetEase(Ease.Linear));
             s.SetLoops(100);
