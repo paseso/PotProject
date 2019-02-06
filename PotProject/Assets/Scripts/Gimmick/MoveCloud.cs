@@ -22,8 +22,8 @@ public class MoveCloud : MonoBehaviour {
 	
 	// Update is called once per frame
 	void LateUpdate () {
-        MoveUpDown();
-        //MoveSide();
+        //MoveUpDown();
+        MoveSide();
     }
 
     public void OnTriggerEnter2D(Collider2D col) {
