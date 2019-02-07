@@ -61,12 +61,18 @@ public class ItemController : MonoBehaviour {
     /// </summary>
     public void OpenKeyDoor()
     {
-        Debug.Log("OpenDoor key door flag = " + BrotherObj.GetComponent<MoveController>().keyDoorFlag);
         if (BrotherObj.GetComponent<MoveController>().keyDoorFlag)
         {
             GameObject keySwitch = GameObject.FindGameObjectWithTag("KeyDoor");
             keySwitch.GetComponent<GimmickController>().UnlockKeyDoor();
             return;
         }
+    }
+
+    /// <summary>
+    /// 雲生成
+    /// </summary>
+    public void CreateCloud() {
+
     }
 }

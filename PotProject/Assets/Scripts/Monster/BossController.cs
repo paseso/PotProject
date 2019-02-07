@@ -29,6 +29,11 @@ public class BossController : MonoBehaviour {
     private bool isMagicAttack = false;
     private GameObject clearPanel;
 
+    public BossStatus Status {
+        get { return status; }
+        set { status = value; }
+    }
+
     public bool IsMagicAttack
     {
         set { isMagicAttack = value; }
@@ -59,17 +64,17 @@ public class BossController : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         // 魔法攻撃
-        if (isMagicAttack)
-        {
-            mTime += Time.deltaTime;
-            if(mTime > status.magicTime)
-            {
-                // 魔法飛ばす処理
-                playerPos = FindObjectOfType<MoveController>().gameObject.transform.position;
-                GetComponentInChildren<MagicShoot>().Shoot(playerPos);
-                mTime = 0;
-            }
-        }
+        //if (isMagicAttack)
+        //{
+        //    mTime += Time.deltaTime;
+        //    if(mTime > status.magicTime)
+        //    {
+        //        // 魔法飛ばす処理
+        //        playerPos = FindObjectOfType<MoveController>().gameObject.transform.position;
+        //        GetComponentInChildren<MagicShoot>().Shoot(playerPos);
+        //        mTime = 0;
+        //    }
+        //}
 	}
 
     /// <summary>

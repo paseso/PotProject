@@ -56,9 +56,9 @@ public class StageController : MonoBehaviour
 
     private CameraManager cManager;
 
-    private List<GameObject> waters;
+    private GameObject[] waters;
 
-    public List<GameObject> Waters {
+    public GameObject[] Waters {
         get {return waters; }
         set { waters = value; }
     }
@@ -70,7 +70,7 @@ public class StageController : MonoBehaviour
         SetList();
         clearPanel = FindObjectOfType<GameClear>().gameObject;
         clearPanel.SetActive(false);
-
+        SetWater();
         pController = FindObjectOfType<PlayerController>();
         mMapController = FindObjectOfType<MiniMapController>();
         cManager = FindObjectOfType<CameraManager>();
@@ -80,6 +80,11 @@ public class StageController : MonoBehaviour
             }
         }
         SoundManager.Instance.PlayBgm((int)SoundManager.BGMNAME.BGM_MAINFAST);
+    }
+
+    void SetWater() {
+        var temp = GameObject.FindGameObjectsWithTag("Water");
+        Waters = temp;
     }
 
     void ActiveWater() {

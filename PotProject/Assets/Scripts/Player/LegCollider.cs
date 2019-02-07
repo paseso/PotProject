@@ -88,7 +88,8 @@ public class LegCollider : MonoBehaviour
     bool JumpCheck(GameObject col)
     {
         if (col.GetComponent<ItemManager>()) { return false; }// Item
-        if (col.gameObject.layer == 2) { return false; }// BackGround
+        if (col.gameObject.layer == 2) { return false; }// 背景
+        if(col.gameObject.layer == LayerMask.NameToLayer("BackGround")) { return true; }
         if (col.GetComponent<KeyBlockCol>()) { return false; } // 鍵ActiveCollider
         if (!col.GetComponent<GimmickInfo>()) { return true; } // Gimmick
         GimmickInfo info = col.GetComponent<GimmickInfo>();

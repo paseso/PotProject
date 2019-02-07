@@ -135,9 +135,19 @@ public class GimmickController :MonoBehaviour {
                 break;
             case GimmickInfo.GimmickType.FIREFIELD:
                 if (!col.GetComponent<MoveController>()) { return; }
-                bossCon.IsMagicAttack = true;
+                var bossMShoot = bossCon.gameObject.transform.GetChild(0).GetComponent<MagicShoot>();
+                bossMShoot.playerPos = col.transform.position;
+                bossMShoot.ShootFlag = true;
+                //bossCon.IsMagicAttack = true;
                 break;
-            
+            case GimmickInfo.GimmickType.THUNDERFIELD:
+                if (!col.GetComponent<MoveController>()) { return; }
+                GameObject mObj = GameObject.Find(transform.root.name + "/OtherObject/Lion(Clone)");
+                MagicShoot magic = mObj.transform.GetChild(0).GetComponent<MagicShoot>();
+                magic.playerPos = col.transform.position;
+                magic.ShootFlag = true;
+                break;
+
             default:
                 break;
         }
@@ -161,7 +171,19 @@ public class GimmickController :MonoBehaviour {
                 break;
             case GimmickInfo.GimmickType.FIREFIELD:
                 if (!col.GetComponent<MoveController>()) { return; }
-                bossCon.IsMagicAttack = false;
+                var bossMShoot = bossCon.gameObject.transform.GetChild(0).GetComponent<MagicShoot>();
+                bossMShoot.playerPos = col.transform.position;
+                bossMShoot.ShootFlag = false;
+                //bossCon.IsMagicAttack = false;
+                break;
+            case GimmickInfo.GimmickType.THUNDERFIELD:
+                if (!col.GetComponent<MoveController>()) { return; }
+                if (GameObject.Find(transform.root.name + "/OtherObject/Lion(Clone)")) {
+                    var mObj = GameObject.Find(transform.root.name + "/OtherObject/Lion(Clone)");
+                    var magic = mObj.transform.GetChild(0).GetComponent<MagicShoot>();
+                    //magic.playerPos = col.transform.position;
+                    magic.ShootFlag = false;
+                }
                 break;
             default:
                 break;

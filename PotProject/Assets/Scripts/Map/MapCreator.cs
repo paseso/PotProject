@@ -184,7 +184,9 @@ public class MapCreator : MonoBehaviour
             {
                 backGroundObject.GetComponent<BoxCollider2D>().isTrigger = true;
                 backGroundObject.AddComponent<MapChange>();
-            }            
+            }else {
+                backGroundObject.layer = LayerMask.NameToLayer("Background");
+            }     
 
             //  オブジェクトの生成
             for (int y = 0; y < yLength; y++)
