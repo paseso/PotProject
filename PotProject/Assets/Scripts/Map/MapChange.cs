@@ -17,6 +17,7 @@ public class MapChange : MonoBehaviour {
         mMapController.NowMap();
         pot_ctr = FindObjectOfType<PotController>();
         Debug.Log(transform.root.GetComponent<MapInfo>().attribute);
+        AttributePot(transform.root.GetComponent<MapInfo>().attribute);
     }
 
     /// <summary>

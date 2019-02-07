@@ -36,7 +36,7 @@ public class MagicShoot : MonoBehaviour {
             magic_T.transform.SetParent(transform.parent.transform);
             magic_T.transform.localPosition = transform.localPosition;
             magic_T.GetComponent<MagicBalletController>().Pos = pos;
-            EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Fire, magic_T.transform.position, 2, magic_T, false);
+            EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Thunder, magic_T.transform.position, 2, magic_T, false);
         }
     }
 }

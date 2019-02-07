@@ -54,7 +54,7 @@ public class FallBlock : MonoBehaviour {
             createTime = fallTime * 2;
         }
 
-        StartCoroutine(Floating());
+        //StartCoroutine(Floating());
     }
 
     void Update() {
@@ -101,7 +101,7 @@ public class FallBlock : MonoBehaviour {
 
     public IEnumerator Floating()
     {
-        while (state != fallState.fall)
+        while (!fallFlag)
         {
             transform.DOMoveY(transform.position.y + 0.1f, 0.5f).SetEase(Ease.Linear);
             yield return new WaitForSeconds(0.5f);

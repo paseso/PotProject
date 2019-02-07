@@ -26,6 +26,7 @@ public class GimmickInfo : MonoBehaviour {
         MAGIC,
         SPRING,
         THUNDERFIELD,
+        RAINCLOUD,
     }
 
     public GimmickType type;

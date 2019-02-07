@@ -5,6 +5,8 @@ using DG.Tweening;
 
 public class PlayerController : MonoBehaviour {
 
+    public bool rideTreeFlag { get; set; }
+
     private SpriteRenderer sword;
 
     private List<Sprite> swordSpriteList = new List<Sprite>();
@@ -72,7 +74,7 @@ public class PlayerController : MonoBehaviour {
         set { isMiniMap = value; }
     }
 
-    private bool itemUseFlag = true;
+    private bool itemUseFlag = false;
 
     public bool ItemUseFlag {
         get {return itemUseFlag; }
@@ -80,6 +82,8 @@ public class PlayerController : MonoBehaviour {
     }
 
     public GameObject OnBlock { get; set; }
+
+    public GameObject OnGimmick { get; set; }
 
     public bool pickUpFlag { get; set; }
 
@@ -294,12 +298,16 @@ public class PlayerController : MonoBehaviour {
     {
         alchemy_ctr.AlchemyItem(getCreateItemList()[alchemyUI_ctr.getNowAlchemyItem]);
         if (!ItemUseFlag) {
-            itemUseFlag = true;
             return;
         }
         deleteCreateItemList(num);
         alchemyUI_ctr.setNowAlchemyItem();
         alchemyUI_ctr.setCreateItemUI();
+        itemUseFlag = false;
+    }
+
+    public void ItemDelete(int num) {
+
     }
 
     /// <summary>

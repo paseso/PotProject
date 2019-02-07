@@ -11,6 +11,8 @@ public class ItemController : MonoBehaviour {
 
     private GameObject BrotherObj;
 
+    public bool useFlag { get; set; }
+
     private void Start()
     {
         playerController = GetComponent<PlayerController>();
@@ -36,7 +38,10 @@ public class ItemController : MonoBehaviour {
     /// </summary>
     public void TreePortion()
     {
-        FindObjectOfType<TreeGrow>().Grow();
+        if (playerController.rideTreeFlag) {
+            FindObjectOfType<TreeGrow>().Grow();
+            playerController.ItemUseFlag = true;
+        }
     }
 
     /// <summary>
@@ -46,6 +51,7 @@ public class ItemController : MonoBehaviour {
     {
         GameObject prefab = Resources.Load("Prefabs/Items/Barrier") as GameObject;
         Instantiate(prefab, BrotherObj.transform);
+        playerController.ItemUseFlag = true;
     }
 
     /// <summary>
@@ -53,7 +59,9 @@ public class ItemController : MonoBehaviour {
     /// </summary>
     public void LadderCreate()
     {
+        if (playerController.OnBlock.GetComponent<CreateLadder>()) { return; }
         playerController.OnBlock.AddComponent<CreateLadder>();
+        playerController.OnBlock.GetComponent<CreateLadder>().PutOnLadder();
     }
 
     /// <summary>
@@ -65,6 +73,7 @@ public class ItemController : MonoBehaviour {
         {
             GameObject keySwitch = GameObject.FindGameObjectWithTag("KeyDoor");
             keySwitch.GetComponent<GimmickController>().UnlockKeyDoor();
+            playerController.ItemUseFlag = true;
             return;
         }
     }

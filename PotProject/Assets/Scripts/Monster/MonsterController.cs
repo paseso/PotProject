@@ -102,7 +102,7 @@ public class MonsterController : MonoBehaviour
         {MonsterStatus.MonsterType.SHADOW,"" },
         {MonsterStatus.MonsterType.CLOUD,"Cloud" },
         {MonsterStatus.MonsterType.TURTLE,"Crystal" },
-        {MonsterStatus.MonsterType.FAIRY,"" },
+        {MonsterStatus.MonsterType.FAIRY,"Feather" },
         {MonsterStatus.MonsterType.HARB,"Weed" },
         {MonsterStatus.MonsterType.CLAY_N,"Clay_N" },
         {MonsterStatus.MonsterType.CLAY_F,"Clay_F" },
