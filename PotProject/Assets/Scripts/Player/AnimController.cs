@@ -619,6 +619,7 @@ public class AnimController : MonoBehaviour {
     {
         Destroy(effect.gameObject);
         Destroy(Itemtarget.transform.parent.gameObject);
+        player_ctr.pickUpFlag = false;
         PotAnimSetBool();
         anim.SetBool("isRightGetItem", false);
         anim.SetBool("isLeftGetItem", false);

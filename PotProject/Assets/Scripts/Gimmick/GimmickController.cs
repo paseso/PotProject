@@ -142,6 +142,7 @@ public class GimmickController :MonoBehaviour {
                 break;
             case GimmickInfo.GimmickType.THUNDERFIELD:
                 if (!col.GetComponent<MoveController>()) { return; }
+                if(!GameObject.Find(transform.root.name + "/OtherObject/Lion(Clone)")) { return; }
                 GameObject mObj = GameObject.Find(transform.root.name + "/OtherObject/Lion(Clone)");
                 MagicShoot magic = mObj.transform.GetChild(0).GetComponent<MagicShoot>();
                 magic.playerPos = col.transform.position;

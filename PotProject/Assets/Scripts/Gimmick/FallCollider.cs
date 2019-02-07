@@ -17,10 +17,10 @@ public class FallCollider : MonoBehaviour {
             block.SetRandingFlag = false;
             block.SetTime = 0;
             block.SetShakeFlag = false;
-            if(block.State != FallBlock.fallState.fall) {
-                block.State = FallBlock.fallState.normal;
-                StartCoroutine(block.Floating());
-            }
+            //if(block.State != FallBlock.fallState.fall) {
+            //    block.State = FallBlock.fallState.normal;
+            //    StartCoroutine(block.Floating());
+            //}
         }
     }
 }

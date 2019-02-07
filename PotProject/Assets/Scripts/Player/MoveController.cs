@@ -494,6 +494,7 @@ public class MoveController : MonoBehaviour
                 }
                 //アイテムを拾う処理
                 bringctr.SquereButton();
+                player_ctr.pickUpFlag = true;
                 target = null;
                 break;
 
@@ -801,6 +802,7 @@ public class MoveController : MonoBehaviour
         if (col.gameObject.tag == "Monster")
         {
             MonsterStatus mStatus = col.gameObject.GetComponent<MonsterController>().Status;
+            if(mStatus.type == MonsterStatus.MonsterType.HARB) { return; }
             int atk = mStatus.GetAttack;
             _hitmonster = true;
             player_ctr.HPDown(atk);

@@ -23,20 +23,20 @@ public class MagicShoot : MonoBehaviour {
     }
 
     public void Shoot(Vector2 pos)
-    {
-        GameObject magic = new GameObject();
-        
+    {   
         if (transform.parent.GetComponent<BossController>()) {
-            magic = Instantiate(Resources.Load<GameObject>("Prefabs/FireMagic"));
-            EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Fire, magic.transform.position, 2, magic, false);
+            GameObject magic_F = Instantiate(Resources.Load<GameObject>("Prefabs/FireMagic"));
+            magic_F.transform.SetParent(transform.parent.transform);
+            magic_F.transform.localPosition = transform.localPosition;
+            magic_F.GetComponent<MagicBalletController>().Pos = pos;
+            EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Fire, magic_F.transform.position, 2, magic_F, false);
         }
         else if (transform.parent.GetComponent<MonsterController>()) {
-            magic = Instantiate(Resources.Load<GameObject>("Prefabs/ThunderMagic"));
-            EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Fire, magic.transform.position, 2, magic, false);
+            GameObject magic_T = Instantiate(Resources.Load<GameObject>("Prefabs/ThunderMagic"));
+            magic_T.transform.SetParent(transform.parent.transform);
+            magic_T.transform.localPosition = transform.localPosition;
+            magic_T.GetComponent<MagicBalletController>().Pos = pos;
+            EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Fire, magic_T.transform.position, 2, magic_T, false);
         }
-
-        magic.transform.SetParent(transform.parent.transform);
-        magic.transform.localPosition = transform.localPosition;
-        magic.GetComponent<MagicBalletController>().Pos = pos;
     }
 }

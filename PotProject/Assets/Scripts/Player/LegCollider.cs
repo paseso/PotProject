@@ -95,6 +95,7 @@ public class LegCollider : MonoBehaviour
         GimmickInfo info = col.GetComponent<GimmickInfo>();
         if (info.type == GimmickInfo.GimmickType.LADDER) { return false; } // はしご
         if (info.type == GimmickInfo.GimmickType.FIREFIELD) { return false; } // 敵攻撃範囲
+        if (info.type == GimmickInfo.GimmickType.THUNDERFIELD) { return false; } // 敵攻撃範囲
         return true;
     }
 

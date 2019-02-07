@@ -81,6 +81,8 @@ public class PlayerController : MonoBehaviour {
 
     public GameObject OnBlock { get; set; }
 
+    public bool pickUpFlag { get; set; }
+
     private GameObject lifePoint;
 
     // Use this for initialization

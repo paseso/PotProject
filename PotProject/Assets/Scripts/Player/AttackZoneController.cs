@@ -57,6 +57,7 @@ public class AttackZoneController : MonoBehaviour {
     /// </summary>
     public void Attack()
     {
+        
         if (Attack_Target == null) { return; }
 
         if (Attack_Target.GetComponent<GimmickController>()) {
@@ -82,8 +83,10 @@ public class AttackZoneController : MonoBehaviour {
     {
         if(col.gameObject.tag == "Monster")
         {
+            
             _attackMonster = true;
             Attack_Target = col.gameObject;
+            Debug.Log(Attack_Target);
             return;
         }
 

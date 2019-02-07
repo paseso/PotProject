@@ -59,7 +59,8 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
     private GameObject Effect_CreateItemSuccece;
     [SerializeField]
     private GameObject Effect_Alchemy;
-
+    [SerializeField]
+    private GameObject Effect_Thunder;
     public void Awake()
     {
         //Destroyしない
@@ -82,6 +83,7 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
         Effect_GetItem,
         Effect_CreateItemSuccece,
         Effect_Alchemy,
+        Effect_Thunder,
     };
 
     /// <summary>
@@ -94,7 +96,7 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
     private void EffectProcess(GameObject PlayEffect, Vector2 EffectPos, float Magnification, GameObject Target, bool isDestry)
     {
         PlayEffect.transform.position = EffectPos;
-        //PlayEffect.transform.SetParent(Target.transform);
+        PlayEffect.transform.SetParent(Target.transform);
         PlayEffect.transform.localScale = new Vector3(Magnification, Magnification, Magnification);
         
         //  再生終わったら破棄するか
@@ -159,6 +161,9 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
                 break;
             case 13:
                 PlayEffect = Instantiate(Effect_Alchemy) as GameObject;
+                break;
+            case 14:
+                PlayEffect = Instantiate(Effect_Thunder) as GameObject;
                 break;
             default:
                 Debug.Log("Effectmanagerのエラー");
