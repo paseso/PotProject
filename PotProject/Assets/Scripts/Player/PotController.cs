@@ -70,6 +70,8 @@ public class PotController : MonoBehaviour
     private float distance = 0f;
 
     private bool _potMoving = false;
+    //ツボが移動アニメーションしてるかどうか
+    private bool _movePot = false;
 
     private MoveController.Direction direction;
 
@@ -95,6 +97,7 @@ public class PotController : MonoBehaviour
         pot_status.setPotFace = PotStatus.PotFace.Normal;
         PotSprite = gameObject.GetComponent<Anima2D.SpriteMeshAnimation>();
         setStartPotFaceSprite();
+        _movePot = false;
         distance = BrotherObj.transform.position.x - gameObject.transform.position.x;
     }
 
@@ -183,6 +186,8 @@ public class PotController : MonoBehaviour
         //ツボが遠すぎたらワープしてプレイヤーの近くに来る
         if ((BrotherObj.transform.position.y - gameObject.transform.position.y) >= 5f)
         {
+            if (_movePot)
+                return;
             StartCoroutine(PotWarpAnimation());
         }
 
@@ -212,6 +217,7 @@ public class PotController : MonoBehaviour
     /// <returns></returns>
     private IEnumerator PotWarpAnimation()
     {
+        _movePot = true;
         //エフェクトを出してツボを小さくしていく
         GameObject effectObj = EffectManager.Instance_Effect.PlayEffect(11, gameObject.transform.position, 10, gameObject, false);
         effectObj.transform.DOScale(new Vector3(1, 1, 1), 0.5f);
@@ -226,6 +232,7 @@ public class PotController : MonoBehaviour
         gameObject.transform.DOScale(new Vector3(0.7f, 0.7f, 1), 0.3f);
         yield return new WaitForSeconds(0.2f);
         Destroy(effectObj.gameObject);
+        _movePot = false;
     }
 
     /// <summary>

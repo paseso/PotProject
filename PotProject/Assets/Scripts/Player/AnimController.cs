@@ -36,6 +36,7 @@ public class AnimController : MonoBehaviour {
     private EffectManager effect_mng;
     private PlayerController player_ctr;
     private PlayerStatus playerstatus;
+    private MoveController move_ctr;
 
     //拾うアニメーションの時に使う
     private GameObject Itemtarget;
@@ -53,6 +54,7 @@ public class AnimController : MonoBehaviour {
         pot_anim = gameObject.transform.parent.GetComponentInChildren<PotController>().gameObject.GetComponent<Animator>();
         attack_ctr = gameObject.transform.parent.GetComponentInChildren<AttackZoneController>();
         effect_mng = GameObject.Find("EffectManager").GetComponent<EffectManager>();
+        move_ctr = gameObject.GetComponentInChildren<MoveController>();
         _attackStart = false;
 	}
 
@@ -623,6 +625,10 @@ public class AnimController : MonoBehaviour {
         PotAnimSetBool();
         anim.SetBool("isRightGetItem", false);
         anim.SetBool("isLeftGetItem", false);
+        if (move_ctr.direc == MoveController.Direction.LEFT)
+            anim.SetBool("isLeftIdle", true);
+        else
+            anim.SetBool("isRightIdle", true);
     }
 
     /// <summary>
