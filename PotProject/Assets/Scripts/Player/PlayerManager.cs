@@ -137,7 +137,6 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>{
     public void InitStatus()
     {
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
-        //player_ctr.setStartSwordList();
         status.PlayerHP = status.GetMaxHP;
         status.PlayerAttack = 1;
         SetSwordType = PlayerStatus.SWORDTYPE.NORMAL;
