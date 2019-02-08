@@ -121,7 +121,7 @@ public class LegCollider : MonoBehaviour
         //ちくわブロックに乗っかった時
         if (col.gameObject.name == "FallCol")
         {
-            _onFallBlock = true;
+            _onFallBlock = false;
         }
 
         if (col.gameObject.layer != 2 && JumpCheck(col.gameObject))
@@ -185,6 +185,11 @@ public class LegCollider : MonoBehaviour
             {
                 _onLandding = true;
             }
+        }
+        //ちくわブロックに乗っかってる時
+        if (col.gameObject.name == "FallCol")
+        {
+            _onFallBlock = true;
         }
     }
 

@@ -635,7 +635,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4812859814696700}
-  - component: {fileID: 61682052648086386}
   - component: {fileID: 114258204311417692}
   - component: {fileID: 114809274357446208}
   - component: {fileID: 50330346737132156}
@@ -644,6 +643,7 @@ GameObject:
   - component: {fileID: 114527772406591790}
   - component: {fileID: 210896242025080826}
   - component: {fileID: 137294695681870720}
+  - component: {fileID: 58855795568813212}
   m_Layer: 9
   m_Name: Pot
   m_TagString: Tubo
@@ -1903,6 +1903,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!58 &58855795568813212
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1630455499227120}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.038875002, y: -0.061436296}
+  serializedVersion: 2
+  m_Radius: 1.1222786
 --- !u!61 &61122476978168078
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -1927,31 +1942,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 9.465387, y: 11.1425705}
-  m_EdgeRadius: 0
---- !u!61 &61682052648086386
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1630455499227120}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.05266452, y: -0.06989002}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.4884742, y: 0.791772}
-    oldSize: {x: 2.92, y: 3.8132687}
-    newSize: {x: 2.92, y: 3.84}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.9756229, y: 1.919786}
   m_EdgeRadius: 0
 --- !u!61 &61739614860551242
 BoxCollider2D:
