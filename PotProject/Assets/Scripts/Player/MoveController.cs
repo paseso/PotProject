@@ -488,6 +488,11 @@ public class MoveController : MonoBehaviour
                 //スイッチを踏む処理
                 if(switchGimmick != null)
                 {
+                    if (direc == Direction.LEFT)
+                        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTIDLE);
+                    else
+                        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTIDLE);
+                    rig.velocity = new Vector2(0, 0);
                     GimmickController gCon = switchGimmick.GetComponent<GimmickController>();
                     gCon.StartSride();
                     return;
