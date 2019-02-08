@@ -650,7 +650,7 @@ public class AnimController : MonoBehaviour {
         switch (se_name)
         {
             case SoundManager.SENAME.SE_FOOTSTEPS:
-                SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_FOOTSTEPS);
+                SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_FOOTSTEPS, 0.2f);
                 break;
             case SoundManager.SENAME.SE_JAMP:
                 SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_JAMP);
