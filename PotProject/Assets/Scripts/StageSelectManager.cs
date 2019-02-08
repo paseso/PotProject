@@ -10,39 +10,21 @@ public class StageSelectManager : MonoBehaviour {
     private GameObject[] buttons;
     [SerializeField]
     private GameObject eventSystem;
-    private int stageSelectNum;
+    private int stageSelectNum = 0;
 
     private StandaloneInputModule[] inputModules;
 
 
 	void Start () {
-        Init();
+        eventSystem.GetComponent<EventSystem>().SetSelectedGameObject(buttons[0]);
+        eventSystem.GetComponent<StandaloneInputModule>().horizontalAxis = "Horizontal_ps4";
+        eventSystem.GetComponent<StandaloneInputModule>().verticalAxis = "Vertical_ps4";
     }
 	
 	void Update () {
 		
 	}
 
-    private void Init()
-    {
-        stageSelectNum = 0;
-        //  ステージセレクト画面の操作を判定
-        inputModules = eventSystem.GetComponents<StandaloneInputModule>();
-        string[] controllerName = Input.GetJoystickNames();
-        //  キーボード
-        if (controllerName.Length == 0 || controllerName[0] == "")
-        {
-            inputModules[0].enabled = true;
-            inputModules[1].enabled = false;
-        }
-        //  コントローラー
-        else if (controllerName[0] != "")
-        {
-            inputModules[0].enabled = false;
-            inputModules[1].enabled = true;
-        }
-    }
-    
     public void TapStageButton(GameObject obj)
     {
         SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SELECT);

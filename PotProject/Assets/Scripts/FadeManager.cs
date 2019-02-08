@@ -85,7 +85,6 @@ public class FadeManager : MonoBehaviour
 
         //シーン切替 .
         SceneManager.LoadScene(sceneNum);
-
         //だんだん明るく .
         time = 0;
         while (time <= interval)
@@ -96,5 +95,7 @@ public class FadeManager : MonoBehaviour
             yield return 0;
         }
         this.isFading = false;
+        gameObject.GetComponent<PadCheck>().CheckInputModule();
+        yield break;
     }
 }

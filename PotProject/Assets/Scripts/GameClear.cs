@@ -9,8 +9,8 @@ public class GameClear : MonoBehaviour {
 
     void Start()
     {
-        selectButton = transform.GetChild(0).GetComponent<Button>();
-        selectButton.onClick.AddListener(ChangeSelect);
+        //selectButton = transform.GetChild(0).GetComponent<Button>();
+        //selectButton.onClick.AddListener(ChangeSelect);
     }
 
     /// <summary>
