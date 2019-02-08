@@ -62,9 +62,6 @@ public class PotController : MonoBehaviour
 
     private GameObject OtotoHead;
 
-    //ツボの画像切り替えに使う
-    private Anima2D.SpriteMeshAnimation PotSprite;
-
     private GameObject BrotherObj;
 
     private float distance = 0f;
@@ -95,7 +92,6 @@ public class PotController : MonoBehaviour
         _potMoving = false;
         pot_status.setPotType = PotStatus.PotType.Normal;
         pot_status.setPotFace = PotStatus.PotFace.Normal;
-        PotSprite = gameObject.GetComponent<Anima2D.SpriteMeshAnimation>();
         setStartPotFaceSprite();
         _movePot = false;
         distance = BrotherObj.transform.position.x - gameObject.transform.position.x;
@@ -251,19 +247,19 @@ public class PotController : MonoBehaviour
         switch (pot_type)
         {
             case PotStatus.PotType.Normal:
-                PotSprite.frame = 0;
+                gameObject.GetComponent<Anima2D.SpriteMeshAnimation>().frame = 0;
                 break;
             case PotStatus.PotType.Fire:
-                PotSprite.frame = 1;
+                gameObject.GetComponent<Anima2D.SpriteMeshAnimation>().frame = 1;
                 break;
             case PotStatus.PotType.Ice:
-                PotSprite.frame = 2;
+                gameObject.GetComponent<Anima2D.SpriteMeshAnimation>().frame = 2;
                 break;
             case PotStatus.PotType.Thunder:
-                PotSprite.frame = 3;
+                gameObject.GetComponent<Anima2D.SpriteMeshAnimation>().frame = 3;
                 break;
             case PotStatus.PotType.Dark:
-                PotSprite.frame = 4;
+                gameObject.GetComponent<Anima2D.SpriteMeshAnimation>().frame = 4;
                 break;
         }
     }

@@ -589,6 +589,7 @@ public class AlchemyUIController : MonoBehaviour
             }
             else
             {
+                Debug.Log("NullCheck");
                 //画像が見当たらなかった時の処理
                 NullCheckImage(i);
             }
@@ -601,7 +602,6 @@ public class AlchemyUIController : MonoBehaviour
     public void setItemboxImage()
     {
         items = player_ctr.getItemList();
-
         if (items.Count < 3)
         {
             for (int j = 2; items.Count <= j; j--)

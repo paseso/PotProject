@@ -642,8 +642,8 @@ GameObject:
   - component: {fileID: 95070713419928944}
   - component: {fileID: 114471461002144150}
   - component: {fileID: 114527772406591790}
-  - component: {fileID: 137128041080205588}
   - component: {fileID: 210896242025080826}
+  - component: {fileID: 137294695681870720}
   m_Layer: 9
   m_Name: Pot
   m_TagString: Tubo
@@ -3372,51 +3372,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.94732153, y: 0.06901723, z: 0}
     m_Extent: {x: 1.2807499, y: 0.54001546, z: 0}
   m_DirtyAABB: 0
---- !u!137 &137128041080205588
-SkinnedMeshRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1630455499227120}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 100
-  serializedVersion: 2
-  m_Quality: 0
-  m_UpdateWhenOffscreen: 0
-  m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 43710105948105888, guid: f7e94366b8f665449a439d369d9766aa, type: 2}
-  m_Bones:
-  - {fileID: 4110122314555834}
-  m_BlendShapeWeights: []
-  m_RootBone: {fileID: 4110122314555834}
-  m_AABB:
-    m_Center: {x: 0.17999887, y: 0.19038725, z: 0}
-    m_Extent: {x: 2.3800004, y: 4.100001, z: 0}
-  m_DirtyAABB: 0
 --- !u!137 &137129220005888356
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -3644,6 +3599,51 @@ SkinnedMeshRenderer:
   m_AABB:
     m_Center: {x: 0.6230786, y: -0.05533997, z: 0}
     m_Extent: {x: 0.55392385, y: 0.30500025, z: 0}
+  m_DirtyAABB: 0
+--- !u!137 &137294695681870720
+SkinnedMeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1630455499227120}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 100
+  serializedVersion: 2
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
+  m_Mesh: {fileID: 43710105948105888, guid: f7e94366b8f665449a439d369d9766aa, type: 2}
+  m_Bones:
+  - {fileID: 4110122314555834}
+  m_BlendShapeWeights: []
+  m_RootBone: {fileID: 4110122314555834}
+  m_AABB:
+    m_Center: {x: 0.19288015, y: 0.5552819, z: 0}
+    m_Extent: {x: 4.787666, y: 7.4513187, z: 0}
   m_DirtyAABB: 0
 --- !u!137 &137379251201473750
 SkinnedMeshRenderer:
