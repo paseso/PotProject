@@ -153,6 +153,7 @@ public class MonsterController : MonoBehaviour
     /// <param name="dir"></param>
     public void KnockBack(MoveController.Direction dir) {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        rb.velocity = Vector2.zero;
         Vector2 knock = new Vector2(knockback.x, knockback.y);
         
         if (dir == MoveController.Direction.LEFT) {
