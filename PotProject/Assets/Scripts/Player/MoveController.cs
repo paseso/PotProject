@@ -488,6 +488,11 @@ public class MoveController : MonoBehaviour
                 //スイッチを踏む処理
                 if(switchGimmick != null)
                 {
+                    if (direc == Direction.LEFT)
+                        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTIDLE);
+                    else
+                        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTIDLE);
+                    rig.velocity = new Vector2(0, 0);
                     GimmickController gCon = switchGimmick.GetComponent<GimmickController>();
                     gCon.StartSride();
                     return;
@@ -673,11 +678,11 @@ public class MoveController : MonoBehaviour
         {//十字右ボタン or キーボードの「X」
             Move(ButtonType.CROSSX_RIGTH);
         }
-        if (Input.GetAxis("CrossY") >= 0.15f || Input.GetKey(KeyCode.Z))
+        if (Input.GetAxis("CrossY") <= -0.15f || Input.GetKey(KeyCode.Z))
         {//十字下ボタン or キーボードの「Z」
             Move(ButtonType.CROSSY_DOWN);
         }
-        else if (Input.GetAxis("CrossY") <= -0.15f || Input.GetKey(KeyCode.V))
+        else if (Input.GetAxis("CrossY") >= 0.15f || Input.GetKey(KeyCode.V))
         {//十字上ボタン or キーボードの「V」
             Move(ButtonType.CROSSY_UP);
         }

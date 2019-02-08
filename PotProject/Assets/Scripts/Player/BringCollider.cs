@@ -64,6 +64,7 @@ public class BringCollider : MonoBehaviour {
         player_ctr.setItemList(target.GetComponent<ItemManager>().getItemStatus());
         GameObject vec = target;
         anim_ctr.setItemtaget = vec;
+        gameObject.transform.parent.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         if(move_ctr.direc == MoveController.Direction.LEFT)
         {
             anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_GETITEM);
