@@ -334,7 +334,7 @@ public class MoveController : MonoBehaviour
                 _onCrossCross = true;
                 if (crossAxisDown.getKeepDown)
                     return;
-
+                //アイテムを捨てる処理
                 if (alchemyUI_ctr.ChooseWindow)
                 {
                     alchemyUI_ctr.ChooseThrow(false);

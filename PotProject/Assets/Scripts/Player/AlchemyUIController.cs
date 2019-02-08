@@ -157,7 +157,7 @@ public class AlchemyUIController : MonoBehaviour
         {
             setMaterialsBox();
         }
-        else if(frameLine == frame_center)
+        else if (frameLine == frame_center)
         {
             ReSetMaterialsBox(nowBox);
         }
@@ -271,7 +271,21 @@ public class AlchemyUIController : MonoBehaviour
     {
         if (_choose)
         {
-            deleteItemBox(getNowBox);
+            if ((frameLine & frame_right) > 0)
+            {
+                player_ctr.deleteItemList(player_ctr.getItemList()[getNowBox]);
+            }
+            else if ((frameLine & frame_center) > 0)
+            {
+                deleteItemBox(getNowBox);
+            }
+            else if ((frameLine & frame_left) > 0)
+            {
+                deleteCreateItemUI(player_ctr.getCreateItemList()[getNowBox]);
+            }
+            setItemboxImage();
+            setCreateItemUI();
+            ReSetMaterialsBox(status.ItemList);
         }
         ChooseObj.SetActive(false);
         _chooseWindow = false;
@@ -323,7 +337,7 @@ public class AlchemyUIController : MonoBehaviour
     {
         nowBox = 0;
         frameLine = 0001;
-        if(Box_item.Length == 2)
+        if (Box_item.Length == 2)
         {
             Box_item = new GameObject[Itembox.Length];
         }
@@ -337,7 +351,7 @@ public class AlchemyUIController : MonoBehaviour
     /// </summary>
     private int BitFrameLine(bool _right)
     {
-        if((frameLine & frame_left) > 0)
+        if ((frameLine & frame_left) > 0)
         {
             if (_right)
             {
@@ -347,7 +361,8 @@ public class AlchemyUIController : MonoBehaviour
             {
                 frameLine = frame_right;
             }
-        }else if((frameLine & frame_center) > 0)
+        }
+        else if ((frameLine & frame_center) > 0)
         {
             if (_right)
             {
@@ -358,7 +373,7 @@ public class AlchemyUIController : MonoBehaviour
                 frameLine = frame_left;
             }
         }
-        else if((frameLine & frame_right) > 0)
+        else if ((frameLine & frame_right) > 0)
         {
             if (_right)
             {
@@ -437,7 +452,7 @@ public class AlchemyUIController : MonoBehaviour
             {
                 BoxItemChange(BitFrameLine(true));
             }
-            else if(move_ctr.OnCrossLeft)
+            else if (move_ctr.OnCrossLeft)
             {
                 BoxItemChange(BitFrameLine(false));
             }
