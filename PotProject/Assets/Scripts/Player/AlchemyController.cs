@@ -666,6 +666,9 @@ public class AlchemyController : MonoBehaviour {
             case CreateItemStatus.Type.Key:
                 item_ctr.OpenKeyDoor();
                 break;
+            case CreateItemStatus.Type.Dast:
+
+                break;
         }
     }
 }
