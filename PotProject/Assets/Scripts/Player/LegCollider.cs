@@ -173,6 +173,7 @@ public class LegCollider : MonoBehaviour
                 move_ctr.InLadderCount++;
                 break;
         }
+        player_ctr.OnBlock = null;
     }
 
     private void OnTriggerStay2D(Collider2D col)
@@ -185,12 +186,6 @@ public class LegCollider : MonoBehaviour
                 _onLandding = true;
             }
         }
-        //if (!col.GetComponent<GimmickInfo>()) { return; }
-        //GimmickInfo info = col.GetComponent<GimmickInfo>();
-        //if (info.type == GimmickInfo.GimmickType.LADDER)
-        //{
-        //    move_ctr.InLadderCount = 1;
-        //}
     }
 
     private void OnTriggerExit2D(Collider2D col)
@@ -215,9 +210,7 @@ public class LegCollider : MonoBehaviour
         {
             _onFallBlock = false;
         }
-        if (col.gameObject.layer == LayerMask.NameToLayer("Block")) {
-            player_ctr.OnBlock = null;
-        }
+        
 
             if (col.GetComponent<GimmickInfo>())
             if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.FIREFIELD && onGroundCount <= 0)
@@ -254,18 +247,5 @@ public class LegCollider : MonoBehaviour
                 }
                 break;
         }
-        //if (info.type == GimmickInfo.GimmickType.LADDER)
-        //{
-        //    move_ctr.ladderDownFlag = false;
-        //    move_ctr.InLadderCount--;
-        //    if (move_ctr.InLadderCount <= 0) {
-        //        move_ctr.InLadderCount = 0;
-        //    }
-        //}
-        //else if (info.type == GimmickInfo.GimmickType.GROWTREE)
-        //{
-        //    //木のギミックから離れた時に弟の場所を元に戻す
-        //    _onLandding = false;
-        //}
     }
 }

@@ -17,6 +17,7 @@ public class ItemController : MonoBehaviour {
     {
         playerController = GetComponent<PlayerController>();
         BrotherObj = FindObjectOfType<MoveController>().gameObject;
+        
     }
 
     /// <summary>
@@ -82,6 +83,14 @@ public class ItemController : MonoBehaviour {
     /// 雲生成
     /// </summary>
     public void CreateCloud() {
-
+        GameObject cloud = Instantiate(Resources.Load<GameObject>("Prefabs/GimmickTiles/FeatherCloudTile"));
+        cloud.transform.SetParent(GameObject.Find(BrotherObj.transform.root.name + "/GimmickObject").transform);
+        var dir = BrotherObj.GetComponent<MoveController>().direc;
+        if(dir == MoveController.Direction.LEFT) {
+            cloud.transform.position = new Vector2(BrotherObj.transform.position.x - cloud.GetComponent<SpriteRenderer>().bounds.size.x, BrotherObj.transform.position.y);
+        } else {
+            cloud.transform.position = new Vector2(BrotherObj.transform.position.x + cloud.GetComponent<SpriteRenderer>().bounds.size.x, BrotherObj.transform.position.y);
+        }
+        playerController.ItemUseFlag = true;
     }
 }

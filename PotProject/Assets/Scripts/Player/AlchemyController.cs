@@ -667,7 +667,7 @@ public class AlchemyController : MonoBehaviour {
                 item_ctr.OpenKeyDoor();
                 break;
             case CreateItemStatus.Type.Dast:
-
+                player_ctr.ItemUseFlag = true;
                 break;
         }
     }
