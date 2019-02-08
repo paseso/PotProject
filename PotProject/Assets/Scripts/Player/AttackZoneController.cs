@@ -47,7 +47,7 @@ public class AttackZoneController : MonoBehaviour {
         }
         else
         {
-            gameObject.transform.localPosition = new Vector2(2.6f, gameObject.transform.localPosition.y);
+            gameObject.transform.localPosition = new Vector2(3.8f, gameObject.transform.localPosition.y);
             dir = MoveController.Direction.RIGHT;
         }
     }

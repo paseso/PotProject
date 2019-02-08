@@ -19,9 +19,8 @@ public struct CreateItemStatus
         SmokeBall,
         Explosive,
         RainCloud,
-        Vajura,
         Lamp,
-        Watter,
+        Water,
         Magnet,
         Boomerang,
         Drill,
@@ -90,6 +89,7 @@ public class AlchemyController : MonoBehaviour {
     private Image GeneratedImg;
     private PlayerController player_ctr;
     private ItemController item_ctr;
+    private AlchemyUIController alchemyUI_ctr;
 
     private Sprite AlphaSprite;
 
@@ -104,6 +104,7 @@ public class AlchemyController : MonoBehaviour {
         GeneratedImg = GameObject.Find("Canvas/Panel/Image").GetComponent<Image>();
         item_ctr = GameObject.Find("Controller").GetComponent<ItemController>();
         AlphaSprite = Resources.Load<Sprite>("Textures/UI/AlphaImage");
+        alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
         ReSetGeneratedImg();
         setCreateItem();
 	}
@@ -143,7 +144,14 @@ public class AlchemyController : MonoBehaviour {
     /// </summary>
     public void ReSetGeneratedImg()
     {
-        GeneratedImg.sprite = AlphaSprite;
+        if(player_ctr.getCreateItemList().Count > 0)
+        {
+            alchemyUI_ctr.setNowAlchemyItem();
+        }
+        else
+        {
+            GeneratedImg.sprite = AlphaSprite;
+        }
     }
 
     /// <summary>
@@ -176,7 +184,7 @@ public class AlchemyController : MonoBehaviour {
             case ItemStatus.Type.CRYSTAL:
                 //水
                 _succece = true;
-                player_ctr.setCreateItemList(CreateItemStatus.Type.Watter);
+                player_ctr.setCreateItemList(CreateItemStatus.Type.Water);
                 break;
             default:
                 //ゴミができる
@@ -341,7 +349,7 @@ public class AlchemyController : MonoBehaviour {
                     case ItemStatus.Type.CLAY_N:
                         //バジュラ（電撃武器）
                         _succece = true;
-                        player_ctr.setCreateItemList(CreateItemStatus.Type.Vajura);
+                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.VAJURA);
                         break;
                     case ItemStatus.Type.LIZARD:
                         //ドリル
@@ -533,7 +541,7 @@ public class AlchemyController : MonoBehaviour {
                     case ItemStatus.Type.VAJURA:
                         //バジュラ（電撃武器）
                         _succece = true;
-                        player_ctr.setCreateItemList(CreateItemStatus.Type.Vajura);
+                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.VAJURA);
                         break;
                     case ItemStatus.Type.LIZARD:
                         //バリア
@@ -654,13 +662,10 @@ public class AlchemyController : MonoBehaviour {
             case CreateItemStatus.Type.Tornado:
 
                 break;
-            case CreateItemStatus.Type.Vajura:
-
-                break;
             case CreateItemStatus.Type.Venom:
 
                 break;
-            case CreateItemStatus.Type.Watter:
+            case CreateItemStatus.Type.Water:
 
                 break;
             case CreateItemStatus.Type.Key:
