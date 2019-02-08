@@ -195,15 +195,9 @@ public class PotController : MonoBehaviour
         //ツボが少し離れた時の処理
         if (distance >= 7f)
         {
-            switch (direction)
-            {
-                case MoveController.Direction.RIGHT:
-                    rig.velocity = new Vector2(10, rig.velocity.y);
-                    break;
-                case MoveController.Direction.LEFT:
-                    rig.velocity = new Vector2(-10, rig.velocity.y);
-                    break;
-            }
+            if (_movePot)
+                return;
+            StartCoroutine(PotWarpAnimation());
         }
     }
 

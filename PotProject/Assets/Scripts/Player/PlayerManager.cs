@@ -67,6 +67,7 @@ public struct PlayerStatus
         DARK,
         AXE,
         TORCH,
+        VAJURA
     }
 
     // 兄がどの状態か
