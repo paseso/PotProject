@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
+
+    public bool rideTreeFlag { get; set; }
 
     private SpriteRenderer sword;
 
@@ -11,7 +14,6 @@ public class PlayerController : MonoBehaviour {
 
     private GameObject[] hearts;
 
-    private GameObject HeartObject;
     private int maxHP;
     private const int maxItemBox = 3;
 
@@ -54,31 +56,46 @@ public class PlayerController : MonoBehaviour {
     // 操作可能か
     private bool isCommandActive = true;
 
-    public bool IsCommandActive {
+    public bool IsCommandActive
+    {
         get { return isCommandActive; }
         set { isCommandActive = value; }
     }
 
     private bool allCommandActive = true;
 
-    public bool AllCommandActive {
+    public bool AllCommandActive
+    {
         get { return allCommandActive; }
         set { allCommandActive = value; }
     }
-    
+
     private bool isMiniMap = false;
 
-    public bool IsMiniMap {
+    public bool IsMiniMap
+    {
         get { return isMiniMap; }
         set { isMiniMap = value; }
     }
 
+    private bool itemUseFlag = false;
+
+    public bool ItemUseFlag
+    {
+        get { return itemUseFlag; }
+        set { itemUseFlag = value; }
+    }
+
     public GameObject OnBlock { get; set; }
+
+    public GameObject OnGimmick { get; set; }
+
+    public bool pickUpFlag { get; set; }
 
     private GameObject lifePoint;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         try
         {
@@ -89,7 +106,6 @@ public class PlayerController : MonoBehaviour {
             BrotherObj = FindObjectOfType<MoveController>().gameObject;
             move_ctr = BrotherObj.GetComponent<MoveController>();
             PotObject = FindObjectOfType<PotController>().gameObject;
-            HeartObject = GameObject.Find("Canvas/Heart");
             createItemBox = new List<CreateItemStatus.Type>();
             anim_ctr = BrotherObj.transform.parent.GetComponent<AnimController>();
             lifePoint = GameObject.FindGameObjectWithTag("LifePoint");
@@ -100,9 +116,14 @@ public class PlayerController : MonoBehaviour {
         }
         StartHeart();
         setStartSwordList();
+        //剣のデバッグ
+        //swordList[1] = PlayerStatus.SWORDTYPE.AXE;
+        //swordList[2] = PlayerStatus.SWORDTYPE.DARK;
+        //swordList[3] = PlayerStatus.SWORDTYPE.VAJURA;
         _itemMax = false;
         alchemyUIFlag = false;
-	}
+
+    }
 
     private void Update()
     {
@@ -147,8 +168,8 @@ public class PlayerController : MonoBehaviour {
     /// <param name="type"></param>
     public void setSwordList(PlayerStatus.SWORDTYPE type)
     {
-        //2番目以降のNORMALタイプのところに錬金した剣をいれる
-        for(int i = 1; i < 4; i++)
+        //0番目以上のNORMALタイプのところに錬金した剣をいれる
+        for (int i = 1; i < 4; i++)
         {
             if (swordList[i] != PlayerStatus.SWORDTYPE.NORMAL)
             {
@@ -195,7 +216,7 @@ public class PlayerController : MonoBehaviour {
     /// <param name="name"></param>
     public void setItemList(ItemStatus.Type Item_Id)
     {
-        if(status.ItemList.Count == maxItemBox)
+        if (status.ItemList.Count == maxItemBox)
         {
             _itemMax = true;
             Debug.Log("アイテムボックスは最大です！");
@@ -242,6 +263,8 @@ public class PlayerController : MonoBehaviour {
         }
 
         createItemBox.Add(type);
+        if (getCreateItemList().Count > 1)
+            return;
         alchemy_ctr.setGeneratedImg(type);
     }
 
@@ -254,6 +277,7 @@ public class PlayerController : MonoBehaviour {
         if (createItemBox.Count <= 0)
             return;
         createItemBox.Remove(type);
+        alchemy_ctr.ReSetGeneratedImg();
     }
 
     /// <summary>
@@ -270,8 +294,8 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     public void deleteCreateItemList(int num)
     {
-        alchemy_ctr.ReSetGeneratedImg();
         createItemBox.RemoveAt(num);
+        alchemy_ctr.ReSetGeneratedImg();
     }
 
     /// <summary>
@@ -280,10 +304,13 @@ public class PlayerController : MonoBehaviour {
     /// <param name="num"></param>
     public void UseAlchemyItem(int num)
     {
-        alchemy_ctr.AlchemyItem(getCreateItemList()[alchemyUI_ctr.getNowAlchemyItem]);
+        alchemy_ctr.AlchemyItem(getCreateItemList()[num]);
+        if (!ItemUseFlag)
+            return;
         deleteCreateItemList(num);
         alchemyUI_ctr.setNowAlchemyItem();
         alchemyUI_ctr.setCreateItemUI();
+        itemUseFlag = false;
     }
 
     /// <summary>
@@ -291,7 +318,7 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     private void setSwordSpriteList()
     {
-        if(sword == null)
+        if (sword == null)
             sword = FindObjectOfType<AnimController>().transform.transform.Find("Sword").GetComponent<SpriteRenderer>();
 
         swordSpriteList = new List<Sprite>();
@@ -302,7 +329,14 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    int count = 0;
+    /// <summary>
+    /// 剣を変更
+    /// </summary>
+    public void SwordNumList(int num)
+    {
+        SwordTypeChange(GetSwordList[num]);
+        pManager.SetSwordType = GetSwordList[num];
+    }
 
     /// <summary>
     /// 剣の属性を変える処理
@@ -311,10 +345,10 @@ public class PlayerController : MonoBehaviour {
     public void SwordTypeChange(PlayerStatus.SWORDTYPE s_type)
     {
         if (swordSpriteList.Count == 0)
+        {
             setSwordSpriteList();
-        count++;
-        int s_num = (int)s_type;
-        sword.sprite = swordSpriteList[s_num];
+        }
+        sword.sprite = swordSpriteList[(int)s_type];
         switch (s_type)
         {
             case PlayerStatus.SWORDTYPE.NORMAL:
@@ -323,9 +357,9 @@ public class PlayerController : MonoBehaviour {
             case PlayerStatus.SWORDTYPE.DARK:
                 status.PlayerAttack = 1;
                 break;
-            case PlayerStatus.SWORDTYPE.SPEAR:
             case PlayerStatus.SWORDTYPE.AXE:
             case PlayerStatus.SWORDTYPE.TORCH:
+            case PlayerStatus.SWORDTYPE.VAJURA:
                 status.PlayerAttack = 2;
                 break;
         }
@@ -340,11 +374,11 @@ public class PlayerController : MonoBehaviour {
         if (item == null)
             return;
 
-        if(item.Count == 1)
+        if (item.Count == 1)
         {
             alchemy_ctr.MadeItem(item[0]);
         }
-        else if(item.Count == 2)
+        else if (item.Count == 2)
         {
             alchemy_ctr.MadeItem(item[0], item[1]);
         }
@@ -361,11 +395,13 @@ public class PlayerController : MonoBehaviour {
             alchemyUI_ctr.ItemFrameReSet();
             alchemyUI_ctr.setCreateItemUI();
             alchemyUI_ctr.ReSetMaterialsBox(status.ItemList);
+            alchemyUI_ctr.SelectItemText();
             Pot_UI.DOLocalMoveX(0, 0.3f).SetEase(Ease.Linear);
             alchemyUIFlag = true;
         }
         else
         {
+            alchemyUI_ctr.CloseTextActive();
             Pot_UI.DOLocalMoveX(1920, 0.3f).SetEase(Ease.Linear);
             alchemyUIFlag = false;
         }
@@ -377,19 +413,13 @@ public class PlayerController : MonoBehaviour {
     /// <param name="point">上昇値</param>
     public void HPUp(int point)
     {
-        if (status.PlayerHP + point > status.GetMaxHP) {
-            status.PlayerHP = status.GetMaxHP;
-            for (int i = 0; i < status.PlayerHP; i++)
-            {
-                hearts[i].SetActive(true);
-            }
-            return;
-        }
+        if (status.PlayerHP + point > status.GetMaxHP) { return; }
         status.PlayerHP += point;
-        for(int i = 0; i < status.PlayerHP; i++)
+        for (int i = 0; i < status.PlayerHP; i++)
         {
             hearts[i].SetActive(true);
         }
+        itemUseFlag = true;
     }
 
     /// <summary>
@@ -407,9 +437,10 @@ public class PlayerController : MonoBehaviour {
         //  HPの減算
         status.PlayerHP -= point;
         //  ゲージ部分のハートにエフェクトを生成
-        EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_HeartBurst, hearts[status.PlayerHP].transform.position + new Vector3(0,-0.5f,0), 0.05f, hearts[0].transform.parent.gameObject, true);
+        EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_HeartBurst, hearts[status.PlayerHP].transform.position + new Vector3(0, -0.5f, 0), 0.05f, hearts[0].transform.parent.gameObject, true);
         // ダメージエフェクトの生成
         EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Damage, BrotherObj.transform.position, 5, BrotherObj, true);
+        //PotObject.GetComponent<PotController>().ChangePotFace(PotStatus.PotFace.Sad);
         //ダメージを受けるアニメーション
         if (move_ctr.direc == MoveController.Direction.LEFT)
         {
@@ -420,7 +451,7 @@ public class PlayerController : MonoBehaviour {
             anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_SUFFERDAMAGE);
         }
 
-        for(int i = status.GetMaxHP - 1; i > status.PlayerHP - 1; i--)
+        for (int i = status.GetMaxHP - 1; i > status.PlayerHP - 1; i--)
         {
             hearts[i].SetActive(false);
         }
@@ -430,7 +461,8 @@ public class PlayerController : MonoBehaviour {
     /// 攻撃力変更
     /// </summary>
     /// <param name="point">可変値(下がるなら「-」をつける)</param>
-    public void ATKChange(int point) {
+    public void ATKChange(int point)
+    {
         status.PlayerAttack += point;
     }
 
@@ -459,7 +491,7 @@ public class PlayerController : MonoBehaviour {
         {
             status.gimmick_state = PlayerStatus.GimmickState.NORMAL;
             PotObject.layer = LayerMask.NameToLayer("Pot");
-            
+
             var children = BrotherObj.transform.parent.transform;
             foreach (Transform child in children)
             {

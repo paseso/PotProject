@@ -50,9 +50,10 @@ public class SoundManager : MonoBehaviour {
         SE_DEMONKINGCLASH,
         SE_DEMONFLYING,
         SE_THUNDER,
+        SE_JAMP,
         SE_ALCHEMYMISS,
         SE_ALCHEMYSUCCESS,
-        SE_STONEDOOR
+        SE_STONEDOOR,
     };
 
     [SerializeField]
@@ -79,7 +80,6 @@ public class SoundManager : MonoBehaviour {
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        PlayBgm(0);
     }
     public void PlayBgm(int BGM_num)
     {

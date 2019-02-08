@@ -10,13 +10,21 @@ public class CameraController : MonoBehaviour {
     /// </summary>
     public GameObject target { get; set; }
 
-	// Use this for initialization
-	void Start () {
+    public Transform map { get; set; }
+    private Vector2 pos;
+
+    private Vector2 minPos;
+    private Vector2 maxPos;
+
+    // Use this for initialization
+    void Start () {
         target = FindObjectOfType<MoveController>().gameObject;
-	}
+        transform.position = new Vector3(target.transform.position.x, target.transform.position.y + 3.5f, -100);
+    }
 	
 	// Update is called once per frame
 	void Update () {
+        map = target.transform.root.gameObject.GetComponentInChildren<MapChange>().gameObject.transform;
         CameraMove(target);
 	}
 
@@ -25,7 +33,49 @@ public class CameraController : MonoBehaviour {
     /// </summary>
     private void CameraMove(GameObject obj)
     {
-        gameObject.transform.position = new Vector3(obj.transform.position.x, obj.transform.position.y + 2.13f, -100);
+        if (obj.transform.position.x < Camera.main.transform.position.x || obj.transform.position.x > Camera.main.transform.position.x) 
+        {
+            pos.x = obj.transform.position.x;
+        }
+
+        if (obj.transform.position.y < Camera.main.transform.position.y || obj.transform.position.y > Camera.main.transform.position.y)
+        {
+            pos.y = obj.transform.position.y;
+        }
+
+        if (obj.transform.position.x > map.transform.position.x + (map.GetComponent<BoxCollider2D>().size.x * 0.7f))
+        {
+            pos.x = map.transform.position.x + (map.GetComponent<BoxCollider2D>().size.x * 0.7f);
+        }
+        if (obj.transform.position.x < map.transform.position.x - (map.GetComponent<BoxCollider2D>().size.x * 0.7f))
+        {
+            pos.x = map.transform.position.x - (map.GetComponent<BoxCollider2D>().size.x * 0.7f);
+        }
+        if (obj.transform.position.y > map.transform.position.y + (map.GetComponent<BoxCollider2D>().size.y) + 2f)
+        {
+            pos.y = map.transform.position.y + (map.GetComponent<BoxCollider2D>().size.y) + 2f;
+        }
+        if (obj.transform.position.y < map.transform.position.y - (map.GetComponent<BoxCollider2D>().size.y) - 2f)
+        {
+            pos.y = map.transform.position.y - (map.GetComponent<BoxCollider2D>().size.y) - 2f;
+        }
+
+        gameObject.transform.position = new Vector3(pos.x,pos.y,-100);
+        //gameObject.transform.position = new Vector3(obj.transform.position.x, obj.transform.position.y + 3.5f, -100);
+        
+
+        /*
+         画面中心より右(左)に来たらx座標追従
+         画面中心より上？に来たらy座標追従
+         今いるマップのカメラがいける最小最大座標をGlobalで取得(x,y)←どっかに保存したい
+         その座標まで来たらカメラのx(y)座標を固定
+         マップが切り替わったらその都度座標更新
+         はしごで下に降りるときは？？(仕様確認)
+         */
+
+
+
+
         //if (gameObject.transform.position.x < 0)
         //{
         //    gameObject.transform.position = new Vector3(0, AniObject.transform.position.y + 2.13f, -10);

@@ -27,7 +27,8 @@ public class GimmickController :MonoBehaviour {
         set { onPlayerFlag = value; }
     }
     // ------------------------------------------
-
+    private int inFireCount = 0;
+    
     // マップの位置
     private Vector2 mapPos;
 
@@ -51,9 +52,9 @@ public class GimmickController :MonoBehaviour {
 
         mInfo = transform.root.GetComponent<MapInfo>();
         gInfo = GetComponent<GimmickInfo>();
-        if (gInfo.type == GimmickInfo.GimmickType.WATER) {
-            sController.Waters.Add(gameObject);
-        }
+        //if (gInfo.type == GimmickInfo.GimmickType.WATER) {
+        //    sController.Waters.Add(gameObject);
+        //}
         if (FindObjectOfType<BossController>())
         {
             bossCon = FindObjectOfType<BossController>();
@@ -123,8 +124,10 @@ public class GimmickController :MonoBehaviour {
             case GimmickInfo.GimmickType.DOWN:
             case GimmickInfo.GimmickType.LEFT:
             case GimmickInfo.GimmickType.RIGHT:
-                Debug.Log("call");
-                onPlayerFlag = true;
+                if (col.gameObject.GetComponent<LegCollider>())
+                {
+                    onPlayerFlag = true;
+                }
                 break;
             case GimmickInfo.GimmickType.MAPCHANGE:
                 col.transform.parent.transform.parent.transform.SetParent(transform.root.gameObject.transform);
@@ -132,9 +135,19 @@ public class GimmickController :MonoBehaviour {
                 break;
             case GimmickInfo.GimmickType.FIREFIELD:
                 if (!col.GetComponent<MoveController>()) { return; }
-                bossCon.IsMagicAttack = true;
+                var bossMShoot = bossCon.gameObject.transform.GetChild(0).GetComponent<MagicShoot>();
+                bossMShoot.playerPos = col.transform.position;
+                bossMShoot.ShootFlag = true;
                 break;
-            
+            case GimmickInfo.GimmickType.THUNDERFIELD:
+                if (!col.GetComponent<MoveController>()) { return; }
+                if(!GameObject.Find(transform.root.name + "/OtherObject/Lion(Clone)")) { return; }
+                GameObject mObj = GameObject.Find(transform.root.name + "/OtherObject/Lion(Clone)");
+                MagicShoot magic = mObj.transform.GetChild(0).GetComponent<MagicShoot>();
+                magic.playerPos = col.transform.position;
+                magic.ShootFlag = true;
+                break;
+
             default:
                 break;
         }
@@ -151,12 +164,24 @@ public class GimmickController :MonoBehaviour {
             case GimmickInfo.GimmickType.DOWN:
             case GimmickInfo.GimmickType.LEFT:
             case GimmickInfo.GimmickType.RIGHT:
-                Debug.Log("call");
-                onPlayerFlag = false;
+                if (col.gameObject.GetComponent<LegCollider>())
+                {
+                    onPlayerFlag = false;
+                }
                 break;
             case GimmickInfo.GimmickType.FIREFIELD:
                 if (!col.GetComponent<MoveController>()) { return; }
-                bossCon.IsMagicAttack = false;
+                var bossMShoot = bossCon.gameObject.transform.GetChild(0).GetComponent<MagicShoot>();
+                bossMShoot.playerPos = col.transform.position;
+                bossMShoot.ShootFlag = false;
+                break;
+            case GimmickInfo.GimmickType.THUNDERFIELD:
+                if (!col.GetComponent<MoveController>()) { return; }
+                if (GameObject.Find(transform.root.name + "/OtherObject/Lion(Clone)")) {
+                    var mObj = GameObject.Find(transform.root.name + "/OtherObject/Lion(Clone)");
+                    var magic = mObj.transform.GetChild(0).GetComponent<MagicShoot>();
+                    magic.ShootFlag = false;
+                }
                 break;
             default:
                 break;
@@ -175,22 +200,13 @@ public class GimmickController :MonoBehaviour {
     public IEnumerator SwitchDoorStep(GameObject obj) {
         transform.parent.transform.parent.DOLocalMoveY(transform.parent.transform.parent.localPosition.y - 0.25f, 1f);
         yield return new WaitForSeconds(1.5f);
-        obj.transform.DOScaleY(0f, 2.0f).SetEase(Ease.Linear);
-        StartCoroutine(DoorStep(obj));
+        DoorStep(obj);
     }
 
-    public IEnumerator DoorStep(GameObject obj) {
+    public void DoorStep(GameObject obj) {
         bool flag = true;
-        obj.transform.DOScaleY(0f, 2.0f).SetEase(Ease.Linear);
-        while (flag) {
-            obj.transform.localPosition = new Vector2(obj.transform.localPosition.x + 0.05f, obj.transform.localPosition.y);
-            yield return new WaitForSeconds(0.05f);
-            obj.transform.localPosition = new Vector2(obj.transform.localPosition.x - 0.05f, obj.transform.localPosition.y);
-            yield return new WaitForSeconds(0.05f);
-            if(obj.transform.localScale.y <= 0) {
-                flag = false;
-            }
-        }
+        obj.GetComponent<OpenDoor>().Open();
+        SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_STONEDOOR);
     }
 
     public void IsWater() {
@@ -198,10 +214,6 @@ public class GimmickController :MonoBehaviour {
         foreach(var i in waters) {
             i.gameObject.SetActive(true);
         }
-    }
-
-    public void BossSpring(GameObject obj) {
-
     }
 
     /// <summary>
@@ -252,9 +264,15 @@ public class GimmickController :MonoBehaviour {
     /// </summary>
     public void UnlockKeyDoor()
     {
-        StartCoroutine(DoorStep(gameObject));
+        //DoorStep(gameObject);
+        GetComponent<OpenDoor>().OpenKey();
+        SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_STONEDOOR);
     }
 
+    /// <summary>
+    /// ボス吹っ飛び
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator IsSpring()
     {
         GetComponent<BoxCollider2D>().enabled = false;   
@@ -266,4 +284,28 @@ public class GimmickController :MonoBehaviour {
         GameObject player = FindObjectOfType<MoveController>().gameObject;
         bossCon.Flying(player);
     }
+
+    /// <summary>
+    /// 水出し
+    /// </summary>
+    public void ActiveWater(GameObject obj) {
+        StartCoroutine(ActiveWaterCoroutine(obj));
+    }
+    
+    IEnumerator ActiveWaterCoroutine(GameObject obj) {
+        var waters = pController.gameObject.GetComponent<StageController>().Waters;
+        transform.parent.GetChild(1).GetComponent<SpriteRenderer>().DOFade(1f, 1f).SetEase(Ease.Linear).OnComplete(() => {
+            transform.parent.GetChild(0).GetComponent<SpriteRenderer>().DOFade(0f, 0f).SetEase(Ease.Linear);
+        });
+        foreach (var i in waters) {
+            i.SetActive(true);
+        }
+        yield return new WaitForSeconds(3f);
+        transform.parent.GetChild(0).GetComponent<SpriteRenderer>().DOFade(1f, 0f).SetEase(Ease.Linear).OnComplete(() => {
+            transform.parent.GetChild(1).GetComponent<SpriteRenderer>().DOFade(0f, 1f).SetEase(Ease.Linear);
+        });
+        
+        yield return null;
+    }
+    
 }

@@ -5,7 +5,8 @@ using DG.Tweening;
 
 public class FallBlock : MonoBehaviour {
     private string blockPrefab = ("Prefabs/GimmickTiles/FallBlockPrefab");
-    private enum fallState {
+    //[HideInInspector]
+    public enum fallState {
         normal,
         reach,
         fall
@@ -20,13 +21,19 @@ public class FallBlock : MonoBehaviour {
 
     private float timer;
     private bool fallFlag = false;
+    private bool randingFlag = false;
 
     public float SetTime {
         set { timer = value; }
     }
 
-    public bool SetFallFlag {
-        set { fallFlag = value; }
+    public fallState State {
+        get { return state; }
+        set { state = value; }
+    }
+
+    public bool SetRandingFlag {
+        set { randingFlag = value; }
     }
 
     private bool shakeFlag = false;
@@ -47,11 +54,11 @@ public class FallBlock : MonoBehaviour {
             createTime = fallTime * 2;
         }
 
-        StartCoroutine(Floating());
+        //StartCoroutine(Floating());
     }
 
     void Update() {
-        if (fallFlag || state == fallState.fall) {
+        if (randingFlag || state == fallState.fall) {
             timer += Time.deltaTime;
 
             if (timer > fallTime / 2 && state == fallState.normal)
@@ -76,15 +83,15 @@ public class FallBlock : MonoBehaviour {
         if (timer > createTime && state == fallState.fall)
         {
             timer = 0;
-            //GameObject fallBlock = Instantiate(Resources.Load<GameObject>(blockPrefab));
-            //fallBlock.transform.SetParent(transform.root.transform);
-            //fallBlock.transform.localPosition = defaultPos;
+            GameObject fallBlock = Instantiate(Resources.Load<GameObject>(blockPrefab));
+            fallBlock.transform.SetParent(transform.root.transform);
+            fallBlock.transform.localPosition = defaultPos;
             Destroy(gameObject);
         }
     }
 
     IEnumerator Shake() {
-        while (fallFlag) {
+        while (state != fallState.fall && randingFlag) {
             transform.localPosition = new Vector2(transform.localPosition.x + 0.05f, transform.localPosition.y);
             yield return new WaitForSeconds(0.05f);
             transform.localPosition = new Vector2(transform.localPosition.x - 0.05f, transform.localPosition.y);
@@ -92,7 +99,7 @@ public class FallBlock : MonoBehaviour {
         }
     }
 
-    IEnumerator Floating()
+    public IEnumerator Floating()
     {
         while (!fallFlag)
         {

@@ -11,16 +11,21 @@ public class DropItemTimer : MonoBehaviour {
     float time = 0;
     bool reachFlag = false;
     float duration = 0.3f;
+    private PlayerController pCon;
 
-	// Use this for initialization
-	void Update () {
+    void Start() {
+        pCon = GameObject.Find("Controller").GetComponent<PlayerController>();
+    }
+
+    // Use this for initialization
+    void Update () {
         time += Time.deltaTime;
         if(time > DestroyTime * 0.8f && !reachFlag)
         {
             reachFlag = true;
             StartCoroutine(Flashing());
         }
-        if(time > DestroyTime)
+        if(time > DestroyTime && !pCon.pickUpFlag)
         {
             Destroy(transform.parent.gameObject);
         }

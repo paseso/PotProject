@@ -34,10 +34,8 @@ public class MapEditor : EditorWindow {
     {
         NONE = 0,
         NORMAL,
-        FIRE,
-        WATER,
+        ICE,
         THUNDER,
-        DARK,
         EMPTY1,
         EMPTY2
     };
@@ -79,12 +77,6 @@ public class MapEditor : EditorWindow {
 
     private void OnGUI()
     {
-        //  グリッド以外のフィールドの表示
-        //EditorGUILayout.BeginHorizontal();
-        //GUILayout.Label("グリッドの色", GUILayout.Width(150));
-        //gridColor = EditorGUILayout.ColorField(gridColor);
-        //EditorGUILayout.EndHorizontal();
-
         GUILayout.BeginHorizontal();
         //  マップデータを書き出し
         if (GUILayout.Button("ファイル出力")) { ExportMapData(); }
@@ -98,45 +90,13 @@ public class MapEditor : EditorWindow {
         gridRect = CreateGrid();
         DrawBackGround();
         //  グリッドの描画
-        for (int y = 0; y < gridNum; y++)
-        {
-            for (int x = 0; x < gridNum; x++)
-            {
-                DrawGrig(gridRect[y, x]);
-            }
-        }
+        DrawGridAll();
 
         // クリックされた場所の配列にデータを追加
         SetMapDate();
 
-        // 画像を描画する
-        for (int y = 0; y < gridNum; y++)
-        {
-            for (int x = 0; x < gridNum; x++)
-            {
-                switch (toolberInt)
-                {
-                    case 0:
-                        //  ノーマルタイルだけ表示
-                        if (mapData[y, x] != 0) { GUI.DrawTexture(gridRect[y, x], tiles[mapData[y, x]].TileImage); }
-                        break;
-                    case 1:
-                        //  ノーマルタイルとギミックタイルを表示
-                        //  GUI.DrawTextureではアルファ値がいじれなかったので、こちらはGraphics.DrawTextureを使用
-                        if (mapData[y, x] != 0) { Graphics.DrawTexture(gridRect[y, x], tiles[mapData[y, x]].TileImage, new Rect(0, 0, 1, 1), 0, 0, 0, 0, new Color(0.5f, 0.5f, 0.5f, 0.25f)); }
-                        if (gimmickData[y, x] != 0) { GUI.DrawTexture(gridRect[y, x], gimmicks[gimmickData[y, x]].GimmickImage); }
-                        break;
-                    case 2:
-                        //  ノーマルタイルとポジションタイルを表示
-                        if (mapData[y, x] != 0) { Graphics.DrawTexture(gridRect[y, x], tiles[mapData[y, x]].TileImage, new Rect(0, 0, 1, 1), 0, 0, 0, 0, new Color(0.5f, 0.5f, 0.5f, 0.25f)); }
-                        if (enemyData[y, x] != 0) { Graphics.DrawTexture(gridRect[y, x], enemies[enemyData[y, x]].EnemyImage, new Rect(0, 0, 1, 1), 0, 0, 0, 0, new Color(0.5f, 0.5f, 0.5f, 0.25f)); }                        
-                        break;
-                    default:
-                        Debug.Log("ツールバーの値が不正です");
-                        break;
-                }
-            }
-        }
+        // グリッドに画像を描画する
+        DrawTileTextures();
         //  グリッド分の空白を挿入
         GUILayout.Space(280);
         //  背景の属性設定
@@ -239,6 +199,13 @@ public class MapEditor : EditorWindow {
             }
             //  値の代入
             //  背景の情報の代入
+            if (backGround == BackGround.NONE)
+            {
+                #if UNITY_EDITOR
+                EditorUtility.DisplayDialog("Error", "背景が設定されていません", "OK");
+                #endif
+                return;
+            }
             tmp.backGroundNum = (int)backGround;
             //  タイルの情報の代入
             for (int i = 0; i < tmp.mapDate.Length; i++)
@@ -340,20 +307,32 @@ public class MapEditor : EditorWindow {
             case BackGround.NORMAL:
                 GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[0].texture);
                 break;
-            case BackGround.FIRE:
+            case BackGround.ICE:
                 GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[1].texture);
                 break;
-            case BackGround.WATER:
+            case BackGround.THUNDER:
                 GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[2].texture);
                 break;
-            case BackGround.THUNDER:
-                GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[0].texture);
+            case BackGround.EMPTY1:
+                GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[3].texture);
                 break;
-            case BackGround.DARK:
-                GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[0].texture);
+            case BackGround.EMPTY2:
+                GUI.DrawTexture(new Rect(new Vector2(firstRect.x, firstRect.y), new Vector2(lastRect.xMax - firstRect.x, lastRect.yMax - firstRect.y)), bgImages[4].texture);
                 break;
             default:
                 break;
+        }
+    }
+
+    //  全てのマス目のグリッドの表示
+    private void DrawGridAll()
+    {
+        for (int y = 0; y < gridNum; y++)
+        {
+            for (int x = 0; x < gridNum; x++)
+            {
+                DrawGrig(gridRect[y, x]);
+            }
         }
     }
 
@@ -381,6 +360,37 @@ public class MapEditor : EditorWindow {
         Handles.DrawLine(
             new Vector2(_rect.position.x + _rect.size.x, _rect.position.y),
             new Vector2(_rect.position.x + _rect.size.x, _rect.position.y + _rect.size.y));
+    }
+
+    private void DrawTileTextures()
+    {
+        for (int y = 0; y < gridNum; y++)
+        {
+            for (int x = 0; x < gridNum; x++)
+            {
+                switch (toolberInt)
+                {
+                    case 0:
+                        //  ノーマルタイルだけ表示
+                        if (mapData[y, x] != 0) { GUI.DrawTexture(gridRect[y, x], tiles[mapData[y, x]].TileImage); }
+                        break;
+                    case 1:
+                        //  ノーマルタイルとギミックタイルを表示
+                        //  GUI.DrawTextureではアルファ値がいじれなかったので、こちらはGraphics.DrawTextureを使用
+                        if (mapData[y, x] != 0) { Graphics.DrawTexture(gridRect[y, x], tiles[mapData[y, x]].TileImage, new Rect(0, 0, 1, 1), 0, 0, 0, 0, new Color(0.5f, 0.5f, 0.5f, 0.25f)); }
+                        if (gimmickData[y, x] != 0) { GUI.DrawTexture(gridRect[y, x], gimmicks[gimmickData[y, x]].GimmickImage); }
+                        break;
+                    case 2:
+                        //  ノーマルタイルとポジションタイルを表示
+                        if (mapData[y, x] != 0) { Graphics.DrawTexture(gridRect[y, x], tiles[mapData[y, x]].TileImage, new Rect(0, 0, 1, 1), 0, 0, 0, 0, new Color(0.5f, 0.5f, 0.5f, 0.25f)); }
+                        if (enemyData[y, x] != 0) { Graphics.DrawTexture(gridRect[y, x], enemies[enemyData[y, x]].EnemyImage, new Rect(0, 0, 1, 1), 0, 0, 0, 0, new Color(0.5f, 0.5f, 0.5f, 0.25f)); }
+                        break;
+                    default:
+                        Debug.Log("ツールバーの値が不正です");
+                        break;
+                }
+            }
+        }
     }
 
     private void DrawTileButtons()

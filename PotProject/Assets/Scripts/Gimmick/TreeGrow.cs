@@ -13,8 +13,9 @@ public class TreeGrow : MonoBehaviour {
 
 	public IEnumerator IsGrow()
     {
+        SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_GROWTREE);
         Vector2 defaultScale = transform.localScale;
-        transform.DOScaleY(4f, growTime).SetEase(Ease.Linear);
+        transform.DOScaleY(6f, growTime).SetEase(Ease.Linear);
         yield return new WaitForSeconds(growTime + 10);
         transform.DOScaleY(defaultScale.y, 10f).SetEase(Ease.Linear);
         yield return null;

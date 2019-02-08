@@ -21,7 +21,7 @@ public class MoveController : MonoBehaviour
 
     private Rigidbody2D rig;
     //はしご中かどうか
-    private bool _laddernow = false;
+    public bool _laddernow { get; set; }
 
     // はしご内にいるカウント
     public int InLadderCount { get; set; }
@@ -41,7 +41,15 @@ public class MoveController : MonoBehaviour
     [HideInInspector]
     public bool _hitmonster = false;
 
+    public enum PlayerState {
+        Action,
+        Pause,
+        MiniMap,
+        MoveMap,
+        Clear,
+    }
 
+    public PlayerState playerState;
 
     //-------アクションボタンを押してるかどうか----------
     private bool _onCrossCross = false;
@@ -66,12 +74,9 @@ public class MoveController : MonoBehaviour
     public GameObject target;
     private List<Sprite> BrotherSprites;
     private GameObject PotObject;
-    //横に動いた時の値
-    private float sidemove = 0f;
 
     private PlayerController player_ctr;
     private BringCollider bringctr;
-    private AttackZoneController atc_ctr;
     private AlchemyUIController alchemyUI_ctr;
     private AnimController anim_ctr;
     private PlayerManager pManager;
@@ -189,13 +194,10 @@ public class MoveController : MonoBehaviour
         CIRCLE,
         SQUARE,
         TRIANGLE,
-        L1,
         R1,
         L2,
         R2,
         OPTION,
-        PSBTN,
-        PSPAD,
         CROSSX_RIGTH,
         CROSSX_LEFT,
         CROSSY_UP,
@@ -239,7 +241,6 @@ public class MoveController : MonoBehaviour
         rig = gameObject.transform.parent.GetComponent<Rigidbody2D>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         bringctr = gameObject.transform.parent.GetChild(0).GetComponent<BringCollider>();
-        atc_ctr = gameObject.transform.parent.GetComponentInChildren<AttackZoneController>();
         alchemyUI_ctr = GameObject.Find("Canvas/Alchemy_UI").GetComponent<AlchemyUIController>();
         miniMap_ctr = GameObject.Find("Canvas/MiniMap").GetComponent<MiniMapController>();
         anim_ctr = gameObject.transform.parent.GetComponent<AnimController>();
@@ -333,7 +334,7 @@ public class MoveController : MonoBehaviour
                 _onCrossCross = true;
                 if (crossAxisDown.getKeepDown)
                     return;
-
+                //アイテムを捨てる処理
                 if (alchemyUI_ctr.ChooseWindow)
                 {
                     alchemyUI_ctr.ChooseThrow(false);
@@ -349,23 +350,24 @@ public class MoveController : MonoBehaviour
 
                 if (player_ctr.GetAlchemyUIFlag) { return; }
 
+                //ジャンプの方向別アニメーション
                 if (direc == Direction.RIGHT)
-                {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTJUMP);
-                }
                 else
-                {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTJUMP);
-                }
 
-                rig.velocity = new Vector2(sidemove, 1f * speed);
-
+                rig.velocity = new Vector2(5, 1f * speed);
+                //弟のジャンプ処理
+                PotObject.GetComponent<PotController>().JumpPot();
                 _jumping = true;
                 break;
 
             case ButtonType.LEFTJOYSTICK_LEFT:
                 if (direc != Direction.LEFT && Jumping)
                     return;
+                else if (direc == Direction.LEFT && Jumping) { }
+                //右ジョイスティックとジャンプ同時押し
+
                 direc = Direction.LEFT;
                 if (!_ActiveRightLeft)
                     return;
@@ -376,28 +378,33 @@ public class MoveController : MonoBehaviour
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_WALK);
                 }
-               
-                sidemove = -5f;
-                rig.velocity = new Vector2(-5f, rig.velocity.y);
+                if (CheckMoveable())
+                    rig.velocity = new Vector2(-5f, rig.velocity.y);
+                //弟の移動処理
+                PotObject.GetComponent<PotController>().LeftMove();
                 break;
 
             case ButtonType.LEFTJOYSTICK_RIGHT:
                 if (direc != Direction.RIGHT && Jumping)
                     return;
+                else if (direc == Direction.RIGHT && Jumping) { }
+                //右ジョイスティックとジャンプ同時押し
+
                 direc = Direction.RIGHT;
 
                 if (!_ActiveRightLeft)
                     return;
-
                 if (player_ctr.GetAlchemyUIFlag) { return; }
 
                 if (leg_col.isLanding && !Jumping)
                 {
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_WALK);
                 }
-                
-                sidemove = 5f;
-                rig.velocity = new Vector2(5f, rig.velocity.y);
+
+                if (CheckMoveable())
+                    rig.velocity = new Vector2(5f, rig.velocity.y);
+                //弟の移動処理
+                PotObject.GetComponent<PotController>().RightMove();
                 break;
 
             case ButtonType.LEFTJOYSTICK_UP:
@@ -423,45 +430,45 @@ public class MoveController : MonoBehaviour
                     Ladder(ladderSpeed, -1);
                     anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LADDER_UP);
                 }
-
                 break;
 
             case ButtonType.RIGHTJOYSTICK_LEFT:
+                //錬金UIが閉じてたらreturn
                 if (!player_ctr.GetAlchemyUIFlag)
                     return;
-
                 _onRJoystickLeft = true;
                 break;
 
             case ButtonType.RIGHTJOYSTICK_RIGHT:
+                //錬金UIが閉じてたらreturn
                 if (!player_ctr.GetAlchemyUIFlag)
                     return;
-
                 _onRJoystickRight = true;
                 break;
 
             case ButtonType.RIGHTJOYSTICK_UP:
+                //錬金UIが閉じてたらreturn
                 if (!player_ctr.GetAlchemyUIFlag)
                     return;
-
                 _onRJoystickUp = true;
                 break;
 
             case ButtonType.RIGHTJOYSTICK_DOWN:
+                //錬金UIが閉じてたらreturn
                 if (!player_ctr.GetAlchemyUIFlag)
                     return;
-
                 _onRJoystickDown = true;
                 break;
 
             case ButtonType.CIRCLE:
                 _onCircle = true;
+                //錬金UI中の捨てるかどうかのウィンドウが出ている時に〇を押した時の処理
                 if (alchemyUI_ctr.ChooseWindow)
                 {
                     alchemyUI_ctr.ChooseThrow(true);
                     return;
                 }
-
+                //錬金UIが出ている時に〇を押した時の処理
                 if (player_ctr.GetAlchemyUIFlag)
                 {
                     alchemyUI_ctr.PickItem();
@@ -478,13 +485,21 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.SQUARE:
                 _onSquare = true;
+                //スイッチを踏む処理
                 if(switchGimmick != null)
                 {
+                    if (direc == Direction.LEFT)
+                        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTIDLE);
+                    else
+                        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTIDLE);
+                    rig.velocity = new Vector2(0, 0);
                     GimmickController gCon = switchGimmick.GetComponent<GimmickController>();
                     gCon.StartSride();
                     return;
                 }
+                //アイテムを拾う処理
                 bringctr.SquereButton();
+                player_ctr.pickUpFlag = true;
                 target = null;
                 break;
 
@@ -495,23 +510,20 @@ public class MoveController : MonoBehaviour
                 player_ctr.UseAlchemyItem(alchemyUI_ctr.getNowAlchemyItem);
                 break;
 
-            case ButtonType.L1:
-                Debug.Log("L1");
-                break;
-
             case ButtonType.R1:
-                Debug.Log("R1");
+                //錬金したアイテムの切り替え
                 if (player_ctr.getCreateItemList().Count <= 1)
                     return;
                 alchemyUI_ctr.setNowAlchemyItem();
                 break;
 
             case ButtonType.L2:
+                //全体のマップを表示する処理
                 miniMap_ctr.ActiveMiniMap();
                 break;
 
             case ButtonType.R2:
-                Debug.Log("R2");
+                //錬金UIを開いたり閉じたりする処理
                 player_ctr.OpenAlchemy();
                 break;
 
@@ -519,52 +531,41 @@ public class MoveController : MonoBehaviour
                 //PouseManagerにOption処理が書いてある（Escapeと同じ処理）
                 break;
 
-            case ButtonType.PSBTN:
-                Debug.Log("PSbtn");
-                break;
-
-            case ButtonType.PSPAD:
-                Debug.Log("PSpad");
-                break;
-
             case ButtonType.CROSSX_RIGTH:
+                //剣の切り替え
                 if (!player_ctr.GetAlchemyUIFlag)
                 {
-                    player_ctr.SwordTypeChange(player_ctr.GetSwordList[1]);
-                    pManager.SetSwordType = player_ctr.GetSwordList[1];
+                    player_ctr.SwordNumList(1);
                     return;
                 }
-
                 _onCrossRight = true;
                 break;
 
             case ButtonType.CROSSX_LEFT:
+                //剣の切り替え
                 if (!player_ctr.GetAlchemyUIFlag)
                 {
-                    player_ctr.SwordTypeChange(player_ctr.GetSwordList[3]);
-                    pManager.SetSwordType = player_ctr.GetSwordList[3];
+                    player_ctr.SwordNumList(3);
                     return;
                 }
-
                 _onCrossLeft = true;
                 break;
 
             case ButtonType.CROSSY_UP:
+                //剣の切り替え
                 if (!player_ctr.GetAlchemyUIFlag)
                 {
-                    player_ctr.SwordTypeChange(player_ctr.GetSwordList[0]);
-                    pManager.SetSwordType = player_ctr.GetSwordList[0];
+                    player_ctr.SwordNumList(0);
                     return;
                 }
-
                 _onCrossUp = true;
                 break;
 
             case ButtonType.CROSSY_DOWN:
+                //剣の切り替え
                 if (!player_ctr.GetAlchemyUIFlag)
                 {
-                    player_ctr.SwordTypeChange(player_ctr.GetSwordList[2]);
-                    pManager.SetSwordType = player_ctr.GetSwordList[2];
+                    player_ctr.SwordNumList(2);
                     return;
                 }
                 _onCrossDown = true;
@@ -582,13 +583,14 @@ public class MoveController : MonoBehaviour
     {
         if (!player_ctr.AllCommandActive) { return; }
 
-        if (Input.GetButtonDown("L2") || Input.GetKeyDown(KeyCode.P)) {// L2ボタン or キーボードの「P」
+        if (Input.GetButtonDown("L2") || Input.GetKeyDown(KeyCode.P))
+        {// L2ボタン or キーボードの「P」
             Move(ButtonType.L2);
         }
 
         if (!player_ctr.IsCommandActive) { return; }
 
-        if (Input.GetButton("Jump") || Input.GetKeyDown(KeyCode.Space)) //Input.GetButton("Jump")
+        if (Input.GetButton("Jump") || Input.GetKeyDown(KeyCode.Space))
         {//×ボタン or キーボードの「W」
             Move(ButtonType.JUMP);
         }
@@ -623,6 +625,7 @@ public class MoveController : MonoBehaviour
             }
 
             rig.velocity = new Vector2(0, rig.velocity.y);
+            PotObject.GetComponent<PotController>().StopPot();
         }
         if (Input.GetAxis("Vertical_ps4") <= -0.8f || Input.GetKey(KeyCode.W))
         {
@@ -655,10 +658,6 @@ public class MoveController : MonoBehaviour
         {//△ボタン or キーボードの「F」
             Move(ButtonType.TRIANGLE);
         }
-        if (Input.GetButtonDown("L1") || Input.GetKeyDown(KeyCode.L))
-        {// L1ボタン or キーボードの「L」
-            Move(ButtonType.L1);
-        }
         if (Input.GetButtonDown("R1") || Input.GetKeyDown(KeyCode.K))
         {// R1ボタン or キーボードの「K」
             Move(ButtonType.R1);
@@ -671,27 +670,19 @@ public class MoveController : MonoBehaviour
         {// Optionボタン or キーボードの「U」
             Move(ButtonType.OPTION);
         }
-        if (Input.GetButtonDown("PSbtn") || Input.GetKeyDown(KeyCode.H))
-        {// 真ん中のPSボタン or キーボードの「H」
-            Move(ButtonType.PSBTN);
-        }
-        if (Input.GetButtonDown("PSpad") || Input.GetKeyDown(KeyCode.Y))
-        {//PSパッドボタン or キーボードの「Y」
-            Move(ButtonType.PSPAD);
-        }
-        if (Input.GetAxis("CrossX") >= 0.15f || Input.GetKey(KeyCode.C))
+        if (Input.GetAxis("CrossX") <= -0.15f || Input.GetKey(KeyCode.C))
         {// 十字左ボタン or キーボードの「C」
             Move(ButtonType.CROSSX_LEFT);
         }
-        else if (Input.GetAxis("CrossX") <= -0.15f || Input.GetKey(KeyCode.X))
+        else if (Input.GetAxis("CrossX") >= 0.15f || Input.GetKey(KeyCode.X))
         {//十字右ボタン or キーボードの「X」
             Move(ButtonType.CROSSX_RIGTH);
         }
-        if (Input.GetAxis("CrossY") >= 0.15f || Input.GetKey(KeyCode.Z))
+        if (Input.GetAxis("CrossY") <= -0.15f || Input.GetKey(KeyCode.Z))
         {//十字下ボタン or キーボードの「Z」
             Move(ButtonType.CROSSY_DOWN);
         }
-        else if (Input.GetAxis("CrossY") <= -0.15f || Input.GetKey(KeyCode.V))
+        else if (Input.GetAxis("CrossY") >= 0.15f || Input.GetKey(KeyCode.V))
         {//十字上ボタン or キーボードの「V」
             Move(ButtonType.CROSSY_UP);
         }
@@ -738,7 +729,7 @@ public class MoveController : MonoBehaviour
     {
         PlayerStatus status = pManager.Status;
         status.gimmick_state = PlayerStatus.GimmickState.ONLADDER;
-
+        IsLadder = true;
         //プレイヤーの子供全部のレイヤーを変更
         var children = transform.parent.transform;
         foreach(Transform child in children)
@@ -753,6 +744,35 @@ public class MoveController : MonoBehaviour
         PotObject.layer = LayerMask.NameToLayer("Trans");
         transform.parent.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, speed * dir);
         _laddernow = true;
+    }
+
+    private bool CheckMoveable()
+    {
+        if (leg_col.isLanding)
+            return true;
+        if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer"))
+        {
+            return true;
+        }
+        
+        if (Jumping)
+        {
+            Vector3 startPos = gameObject.transform.position;
+            Vector2 dir = direc == Direction.RIGHT ? Vector2.right : Vector2.left;
+            // Rayを飛ばす
+            RaycastHit2D[] hit = Physics2D.RaycastAll(startPos, dir, GetComponent<CapsuleCollider2D>().size.x * 0.5f);
+            bool flag = true;
+            foreach (RaycastHit2D r in hit)
+            {
+                if (r.collider.gameObject.layer == LayerMask.NameToLayer("Block"))
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            return flag;
+        }
+        return false;
     }
     
     private void OnTriggerEnter2D(Collider2D col)
@@ -787,9 +807,9 @@ public class MoveController : MonoBehaviour
         if (col.gameObject.tag == "Monster")
         {
             MonsterStatus mStatus = col.gameObject.GetComponent<MonsterController>().Status;
+            if(mStatus.type == MonsterStatus.MonsterType.HARB) { return; }
             int atk = mStatus.GetAttack;
             _hitmonster = true;
-            Debug.Log(atk);
             player_ctr.HPDown(atk);
             StartCoroutine(PlayerNockBackWaitTime());
         }
@@ -801,10 +821,15 @@ public class MoveController : MonoBehaviour
     /// <returns></returns>
     private IEnumerator PlayerNockBackWaitTime()
     {
+        //弟の顔変更
+        PotObject.GetComponent<PotController>().ChangePotFace(PotStatus.PotFace.Sad);
         player_ctr.AllCommandActive = false;
+        //プレイヤーをノックバック
         rig.AddForce(new Vector2(rig.velocity.x * -2f, 1.5f), ForceMode2D.Impulse);
         yield return new WaitForSeconds(0.4f);
         player_ctr.AllCommandActive = true;
+        //弟の顔変更
+        PotObject.GetComponent<PotController>().ChangePotFace(PotStatus.PotFace.Normal);
     }
 
     private void OnCollisionExit2D(Collision2D col)
@@ -814,4 +839,4 @@ public class MoveController : MonoBehaviour
             _hitmonster = false;
         }
     }
-}//870
+}

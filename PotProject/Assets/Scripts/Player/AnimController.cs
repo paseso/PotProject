@@ -32,10 +32,11 @@ public class AnimController : MonoBehaviour {
 
     private Animator anim;
     private AttackZoneController attack_ctr;
-    private BringCollider bring_col;
     private Animator pot_anim;
     private EffectManager effect_mng;
     private PlayerController player_ctr;
+    private PlayerStatus playerstatus;
+    private MoveController move_ctr;
 
     //拾うアニメーションの時に使う
     private GameObject Itemtarget;
@@ -52,14 +53,9 @@ public class AnimController : MonoBehaviour {
         anim = gameObject.GetComponent<Animator>();
         pot_anim = gameObject.transform.parent.GetComponentInChildren<PotController>().gameObject.GetComponent<Animator>();
         attack_ctr = gameObject.transform.parent.GetComponentInChildren<AttackZoneController>();
-        bring_col = gameObject.transform.GetComponentInChildren<BringCollider>();
         effect_mng = GameObject.Find("EffectManager").GetComponent<EffectManager>();
+        move_ctr = gameObject.GetComponentInChildren<MoveController>();
         _attackStart = false;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 
     /// <summary>
@@ -569,7 +565,7 @@ public class AnimController : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.35f);
         //アイテムのある位置にエフェクトの位置を合わせて呼ぶ
-        GameObject EffectObj = effect_mng.PlayEffect(0, Itemtarget.transform.position, 10, Itemtarget, false).gameObject;
+        GameObject EffectObj = effect_mng.PlayEffect((int)EffectManager.EffectName.Effect_GetItem, Itemtarget.transform.position, 10, Itemtarget, false).gameObject;
         EffectObj.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
         //Effectのスケールとアイテムのスケールをだんだん小さくしていく処理
         Itemtarget.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
@@ -586,9 +582,10 @@ public class AnimController : MonoBehaviour {
         Itemtarget.transform.DOScale(new Vector3(0, 0, 0), 0.4f);
         Itemtarget.transform.DOMoveY(pot_anim.transform.position.y + 0.5f, 0.4f);
         PotAnimSetBool();
-        yield return new WaitForSeconds(1.3f);
+        yield return new WaitForSeconds(1.2f);
         //エフェクトとアイテムのオブジェクトはもう使わないので削除、フラグをfalseにする
         GetItemEndAnim(EffectObj);
+        player_ctr.AllCommandActive = true;
         pot_anim.SetBool("isPotDown", false);
     }
 
@@ -624,10 +621,14 @@ public class AnimController : MonoBehaviour {
     {
         Destroy(effect.gameObject);
         Destroy(Itemtarget.transform.parent.gameObject);
+        player_ctr.pickUpFlag = false;
         PotAnimSetBool();
         anim.SetBool("isRightGetItem", false);
         anim.SetBool("isLeftGetItem", false);
-        player_ctr.AllCommandActive = true;
+        if (move_ctr.direc == MoveController.Direction.LEFT)
+            anim.SetBool("isLeftIdle", true);
+        else
+            anim.SetBool("isRightIdle", true);
     }
 
     /// <summary>
@@ -639,5 +640,40 @@ public class AnimController : MonoBehaviour {
             player_ctr.AllCommandActive = false;
         else
             player_ctr.AllCommandActive = true;
+    }
+
+    /// <summary>
+    /// SEを鳴らす処理
+    /// </summary>
+    public void ChoiceSe(SoundManager.SENAME se_name)
+    {
+        switch (se_name)
+        {
+            case SoundManager.SENAME.SE_FOOTSTEPS:
+                SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_FOOTSTEPS, 0.2f);
+                break;
+            case SoundManager.SENAME.SE_JAMP:
+                SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_JAMP);
+                break;
+            default:
+                Debug.Log("セットされてません");
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 剣を振るSEの処理
+    /// </summary>
+    public void SwordSE()
+    {
+        //アックス、槍、たいまつは重い剣のSE
+        if (playerstatus.swordtype == PlayerStatus.SWORDTYPE.AXE || playerstatus.swordtype == PlayerStatus.SWORDTYPE.TORCH)
+        {
+            SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SWORDHEAVY);
+        }
+        else
+        {
+            SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SWORD);
+        }
     }
 }

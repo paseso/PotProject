@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 /// <summary>
 /// モンスターステータス
@@ -101,13 +102,14 @@ public class MonsterController : MonoBehaviour
         {MonsterStatus.MonsterType.SHADOW,"" },
         {MonsterStatus.MonsterType.CLOUD,"Cloud" },
         {MonsterStatus.MonsterType.TURTLE,"Crystal" },
-        {MonsterStatus.MonsterType.FAIRY,"" },
+        {MonsterStatus.MonsterType.FAIRY,"Feather" },
         {MonsterStatus.MonsterType.HARB,"Weed" },
         {MonsterStatus.MonsterType.CLAY_N,"Clay_N" },
         {MonsterStatus.MonsterType.CLAY_F,"Clay_F" },
         {MonsterStatus.MonsterType.CLAY_D,"Clay_D" },
         {MonsterStatus.MonsterType.CLAY_T,"Clay_T" },
         {MonsterStatus.MonsterType.CLAY_W,"Clay_W" },
+        {MonsterStatus.MonsterType.MAGIC,"" }
     };
 
     private GameObject clearPanel;
@@ -132,19 +134,28 @@ public class MonsterController : MonoBehaviour
     /// <param name="damage"></param>
     public void Damage(int damage)
     {
+        if(status.type == MonsterStatus.MonsterType.HARB) {
+            StartCoroutine(Drop());
+            return;
+        }
+        EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_AttackIce, transform.position, 4, gameObject, true);
+        KnockBack(mController.direc);
         status.HP -= damage;
         if(status.HP <= 0)
         {
-            DropItem(status);
+            StartCoroutine(Drop());
             return;
-        }
-
-        KnockBack(mController.direc);
+        }        
     }
 
+    /// <summary>
+    /// ノックバック
+    /// </summary>
+    /// <param name="dir"></param>
     public void KnockBack(MoveController.Direction dir) {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        Vector2 knock = new Vector2(knockback.x, knockback.y);
+        rb.velocity = Vector2.zero;
+        Vector2 knock = knockback;
         
         if (dir == MoveController.Direction.LEFT) {
             knock.x *= -1;
@@ -152,23 +163,34 @@ public class MonsterController : MonoBehaviour
         rb.AddForce(knock, ForceMode2D.Impulse);
     }
 
-    public void DropItem(MonsterStatus status)
+    public IEnumerator Drop()
     {
-        if(ItemList[status.type] == "") {
+        if (ItemList[status.type] == "")
+        {
             Destroy(gameObject);
-            return;
+            yield break;
         }
+
+        if (GetComponent<MonsterWalk>())
+        {
+            Destroy(GetComponent<MonsterWalk>());
+        }
+
+        GetComponent<BoxCollider2D>().enabled = false;
+        GetComponent<SpriteRenderer>().DOFade(0f, 1f).SetEase(Ease.Linear);
 
         GameObject dropPos = new GameObject("DropPos");
         dropPos.transform.SetParent(transform.parent.transform);
         dropPos.transform.position = transform.position;
+        Transform trans = transform;
 
+        resPoint.GetComponent<MonsterResporn>().CountFlag = true;
+        yield return new WaitForSeconds(1f);
         GameObject item = Instantiate(Resources.Load<GameObject>(itemFolder + ItemList[status.type]));
         item.transform.SetParent(dropPos.transform);
-        item.transform.position = dropPos.transform.position;
+        item.transform.position = trans.position;
         item.AddComponent<DropItemTimer>();
         
-        resPoint.GetComponent<MonsterResporn>().CountFlag = true;
         Destroy(gameObject);
     }
 }

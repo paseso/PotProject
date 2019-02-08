@@ -12,6 +12,7 @@ public class KeyBlockCol : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D col) {
         if (col.GetComponent<MoveController>()) {
             mController.keyDoorFlag = true;
+            Debug.Log("col=" + col.gameObject.name);
         }
     }
 

@@ -29,6 +29,11 @@ public class BossController : MonoBehaviour {
     private bool isMagicAttack = false;
     private GameObject clearPanel;
 
+    public BossStatus Status {
+        get { return status; }
+        set { status = value; }
+    }
+
     public bool IsMagicAttack
     {
         set { isMagicAttack = value; }
@@ -59,18 +64,17 @@ public class BossController : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         // 魔法攻撃
-        if (isMagicAttack)
-        {
-            mTime += Time.deltaTime;
-            if(mTime > status.magicTime)
-            {
-                // 魔法飛ばす処理
-                playerPos = FindObjectOfType<MoveController>().gameObject.transform.position;
-                Debug.Log("PlayerPos=" + playerPos);
-                GetComponentInChildren<MagicShoot>().Shoot(playerPos);
-                mTime = 0;
-            }
-        }
+        //if (isMagicAttack)
+        //{
+        //    mTime += Time.deltaTime;
+        //    if(mTime > status.magicTime)
+        //    {
+        //        // 魔法飛ばす処理
+        //        playerPos = FindObjectOfType<MoveController>().gameObject.transform.position;
+        //        GetComponentInChildren<MagicShoot>().Shoot(playerPos);
+        //        mTime = 0;
+        //    }
+        //}
 	}
 
     /// <summary>
@@ -84,12 +88,13 @@ public class BossController : MonoBehaviour {
         GetComponent<Rigidbody2D>().isKinematic = true;
         GetComponent<BoxCollider2D>().enabled = false;
 
-        Vector2 pos = player.transform.position;
+        Vector2 pos = Camera.main.transform.position;
 
         sr.sortingOrder = 1000;
 
         transform.DOLocalMoveY(transform.localPosition.y - 0.5f, 0.5f).SetEase(Ease.Linear).OnComplete(() =>
         {
+            SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_DEMONFLYING);
             Sequence s = DOTween.Sequence();
             s.Append(transform.DORotate(new Vector3(0, 0, 365 * 4), 1f, RotateMode.FastBeyond360).SetEase(Ease.Linear));
             s.SetLoops(100);
@@ -101,6 +106,7 @@ public class BossController : MonoBehaviour {
                 transform.DOMoveY(transform.localPosition.y - (size.y * 5), moveTime).SetEase(Ease.Linear).SetDelay(1f).OnComplete(() =>
                 {
                     clearPanel.SetActive(true);
+                    UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(clearPanel.transform.GetChild(0).gameObject);
                 });
             });
 

@@ -26,6 +26,9 @@ public class StageController : MonoBehaviour
 
     private MiniMapController mMapController;
 
+    // 外壁
+    private GameObject wall;
+
     public List<List<GameObject>> GetMaps
     {
         get { return Maps; }
@@ -41,15 +44,24 @@ public class StageController : MonoBehaviour
         set { mapLists = value; }
     }
 
+    private int changeFlag;
+
+    /// <summary>
+    /// マップ切り替えフラグ
+    /// </summary>
+    public int ChangeFlag
+    {
+        get { return changeFlag; }
+        set { changeFlag = value; }
+    }
+
     private int stageLength = 3;
 
     private CameraManager cManager;
 
-    private GameObject[] aaa;
+    private GameObject[] waters;
 
-    private List<GameObject> waters;
-
-    public List<GameObject> Waters {
+    public GameObject[] Waters {
         get {return waters; }
         set { waters = value; }
     }
@@ -59,9 +71,10 @@ public class StageController : MonoBehaviour
     void Start()
     {
         SetList();
+        wall = GameObject.Find("Walls");
         clearPanel = FindObjectOfType<GameClear>().gameObject;
         clearPanel.SetActive(false);
-
+        SetWater();
         pController = FindObjectOfType<PlayerController>();
         mMapController = FindObjectOfType<MiniMapController>();
         cManager = FindObjectOfType<CameraManager>();
@@ -70,6 +83,12 @@ public class StageController : MonoBehaviour
                 i.SetActive(false);
             }
         }
+        SoundManager.Instance.PlayBgm((int)SoundManager.BGMNAME.BGM_MAINFAST);
+    }
+
+    void SetWater() {
+        var temp = GameObject.FindGameObjectsWithTag("Water");
+        Waters = temp;
     }
 
     void ActiveWater() {
@@ -107,8 +126,6 @@ public class StageController : MonoBehaviour
     /// </summary>
     /// <param name="num"></param>
     /// <param name="dir"></param>
-    /// <param name="pos"></param>
-    /// <param name="size"></param>
     public void Sride(int num, Direction dir) {
         if (isMove) { return; }
         StartCoroutine(SrideInFade(num,dir, GetMaps[1][1].transform.localPosition));
@@ -122,16 +139,23 @@ public class StageController : MonoBehaviour
     /// <param name="num"></param>
     /// <param name="dir"></param>
     /// <param name="pos"></param>
-    /// <param name="size"></param>
     /// <returns></returns>
     public IEnumerator SrideInFade(int num, Direction dir, Vector2 pos)
     {
+        foreach(Transform i in wall.transform) {
+            i.gameObject.layer = LayerMask.NameToLayer("MoveMap");
+        }
+        
         cManager.SwitchingCameraSub(pos, subCameraSize);
         yield return new WaitForSeconds(1.5f);
+        SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SLIDESTAGE);
         SrideStage(num, dir);
         mMapController.NowMap();
         yield return new WaitForSeconds(4.5f);
         pController.AllCommandActive = true;
+        foreach (Transform i in wall.transform) {
+            i.gameObject.layer = LayerMask.NameToLayer("Wall");
+        }
 
     }
 
@@ -151,6 +175,7 @@ public class StageController : MonoBehaviour
         float mapSize = 40;
         int mapCount = 0;
 
+        mMapController.miniMapSride(dir);
         switch (dir)
         {
             // 上-------------------------------------------------------------------
@@ -166,7 +191,6 @@ public class StageController : MonoBehaviour
                     tempPos = Maps[i][num].transform.position;
                     tempPos.z = 90;
                     StartCoroutine(SrideAnimation(Maps[i][num], turnPos,new Vector2(tempPos.x,tempPos.y + mapSize),mapCount));
-                    //Maps[i][num].transform.localPosition = tempPos;
 
                     mapCount++;
                 }
@@ -213,7 +237,6 @@ public class StageController : MonoBehaviour
                 Maps[0][num] = temp;
 
                 Maps[0][num].GetComponent<MapInfo>().MapNumY = 0;
-
                 break;
 
             // 下-------------------------------------------------------------------＊
@@ -243,7 +266,6 @@ public class StageController : MonoBehaviour
                 Maps[num][0] = temp;
 
                 Maps[num][0].GetComponent<MapInfo>().MapNumX = 0;
-
                 break;
 
             // 右-------------------------------------------------------------------＊
@@ -262,8 +284,6 @@ public class StageController : MonoBehaviour
 
                     mapCount++;
                 }
-
-                Maps[num][0].transform.localPosition = turnPos;
 
                 // スライド終了時の配列内入れ替え
                 temp = Maps[num][0];
@@ -313,7 +333,9 @@ public class StageController : MonoBehaviour
     /// スライドアニメーション
     /// </summary>
     /// <param name="obj"></param>
+    /// <param name="turn"></param>
     /// <param name="pos"></param>
+    /// <param name="count"></param>
     /// <returns></returns>
     public IEnumerator SrideAnimation(GameObject obj,Vector2 turn, Vector2 pos, int count)
     {   

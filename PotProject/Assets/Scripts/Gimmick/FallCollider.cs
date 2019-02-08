@@ -7,15 +7,20 @@ public class FallCollider : MonoBehaviour {
     public void OnTriggerStay2D(Collider2D col) {
         
         if (col.gameObject.name == "Leg") {
-            transform.parent.GetComponent<FallBlock>().SetFallFlag = true;
+            transform.parent.GetComponent<FallBlock>().SetRandingFlag = true;
         }
     }
 
     public void OnTriggerExit2D(Collider2D col) {
         if (col.gameObject.name == "Leg") {
-            transform.parent.GetComponent<FallBlock>().SetFallFlag = false;
-            transform.parent.GetComponent<FallBlock>().SetTime = 0;
-            transform.parent.GetComponent<FallBlock>().SetShakeFlag = false;
+            var block = transform.parent.GetComponent<FallBlock>();
+            block.SetRandingFlag = false;
+            block.SetTime = 0;
+            block.SetShakeFlag = false;
+            if (block.State != FallBlock.fallState.fall) {
+                block.State = FallBlock.fallState.normal;
+                StartCoroutine(block.Floating());
+            }
         }
     }
 }

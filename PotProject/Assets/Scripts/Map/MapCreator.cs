@@ -19,7 +19,7 @@ public class MapCreator : MonoBehaviour
     [SerializeField]
     GameObject playerPrefab;
     [SerializeField]
-    [Header("背景画像 ノーマル、炎、氷、雷、闇、空用の順に")]
+    [Header("背景画像 ノーマル、氷、雷、空用1, 空用2の順に")]
     private Sprite[] backImages;
 
     private GameObject[] mapObjects = new GameObject[9];
@@ -154,14 +154,39 @@ public class MapCreator : MonoBehaviour
             backGroundObject.GetComponent<BoxCollider2D>().size = new Vector2(xLength * 0.5f + 0.25f, xLength * 0.5f + 0.25f);
             backGroundObject.transform.parent = rootObj.transform;
             backGroundObject.transform.localPosition = Vector3.zero + new Vector3(-tileSize * 0.5f, tileSize * 0.5f, 0);
-            backGroundObject.GetComponent<SpriteRenderer>().sprite = backImages[datas[i].backGroundNum];
-            
+            backGroundObject.GetComponent<SpriteRenderer>().sprite = backImages[datas[i].backGroundNum - 1];
+            MiniMapController miniMapController = GameObject.Find("Canvas/MiniMap").GetComponent<MiniMapController>();
+            miniMapController.MSprite[i] = backGroundObject.GetComponent<SpriteRenderer>().sprite;
+            switch (datas[i].backGroundNum)
+            {
+                case 0: // NONE
+                    break;
+                case 1: // Normal
+                    backGroundObject.transform.root.GetComponent<MapInfo>().attribute = MapInfo.Attribute.NORMAL;
+                    break;
+                case 2: // Ice
+                    backGroundObject.transform.root.GetComponent<MapInfo>().attribute = MapInfo.Attribute.ICE;
+                    break;
+                case 3: // Thunder
+                    backGroundObject.transform.root.GetComponent<MapInfo>().attribute = MapInfo.Attribute.THUNDER;
+                    break;
+                case 4: // Rock(under)
+                case 5: // Rock(under)
+                    backGroundObject.transform.root.GetComponent<MapInfo>().attribute = MapInfo.Attribute.ROCK;
+                    break;
+
+                default:
+                    break;
+            }
+
             backGroundObject.transform.localScale = new Vector3(stageSize / backGroundObject.GetComponent<SpriteRenderer>().size.x, stageSize / backGroundObject.GetComponent<SpriteRenderer>().size.y, 0);
             if (backGroundObject.GetComponent<SpriteRenderer>().sprite.name != "Empty" && backGroundObject.GetComponent<SpriteRenderer>().sprite.name != "Empty2")
             {
                 backGroundObject.GetComponent<BoxCollider2D>().isTrigger = true;
                 backGroundObject.AddComponent<MapChange>();
-            }            
+            }else {
+                backGroundObject.layer = LayerMask.NameToLayer("Background");
+            }     
 
             //  オブジェクトの生成
             for (int y = 0; y < yLength; y++)

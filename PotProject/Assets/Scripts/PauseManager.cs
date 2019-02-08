@@ -68,6 +68,7 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
             isPause = false;
             pauseCanvasObj.SetActive(false);
             pManager = GameObject.Find("PlayerStatus").GetComponent<PlayerManager>();
+            pManager.InitStatus();
         }
         else if (FadeManager.Instance == null)
         {

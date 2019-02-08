@@ -11,17 +11,20 @@ public class ItemController : MonoBehaviour {
 
     private GameObject BrotherObj;
 
+    public bool useFlag { get; set; }
+
     private void Start()
     {
         playerController = GetComponent<PlayerController>();
         BrotherObj = FindObjectOfType<MoveController>().gameObject;
+        
     }
 
     /// <summary>
     /// 回復ポーション
     /// </summary>
     public void HPPortion() {
-        playerController.HPUp(1);
+        playerController.HPUp(2);
     }
 
     /// <summary>
@@ -36,7 +39,10 @@ public class ItemController : MonoBehaviour {
     /// </summary>
     public void TreePortion()
     {
-        FindObjectOfType<TreeGrow>().Grow();
+        if (playerController.rideTreeFlag) {
+            FindObjectOfType<TreeGrow>().Grow();
+            playerController.ItemUseFlag = true;
+        }
     }
 
     /// <summary>
@@ -45,7 +51,8 @@ public class ItemController : MonoBehaviour {
     public void CreateBarrier()
     {
         GameObject prefab = Resources.Load("Prefabs/Items/Barrier") as GameObject;
-        GameObject obj = Instantiate(prefab, BrotherObj.transform);
+        Instantiate(prefab, BrotherObj.transform);
+        playerController.ItemUseFlag = true;
     }
 
     /// <summary>
@@ -53,7 +60,14 @@ public class ItemController : MonoBehaviour {
     /// </summary>
     public void LadderCreate()
     {
+        if(playerController.OnBlock == null) { return; }
+        if (playerController.OnBlock.layer != LayerMask.NameToLayer("Block")) { return; }
+        if (playerController.OnBlock.GetComponent<CreateLadder>()) {
+            playerController.OnBlock.GetComponent<CreateLadder>().PutOnLadder();
+            return;
+        }
         playerController.OnBlock.AddComponent<CreateLadder>();
+        playerController.OnBlock.GetComponent<CreateLadder>().PutOnLadder();
     }
 
     /// <summary>
@@ -65,7 +79,34 @@ public class ItemController : MonoBehaviour {
         {
             GameObject keySwitch = GameObject.FindGameObjectWithTag("KeyDoor");
             keySwitch.GetComponent<GimmickController>().UnlockKeyDoor();
+            playerController.ItemUseFlag = true;
             return;
         }
+    }
+
+    /// <summary>
+    /// 雲生成
+    /// </summary>
+    public void CreateCloud() {
+        GameObject cloud = Instantiate(Resources.Load<GameObject>("Prefabs/GimmickTiles/FeatherCloudTile"));
+        cloud.transform.SetParent(GameObject.Find(BrotherObj.transform.root.name + "/GimmickObject").transform);
+        var dir = BrotherObj.GetComponent<MoveController>().direc;
+        if(dir == MoveController.Direction.LEFT) {
+            cloud.transform.position = new Vector2(BrotherObj.transform.position.x - cloud.GetComponent<SpriteRenderer>().bounds.size.x, BrotherObj.transform.position.y);
+        } else {
+            cloud.transform.position = new Vector2(BrotherObj.transform.position.x + cloud.GetComponent<SpriteRenderer>().bounds.size.x, BrotherObj.transform.position.y);
+        }
+        playerController.ItemUseFlag = true;
+    }
+
+    /// <summary>
+    /// 雨雲から雨を降らせる
+    /// </summary>
+    public void Rain() {
+        if (!playerController.OnGimmick.GetComponent<GimmickInfo>()) { return; }
+        var info = playerController.OnGimmick.GetComponent<GimmickInfo>().gameObject;
+        if (info.GetComponent<GimmickInfo>().type != GimmickInfo.GimmickType.RAINCLOUD) { return; }
+        info.GetComponent<GimmickController>().ActiveWater(info);
+        playerController.ItemUseFlag = true;
     }
 }

@@ -28,8 +28,7 @@ public class MonsterResporn : MonoBehaviour {
 
     private string folderPass = "Prefabs/Monsters/";
 
-    [SerializeField]
-    private float createTime = 60;
+    private float createTime = 40;
     private float time;
     private bool countFlag = false;
     public bool CountFlag
@@ -56,7 +55,7 @@ public class MonsterResporn : MonoBehaviour {
             time += Time.deltaTime;
             if (time > createTime)
             {
-                Resporn();
+                StartCoroutine(Resporn());
             }
         }
 	}
@@ -64,11 +63,13 @@ public class MonsterResporn : MonoBehaviour {
     /// <summary>
     /// モンスター生成
     /// </summary>
-    void Resporn() {
+    IEnumerator Resporn() {
         GameObject monster = Instantiate(Resources.Load<GameObject>(folderPass + pass[mType]));
         monster.transform.SetParent(transform.parent.gameObject.transform);
         monster.transform.localPosition = transform.localPosition;
+        EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Respawn, transform.position, 2, monster, true);
         CountFlag = false;
         Destroy(gameObject);
+        yield return null;
     }
 }

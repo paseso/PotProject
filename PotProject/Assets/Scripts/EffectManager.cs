@@ -53,7 +53,14 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
     private GameObject Effect_Water;
     [SerializeField]
     private GameObject Effect_Grow;
-
+    [SerializeField]
+    private GameObject Effect_GetItem;
+    [SerializeField]
+    private GameObject Effect_CreateItemSuccece;
+    [SerializeField]
+    private GameObject Effect_Alchemy;
+    [SerializeField]
+    private GameObject Effect_Thunder;
     public void Awake()
     {
         //Destroyしない
@@ -72,7 +79,11 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
         Effect_Fire,
         Effect_KeyDoor,
         Effect_Water,
-        Effect_Grow
+        Effect_Grow,
+        Effect_GetItem,
+        Effect_CreateItemSuccece,
+        Effect_Alchemy,
+        Effect_Thunder,
     };
 
     /// <summary>
@@ -84,10 +95,10 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
     /// <param name="Target">親子付けするObject</param>
     private void EffectProcess(GameObject PlayEffect, Vector2 EffectPos, float Magnification, GameObject Target, bool isDestry)
     {
-        Debug.Log("InstanceEffects" + PlayEffect.transform.name);
         PlayEffect.transform.position = EffectPos;
-        PlayEffect.transform.localScale = new Vector3(Magnification, Magnification, Magnification);
         PlayEffect.transform.SetParent(Target.transform);
+        PlayEffect.transform.localScale = new Vector3(Magnification, Magnification, Magnification);
+        
         //  再生終わったら破棄するか
         if (isDestry)
         {
@@ -141,6 +152,18 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
                 break;
             case 10:
                 PlayEffect = Instantiate(Effect_Grow) as GameObject;
+                break;
+            case 11:
+                PlayEffect = Instantiate(Effect_GetItem) as GameObject;
+                break;
+            case 12:
+                PlayEffect = Instantiate(Effect_CreateItemSuccece) as GameObject;
+                break;
+            case 13:
+                PlayEffect = Instantiate(Effect_Alchemy) as GameObject;
+                break;
+            case 14:
+                PlayEffect = Instantiate(Effect_Thunder) as GameObject;
                 break;
             default:
                 Debug.Log("Effectmanagerのエラー");

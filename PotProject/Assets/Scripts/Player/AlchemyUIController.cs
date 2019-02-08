@@ -32,6 +32,11 @@ public class AlchemyUIController : MonoBehaviour
     private GameObject[] Itembox;
     //錬金してできたアイテムボックス欄のオブジェクト
     private GameObject[] createItembox;
+    //錬金素材の説明オブジェクト
+    private GameObject[] matDescriptions;
+    //錬金してできたアイテムの説明オブジェクト
+    private GameObject[] itemDescriptions;
+
     //アイテムの画像
     private Sprite[] ItemImage;
 
@@ -52,13 +57,14 @@ public class AlchemyUIController : MonoBehaviour
     private List<ItemStatus.Type> items = new List<ItemStatus.Type>();
     //
     private List<ItemStatus.Type> Materials_item = new List<ItemStatus.Type>();
-    //錬金されたアイテムをいれるボックス
-    private List<CreateItemStatus.Type> Create_item = new List<CreateItemStatus.Type>();
-    private bool _boxRight = true;
 
     private MoveController move_ctr;
     private CrossAxisDown crossAxisdown;
     private AlchemyController alchemy_ctr;
+    private AlchemyText alchemyText;
+
+    //アイテムのテキスト
+    private String txt;
 
     //---錬金UI中のフレームの縦ラインの位置-----------
     private int frameLine = 0000;
@@ -74,7 +80,7 @@ public class AlchemyUIController : MonoBehaviour
     private int RotationCount = 0;
     //------------------------------------------
 
-    private bool _onClick = false;
+    private int beforeNowBox = -1;
 
     //捨てる捨てないのobjectがでてるかでてないかの判定
     private bool _chooseWindow = false;
@@ -104,7 +110,7 @@ public class AlchemyUIController : MonoBehaviour
             move_ctr = GameObject.FindObjectOfType<MoveController>();
             crossAxisdown = move_ctr.gameObject.GetComponent<CrossAxisDown>();
             alchemy_ctr = GameObject.FindObjectOfType<AlchemyController>();
-
+            alchemyText = gameObject.GetComponent<AlchemyText>();
             ChooseObj = gameObject.transform.Find("ThrowChoose").gameObject;
             ChooseObj.SetActive(false);
             ItemFrame = gameObject.transform.Find("SelectFrame").gameObject;
@@ -119,12 +125,11 @@ public class AlchemyUIController : MonoBehaviour
         }
         nowAlchemyItem = 0;
         nowBox = 0;
+        beforeNowBox = -1;
         _chooseWindow = false;
-        _onClick = false;
         setItembox();
         setItemImageList();
         StartCreateItemBox();
-        _boxRight = true;
         Box_item = new GameObject[Itembox.Length];
         ClearJoystickRotation();
         Materials_item.Clear();
@@ -143,10 +148,63 @@ public class AlchemyUIController : MonoBehaviour
     private void StartCreateItemBox()
     {
         createItembox = new GameObject[3];
+        itemDescriptions = new GameObject[3];
         GameObject Items = gameObject.transform.Find("CreateItems").gameObject;
         for (int i = 0; i < Items.transform.childCount; i++)
         {
             createItembox[i] = Items.transform.GetChild(i).GetChild(0).gameObject;
+            itemDescriptions[i] = Items.transform.GetChild(i).GetChild(1).gameObject;
+        }
+    }
+
+    /// <summary>
+    /// Itemboxに子オブジェクトをセット
+    /// </summary>
+    private void setItembox()
+    {
+        Itembox = new GameObject[3];
+        matDescriptions = new GameObject[3];
+        GameObject Items = gameObject.transform.Find("MaterialItems").gameObject;
+        for (int i = 0; i < Items.transform.childCount; i++)
+        {
+            Itembox[i] = Items.transform.GetChild(i).gameObject.transform.GetChild(0).gameObject;
+            matDescriptions[i] = Items.transform.GetChild(i).gameObject.transform.GetChild(1).gameObject;
+        }
+    }
+
+    /// <summary>
+    /// 錬金UIで選択されてるアイテムの説明文を出す
+    /// </summary>
+    public void SelectItemText()
+    {
+        Sprite img = Box_item[nowBox].GetComponent<Image>().sprite;
+        if (img == AlphaSprite)
+            return;
+        if ((frameLine & frame_right) > 0)
+        {
+            Itembox[nowBox].transform.parent.GetChild(1).transform.GetChild(0).GetComponent<Text>().text = alchemyText.MaterialTexts[(int)player_ctr.getItemList()[nowBox]].materialName;
+            Itembox[nowBox].transform.parent.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = alchemyText.MaterialTexts[(int)player_ctr.getItemList()[nowBox]].madeableItem;
+            Itembox[nowBox].transform.parent.GetChild(1).transform.GetChild(2).GetComponent<Text>().text = alchemyText.MaterialTexts[(int)player_ctr.getItemList()[nowBox]].materialDesc;
+        }
+        else if((frameLine & frame_left) > 0)
+        {
+            createItembox[nowBox].transform.parent.GetChild(1).transform.GetChild(0).GetComponent<Text>().text = alchemyText.ItemTexts[(int)player_ctr.getCreateItemList()[nowBox]].itemName;
+            createItembox[nowBox].transform.parent.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = alchemyText.ItemTexts[(int)player_ctr.getCreateItemList()[nowBox]].itemDesc;
+        }
+        Box_item[nowBox].transform.parent.GetChild(1).gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// 錬金UIを閉じた時にTextのオブジェクトをfalseにする処理
+    /// </summary>
+    public void CloseTextActive()
+    {
+        for (int i = 0; i < Itembox.Length; i++)
+        {
+            if (Itembox[i].transform.parent.GetChild(1).gameObject.activeSelf)
+                Itembox[i].transform.parent.GetChild(1).gameObject.SetActive(false);
+            if (createItembox[i].transform.parent.GetChild(1).gameObject.activeSelf)
+                createItembox[i].transform.parent.GetChild(1).gameObject.SetActive(false);
         }
     }
 
@@ -155,14 +213,19 @@ public class AlchemyUIController : MonoBehaviour
     /// </summary>
     public void PickItem()
     {
-        if (frameLine == frame_right)
+        //何回も同じところを選択できないように
+        if (beforeNowBox == nowBox)
+            return;
+        if ((frameLine & frame_right) > 0)
         {
             setMaterialsBox();
         }
-        else if(frameLine == frame_center)
+        else if ((frameLine & frame_center) > 0)
         {
             ReSetMaterialsBox(nowBox);
         }
+        beforeNowBox = nowBox;
+        SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_CHOICE);
     }
 
     /// <summary>
@@ -204,7 +267,6 @@ public class AlchemyUIController : MonoBehaviour
                 mtr_1_img.sprite = img;
             }
         }
-
         Materials_item.Add(items[nowBox]);
     }
 
@@ -271,7 +333,21 @@ public class AlchemyUIController : MonoBehaviour
     {
         if (_choose)
         {
-            deleteItemBox(getNowBox);
+            if ((frameLine & frame_right) > 0)
+            {
+                player_ctr.deleteItemList(player_ctr.getItemList()[getNowBox]);
+            }
+            else if ((frameLine & frame_center) > 0)
+            {
+                deleteItemBox(getNowBox);
+            }
+            else if ((frameLine & frame_left) > 0)
+            {
+                deleteCreateItemUI(player_ctr.getCreateItemList()[getNowBox]);
+            }
+            setItemboxImage();
+            setCreateItemUI();
+            ReSetMaterialsBox(status.ItemList);
         }
         ChooseObj.SetActive(false);
         _chooseWindow = false;
@@ -322,14 +398,14 @@ public class AlchemyUIController : MonoBehaviour
     public void ItemFrameReSet()
     {
         nowBox = 0;
-        if(Box_item.Length == 2)
+        frameLine = frame_right;
+        beforeNowBox = -1;
+        if (Box_item.Length == 2)
         {
             Box_item = new GameObject[Itembox.Length];
         }
         Array.Copy(Itembox, Box_item, Itembox.Length);
         ItemFrame.transform.position = Box_item[0].transform.position;
-        _boxRight = true;
-        frameLine = frame_right;
     }
 
     /// <summary>
@@ -337,7 +413,7 @@ public class AlchemyUIController : MonoBehaviour
     /// </summary>
     private int BitFrameLine(bool _right)
     {
-        if(frameLine == frame_left)
+        if ((frameLine & frame_left) > 0)
         {
             if (_right)
             {
@@ -347,7 +423,8 @@ public class AlchemyUIController : MonoBehaviour
             {
                 frameLine = frame_right;
             }
-        }else if(frameLine == frame_center)
+        }
+        else if ((frameLine & frame_center) > 0)
         {
             if (_right)
             {
@@ -358,7 +435,7 @@ public class AlchemyUIController : MonoBehaviour
                 frameLine = frame_left;
             }
         }
-        else if(frameLine == frame_right)
+        else if ((frameLine & frame_right) > 0)
         {
             if (_right)
             {
@@ -375,21 +452,21 @@ public class AlchemyUIController : MonoBehaviour
     /// <summary>
     /// フレームが左右に移動する時にBox_itemの中身も変更する処理
     /// </summary>
-    /// <param name="numLine">今の位置</param>
-    private void BoxItemChange(int numLine)
+    /// <param name="nowLine">今の位置</param>
+    private void BoxItemChange(int nowLine)
     {
-        if (numLine == frame_left)
+        if ((nowLine & frame_left) > 0)
         {
             Box_item = new GameObject[createItembox.Length];
             Array.Copy(createItembox, Box_item, createItembox.Length);
         }
-        else if (numLine == frame_center)
+        else if ((nowLine & frame_center) > 0)
         {
             Box_item = new GameObject[2];
             Box_item[0] = mtr_0;
             Box_item[1] = mtr_1;
         }
-        else if (numLine == frame_right)
+        else if ((nowLine & frame_right) > 0)
         {
             Box_item = new GameObject[Itembox.Length];
             Array.Copy(Itembox, Box_item, Itembox.Length);
@@ -407,9 +484,13 @@ public class AlchemyUIController : MonoBehaviour
         //上下押した時
         while (move_ctr.OnCrossUp || move_ctr.OnCrossDown)
         {
-            _onClick = true;
             if (!move_ctr.OnCrossUp && !move_ctr.OnCrossDown)
                 break;
+            if ((frameLine & frame_right) > 0 || (frameLine & frame_left) > 0)
+            {
+                if(Box_item[nowBox].gameObject.transform.parent.GetChild(1).gameObject.activeSelf)
+                    Box_item[nowBox].gameObject.transform.parent.GetChild(1).gameObject.SetActive(false);
+            }
             if (move_ctr.OnCrossUp)
             {
                 if (nowBox - 1 < 0)
@@ -425,26 +506,34 @@ public class AlchemyUIController : MonoBehaviour
                     nowBox++;
             }
             ItemFrame.transform.position = Box_item[nowBox].transform.position;
+            SelectItemText();
+            SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SELECT);
             break;
         }
         //左右押した時
         while (move_ctr.OnCrossRight || move_ctr.OnCrossLeft)
         {
-            _onClick = true;
             if (!move_ctr.OnCrossRight && !move_ctr.OnCrossLeft)
                 break;
-
+            if((frameLine & frame_right) > 0 || (frameLine & frame_left) > 0)
+            {
+                if (Box_item[nowBox].gameObject.transform.parent.GetChild(1).gameObject.activeSelf)
+                    Box_item[nowBox].gameObject.transform.parent.GetChild(1).gameObject.SetActive(false);
+            }
+            //配列の変更
             if (move_ctr.OnCrossRight)
             {
                 BoxItemChange(BitFrameLine(true));
             }
-            else if(move_ctr.OnCrossLeft)
+            else if (move_ctr.OnCrossLeft)
             {
                 BoxItemChange(BitFrameLine(false));
             }
 
             nowBox = 0;
             ItemFrame.transform.position = Box_item[0].transform.position;
+            SelectItemText();
+            SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SELECT);
             break;
         }
     }
@@ -561,18 +650,6 @@ public class AlchemyUIController : MonoBehaviour
         setCreateItemUI();
     }
 
-    /// <summary>
-    /// Itemboxに子オブジェクトをセット
-    /// </summary>
-    private void setItembox()
-    {
-        Itembox = new GameObject[3];
-        GameObject Items = gameObject.transform.Find("MaterialItems").gameObject;
-        for (int i = 0; i < Items.transform.childCount; i++)
-        {
-            Itembox[i] = Items.transform.GetChild(i).gameObject.transform.GetChild(0).gameObject;
-        }
-    }
 
     /// <summary>
     /// アイテムの画像をセット
@@ -580,16 +657,16 @@ public class AlchemyUIController : MonoBehaviour
     private void setItemImageList()
     {
         ItemImage = new Sprite[14];
-        Sprite img;
         for (int i = 0; i < ItemImage.Length; i++)
         {
             if (!NullCheckImage(i))
             {
-                img = Resources.Load<Sprite>("Textures/AlchemyUI_items/AlchemyUI_item" + i);
+                Sprite img = Resources.Load<Sprite>("Textures/AlchemyUI_items/AlchemyUI_item" + i);
                 ItemImage[i] = img;
             }
             else
             {
+                //画像が見当たらなかった時の処理
                 NullCheckImage(i);
             }
         }
@@ -601,10 +678,8 @@ public class AlchemyUIController : MonoBehaviour
     public void setItemboxImage()
     {
         items = player_ctr.getItemList();
-
         if (items.Count < 3)
         {
-            int num = 3 - items.Count;
             for (int j = 2; items.Count <= j; j--)
             {
                 Image item_img = Itembox[j].GetComponent<Image>();
@@ -615,7 +690,6 @@ public class AlchemyUIController : MonoBehaviour
         for (int i = 0; i < items.Count; i++)
         {
             Image item_img = Itembox[i].GetComponent<Image>();
-
             switch (items[i])
             {
                 case ItemStatus.Type.CLAY_N:
@@ -680,4 +754,5 @@ public class AlchemyUIController : MonoBehaviour
 
         alchemy_ctr.setGeneratedImg(player_ctr.getCreateItemList()[nowAlchemyItem]);
     }
+
 }
