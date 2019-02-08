@@ -16,7 +16,7 @@ public class MapChange : MonoBehaviour {
         sController = GameObject.Find("Controller").GetComponent<StageController>();
         mMapController.NowMap();
         pot_ctr = FindObjectOfType<PotController>();
-        Debug.Log(transform.root.GetComponent<MapInfo>().attribute);
+
         AttributePot(transform.root.GetComponent<MapInfo>().attribute);
     }
 
