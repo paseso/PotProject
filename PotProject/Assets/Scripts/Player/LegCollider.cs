@@ -96,11 +96,13 @@ public class LegCollider : MonoBehaviour
         if (col.gameObject.layer == 2) { return false; }// 背景
         if (col.gameObject.layer == LayerMask.NameToLayer("BackGround")) { return true; }
         if (col.GetComponent<KeyBlockCol>()) { return false; } // 鍵ActiveCollider
-        if (!col.GetComponent<GimmickInfo>()) { return true; } // Gimmick
-        GimmickInfo info = col.GetComponent<GimmickInfo>();
-        if (info.type == GimmickInfo.GimmickType.LADDER) { return false; } // はしご
-        if (info.type == GimmickInfo.GimmickType.FIREFIELD) { return false; } // 敵攻撃範囲
-        if (info.type == GimmickInfo.GimmickType.THUNDERFIELD) { return false; } // 敵攻撃範囲
+        if (col.GetComponent<GimmickInfo>()) {
+            GimmickInfo info = col.GetComponent<GimmickInfo>();
+            if (info.type == GimmickInfo.GimmickType.LADDER) { return false; } // はしご
+            if (info.type == GimmickInfo.GimmickType.FIREFIELD) { return false; } // 敵攻撃範囲
+            if (info.type == GimmickInfo.GimmickType.THUNDERFIELD) { return false; } // 敵攻撃範囲
+        }
+        
         return true;
     }
 
@@ -226,8 +228,10 @@ public class LegCollider : MonoBehaviour
 
         if (col.GetComponent<GimmickInfo>())
         {
-            if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.FIREFIELD && onGroundCount <= 0)
-            {
+            if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.FIREFIELD && onGroundCount <= 0){
+                return;
+            }
+            if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.THUNDERFIELD && onGroundCount <= 0) {
                 return;
             }
         }

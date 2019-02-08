@@ -192,6 +192,10 @@ MonoBehaviour:
     gimmickSize: {x: 1, y: 1}
     gimmickObj: {fileID: 1572951355183890, guid: 80138025240bf8d41a30bfa01798a499,
       type: 2}
+  - gimmickImage: {fileID: 2800000, guid: 3f7f0f2e5d3cb844bb7d2969098cd38f, type: 3}
+    gimmickSize: {x: 1, y: 1}
+    gimmickObj: {fileID: 1508175303122380, guid: 20079547bad63b34bb22fdde1f6853f6,
+      type: 2}
   enemies:
   - enemyImage: {fileID: 2800000, guid: d1a5bda456b103e4c858f26fbc740877, type: 3}
     enemyObj: {fileID: 0}
@@ -233,8 +237,10 @@ MonoBehaviour:
     enemyObj: {fileID: 1398486377858722, guid: 232a0f376f1909e45b5fc702aca0b1d5, type: 2}
   - enemyImage: {fileID: 2800000, guid: 0dc304b0e4972c74591c41db06536502, type: 3}
     enemyObj: {fileID: 1396070381188814, guid: 6fb4668f867cb634c837bdf759a23108, type: 2}
-  - enemyImage: {fileID: 2800000, guid: a737b4faab9d3e749bee2b61a36ce3c1, type: 3}
+  - enemyImage: {fileID: 2800000, guid: ef5fed272abce114eaa8a26868c48eb0, type: 3}
     enemyObj: {fileID: 1306722706709782, guid: 3628e2257f530754d9e7f3d07b702350, type: 2}
+  - enemyImage: {fileID: 2800000, guid: 5f4ccf8794b3ee04a98b53022207db14, type: 3}
+    enemyObj: {fileID: 1230577038217164, guid: d517c865d5e54a847a2f2c66f73589c5, type: 2}
   map: {fileID: 0}
   playerPrefab: {fileID: 1918219012865452, guid: edf43bd1930ee6544b29d2446d3d6f4c,
     type: 2}
