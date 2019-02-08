@@ -182,7 +182,7 @@ public class PotController : MonoBehaviour
         //ツボが遠すぎたらワープしてプレイヤーの近くに来る
         if ((BrotherObj.transform.position.y - gameObject.transform.position.y) >= 5f)
         {
-            if (_movePot)
+            if (_movePot || move_ctr._laddernow)
                 return;
             StartCoroutine(PotWarpAnimation());
         }
@@ -195,7 +195,7 @@ public class PotController : MonoBehaviour
         //ツボが少し離れた時の処理
         if (distance >= 7f)
         {
-            if (_movePot)
+            if (_movePot || move_ctr._laddernow)
                 return;
             StartCoroutine(PotWarpAnimation());
         }

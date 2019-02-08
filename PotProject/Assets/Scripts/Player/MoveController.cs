@@ -21,7 +21,7 @@ public class MoveController : MonoBehaviour
 
     private Rigidbody2D rig;
     //はしご中かどうか
-    private bool _laddernow = false;
+    public bool _laddernow { get; set; }
 
     // はしご内にいるカウント
     public int InLadderCount { get; set; }

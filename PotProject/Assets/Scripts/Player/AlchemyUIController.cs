@@ -180,7 +180,7 @@ public class AlchemyUIController : MonoBehaviour
         Sprite img = Box_item[nowBox].GetComponent<Image>().sprite;
         if (img == AlphaSprite)
             return;
-        if ((frameLine & frame_right) > 0 || (frameLine & frame_center) > 0)
+        if ((frameLine & frame_right) > 0)
         {
             Itembox[nowBox].transform.parent.GetChild(1).transform.GetChild(0).GetComponent<Text>().text = alchemyText.MaterialTexts[(int)player_ctr.getItemList()[nowBox]].materialName;
             Itembox[nowBox].transform.parent.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = alchemyText.MaterialTexts[(int)player_ctr.getItemList()[nowBox]].madeableItem;
@@ -188,8 +188,23 @@ public class AlchemyUIController : MonoBehaviour
         }
         else if((frameLine & frame_left) > 0)
         {
-            Itembox[nowBox].transform.parent.GetChild(1).transform.GetChild(0).GetComponent<Text>().text = alchemyText.ItemTexts[(int)player_ctr.getItemList()[nowBox]].itemName;
-            Itembox[nowBox].transform.parent.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = alchemyText.ItemTexts[(int)player_ctr.getItemList()[nowBox]].itemDesc;
+            createItembox[nowBox].transform.parent.GetChild(1).transform.GetChild(0).GetComponent<Text>().text = alchemyText.ItemTexts[(int)player_ctr.getCreateItemList()[nowBox]].itemName;
+            createItembox[nowBox].transform.parent.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = alchemyText.ItemTexts[(int)player_ctr.getCreateItemList()[nowBox]].itemDesc;
+        }
+        Box_item[nowBox].transform.parent.GetChild(1).gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// 錬金UIを閉じた時にTextのオブジェクトをfalseにする処理
+    /// </summary>
+    public void CloseTextActive()
+    {
+        for (int i = 0; i < Itembox.Length; i++)
+        {
+            if (Itembox[i].transform.parent.GetChild(1).gameObject.activeSelf)
+                Itembox[i].transform.parent.GetChild(1).gameObject.SetActive(false);
+            if (createItembox[i].transform.parent.GetChild(1).gameObject.activeSelf)
+                createItembox[i].transform.parent.GetChild(1).gameObject.SetActive(false);
         }
     }
 
@@ -252,7 +267,6 @@ public class AlchemyUIController : MonoBehaviour
                 mtr_1_img.sprite = img;
             }
         }
-
         Materials_item.Add(items[nowBox]);
     }
 
@@ -472,6 +486,11 @@ public class AlchemyUIController : MonoBehaviour
         {
             if (!move_ctr.OnCrossUp && !move_ctr.OnCrossDown)
                 break;
+            if ((frameLine & frame_right) > 0 || (frameLine & frame_left) > 0)
+            {
+                if(Box_item[nowBox].gameObject.transform.parent.GetChild(1).gameObject.activeSelf)
+                    Box_item[nowBox].gameObject.transform.parent.GetChild(1).gameObject.SetActive(false);
+            }
             if (move_ctr.OnCrossUp)
             {
                 if (nowBox - 1 < 0)
@@ -496,6 +515,11 @@ public class AlchemyUIController : MonoBehaviour
         {
             if (!move_ctr.OnCrossRight && !move_ctr.OnCrossLeft)
                 break;
+            if((frameLine & frame_right) > 0 || (frameLine & frame_left) > 0)
+            {
+                if (Box_item[nowBox].gameObject.transform.parent.GetChild(1).gameObject.activeSelf)
+                    Box_item[nowBox].gameObject.transform.parent.GetChild(1).gameObject.SetActive(false);
+            }
             //配列の変更
             if (move_ctr.OnCrossRight)
             {

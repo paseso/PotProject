@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
 
     public bool rideTreeFlag { get; set; }
 
@@ -55,29 +56,33 @@ public class PlayerController : MonoBehaviour {
     // 操作可能か
     private bool isCommandActive = true;
 
-    public bool IsCommandActive {
+    public bool IsCommandActive
+    {
         get { return isCommandActive; }
         set { isCommandActive = value; }
     }
 
     private bool allCommandActive = true;
 
-    public bool AllCommandActive {
+    public bool AllCommandActive
+    {
         get { return allCommandActive; }
         set { allCommandActive = value; }
     }
-    
+
     private bool isMiniMap = false;
 
-    public bool IsMiniMap {
+    public bool IsMiniMap
+    {
         get { return isMiniMap; }
         set { isMiniMap = value; }
     }
 
     private bool itemUseFlag = false;
 
-    public bool ItemUseFlag {
-        get {return itemUseFlag; }
+    public bool ItemUseFlag
+    {
+        get { return itemUseFlag; }
         set { itemUseFlag = value; }
     }
 
@@ -90,7 +95,7 @@ public class PlayerController : MonoBehaviour {
     private GameObject lifePoint;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         try
         {
@@ -117,8 +122,8 @@ public class PlayerController : MonoBehaviour {
         //swordList[3] = PlayerStatus.SWORDTYPE.VAJURA;
         _itemMax = false;
         alchemyUIFlag = false;
-        
-	}
+
+    }
 
     private void Update()
     {
@@ -164,7 +169,7 @@ public class PlayerController : MonoBehaviour {
     public void setSwordList(PlayerStatus.SWORDTYPE type)
     {
         //0番目以上のNORMALタイプのところに錬金した剣をいれる
-        for(int i = 1; i < 4; i++)
+        for (int i = 1; i < 4; i++)
         {
             if (swordList[i] != PlayerStatus.SWORDTYPE.NORMAL)
             {
@@ -211,7 +216,7 @@ public class PlayerController : MonoBehaviour {
     /// <param name="name"></param>
     public void setItemList(ItemStatus.Type Item_Id)
     {
-        if(status.ItemList.Count == maxItemBox)
+        if (status.ItemList.Count == maxItemBox)
         {
             _itemMax = true;
             Debug.Log("アイテムボックスは最大です！");
@@ -258,6 +263,8 @@ public class PlayerController : MonoBehaviour {
         }
 
         createItemBox.Add(type);
+        if (getCreateItemList().Count > 1)
+            return;
         alchemy_ctr.setGeneratedImg(type);
     }
 
@@ -297,8 +304,10 @@ public class PlayerController : MonoBehaviour {
     /// <param name="num"></param>
     public void UseAlchemyItem(int num)
     {
-        alchemy_ctr.AlchemyItem(getCreateItemList()[alchemyUI_ctr.getNowAlchemyItem]);
-        if (!ItemUseFlag) {
+        Debug.Log("UseItem num = " + num);
+        alchemy_ctr.AlchemyItem(getCreateItemList()[num]);
+        if (!ItemUseFlag)
+        {
             return;
         }
         deleteCreateItemList(num);
@@ -312,7 +321,7 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     private void setSwordSpriteList()
     {
-        if(sword == null)
+        if (sword == null)
             sword = FindObjectOfType<AnimController>().transform.transform.Find("Sword").GetComponent<SpriteRenderer>();
 
         swordSpriteList = new List<Sprite>();
@@ -368,11 +377,11 @@ public class PlayerController : MonoBehaviour {
         if (item == null)
             return;
 
-        if(item.Count == 1)
+        if (item.Count == 1)
         {
             alchemy_ctr.MadeItem(item[0]);
         }
-        else if(item.Count == 2)
+        else if (item.Count == 2)
         {
             alchemy_ctr.MadeItem(item[0], item[1]);
         }
@@ -395,6 +404,7 @@ public class PlayerController : MonoBehaviour {
         }
         else
         {
+            alchemyUI_ctr.CloseTextActive();
             Pot_UI.DOLocalMoveX(1920, 0.3f).SetEase(Ease.Linear);
             alchemyUIFlag = false;
         }
@@ -408,7 +418,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (status.PlayerHP + point > status.GetMaxHP) { return; }
         status.PlayerHP += point;
-        for(int i = 0; i < status.PlayerHP; i++)
+        for (int i = 0; i < status.PlayerHP; i++)
         {
             hearts[i].SetActive(true);
         }
@@ -430,7 +440,7 @@ public class PlayerController : MonoBehaviour {
         //  HPの減算
         status.PlayerHP -= point;
         //  ゲージ部分のハートにエフェクトを生成
-        EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_HeartBurst, hearts[status.PlayerHP].transform.position + new Vector3(0,-0.5f,0), 0.05f, hearts[0].transform.parent.gameObject, true);
+        EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_HeartBurst, hearts[status.PlayerHP].transform.position + new Vector3(0, -0.5f, 0), 0.05f, hearts[0].transform.parent.gameObject, true);
         // ダメージエフェクトの生成
         EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Damage, BrotherObj.transform.position, 5, BrotherObj, true);
         //PotObject.GetComponent<PotController>().ChangePotFace(PotStatus.PotFace.Sad);
@@ -444,7 +454,7 @@ public class PlayerController : MonoBehaviour {
             anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_SUFFERDAMAGE);
         }
 
-        for(int i = status.GetMaxHP - 1; i > status.PlayerHP - 1; i--)
+        for (int i = status.GetMaxHP - 1; i > status.PlayerHP - 1; i--)
         {
             hearts[i].SetActive(false);
         }
@@ -454,7 +464,8 @@ public class PlayerController : MonoBehaviour {
     /// 攻撃力変更
     /// </summary>
     /// <param name="point">可変値(下がるなら「-」をつける)</param>
-    public void ATKChange(int point) {
+    public void ATKChange(int point)
+    {
         status.PlayerAttack += point;
     }
 
@@ -483,7 +494,7 @@ public class PlayerController : MonoBehaviour {
         {
             status.gimmick_state = PlayerStatus.GimmickState.NORMAL;
             PotObject.layer = LayerMask.NameToLayer("Pot");
-            
+
             var children = BrotherObj.transform.parent.transform;
             foreach (Transform child in children)
             {
