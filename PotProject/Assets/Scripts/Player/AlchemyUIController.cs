@@ -32,6 +32,11 @@ public class AlchemyUIController : MonoBehaviour
     private GameObject[] Itembox;
     //錬金してできたアイテムボックス欄のオブジェクト
     private GameObject[] createItembox;
+    //錬金素材の説明オブジェクト
+    private GameObject[] matDescriptions;
+    //錬金してできたアイテムの説明オブジェクト
+    private GameObject[] itemDescriptions;
+
     //アイテムの画像
     private Sprite[] ItemImage;
 
@@ -56,6 +61,7 @@ public class AlchemyUIController : MonoBehaviour
     private MoveController move_ctr;
     private CrossAxisDown crossAxisdown;
     private AlchemyController alchemy_ctr;
+    private AlchemyText alchemyText;
 
     //---錬金UI中のフレームの縦ラインの位置-----------
     private int frameLine = 0000;
@@ -101,7 +107,7 @@ public class AlchemyUIController : MonoBehaviour
             move_ctr = GameObject.FindObjectOfType<MoveController>();
             crossAxisdown = move_ctr.gameObject.GetComponent<CrossAxisDown>();
             alchemy_ctr = GameObject.FindObjectOfType<AlchemyController>();
-
+            alchemyText = gameObject.GetComponent<AlchemyText>();
             ChooseObj = gameObject.transform.Find("ThrowChoose").gameObject;
             ChooseObj.SetActive(false);
             ItemFrame = gameObject.transform.Find("SelectFrame").gameObject;
@@ -139,12 +145,30 @@ public class AlchemyUIController : MonoBehaviour
     private void StartCreateItemBox()
     {
         createItembox = new GameObject[3];
+        itemDescriptions = new GameObject[3];
         GameObject Items = gameObject.transform.Find("CreateItems").gameObject;
         for (int i = 0; i < Items.transform.childCount; i++)
         {
             createItembox[i] = Items.transform.GetChild(i).GetChild(0).gameObject;
+            itemDescriptions[i] = Items.transform.GetChild(i).GetChild(1).gameObject;
         }
     }
+
+    /// <summary>
+    /// Itemboxに子オブジェクトをセット
+    /// </summary>
+    private void setItembox()
+    {
+        Itembox = new GameObject[3];
+        matDescriptions = new GameObject[3];
+        GameObject Items = gameObject.transform.Find("MaterialItems").gameObject;
+        for (int i = 0; i < Items.transform.childCount; i++)
+        {
+            Itembox[i] = Items.transform.GetChild(i).gameObject.transform.GetChild(0).gameObject;
+            matDescriptions[i] = Items.transform.GetChild(i).gameObject.transform.GetChild(1).gameObject;
+        }
+    }
+
 
     /// <summary>
     /// アイテムの決定
@@ -576,18 +600,6 @@ public class AlchemyUIController : MonoBehaviour
         setCreateItemUI();
     }
 
-    /// <summary>
-    /// Itemboxに子オブジェクトをセット
-    /// </summary>
-    private void setItembox()
-    {
-        Itembox = new GameObject[3];
-        GameObject Items = gameObject.transform.Find("MaterialItems").gameObject;
-        for (int i = 0; i < Items.transform.childCount; i++)
-        {
-            Itembox[i] = Items.transform.GetChild(i).gameObject.transform.GetChild(0).gameObject;
-        }
-    }
 
     /// <summary>
     /// アイテムの画像をセット
