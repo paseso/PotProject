@@ -673,11 +673,11 @@ public class MoveController : MonoBehaviour
         {//十字右ボタン or キーボードの「X」
             Move(ButtonType.CROSSX_RIGTH);
         }
-        if (Input.GetAxis("CrossY") >= 0.15f || Input.GetKey(KeyCode.Z))
+        if (Input.GetAxis("CrossY") <= -0.15f || Input.GetKey(KeyCode.Z))
         {//十字下ボタン or キーボードの「Z」
             Move(ButtonType.CROSSY_DOWN);
         }
-        else if (Input.GetAxis("CrossY") <= -0.15f || Input.GetKey(KeyCode.V))
+        else if (Input.GetAxis("CrossY") >= 0.15f || Input.GetKey(KeyCode.V))
         {//十字上ボタン or キーボードの「V」
             Move(ButtonType.CROSSY_UP);
         }
