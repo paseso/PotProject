@@ -12,6 +12,7 @@ public class LegCollider : MonoBehaviour
     private bool _onLandding = false;
     //ちくわブロックに乗ってるかどうか
     private bool _onFallBlock = false;
+    private bool _onMoveCloud = false;
 
     float jumpPos;
     int onGroundCount;
@@ -32,7 +33,8 @@ public class LegCollider : MonoBehaviour
         {
             if (value)
             {
-                if (_onFallBlock)
+                //ちくわブロックと動く雲の時
+                if (_onFallBlock || _onMoveCloud)
                 {
                     jumpPos = transform.position.y;
                     landingFlag = value;
@@ -66,6 +68,7 @@ public class LegCollider : MonoBehaviour
         PotObj = GameObject.FindObjectOfType<PotController>().gameObject;
         _onLandding = false;
         _onFallBlock = false;
+        _onMoveCloud = false;
     }
 
     private void Update()
@@ -74,8 +77,10 @@ public class LegCollider : MonoBehaviour
         if (_onLandding)
         {
             PotObj.transform.position = gameObject.transform.parent.transform.position;
+            PotObj.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         }
-        if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer") && move_ctr.InLadderCount <= 0) {
+        if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer") && move_ctr.InLadderCount <= 0)
+        {
             player_ctr.ChangeLayer();
         }
     }
@@ -89,7 +94,7 @@ public class LegCollider : MonoBehaviour
     {
         if (col.GetComponent<ItemManager>()) { return false; }// Item
         if (col.gameObject.layer == 2) { return false; }// 背景
-        if(col.gameObject.layer == LayerMask.NameToLayer("BackGround")) { return true; }
+        if (col.gameObject.layer == LayerMask.NameToLayer("BackGround")) { return true; }
         if (col.GetComponent<KeyBlockCol>()) { return false; } // 鍵ActiveCollider
         if (!col.GetComponent<GimmickInfo>()) { return true; } // Gimmick
         GimmickInfo info = col.GetComponent<GimmickInfo>();
@@ -133,7 +138,7 @@ public class LegCollider : MonoBehaviour
         {
             isLanding = true;
         }
-        
+
         if (move_ctr.Jumping)
         {
             move_ctr.setJumping = false;
@@ -164,7 +169,8 @@ public class LegCollider : MonoBehaviour
         GimmickInfo info = col.GetComponent<GimmickInfo>();
         player_ctr.OnGimmick = col.gameObject;
 
-        switch (info.type) {
+        switch (info.type)
+        {
             case GimmickInfo.GimmickType.GROWTREE:
                 player_ctr.rideTreeFlag = true;
                 _onLandding = true;
@@ -183,6 +189,7 @@ public class LegCollider : MonoBehaviour
         {
             if (col.gameObject.GetComponent<CloudCol>().getLandingCloud)
             {
+                _onMoveCloud = true;
                 _onLandding = true;
             }
         }
@@ -204,6 +211,7 @@ public class LegCollider : MonoBehaviour
         //雲から降りた時
         if (col.gameObject.GetComponent<CloudCol>())
         {
+            _onMoveCloud = false;
             _onLandding = false;
         }
         if (col.gameObject.layer != 2 && JumpCheck(col.gameObject))
@@ -215,13 +223,14 @@ public class LegCollider : MonoBehaviour
         {
             _onFallBlock = false;
         }
-        
 
-            if (col.GetComponent<GimmickInfo>())
+        if (col.GetComponent<GimmickInfo>())
+        {
             if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.FIREFIELD && onGroundCount <= 0)
             {
                 return;
             }
+        }
 
         if (onGroundCount <= 0)
         {
@@ -239,7 +248,8 @@ public class LegCollider : MonoBehaviour
         player_ctr.OnGimmick = null;
         GimmickInfo info = col.GetComponent<GimmickInfo>();
 
-        switch (col.GetComponent<GimmickInfo>().type) {
+        switch (col.GetComponent<GimmickInfo>().type)
+        {
             case GimmickInfo.GimmickType.GROWTREE:
                 _onLandding = false;
                 player_ctr.rideTreeFlag = false;
@@ -247,7 +257,8 @@ public class LegCollider : MonoBehaviour
             case GimmickInfo.GimmickType.LADDER:
                 move_ctr.ladderDownFlag = false;
                 move_ctr.InLadderCount--;
-                if (move_ctr.InLadderCount <= 0) {
+                if (move_ctr.InLadderCount <= 0)
+                {
                     move_ctr.InLadderCount = 0;
                 }
                 break;
