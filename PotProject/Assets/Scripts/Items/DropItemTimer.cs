@@ -25,7 +25,7 @@ public class DropItemTimer : MonoBehaviour {
             reachFlag = true;
             StartCoroutine(Flashing());
         }
-        if(time > DestroyTime && !pCon)
+        if(time > DestroyTime && !pCon.pickUpFlag)
         {
             Destroy(transform.parent.gameObject);
         }

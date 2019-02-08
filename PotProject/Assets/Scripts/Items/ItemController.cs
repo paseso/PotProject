@@ -24,7 +24,7 @@ public class ItemController : MonoBehaviour {
     /// 回復ポーション
     /// </summary>
     public void HPPortion() {
-        playerController.HPUp(1);
+        playerController.HPUp(2);
     }
 
     /// <summary>
@@ -94,11 +94,14 @@ public class ItemController : MonoBehaviour {
         playerController.ItemUseFlag = true;
     }
 
-    public void Water() {
-        var waters = playerController.gameObject.GetComponent<StageController>().Waters;
-        foreach(var i in waters) {
-            i.SetActive(true);
-        }
+    /// <summary>
+    /// 雨雲から雨を降らせる
+    /// </summary>
+    public void Rain() {
+        if (!playerController.OnGimmick.GetComponent<GimmickInfo>()) { return; }
+        var info = playerController.OnGimmick.GetComponent<GimmickInfo>().gameObject;
+        if (info.GetComponent<GimmickInfo>().type != GimmickInfo.GimmickType.RAINCLOUD) { return; }
+        info.GetComponent<GimmickController>().ActiveWater(info);
         playerController.ItemUseFlag = true;
     }
 }

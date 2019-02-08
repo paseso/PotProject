@@ -109,6 +109,7 @@ public class MonsterController : MonoBehaviour
         {MonsterStatus.MonsterType.CLAY_D,"Clay_D" },
         {MonsterStatus.MonsterType.CLAY_T,"Clay_T" },
         {MonsterStatus.MonsterType.CLAY_W,"Clay_W" },
+        {MonsterStatus.MonsterType.MAGIC,"" }
     };
 
     private GameObject clearPanel;

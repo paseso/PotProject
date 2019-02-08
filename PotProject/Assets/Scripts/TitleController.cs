@@ -29,6 +29,7 @@ public class TitleController : MonoBehaviour
 
         LogoAnimatino();
         LoopCharaAnimation();
+        
         SoundManager.Instance.PlayBgm((int)SoundManager.BGMNAME.BGM_TITLE);
     }
 

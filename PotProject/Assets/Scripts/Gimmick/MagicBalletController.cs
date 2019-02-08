@@ -24,8 +24,6 @@ public class MagicBalletController : MonoBehaviour {
         }else if(GetComponent<MonsterController>()) {
             mStatus = GetComponent<MonsterController>().Status;
         }
-        
-        //GetComponent<MonsterStatus>().attribute = MonsterStatus.MonsterAttribute.THUNDER;
     }
     // Update is called once per frame
     void Update()

@@ -619,7 +619,7 @@ public class AlchemyController : MonoBehaviour {
 
                 break;
             case CreateItemStatus.Type.FlyCloud:
-
+                item_ctr.CreateCloud();
                 break;
             case CreateItemStatus.Type.HPPotion:
                 item_ctr.HPPortion();
@@ -640,7 +640,7 @@ public class AlchemyController : MonoBehaviour {
 
                 break;
             case CreateItemStatus.Type.RainCloud:
-
+                item_ctr.Rain();
                 break;
             case CreateItemStatus.Type.SmokeBall:
 
