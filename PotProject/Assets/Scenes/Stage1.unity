@@ -380,6 +380,11 @@ Prefab:
       propertyPath: enemies.Array.size
       value: 22
       objectReference: {fileID: 0}
+    - target: {fileID: 114477684173658472, guid: 46a2855876a394c43b9173becbcd16b8,
+        type: 2}
+      propertyPath: gimmicks.Array.size
+      value: 22
+      objectReference: {fileID: 0}
     - target: {fileID: 4317403914716936, guid: 46a2855876a394c43b9173becbcd16b8, type: 2}
       propertyPath: m_LocalPosition.x
       value: 1
@@ -426,6 +431,27 @@ Prefab:
       propertyPath: enemies.Array.data[21].enemyObj
       value: 
       objectReference: {fileID: 1230577038217164, guid: d517c865d5e54a847a2f2c66f73589c5,
+        type: 2}
+    - target: {fileID: 114477684173658472, guid: 46a2855876a394c43b9173becbcd16b8,
+        type: 2}
+      propertyPath: gimmicks.Array.data[21].gimmickImage
+      value: 
+      objectReference: {fileID: 2800000, guid: 3f7f0f2e5d3cb844bb7d2969098cd38f, type: 3}
+    - target: {fileID: 114477684173658472, guid: 46a2855876a394c43b9173becbcd16b8,
+        type: 2}
+      propertyPath: gimmicks.Array.data[21].gimmickSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114477684173658472, guid: 46a2855876a394c43b9173becbcd16b8,
+        type: 2}
+      propertyPath: gimmicks.Array.data[21].gimmickSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114477684173658472, guid: 46a2855876a394c43b9173becbcd16b8,
+        type: 2}
+      propertyPath: gimmicks.Array.data[21].gimmickObj
+      value: 
+      objectReference: {fileID: 1508175303122380, guid: 20079547bad63b34bb22fdde1f6853f6,
         type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 46a2855876a394c43b9173becbcd16b8, type: 2}

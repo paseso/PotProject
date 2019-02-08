@@ -60,7 +60,12 @@ public class ItemController : MonoBehaviour {
     /// </summary>
     public void LadderCreate()
     {
-        if (playerController.OnBlock.GetComponent<CreateLadder>()) { return; }
+        if(playerController.OnBlock == null) { return; }
+        if (playerController.OnBlock.layer != LayerMask.NameToLayer("Block")) { return; }
+        if (playerController.OnBlock.GetComponent<CreateLadder>()) {
+            playerController.OnBlock.GetComponent<CreateLadder>().PutOnLadder();
+            return;
+        }
         playerController.OnBlock.AddComponent<CreateLadder>();
         playerController.OnBlock.GetComponent<CreateLadder>().PutOnLadder();
     }
