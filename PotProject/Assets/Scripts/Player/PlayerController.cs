@@ -306,10 +306,6 @@ public class PlayerController : MonoBehaviour {
         itemUseFlag = false;
     }
 
-    public void ItemDelete(int num) {
-
-    }
-
     /// <summary>
     /// swordSpriteListに画像をセットする処理
     /// </summary>
