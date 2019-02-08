@@ -389,6 +389,7 @@ public class PlayerController : MonoBehaviour {
             alchemyUI_ctr.ItemFrameReSet();
             alchemyUI_ctr.setCreateItemUI();
             alchemyUI_ctr.ReSetMaterialsBox(status.ItemList);
+            alchemyUI_ctr.SelectItemText();
             Pot_UI.DOLocalMoveX(0, 0.3f).SetEase(Ease.Linear);
             alchemyUIFlag = true;
         }

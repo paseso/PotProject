@@ -63,6 +63,9 @@ public class AlchemyUIController : MonoBehaviour
     private AlchemyController alchemy_ctr;
     private AlchemyText alchemyText;
 
+    //アイテムのテキスト
+    private String txt;
+
     //---錬金UI中のフレームの縦ラインの位置-----------
     private int frameLine = 0000;
     private int frame_right = 0001;
@@ -169,19 +172,40 @@ public class AlchemyUIController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 錬金UIで選択されてるアイテムの説明文を出す
+    /// </summary>
+    public void SelectItemText()
+    {
+        Sprite img = Box_item[nowBox].GetComponent<Image>().sprite;
+        if (img == AlphaSprite)
+            return;
+        if ((frameLine & frame_right) > 0 || (frameLine & frame_center) > 0)
+        {
+            Itembox[nowBox].transform.parent.GetChild(1).transform.GetChild(0).GetComponent<Text>().text = alchemyText.MaterialTexts[(int)player_ctr.getItemList()[nowBox]].materialName;
+            Itembox[nowBox].transform.parent.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = alchemyText.MaterialTexts[(int)player_ctr.getItemList()[nowBox]].madeableItem;
+            Itembox[nowBox].transform.parent.GetChild(1).transform.GetChild(2).GetComponent<Text>().text = alchemyText.MaterialTexts[(int)player_ctr.getItemList()[nowBox]].materialDesc;
+        }
+        else if((frameLine & frame_left) > 0)
+        {
+            Itembox[nowBox].transform.parent.GetChild(1).transform.GetChild(0).GetComponent<Text>().text = alchemyText.ItemTexts[(int)player_ctr.getItemList()[nowBox]].itemName;
+            Itembox[nowBox].transform.parent.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = alchemyText.ItemTexts[(int)player_ctr.getItemList()[nowBox]].itemDesc;
+        }
+    }
 
     /// <summary>
     /// アイテムの決定
     /// </summary>
     public void PickItem()
     {
+        //何回も同じところを選択できないように
         if (beforeNowBox == nowBox)
             return;
-        if (frameLine == frame_right)
+        if ((frameLine & frame_right) > 0)
         {
             setMaterialsBox();
         }
-        else if (frameLine == frame_center)
+        else if ((frameLine & frame_center) > 0)
         {
             ReSetMaterialsBox(nowBox);
         }
@@ -360,14 +384,14 @@ public class AlchemyUIController : MonoBehaviour
     public void ItemFrameReSet()
     {
         nowBox = 0;
-        frameLine = 0001;
+        frameLine = frame_right;
+        beforeNowBox = -1;
         if (Box_item.Length == 2)
         {
             Box_item = new GameObject[Itembox.Length];
         }
         Array.Copy(Itembox, Box_item, Itembox.Length);
         ItemFrame.transform.position = Box_item[0].transform.position;
-        frameLine = frame_right;
     }
 
     /// <summary>
@@ -463,6 +487,7 @@ public class AlchemyUIController : MonoBehaviour
                     nowBox++;
             }
             ItemFrame.transform.position = Box_item[nowBox].transform.position;
+            SelectItemText();
             SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SELECT);
             break;
         }
@@ -483,6 +508,7 @@ public class AlchemyUIController : MonoBehaviour
 
             nowBox = 0;
             ItemFrame.transform.position = Box_item[0].transform.position;
+            SelectItemText();
             SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SELECT);
             break;
         }
@@ -704,4 +730,5 @@ public class AlchemyUIController : MonoBehaviour
 
         alchemy_ctr.setGeneratedImg(player_ctr.getCreateItemList()[nowAlchemyItem]);
     }
+
 }
