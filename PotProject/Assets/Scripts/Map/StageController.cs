@@ -26,6 +26,9 @@ public class StageController : MonoBehaviour
 
     private MiniMapController mMapController;
 
+    // 外壁
+    private GameObject wall;
+
     public List<List<GameObject>> GetMaps
     {
         get { return Maps; }
@@ -68,6 +71,7 @@ public class StageController : MonoBehaviour
     void Start()
     {
         SetList();
+        wall = GameObject.Find("Walls");
         clearPanel = FindObjectOfType<GameClear>().gameObject;
         clearPanel.SetActive(false);
         SetWater();
@@ -138,6 +142,10 @@ public class StageController : MonoBehaviour
     /// <returns></returns>
     public IEnumerator SrideInFade(int num, Direction dir, Vector2 pos)
     {
+        foreach(Transform i in wall.transform) {
+            i.gameObject.layer = LayerMask.NameToLayer("MoveMap");
+        }
+        
         cManager.SwitchingCameraSub(pos, subCameraSize);
         yield return new WaitForSeconds(1.5f);
         SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SLIDESTAGE);
@@ -145,6 +153,9 @@ public class StageController : MonoBehaviour
         mMapController.NowMap();
         yield return new WaitForSeconds(4.5f);
         pController.AllCommandActive = true;
+        foreach (Transform i in wall.transform) {
+            i.gameObject.layer = LayerMask.NameToLayer("Wall");
+        }
 
     }
 

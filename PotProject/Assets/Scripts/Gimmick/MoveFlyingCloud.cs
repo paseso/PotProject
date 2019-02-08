@@ -33,11 +33,6 @@ public class MoveFlyingCloud : MonoBehaviour {
 	
 	// Update is called once per frame
 	void LateUpdate () {
-        //if (!createFlag) {
-        //    MoveSide();
-        //    //MoveDiagonal();
-        //    return;
-        //}
 
         switch (moveType) {
             case MoveType.UpDown:
@@ -54,13 +49,8 @@ public class MoveFlyingCloud : MonoBehaviour {
         }
     }
 
-    public void OnTriggerEnter2D(Collider2D col) {
-
-        if (col.gameObject.layer == LayerMask.NameToLayer("Block")) {
-            direction *= -1;
-        }
-
-
+    public void OnCollisionEnter2D(Collision2D col) {
+        direction *= -1;
     }
 
     public void MoveSide() {

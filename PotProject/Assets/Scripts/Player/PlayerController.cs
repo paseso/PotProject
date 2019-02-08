@@ -407,19 +407,13 @@ public class PlayerController : MonoBehaviour {
     /// <param name="point">上昇値</param>
     public void HPUp(int point)
     {
-        if (status.PlayerHP + point > status.GetMaxHP) {
-            status.PlayerHP = status.GetMaxHP;
-            for (int i = 0; i < status.PlayerHP; i++)
-            {
-                hearts[i].SetActive(true);
-            }
-            return;
-        }
+        if (status.PlayerHP + point > status.GetMaxHP) { return; }
         status.PlayerHP += point;
         for(int i = 0; i < status.PlayerHP; i++)
         {
             hearts[i].SetActive(true);
         }
+        itemUseFlag = true;
     }
 
     /// <summary>
