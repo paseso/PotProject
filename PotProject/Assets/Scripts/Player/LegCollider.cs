@@ -122,7 +122,15 @@ public class LegCollider : MonoBehaviour
             move_ctr.switchGimmick = col.gameObject;
             col.GetComponent<GimmickController>().OnPlayerFlag = true;
         }
-
+        //動く雲に乗った後に普通のブロックに乗ったら弟位置解除
+        if(col.gameObject.layer == LayerMask.NameToLayer("Block"))
+        {
+            if(_onLandding || _onMoveCloud)
+            {
+                _onMoveCloud = false;
+                _onLandding = false;
+            }
+        }
         //ちくわブロックに乗っかった時
         if (col.gameObject.name == "FallCol")
         {
@@ -207,12 +215,6 @@ public class LegCollider : MonoBehaviour
         {
             move_ctr.switchGimmick = null;
             col.GetComponent<GimmickController>().OnPlayerFlag = false;
-        }
-        //雲から降りた時
-        if (col.gameObject.GetComponent<CloudCol>())
-        {
-            _onMoveCloud = false;
-            _onLandding = false;
         }
         if (col.gameObject.layer != 2 && JumpCheck(col.gameObject))
         {
