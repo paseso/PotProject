@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour {
         //剣のデバッグ
         //swordList[1] = PlayerStatus.SWORDTYPE.AXE;
         //swordList[2] = PlayerStatus.SWORDTYPE.DARK;
-        //swordList[3] = PlayerStatus.SWORDTYPE.TORCH;
+        //swordList[3] = PlayerStatus.SWORDTYPE.VAJURA;
         _itemMax = false;
         alchemyUIFlag = false;
         
@@ -270,6 +270,7 @@ public class PlayerController : MonoBehaviour {
         if (createItemBox.Count <= 0)
             return;
         createItemBox.Remove(type);
+        alchemy_ctr.ReSetGeneratedImg();
     }
 
     /// <summary>
@@ -286,8 +287,8 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     public void deleteCreateItemList(int num)
     {
-        alchemy_ctr.ReSetGeneratedImg();
         createItemBox.RemoveAt(num);
+        alchemy_ctr.ReSetGeneratedImg();
     }
 
     /// <summary>
@@ -352,6 +353,7 @@ public class PlayerController : MonoBehaviour {
                 break;
             case PlayerStatus.SWORDTYPE.AXE:
             case PlayerStatus.SWORDTYPE.TORCH:
+            case PlayerStatus.SWORDTYPE.VAJURA:
                 status.PlayerAttack = 2;
                 break;
         }

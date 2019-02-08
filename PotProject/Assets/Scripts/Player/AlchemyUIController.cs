@@ -616,7 +616,6 @@ public class AlchemyUIController : MonoBehaviour
             }
             else
             {
-                Debug.Log("NullCheck");
                 //画像が見当たらなかった時の処理
                 NullCheckImage(i);
             }
