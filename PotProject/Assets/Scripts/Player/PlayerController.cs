@@ -304,12 +304,9 @@ public class PlayerController : MonoBehaviour
     /// <param name="num"></param>
     public void UseAlchemyItem(int num)
     {
-        Debug.Log("UseItem num = " + num);
         alchemy_ctr.AlchemyItem(getCreateItemList()[num]);
         if (!ItemUseFlag)
-        {
             return;
-        }
         deleteCreateItemList(num);
         alchemyUI_ctr.setNowAlchemyItem();
         alchemyUI_ctr.setCreateItemUI();
