@@ -93,4 +93,12 @@ public class ItemController : MonoBehaviour {
         }
         playerController.ItemUseFlag = true;
     }
+
+    public void Water() {
+        var waters = playerController.gameObject.GetComponent<StageController>().Waters;
+        foreach(var i in waters) {
+            i.SetActive(true);
+        }
+        playerController.ItemUseFlag = true;
+    }
 }
