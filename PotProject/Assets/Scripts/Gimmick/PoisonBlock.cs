@@ -9,7 +9,7 @@ public class PoisonBlock : MonoBehaviour {
         pCon = GameObject.Find("Controller").GetComponent<PlayerController>();
 	}
 	
-    public void OnCollisionEnter2D(Collision2D col) {
+    public void OnTriggerEnter2D(Collider2D col) {
         if (col.gameObject.layer == LayerMask.NameToLayer("Player")) {
             pCon.HPDown(6);
         }

@@ -68,6 +68,11 @@ public class StageController : MonoBehaviour
 
     private GameObject clearPanel;
 
+    public GameObject GetClearPanel
+    {
+        get { return clearPanel; }
+    }
+
     void Start()
     {
         SetList();
