@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Anima2D;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 
 public class AnimController : MonoBehaviour {
@@ -15,18 +16,14 @@ public class AnimController : MonoBehaviour {
             RIGHTIDLE,
             LEFT_WALK,
             RIGHT_WALK,
-            SWORDATTACK_LEFT,
-            SWORDATTACK_RIGHT,
+            SORDATTACK_LEFT,
+            SORDATTACK_RIGHT,
             LADDER_UP,
             LADDER_DOWN,
             LEFT_GETITEM,
             RIGHT_GETITEM,
             LEFT_SUFFERDAMAGE,
             RIGHT_SUFFERDAMAGE,
-            RIGHT_VAJURA,
-            LEFT_VAJURA,
-            RIGHTBRINGPOT,
-            LEFTBRINGPOT,
         }
         public AnimType animtype;
     }
@@ -38,7 +35,7 @@ public class AnimController : MonoBehaviour {
     private Animator pot_anim;
     private EffectManager effect_mng;
     private PlayerController player_ctr;
-    private PlayerManager player_mng;
+    private PlayerStatus playerstatus;
     private MoveController move_ctr;
 
     //拾うアニメーションの時に使う
@@ -58,7 +55,6 @@ public class AnimController : MonoBehaviour {
         attack_ctr = gameObject.transform.parent.GetComponentInChildren<AttackZoneController>();
         effect_mng = GameObject.Find("EffectManager").GetComponent<EffectManager>();
         move_ctr = gameObject.GetComponentInChildren<MoveController>();
-        player_mng = GameObject.Find("PlayerStatus").GetComponent<PlayerManager>();
         _attackStart = false;
 	}
 
@@ -72,14 +68,11 @@ public class AnimController : MonoBehaviour {
             case AnimState.AnimType.LEFTJUMP:
             case AnimState.AnimType.LEFTIDLE:
             case AnimState.AnimType.LEFT_WALK:
-            case AnimState.AnimType.SWORDATTACK_LEFT:
+            case AnimState.AnimType.SORDATTACK_LEFT:
             case AnimState.AnimType.LEFT_SUFFERDAMAGE:
-            case AnimState.AnimType.LEFT_VAJURA:
-            case AnimState.AnimType.LEFTBRINGPOT:
                 //剣
                 gameObject.transform.GetChild(4).GetComponent<SpriteRenderer>().sortingOrder = 10;
                 //頭
-                gameObject.transform.GetChild(5).GetComponent<SpriteMeshInstance>().sortingOrder = 6;
                 gameObject.transform.GetChild(5).GetComponent<SpriteMeshAnimation>().frame = 0;
                 gameObject.transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<SpriteMeshInstance>().sortingOrder = 8;
                 gameObject.transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<SpriteMeshInstance>().sortingOrder = 8;
@@ -125,14 +118,11 @@ public class AnimController : MonoBehaviour {
             case AnimState.AnimType.RIGHTJUMP:
             case AnimState.AnimType.RIGHTIDLE:
             case AnimState.AnimType.RIGHT_WALK:
-            case AnimState.AnimType.SWORDATTACK_RIGHT:
+            case AnimState.AnimType.SORDATTACK_RIGHT:
             case AnimState.AnimType.RIGHT_SUFFERDAMAGE:
-            case AnimState.AnimType.RIGHT_VAJURA:
-            case AnimState.AnimType.RIGHTBRINGPOT:
                 //剣
                 gameObject.transform.GetChild(4).GetComponent<SpriteRenderer>().sortingOrder = 1;
                 //頭
-                gameObject.transform.GetChild(5).GetComponent<SpriteMeshInstance>().sortingOrder = 6;
                 gameObject.transform.GetChild(5).GetComponent<SpriteMeshAnimation>().frame = 1;
                 gameObject.transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<SpriteMeshInstance>().sortingOrder = 8;
                 gameObject.transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<SpriteMeshInstance>().sortingOrder = 8;
@@ -238,7 +228,7 @@ public class AnimController : MonoBehaviour {
 
         switch (animtype)
         {
-            case AnimState.AnimType.SWORDATTACK_LEFT:
+            case AnimState.AnimType.SORDATTACK_LEFT:
                 //RightArm
                 gameObject.transform.GetChild(9).GetChild(0).GetComponent<SpriteMeshInstance>().sortingOrder = 10;
                 gameObject.transform.GetChild(9).GetChild(0).GetChild(0).GetComponent<SpriteMeshInstance>().sortingOrder = 10;
@@ -246,7 +236,7 @@ public class AnimController : MonoBehaviour {
                 gameObject.transform.GetChild(9).GetChild(0).GetChild(0).GetComponent<SpriteMeshAnimation>().frame = 0;
                 break;
 
-            case AnimState.AnimType.SWORDATTACK_RIGHT:
+            case AnimState.AnimType.SORDATTACK_RIGHT:
                 //剣
                 gameObject.transform.GetChild(4).GetComponent<SpriteRenderer>().sortingOrder = 10;
                 //LeftArm
@@ -286,10 +276,6 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightGetItem", false);
                 anim.SetBool("isLeftSufferDamage", false);
                 anim.SetBool("isRightSufferDamage", false);
-                anim.SetBool("isRightVajura", false);
-                anim.SetBool("isLeftVajura", false);
-                anim.SetBool("isLeftBringPot", false);
-                anim.SetBool("isRightBringPot", false);
                 pot_anim.SetBool("isIdle", true);
                 pot_anim.SetBool("isRightMove", false);
                 pot_anim.SetBool("isLeftMove", false);
@@ -310,10 +296,6 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightGetItem", false);
                 anim.SetBool("isLeftSufferDamage", false);
                 anim.SetBool("isRightSufferDamage", false);
-                anim.SetBool("isRightVajura", false);
-                anim.SetBool("isLeftVajura", false);
-                anim.SetBool("isLeftBringPot", false);
-                anim.SetBool("isRightBringPot", false);
                 pot_anim.SetBool("isIdle", true);
                 pot_anim.SetBool("isRightMove", false);
                 pot_anim.SetBool("isLeftMove", false);
@@ -334,10 +316,6 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightGetItem", false);
                 anim.SetBool("isLeftSufferDamage", false);
                 anim.SetBool("isRightSufferDamage", false);
-                anim.SetBool("isRightVajura", false);
-                anim.SetBool("isLeftVajura", false);
-                anim.SetBool("isLeftBringPot", false);
-                anim.SetBool("isRightBringPot", false);
                 pot_anim.SetBool("isIdle", true);
                 pot_anim.SetBool("isRightMove", false);
                 pot_anim.SetBool("isLeftMove", false);
@@ -358,10 +336,6 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightGetItem", false);
                 anim.SetBool("isLeftSufferDamage", false);
                 anim.SetBool("isRightSufferDamage", false);
-                anim.SetBool("isRightVajura", false);
-                anim.SetBool("isLeftVajura", false);
-                anim.SetBool("isLeftBringPot", false);
-                anim.SetBool("isRightBringPot", false);
                 pot_anim.SetBool("isIdle", true);
                 pot_anim.SetBool("isRightMove", false);
                 pot_anim.SetBool("isLeftMove", false);
@@ -382,10 +356,6 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightGetItem", false);
                 anim.SetBool("isLeftSufferDamage", false);
                 anim.SetBool("isRightSufferDamage", false);
-                anim.SetBool("isRightVajura", false);
-                anim.SetBool("isLeftVajura", false);
-                anim.SetBool("isLeftBringPot", false);
-                anim.SetBool("isRightBringPot", false);
                 pot_anim.SetBool("isIdle", false);
                 pot_anim.SetBool("isRightMove", false);
                 pot_anim.SetBool("isLeftMove", true);
@@ -406,106 +376,46 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightGetItem", false);
                 anim.SetBool("isLeftSufferDamage", false);
                 anim.SetBool("isRightSufferDamage", false);
-                anim.SetBool("isRightVajura", false);
-                anim.SetBool("isLeftVajura", false);
-                anim.SetBool("isLeftBringPot", false);
-                anim.SetBool("isRightBringPot", false);
                 pot_anim.SetBool("isIdle", false);
                 pot_anim.SetBool("isRightMove", true);
                 pot_anim.SetBool("isLeftMove", false);
                 break;
 
-            case AnimState.AnimType.SWORDATTACK_LEFT:
-                animstate.animtype = AnimState.AnimType.SWORDATTACK_LEFT;
+            case AnimState.AnimType.SORDATTACK_LEFT:
+                animstate.animtype = AnimState.AnimType.SORDATTACK_LEFT;
                 anim.SetBool("isRightJump", false);
                 anim.SetBool("isLeftJump", false);
                 anim.SetBool("isLeftWalk", false);
                 anim.SetBool("isRightWalk", false);
                 anim.SetBool("isLeftIdle", false);
                 anim.SetBool("isRightIdle", false);
-                anim.SetBool("isSordAttackRight", false);
                 anim.SetBool("isSordAttackLeft", true);
+                anim.SetBool("isSordAttackRight", false);
                 anim.SetBool("isLadderUp", false);
                 anim.SetBool("isLeftGetItem", false);
                 anim.SetBool("isRightGetItem", false);
                 anim.SetBool("isLeftSufferDamage", false);
                 anim.SetBool("isRightSufferDamage", false);
-                anim.SetBool("isRightVajura", false);
-                anim.SetBool("isLeftVajura", false);
-                anim.SetBool("isLeftBringPot", false);
-                anim.SetBool("isRightBringPot", false);
                 pot_anim.SetBool("isIdle", true);
                 pot_anim.SetBool("isRightMove", false);
                 pot_anim.SetBool("isLeftMove", false);
                 break;
 
-            case AnimState.AnimType.SWORDATTACK_RIGHT:
-                animstate.animtype = AnimState.AnimType.SWORDATTACK_RIGHT;
+            case AnimState.AnimType.SORDATTACK_RIGHT:
+                animstate.animtype = AnimState.AnimType.SORDATTACK_RIGHT;
                 anim.SetBool("isRightJump", false);
                 anim.SetBool("isLeftJump", false);
                 anim.SetBool("isLeftWalk", false);
                 anim.SetBool("isRightWalk", false);
                 anim.SetBool("isLeftIdle", false);
                 anim.SetBool("isRightIdle", false);
+                anim.SetBool("isSordAttackLeft", false);
                 anim.SetBool("isSordAttackRight", true);
-                anim.SetBool("isSordAttackLeft", false);
                 anim.SetBool("isLadderUp", false);
                 anim.SetBool("isLeftGetItem", false);
                 anim.SetBool("isRightGetItem", false);
                 anim.SetBool("isLeftSufferDamage", false);
                 anim.SetBool("isRightSufferDamage", false);
-                anim.SetBool("isRightVajura", false);
-                anim.SetBool("isLeftVajura", false);
-                anim.SetBool("isLeftBringPot", false);
-                anim.SetBool("isRightBringPot", false);
-                pot_anim.SetBool("isIdle", true);
-                pot_anim.SetBool("isRightMove", false);
-                pot_anim.SetBool("isLeftMove", false);
-                break;
-
-            case AnimState.AnimType.LEFT_VAJURA:
-                animstate.animtype = AnimState.AnimType.LEFT_VAJURA;
-                anim.SetBool("isRightJump", false);
-                anim.SetBool("isLeftJump", false);
-                anim.SetBool("isLeftWalk", false);
-                anim.SetBool("isRightWalk", false);
-                anim.SetBool("isLeftIdle", false);
-                anim.SetBool("isRightIdle", false);
-                anim.SetBool("isSordAttackRight", false);
-                anim.SetBool("isSordAttackLeft", false);
-                anim.SetBool("isLadderUp", false);
-                anim.SetBool("isLeftGetItem", false);
-                anim.SetBool("isRightGetItem", false);
-                anim.SetBool("isLeftSufferDamage", false);
-                anim.SetBool("isRightSufferDamage", false);
-                anim.SetBool("isRightVajura", false);
-                anim.SetBool("isLeftVajura", true);
-                anim.SetBool("isLeftBringPot", false);
-                anim.SetBool("isRightBringPot", false);
-                pot_anim.SetBool("isIdle", true);
-                pot_anim.SetBool("isRightMove", false);
-                pot_anim.SetBool("isLeftMove", false);
-                break;
-
-            case AnimState.AnimType.RIGHT_VAJURA:
-                animstate.animtype = AnimState.AnimType.RIGHT_VAJURA;
-                anim.SetBool("isRightJump", false);
-                anim.SetBool("isLeftJump", false);
-                anim.SetBool("isLeftWalk", false);
-                anim.SetBool("isRightWalk", false);
-                anim.SetBool("isLeftIdle", false);
-                anim.SetBool("isRightIdle", false);
-                anim.SetBool("isSordAttackRight", false);
-                anim.SetBool("isSordAttackLeft", false);
-                anim.SetBool("isLadderUp", false);
-                anim.SetBool("isLeftGetItem", false);
-                anim.SetBool("isRightGetItem", false);
-                anim.SetBool("isLeftSufferDamage", false);
-                anim.SetBool("isRightSufferDamage", false);
-                anim.SetBool("isRightVajura", true);
-                anim.SetBool("isLeftVajura", false);
-                anim.SetBool("isLeftBringPot", false);
-                anim.SetBool("isRightBringPot", false);
                 pot_anim.SetBool("isIdle", true);
                 pot_anim.SetBool("isRightMove", false);
                 pot_anim.SetBool("isLeftMove", false);
@@ -526,10 +436,6 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightGetItem", false);
                 anim.SetBool("isLeftSufferDamage", false);
                 anim.SetBool("isRightSufferDamage", false);
-                anim.SetBool("isRightVajura", false);
-                anim.SetBool("isLeftVajura", false);
-                anim.SetBool("isLeftBringPot", false);
-                anim.SetBool("isRightBringPot", false);
                 pot_anim.SetBool("isIdle", true);
                 pot_anim.SetBool("isRightMove", false);
                 pot_anim.SetBool("isLeftMove", false);
@@ -550,10 +456,6 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightGetItem", false);
                 anim.SetBool("isLeftSufferDamage", false);
                 anim.SetBool("isRightSufferDamage", false);
-                anim.SetBool("isRightVajura", false);
-                anim.SetBool("isLeftVajura", false);
-                anim.SetBool("isLeftBringPot", false);
-                anim.SetBool("isRightBringPot", false);
                 pot_anim.SetBool("isIdle", true);
                 pot_anim.SetBool("isRightMove", false);
                 pot_anim.SetBool("isLeftMove", false);
@@ -574,10 +476,6 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightGetItem", false);
                 anim.SetBool("isLeftSufferDamage", false);
                 anim.SetBool("isRightSufferDamage", false);
-                anim.SetBool("isRightVajura", false);
-                anim.SetBool("isLeftVajura", false);
-                anim.SetBool("isLeftBringPot", false);
-                anim.SetBool("isRightBringPot", false);
                 pot_anim.SetBool("isIdle", false);
                 pot_anim.SetBool("isRightMove", false);
                 pot_anim.SetBool("isLeftMove", false);
@@ -600,10 +498,6 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightGetItem", true);
                 anim.SetBool("isLeftSufferDamage", false);
                 anim.SetBool("isRightSufferDamage", false);
-                anim.SetBool("isRightVajura", false);
-                anim.SetBool("isLeftVajura", false);
-                anim.SetBool("isLeftBringPot", false);
-                anim.SetBool("isRightBringPot", false);
                 pot_anim.SetBool("isIdle", false);
                 pot_anim.SetBool("isRightMove", false);
                 pot_anim.SetBool("isLeftMove", false);
@@ -626,10 +520,6 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightGetItem", true);
                 anim.SetBool("isLeftSufferDamage", true);
                 anim.SetBool("isRightSufferDamage", false);
-                anim.SetBool("isRightVajura", false);
-                anim.SetBool("isLeftVajura", false);
-                anim.SetBool("isLeftBringPot", false);
-                anim.SetBool("isRightBringPot", false);
                 pot_anim.SetBool("isIdle", false);
                 pot_anim.SetBool("isRightMove", false);
                 pot_anim.SetBool("isLeftMove", false);
@@ -651,64 +541,10 @@ public class AnimController : MonoBehaviour {
                 anim.SetBool("isRightGetItem", true);
                 anim.SetBool("isLeftSufferDamage", false);
                 anim.SetBool("isRightSufferDamage", true);
-                anim.SetBool("isRightVajura", false);
-                anim.SetBool("isLeftVajura", false);
-                anim.SetBool("isLeftBringPot", false);
-                anim.SetBool("isRightBringPot", false);
                 pot_anim.SetBool("isIdle", false);
                 pot_anim.SetBool("isRightMove", false);
                 pot_anim.SetBool("isLeftMove", false);
                 pot_anim.SetBool("isPotDown", false);
-                break;
-
-            case AnimState.AnimType.LEFTBRINGPOT:
-                animstate.animtype = AnimState.AnimType.LEFTBRINGPOT;
-                anim.SetBool("isRightJump", false);
-                anim.SetBool("isLeftJump", false);
-                anim.SetBool("isLeftWalk", false);
-                anim.SetBool("isRightWalk", false);
-                anim.SetBool("isLeftIdle", false);
-                anim.SetBool("isRightIdle", false);
-                anim.SetBool("isSordAttackLeft", false);
-                anim.SetBool("isSordAttackRight", false);
-                anim.SetBool("isLadderUp", false);
-                anim.SetBool("isLeftGetItem", true);
-                anim.SetBool("isRightGetItem", false);
-                anim.SetBool("isLeftSufferDamage", false);
-                anim.SetBool("isRightSufferDamage", false);
-                anim.SetBool("isRightVajura", false);
-                anim.SetBool("isLeftVajura", false);
-                anim.SetBool("isLeftBringPot", true);
-                anim.SetBool("isRightBringPot", false);
-                pot_anim.SetBool("isIdle", false);
-                pot_anim.SetBool("isRightMove", false);
-                pot_anim.SetBool("isLeftMove", false);
-                pot_anim.SetBool("isPotDown", true);
-                break;
-
-            case AnimState.AnimType.RIGHTBRINGPOT:
-                animstate.animtype = AnimState.AnimType.RIGHTBRINGPOT;
-                anim.SetBool("isRightJump", false);
-                anim.SetBool("isLeftJump", false);
-                anim.SetBool("isLeftWalk", false);
-                anim.SetBool("isRightWalk", false);
-                anim.SetBool("isLeftIdle", false);
-                anim.SetBool("isRightIdle", false);
-                anim.SetBool("isSordAttackLeft", false);
-                anim.SetBool("isSordAttackRight", false);
-                anim.SetBool("isLadderUp", false);
-                anim.SetBool("isLeftGetItem", true);
-                anim.SetBool("isRightGetItem", false);
-                anim.SetBool("isLeftSufferDamage", false);
-                anim.SetBool("isRightSufferDamage", false);
-                anim.SetBool("isRightVajura", false);
-                anim.SetBool("isLeftVajura", false);
-                anim.SetBool("isLeftBringPot", false);
-                anim.SetBool("isRightBringPot", true);
-                pot_anim.SetBool("isIdle", false);
-                pot_anim.SetBool("isRightMove", false);
-                pot_anim.SetBool("isLeftMove", false);
-                pot_anim.SetBool("isPotDown", true);
                 break;
         }
     }
@@ -819,9 +655,6 @@ public class AnimController : MonoBehaviour {
             case SoundManager.SENAME.SE_JAMP:
                 SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_JAMP);
                 break;
-            case SoundManager.SENAME.SE_THUNDER:
-                SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_THUNDER);
-                break;
             default:
                 Debug.Log("セットされてません");
                 break;
@@ -834,13 +667,9 @@ public class AnimController : MonoBehaviour {
     public void SwordSE()
     {
         //アックス、槍、たいまつは重い剣のSE
-        if (player_mng.GetSwordType == PlayerStatus.SWORDTYPE.AXE || player_mng.GetSwordType == PlayerStatus.SWORDTYPE.TORCH)
+        if (playerstatus.swordtype == PlayerStatus.SWORDTYPE.AXE || playerstatus.swordtype == PlayerStatus.SWORDTYPE.TORCH)
         {
             SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SWORDHEAVY);
-        }
-        else if(player_mng.GetSwordType == PlayerStatus.SWORDTYPE.VAJURA)
-        {
-            SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_THUNDER);
         }
         else
         {

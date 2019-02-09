@@ -6,7 +6,6 @@ public class LegCollider : MonoBehaviour
     private MoveController move_ctr;
     private PlayerController player_ctr;
     private GameObject PotObj;
-    private AnimController anim_ctr;
 
     private bool landingFlag = false;
     //雲に乗ってるかどうか
@@ -14,8 +13,6 @@ public class LegCollider : MonoBehaviour
     //ちくわブロックに乗ってるかどうか
     private bool _onFallBlock = false;
     private bool _onMoveCloud = false;
-
-    private MoveController.Direction nowDirec;
 
     float jumpPos;
     int onGroundCount;
@@ -69,11 +66,9 @@ public class LegCollider : MonoBehaviour
         move_ctr = transform.parent.GetComponentInChildren<MoveController>();
         player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         PotObj = GameObject.FindObjectOfType<PotController>().gameObject;
-        anim_ctr = move_ctr.gameObject.transform.parent.GetComponent<AnimController>();
         _onLandding = false;
         _onFallBlock = false;
         _onMoveCloud = false;
-        nowDirec = move_ctr.direc;
     }
 
     private void Update()
@@ -83,8 +78,6 @@ public class LegCollider : MonoBehaviour
         {
             PotObj.transform.position = gameObject.transform.parent.transform.position;
             PotObj.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-            
-            nowDirec = move_ctr.direc;
         }
         if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer") && move_ctr.InLadderCount <= 0)
         {
@@ -208,13 +201,6 @@ public class LegCollider : MonoBehaviour
             {
                 _onMoveCloud = true;
                 _onLandding = true;
-                //if (move_ctr.direc != nowDirec)
-                //{
-                //    if (move_ctr.direc == MoveController.Direction.LEFT)
-                //        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTBRINGPOT);
-                //    else
-                //        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTBRINGPOT);
-                //}
             }
         }
         //ちくわブロックに乗っかってる時
