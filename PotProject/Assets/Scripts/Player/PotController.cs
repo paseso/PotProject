@@ -226,14 +226,6 @@ public class PotController : MonoBehaviour
     }
 
     /// <summary>
-    /// お兄ちゃんが物を持っている時レイヤーを変更する処理
-    /// </summary>
-    public void ChangeLayer()
-    {
-        gameObject.layer = LayerMask.NameToLayer("Default");
-    }
-
-    /// <summary>
     /// ツボの属性を変更する処理
     /// </summary>
     public void ChangePotType(PotStatus.PotType pot_type)
