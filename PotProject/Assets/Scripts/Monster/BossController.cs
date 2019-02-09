@@ -106,6 +106,7 @@ public class BossController : MonoBehaviour {
                 transform.DOMoveY(transform.localPosition.y - (size.y * 5), moveTime).SetEase(Ease.Linear).SetDelay(1f).OnComplete(() =>
                 {
                     clearPanel.SetActive(true);
+                    UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(clearPanel.transform.GetChild(0).gameObject);
                 });
             });
 

@@ -108,11 +108,6 @@ public class AlchemyController : MonoBehaviour {
         ReSetGeneratedImg();
         setCreateItem();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     /// <summary>
     /// 生成できるアイテム配列CreateItemにセット
@@ -171,16 +166,16 @@ public class AlchemyController : MonoBehaviour {
         bool _succece = true;
         switch (item)
         {
-            case ItemStatus.Type.LAMP:
+            //case ItemStatus.Type.LAMP:
                 //ランプ
-                _succece = true;
-                player_ctr.setCreateItemList(CreateItemStatus.Type.Lamp);
-                break;
-            case ItemStatus.Type.SMOKE:
+                //_succece = true;
+                //player_ctr.setCreateItemList(CreateItemStatus.Type.Lamp);
+                //break;
+            //case ItemStatus.Type.SMOKE:
                 //爆薬
-                _succece = true;
-                player_ctr.setItemList(ItemStatus.Type.EXPLOSIVE);
-                break;
+                //_succece = true;
+                //player_ctr.setItemList(ItemStatus.Type.EXPLOSIVE);
+                //break;
             case ItemStatus.Type.CRYSTAL:
                 //水
                 _succece = true;
@@ -220,11 +215,11 @@ public class AlchemyController : MonoBehaviour {
                         _succece = true;
                         player_ctr.setCreateItemList(CreateItemStatus.Type.Ladder);
                         break;
-                    case ItemStatus.Type.POWDER:
+                    //case ItemStatus.Type.POWDER:
                         //投げ縄
-                        _succece = true;
-                        player_ctr.setCreateItemList(CreateItemStatus.Type.Lasso);
-                        break;
+                        //_succece = true;
+                        //player_ctr.setCreateItemList(CreateItemStatus.Type.Lasso);
+                        //break;
                     default:
                         //ゴミ
                         _succece = false;
@@ -241,11 +236,11 @@ public class AlchemyController : MonoBehaviour {
                         _succece = true;
                         player_ctr.setCreateItemList(CreateItemStatus.Type.Key);
                         break;
-                    case ItemStatus.Type.CLAY_N:
+                    //case ItemStatus.Type.CLAY_N:
                         //磁石
-                        _succece = true;
-                        player_ctr.setCreateItemList(CreateItemStatus.Type.Magnet);
-                        break;
+                        //_succece = true;
+                        //player_ctr.setCreateItemList(CreateItemStatus.Type.Magnet);
+                        //break;
                     default:
                         //ゴミ
                         _succece = false;
@@ -262,11 +257,11 @@ public class AlchemyController : MonoBehaviour {
                         _succece = true;
                         player_ctr.setCreateItemList(CreateItemStatus.Type.Key);
                         break;
-                    case ItemStatus.Type.LIZARD:
+                    //case ItemStatus.Type.LIZARD:
                         //斧
-                        _succece = true;
-                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.AXE);
-                        break;
+                        //_succece = true;
+                        //player_ctr.setSwordList(PlayerStatus.SWORDTYPE.AXE);
+                        //break;
                     default:
                         //ゴミ
                         _succece = false;
@@ -283,11 +278,11 @@ public class AlchemyController : MonoBehaviour {
                         _succece = true;
                         player_ctr.setCreateItemList(CreateItemStatus.Type.HPPotion);
                         break;
-                    case ItemStatus.Type.CLAY_N:
+                    //case ItemStatus.Type.CLAY_N:
                         //攻撃ポーション
-                        _succece = true;
-                        player_ctr.setCreateItemList(CreateItemStatus.Type.ATKPotion);
-                        break;
+                        //_succece = true;
+                        //player_ctr.setCreateItemList(CreateItemStatus.Type.ATKPotion);
+                        //break;
                     default:
                         //ゴミ
                         _succece = false;
@@ -306,14 +301,14 @@ public class AlchemyController : MonoBehaviour {
                         break;
                     case ItemStatus.Type.POWDER:
                         //ブーメラン
-                        _succece = true;
-                        player_ctr.setCreateItemList(CreateItemStatus.Type.Boomerang);
+                        //_succece = true;
+                        //player_ctr.setCreateItemList(CreateItemStatus.Type.Boomerang);
                         break;
-                    case ItemStatus.Type.KEYROD:
+                    //case ItemStatus.Type.KEYROD:
                         //斧
-                        _succece = true;
-                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.AXE);
-                        break;
+                        //_succece = true;
+                        //player_ctr.setSwordList(PlayerStatus.SWORDTYPE.AXE);
+                        //break;
                     case ItemStatus.Type.VAJURA:
                         //ドリル
                         _succece = true;
@@ -367,11 +362,11 @@ public class AlchemyController : MonoBehaviour {
             case ItemStatus.Type.MIC:
                 switch (item_1)
                 {
-                    case ItemStatus.Type.CLAY_N:
+                    //case ItemStatus.Type.CLAY_N:
                         //拡声器
-                        _succece = true;
-                        player_ctr.setCreateItemList(CreateItemStatus.Type.Speaker);
-                        break;
+                        //_succece = true;
+                        //player_ctr.setCreateItemList(CreateItemStatus.Type.Speaker);
+                        //break;
                     default:
                         //ゴミ
                         _succece = false;
@@ -388,11 +383,11 @@ public class AlchemyController : MonoBehaviour {
                         _succece = true;
                         player_ctr.setCreateItemList(CreateItemStatus.Type.FlyCloud);
                         break;
-                    case ItemStatus.Type.SMOKE:
+                    //case ItemStatus.Type.SMOKE:
                         //竜巻
-                        _succece = true;
-                        player_ctr.setCreateItemList(CreateItemStatus.Type.Tornado);
-                        break;
+                        //_succece = true;
+                        //player_ctr.setCreateItemList(CreateItemStatus.Type.Tornado);
+                        //break;
                     case ItemStatus.Type.CRYSTAL:
                         //雨雲
                         _succece = true;
@@ -419,11 +414,11 @@ public class AlchemyController : MonoBehaviour {
                         _succece = true;
                         player_ctr.setCreateItemList(CreateItemStatus.Type.Inclubator);
                         break;
-                    case ItemStatus.Type.POWDER:
+                    //case ItemStatus.Type.POWDER:
                         //毒液
-                        _succece = true;
-                        player_ctr.setCreateItemList(CreateItemStatus.Type.Venom);
-                        break;
+                        //_succece = true;
+                        //player_ctr.setCreateItemList(CreateItemStatus.Type.Venom);
+                        //break;
                     case ItemStatus.Type.CLAY_N:
                         //氷の剣
                         _succece = true;
@@ -440,26 +435,26 @@ public class AlchemyController : MonoBehaviour {
             case ItemStatus.Type.SMOKE:
                 switch (item_1)
                 {
-                    case ItemStatus.Type.CLOUD:
+                    //case ItemStatus.Type.CLOUD:
                         //竜巻
-                        _succece = true;
-                        player_ctr.setCreateItemList(CreateItemStatus.Type.Tornado);
-                        break;
-                    case ItemStatus.Type.POWDER:
+                        //_succece = true;
+                        //player_ctr.setCreateItemList(CreateItemStatus.Type.Tornado);
+                        //break;
+                    //case ItemStatus.Type.POWDER:
                         //煙幕
-                        _succece = true;
-                        player_ctr.setItemList(ItemStatus.Type.SMOKESCREEN);
-                        break;
-                    case ItemStatus.Type.CLAY_N:
+                        //_succece = true;
+                        //player_ctr.setItemList(ItemStatus.Type.SMOKESCREEN);
+                        //break;
+                    //case ItemStatus.Type.CLAY_N:
                         //闇の剣
-                        _succece = true;
-                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.DARK);
-                        break;
-                    case ItemStatus.Type.LAMP:
+                        //_succece = true;
+                        //player_ctr.setSwordList(PlayerStatus.SWORDTYPE.DARK);
+                        //break;
+                    //case ItemStatus.Type.LAMP:
                         //爆薬
-                        _succece = true;
-                        player_ctr.setItemList(ItemStatus.Type.EXPLOSIVE);
-                        break;
+                        //_succece = true;
+                        //player_ctr.setItemList(ItemStatus.Type.EXPLOSIVE);
+                        //break;
                     default:
                         //ゴミ
                         _succece = false;
@@ -471,11 +466,11 @@ public class AlchemyController : MonoBehaviour {
             case ItemStatus.Type.POWDER:
                 switch (item_1)
                 {
-                    case ItemStatus.Type.SNAKE:
+                    //case ItemStatus.Type.SNAKE:
                         //投げ縄
-                        _succece = true;
-                        player_ctr.setCreateItemList(CreateItemStatus.Type.Lasso);
-                        break;
+                        //_succece = true;
+                        //player_ctr.setCreateItemList(CreateItemStatus.Type.Lasso);
+                        //break;
                     case ItemStatus.Type.CLOUD:
                         //飛べる雲
                         _succece = true;
@@ -486,21 +481,21 @@ public class AlchemyController : MonoBehaviour {
                         _succece = true;
                         player_ctr.setCreateItemList(CreateItemStatus.Type.HPPotion);
                         break;
-                    case ItemStatus.Type.SMOKE:
+                    //case ItemStatus.Type.SMOKE:
                         //煙幕
-                        _succece = true;
-                        player_ctr.setItemList(ItemStatus.Type.SMOKESCREEN);
-                        break;
-                    case ItemStatus.Type.LIZARD:
+                        //_succece = true;
+                        //player_ctr.setItemList(ItemStatus.Type.SMOKESCREEN);
+                        //break;
+                    //case ItemStatus.Type.LIZARD:
                         //ブーメラン
-                        _succece = true;
-                        player_ctr.setCreateItemList(CreateItemStatus.Type.Boomerang);
-                        break;
-                    case ItemStatus.Type.CRYSTAL:
+                        //_succece = true;
+                        //player_ctr.setCreateItemList(CreateItemStatus.Type.Boomerang);
+                        //break;
+                    //case ItemStatus.Type.CRYSTAL:
                         //毒液
-                        _succece = true;
-                        player_ctr.setCreateItemList(CreateItemStatus.Type.Venom);
-                        break;
+                        //_succece = true;
+                        //player_ctr.setCreateItemList(CreateItemStatus.Type.Venom);
+                        //break;
                     default:
                         //ゴミ
                         _succece = false;
@@ -512,11 +507,11 @@ public class AlchemyController : MonoBehaviour {
             case ItemStatus.Type.LAMP:
                 switch (item_1)
                 {
-                    case ItemStatus.Type.SMOKE:
+                    //case ItemStatus.Type.SMOKE:
                         //爆薬
-                        _succece = true;
-                        player_ctr.setItemList(ItemStatus.Type.EXPLOSIVE);
-                        break;
+                        //_succece = true;
+                        //player_ctr.setItemList(ItemStatus.Type.EXPLOSIVE);
+                        //break;
                     default:
                         //ゴミ
                         _succece = false;
@@ -528,16 +523,16 @@ public class AlchemyController : MonoBehaviour {
             case ItemStatus.Type.CLAY_N:
                 switch (item_1)
                 {
-                    case ItemStatus.Type.FLOWER:
+                    //case ItemStatus.Type.FLOWER:
                         //攻撃ポーション
-                        _succece = true;
-                        player_ctr.setCreateItemList(CreateItemStatus.Type.ATKPotion);
-                        break;
-                    case ItemStatus.Type.MIC:
+                        //_succece = true;
+                        //player_ctr.setCreateItemList(CreateItemStatus.Type.ATKPotion);
+                    //    break;
+                    //case ItemStatus.Type.MIC:
                         //拡声器
-                        _succece = true;
-                        player_ctr.setCreateItemList(CreateItemStatus.Type.Speaker);
-                        break;
+                        //_succece = true;
+                        //player_ctr.setCreateItemList(CreateItemStatus.Type.Speaker);
+                        //break;
                     case ItemStatus.Type.VAJURA:
                         //バジュラ（電撃武器）
                         _succece = true;
@@ -553,21 +548,21 @@ public class AlchemyController : MonoBehaviour {
                         _succece = true;
                         player_ctr.setCreateItemList(CreateItemStatus.Type.Ladder);
                         break;
-                    case ItemStatus.Type.CROWN:
+                    //case ItemStatus.Type.CROWN:
                         //磁石
-                        _succece = true;
-                        player_ctr.setCreateItemList(CreateItemStatus.Type.Magnet);
-                        break;
+                        //_succece = true;
+                        //player_ctr.setCreateItemList(CreateItemStatus.Type.Magnet);
+                        //break;
                     case ItemStatus.Type.CRYSTAL:
                         //氷の剣
                         _succece = true;
                         player_ctr.setSwordList(PlayerStatus.SWORDTYPE.FROZEN);
                         break;
-                    case ItemStatus.Type.SMOKE:
+                    //case ItemStatus.Type.SMOKE:
                         //闇の剣
-                        _succece = true;
-                        player_ctr.setSwordList(PlayerStatus.SWORDTYPE.DARK);
-                        break;
+                        //_succece = true;
+                        //player_ctr.setSwordList(PlayerStatus.SWORDTYPE.DARK);
+                        //break;
                     case ItemStatus.Type.EXPLOSIVE:
                         //火の剣
                         _succece = true;
