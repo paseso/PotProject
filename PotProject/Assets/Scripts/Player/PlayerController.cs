@@ -117,9 +117,9 @@ public class PlayerController : MonoBehaviour
         StartHeart();
         setStartSwordList();
         //剣のデバッグ
-        //swordList[1] = PlayerStatus.SWORDTYPE.AXE;
-        //swordList[2] = PlayerStatus.SWORDTYPE.DARK;
-        //swordList[3] = PlayerStatus.SWORDTYPE.VAJURA;
+        swordList[1] = PlayerStatus.SWORDTYPE.AXE;
+        swordList[2] = PlayerStatus.SWORDTYPE.DARK;
+        swordList[3] = PlayerStatus.SWORDTYPE.VAJURA;
         _itemMax = false;
         alchemyUIFlag = false;
 
@@ -419,7 +419,6 @@ public class PlayerController : MonoBehaviour
         EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_HeartBurst, hearts[status.PlayerHP].transform.position + new Vector3(0, -0.5f, 0), 0.05f, hearts[0].transform.parent.gameObject, true);
         // ダメージエフェクトの生成
         EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Damage, BrotherObj.transform.position, 5, BrotherObj, true);
-        //PotObject.GetComponent<PotController>().ChangePotFace(PotStatus.PotFace.Sad);
         //ダメージを受けるアニメーション
         if (move_ctr.direc == MoveController.Direction.LEFT)
         {
@@ -429,7 +428,7 @@ public class PlayerController : MonoBehaviour
         {
             anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_SUFFERDAMAGE);
         }
-
+        AllCommandActive = true;
         for (int i = status.GetMaxHP - 1; i > status.PlayerHP - 1; i--)
         {
             hearts[i].SetActive(false);
