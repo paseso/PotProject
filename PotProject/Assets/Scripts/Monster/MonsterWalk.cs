@@ -4,6 +4,10 @@ using UnityEngine;
 using DG.Tweening;
 
 public class MonsterWalk : MonoBehaviour {
+
+    [SerializeField]
+    private bool isDoubleAnim;
+
     private Vector2 firstPos;
     private float randTime;
     private float distance = 2;
@@ -15,15 +19,13 @@ public class MonsterWalk : MonoBehaviour {
         get { return distance; }
     }
 
-    // Use this for initialization
     void Start () {
         firstPos = transform.localPosition;
         
         randTime = Random.Range(1, 5);
-        direction = Random.Range(-1, 2);
+        direction = Random.Range(0, 1) == 0 ? -1 : 1;
 	}
 	
-	// Update is called once per frame
 	void Update () {
         time += Time.deltaTime;
         if(time > randTime) {
@@ -49,5 +51,24 @@ public class MonsterWalk : MonoBehaviour {
         }
         time = 0;
         randTime = Random.Range(1, 5);
+    }
+
+    void HorizontalMove()
+    {
+
+        Vector3 startPos = gameObject.transform.position;
+        Vector2 dir = Vector2.down;
+        // Rayを飛ばす
+        RaycastHit2D[] hit = Physics2D.RaycastAll(startPos, dir, GetComponent<CapsuleCollider2D>().size.x * 0.5f);
+        bool flag = true;
+        foreach (RaycastHit2D r in hit)
+        {
+            if (r.collider.gameObject.layer == LayerMask.NameToLayer("Block"))
+            {
+                flag = false;
+                break;
+            }
+        }
+
     }
 }
