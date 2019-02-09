@@ -166,11 +166,6 @@ public class AlchemyController : MonoBehaviour {
         bool _succece = true;
         switch (item)
         {
-            case ItemStatus.Type.FLOWER:
-                //HPポーション
-                _succece = true;
-                player_ctr.setCreateItemList(CreateItemStatus.Type.HPPotion);
-                break;
             //case ItemStatus.Type.LAMP:
                 //ランプ
                 //_succece = true;
@@ -278,11 +273,11 @@ public class AlchemyController : MonoBehaviour {
             case ItemStatus.Type.FLOWER:
                 switch (item_1)
                 {
-                    //case ItemStatus.Type.POWDER:
-                    //    //HPポーション
-                    //    _succece = true;
-                    //    player_ctr.setCreateItemList(CreateItemStatus.Type.HPPotion);
-                    //    break;
+                    case ItemStatus.Type.POWDER:
+                        //HPポーション
+                        _succece = true;
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.HPPotion);
+                        break;
                     //case ItemStatus.Type.CLAY_N:
                         //攻撃ポーション
                         //_succece = true;
@@ -481,11 +476,11 @@ public class AlchemyController : MonoBehaviour {
                         _succece = true;
                         player_ctr.setCreateItemList(CreateItemStatus.Type.FlyCloud);
                         break;
-                    //case ItemStatus.Type.FLOWER:
-                    //    //HPポーション
-                    //    _succece = true;
-                    //    player_ctr.setCreateItemList(CreateItemStatus.Type.HPPotion);
-                    //    break;
+                    case ItemStatus.Type.FLOWER:
+                        //HPポーション
+                        _succece = true;
+                        player_ctr.setCreateItemList(CreateItemStatus.Type.HPPotion);
+                        break;
                     //case ItemStatus.Type.SMOKE:
                         //煙幕
                         //_succece = true;
