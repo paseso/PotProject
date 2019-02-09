@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 114126412653810618}
   - component: {fileID: 114470256176712428}
   - component: {fileID: 95566739922324456}
+  - component: {fileID: 210821624385108860}
   m_Layer: 0
   m_Name: SnakeCentet
   m_TagString: Untagged
@@ -102,7 +103,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1437055088842960}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.55, y: 0.79, z: 0}
+  m_LocalPosition: {x: -0.04, y: 2.34, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4373673555117564}
@@ -116,7 +117,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1657657270380582}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.449999, y: -0.5400003, z: 0}
+  m_LocalPosition: {x: 0.06000004, y: 1.0099996, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4526637307569732}
@@ -375,3 +376,13 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.50088453, y: 0.06586942, z: 0}
     m_Extent: {x: 0.72244763, y: 0.9912435, z: 0}
   m_DirtyAABB: 0
+--- !u!210 &210821624385108860
+SortingGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1401680030547708}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0

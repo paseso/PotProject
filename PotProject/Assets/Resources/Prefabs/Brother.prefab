@@ -2083,7 +2083,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dea064d8c45112a4eb77ff1ecad8e0e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _legFloor: 0
 --- !u!114 &114375517645726308
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2314,7 +2313,9 @@ MonoBehaviour:
   _ActiveRightLeft: 0
   _itemFall: 0
   _hitmonster: 0
+  playerState: 0
   target: {fileID: 0}
+  ladderDir: 0
   direc: 0
 --- !u!114 &114549674028407784
 MonoBehaviour:
@@ -2465,8 +2466,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Attack_Target: {fileID: 0}
-  Impalce_x: 3
-  Impalce_y: 6
 --- !u!114 &114703059043111294
 MonoBehaviour:
   m_ObjectHideFlags: 1
