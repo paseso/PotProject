@@ -389,7 +389,7 @@ public class AlchemyUIController : MonoBehaviour
         mtr_1.GetComponent<Image>().sprite = AlphaSprite;
         if (Materials_item.Count == 0)
             return;
-        Materials_item.RemoveRange(0, Materials_item.Count - 1);
+        Materials_item.Clear();
     }
 
     /// <summary>
@@ -624,6 +624,7 @@ public class AlchemyUIController : MonoBehaviour
     public void setCreateItemUI()
     {
         int item_num = player_ctr.getCreateItemList().Count;
+        Debug.Log("item_num = " + item_num);
         if (item_num < 3)
         {
             for (int i = item_num; 0 <= i; i--)
