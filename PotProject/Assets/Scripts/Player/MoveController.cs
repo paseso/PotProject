@@ -477,9 +477,20 @@ public class MoveController : MonoBehaviour
                 {
                     if(gameObject.layer == LayerMask.NameToLayer("LadderPlayer")) { return; }
                     if (direc == Direction.LEFT)
-                        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.SORDATTACK_LEFT);
+                    {
+                        if (pManager.GetSwordType == PlayerStatus.SWORDTYPE.VAJURA)
+                            anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFT_VAJURA);
+                        else
+                            anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.SWORDATTACK_LEFT);
+                    }
                     else
-                        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.SORDATTACK_RIGHT);
+                    {
+                        if (pManager.GetSwordType == PlayerStatus.SWORDTYPE.VAJURA)
+                            anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHT_VAJURA);
+                        else
+                            anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.SWORDATTACK_RIGHT);
+                    }
+                        
                 }
                 break;
 
@@ -781,6 +792,16 @@ public class MoveController : MonoBehaviour
         if (col.gameObject.tag == "Item")
         {
             target = col.gameObject;
+        }
+        //モンスターの投擲物に当たった時
+        if(col.gameObject.tag == "Monster")
+        {
+            MonsterStatus mStatus = col.gameObject.GetComponent<MonsterController>().Status;
+            if (mStatus.type == MonsterStatus.MonsterType.HARB) { return; }
+            int atk = mStatus.GetAttack;
+            _hitmonster = true;
+            player_ctr.HPDown(atk);
+            StartCoroutine(PlayerNockBackWaitTime());
         }
         
         if (col.GetComponent<GimmickInfo>())
