@@ -61,12 +61,7 @@ public class AttackZoneController : MonoBehaviour {
         if (Attack_Target == null) { return; }
 
         if (Attack_Target.GetComponent<GimmickController>()) {
-            var info = Attack_Target.GetComponent<GimmickInfo>();
-            if(info.type == GimmickInfo.GimmickType.RAINCLOUD && pManager.Status.swordtype == PlayerStatus.SWORDTYPE.VAJURA)
-            {
-                Attack_Target.GetComponent<GimmickController>().Lightning();
-            }
-            //Attack_Target.GetComponent<GimmickController>().BakeTree();
+            Attack_Target.GetComponent<GimmickController>().BakeTree();
             return;
         }
 
@@ -94,7 +89,7 @@ public class AttackZoneController : MonoBehaviour {
             return;
         }
 
-        if(col.GetComponent<GimmickInfo>() && col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.RAINCLOUD) {
+        if(col.GetComponent<GimmickInfo>() && col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.BAKETREE) {
             Attack_Target = col.gameObject;
         }
     }

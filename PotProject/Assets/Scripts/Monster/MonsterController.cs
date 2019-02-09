@@ -85,7 +85,7 @@ public class MonsterController : MonoBehaviour
     }
 
     //private float knockback = 6;
-    private Vector2 knockback = new Vector2(10, 60);
+    private Vector2 knockback = new Vector2(1, 6);
 
     private Dictionary<MonsterStatus.MonsterType, string> ItemList = new Dictionary<MonsterStatus.MonsterType, string>
     {

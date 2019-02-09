@@ -133,43 +133,23 @@ public class GimmickController :MonoBehaviour {
                 col.transform.parent.transform.parent.transform.SetParent(transform.root.gameObject.transform);
                 mMapController.NowMap();
                 break;
-            //case GimmickInfo.GimmickType.FIREFIELD:
-            //    if (!col.GetComponent<MoveController>()) { return; }
-            //    var bossMShoot = bossCon.gameObject.transform.GetChild(0).GetComponent<MagicShoot>();
-            //    bossMShoot.playerPos = col.transform.position;
-            //    bossMShoot.ShootFlag = true;
-            //    break;
-            //case GimmickInfo.GimmickType.THUNDERFIELD:
-            //    if (!col.GetComponent<MoveController>()) { return; }
-            //    if(!GameObject.Find(transform.root.name + "/OtherObject/Lion(Clone)")) { return; }
-            //    GameObject mObj = GameObject.Find(transform.root.name + "/OtherObject/Lion(Clone)");
-            //    MagicShoot magic = mObj.transform.GetChild(0).GetComponent<MagicShoot>();
-            //    magic.playerPos = col.transform.position;
-            //    magic.ShootFlag = true;
-            //    break;
+            case GimmickInfo.GimmickType.FIREFIELD:
+                if (!col.GetComponent<MoveController>()) { return; }
+                var bossMShoot = bossCon.gameObject.transform.GetChild(0).GetComponent<MagicShoot>();
+                bossMShoot.playerPos = col.transform.position;
+                bossMShoot.ShootFlag = true;
+                break;
+            case GimmickInfo.GimmickType.THUNDERFIELD:
+                if (!col.GetComponent<MoveController>()) { return; }
+                if(!GameObject.Find(transform.root.name + "/OtherObject/Lion(Clone)")) { return; }
+                GameObject mObj = GameObject.Find(transform.root.name + "/OtherObject/Lion(Clone)");
+                MagicShoot magic = mObj.transform.GetChild(0).GetComponent<MagicShoot>();
+                magic.playerPos = col.transform.position;
+                magic.ShootFlag = true;
+                break;
 
             default:
                 break;
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D col)
-    {
-        if (col.gameObject.layer != LayerMask.NameToLayer("Player")) { return; }
-        if (gInfo.type == GimmickInfo.GimmickType.FIREFIELD)
-        {
-            var bossMShoot = bossCon.gameObject.transform.GetComponentInChildren<MagicShoot>();
-            bossMShoot.playerPos = col.transform.position;
-            bossMShoot.ShootFlag = true;
-        }
-        else if (gInfo.type == GimmickInfo.GimmickType.THUNDERFIELD)
-        {
-            if (!col.GetComponent<MoveController>()) { return; }
-            if (!GameObject.Find(transform.root.name + "/OtherObject/Lion(Clone)")) { return; }
-            GameObject mObj = GameObject.Find(transform.root.name + "/OtherObject/Lion(Clone)");
-            MagicShoot magic = mObj.transform.GetComponentInChildren<MagicShoot>();
-            magic.playerPos = col.transform.position;
-            magic.ShootFlag = true;
         }
     }
 
@@ -327,37 +307,5 @@ public class GimmickController :MonoBehaviour {
         
         yield return null;
     }
-
-    /// <summary>
-    /// 落雷
-    /// </summary>
-    public void Lightning()
-    {
-        var boss = FindObjectOfType<BossController>().gameObject;
-        Debug.Log("call");
-        if(boss.transform.root.gameObject != transform.root.gameObject) { return; }
-        Debug.Log("callaaa");
-        StartCoroutine(LightningCoroutine(boss));
-
-    }
-
-    public IEnumerator LightningCoroutine(GameObject boss)
-    {
-        pController.AllCommandActive = false;
-        yield return new WaitForSeconds(1f);
-        CameraController cameraCon = FindObjectOfType<CameraController>();
-        cameraCon.target = boss;
-        yield return new WaitForSeconds(1f);
-        SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_THUNDER);
-        // 雷エフェクトをbossの座標の上に表示
-        // bossがやられる演出
-        yield return new WaitForSeconds(3f);
-        cameraCon.target = FindObjectOfType<MoveController>().gameObject;
-        yield return new WaitForSeconds(1f);
-        sController.GetClearPanel.SetActive(true);
-        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(sController.GetClearPanel.transform.GetChild(0).gameObject);
-        yield return null;
-    }
-
-
+    
 }
