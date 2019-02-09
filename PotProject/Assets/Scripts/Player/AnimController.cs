@@ -73,6 +73,7 @@ public class AnimController : MonoBehaviour {
                 //剣
                 gameObject.transform.GetChild(4).GetComponent<SpriteRenderer>().sortingOrder = 10;
                 //頭
+                gameObject.transform.GetChild(5).GetComponent<SpriteMeshInstance>().sortingOrder = 6;
                 gameObject.transform.GetChild(5).GetComponent<SpriteMeshAnimation>().frame = 0;
                 gameObject.transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<SpriteMeshInstance>().sortingOrder = 8;
                 gameObject.transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<SpriteMeshInstance>().sortingOrder = 8;
@@ -123,6 +124,7 @@ public class AnimController : MonoBehaviour {
                 //剣
                 gameObject.transform.GetChild(4).GetComponent<SpriteRenderer>().sortingOrder = 1;
                 //頭
+                gameObject.transform.GetChild(5).GetComponent<SpriteMeshInstance>().sortingOrder = 6;
                 gameObject.transform.GetChild(5).GetComponent<SpriteMeshAnimation>().frame = 1;
                 gameObject.transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<SpriteMeshInstance>().sortingOrder = 8;
                 gameObject.transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<SpriteMeshInstance>().sortingOrder = 8;

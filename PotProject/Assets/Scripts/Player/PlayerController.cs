@@ -181,27 +181,6 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// EventStateの設定
-    /// </summary>
-    private void setEventState(PlayerStatus.EventState st)
-    {
-        switch (st)
-        {
-            case PlayerStatus.EventState.NORMAL:
-
-                break;
-
-            case PlayerStatus.EventState.CAMERA:
-
-                break;
-
-            case PlayerStatus.EventState.ALCHEMYUI:
-
-                break;
-        }
-    }
-
-    /// <summary>
     /// 持ち物リストの情報
     /// </summary>
     /// <returns></returns>
@@ -394,7 +373,6 @@ public class PlayerController : MonoBehaviour
             alchemyUI_ctr.setItemboxImage();
             alchemyUI_ctr.ItemFrameReSet();
             alchemyUI_ctr.setCreateItemUI();
-            alchemyUI_ctr.ReSetMaterialsBox(status.ItemList);
             alchemyUI_ctr.SelectItemText();
             Pot_UI.DOLocalMoveX(0, 0.3f).SetEase(Ease.Linear);
             alchemyUIFlag = true;
@@ -402,6 +380,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             alchemyUI_ctr.CloseTextActive();
+            alchemyUI_ctr.ReSetMaterialsBox(status.ItemList);
             Pot_UI.DOLocalMoveX(1920, 0.3f).SetEase(Ease.Linear);
             alchemyUIFlag = false;
         }
