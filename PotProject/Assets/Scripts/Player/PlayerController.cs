@@ -496,4 +496,56 @@ public class PlayerController : MonoBehaviour
             PotObject.GetComponent<Rigidbody2D>().gravityScale = 1;
         }
     }
+
+    /// <summary>
+    /// プレイヤーを透明にする処理
+    /// </summary>
+    public void PlayerAlphaDown()
+    {
+        Transform children = BrotherObj.transform.parent.transform;
+        foreach (Transform child in children)
+        {
+            if (child.GetComponentInChildren<Anima2D.SpriteMeshInstance>())
+            {
+                child.GetComponentInChildren<Anima2D.SpriteMeshInstance>().color = new Color(1, 1, 1, 0.5f);
+                if (child.childCount == 0)
+                    continue;
+                foreach(Transform obj in child)
+                {
+                    if(obj.GetComponentInChildren<Anima2D.SpriteMeshInstance>())
+                        obj.GetComponentInChildren<Anima2D.SpriteMeshInstance>().color = new Color(1, 1, 1, 0.5f);
+                }
+            }
+            if (child.GetComponent<SpriteRenderer>())
+            {
+                child.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 透明なプレイヤーのアルファ値を戻す処理
+    /// </summary>
+    public void PlayerAlphaMax()
+    {
+        Transform children = BrotherObj.transform.parent.transform;
+        foreach (Transform child in children)
+        {
+            if (child.GetComponentInChildren<Anima2D.SpriteMeshInstance>())
+            {
+                child.GetComponentInChildren<Anima2D.SpriteMeshInstance>().color = new Color(1, 1, 1, 1);
+                if (child.childCount == 0)
+                    continue;
+                foreach (Transform obj in child)
+                {
+                    if (obj.GetComponentInChildren<Anima2D.SpriteMeshInstance>())
+                        obj.GetComponentInChildren<Anima2D.SpriteMeshInstance>().color = new Color(1, 1, 1, 1);
+                }
+            }
+            if (child.GetComponent<SpriteRenderer>())
+            {
+                child.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+            }
+        }
+    }
 }

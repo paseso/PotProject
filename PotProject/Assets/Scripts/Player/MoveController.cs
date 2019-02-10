@@ -260,16 +260,19 @@ public class MoveController : MonoBehaviour
         ClearBtnFlg();
         EventStateCheck();
 
-        if (_hitmonster)
-        {
-            float superTime = 0.5f;
-            superTime -= Time.deltaTime;
-            if(superTime <= 0f)
-            {
-                _hitmonster = false;
-                superTime = 0f;
-            }
-        }
+    }
+
+    /// <summary>
+    /// 透明にしてから元に戻す処理
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator TransWaitTime()
+    {
+        _hitmonster = true;
+        player_ctr.PlayerAlphaDown();
+        yield return new WaitForSeconds(0.5f);
+        player_ctr.PlayerAlphaMax();
+        _hitmonster = false;
     }
 
     /// <summary>
@@ -501,7 +504,6 @@ public class MoveController : MonoBehaviour
                         else
                             anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.SWORDATTACK_RIGHT);
                     }
-                        
                 }
                 break;
 
@@ -811,7 +813,7 @@ public class MoveController : MonoBehaviour
             MonsterStatus mStatus = col.gameObject.GetComponent<MonsterController>().Status;
             if (mStatus.type == MonsterStatus.MonsterType.HARB) { return; }
             int atk = mStatus.GetAttack;
-            _hitmonster = true;
+            StartCoroutine(TransWaitTime());
             player_ctr.HPDown(atk);
             StartCoroutine(PlayerNockBackWaitTime());
         }
@@ -843,7 +845,7 @@ public class MoveController : MonoBehaviour
             if (mStatus.type == MonsterStatus.MonsterType.HARB) { return; }
             if (_hitmonster) { return; }
             int atk = mStatus.GetAttack;
-            _hitmonster = true;
+            StartCoroutine(TransWaitTime());
             player_ctr.HPDown(atk);
             StartCoroutine(PlayerNockBackWaitTime());
         }
@@ -864,13 +866,5 @@ public class MoveController : MonoBehaviour
         player_ctr.AllCommandActive = true;
         //弟の顔変更
         PotObject.GetComponent<PotController>().ChangePotFace(PotStatus.PotFace.Normal);
-    }
-
-    private void OnCollisionExit2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "Monster")
-        {
-            _hitmonster = false;
-        }
     }
 }

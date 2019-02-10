@@ -70,7 +70,6 @@ public class AttackZoneController : MonoBehaviour {
                 break;
         }
         
-
         if (Attack_Target.GetComponent<GimmickController>()) {
             var info = Attack_Target.GetComponent<GimmickInfo>();
             if(info.type == GimmickInfo.GimmickType.RAINCLOUD && pManager.Status.swordtype == PlayerStatus.SWORDTYPE.VAJURA)
