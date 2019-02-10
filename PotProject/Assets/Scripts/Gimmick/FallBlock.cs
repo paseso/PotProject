@@ -54,7 +54,7 @@ public class FallBlock : MonoBehaviour {
             createTime = fallTime * 2;
         }
 
-        //StartCoroutine(Floating());
+        StartCoroutine(Floating());
     }
 
     void Update() {

@@ -71,6 +71,13 @@ public class PlayerController : MonoBehaviour
         set { allCommandActive = value; }
     }
 
+    private bool eventFlag = false;
+
+    public bool EventFlag {
+        get { return eventFlag; }
+        set { eventFlag = value; }
+    }
+
     private bool isMiniMap = false;
 
     public bool IsMiniMap

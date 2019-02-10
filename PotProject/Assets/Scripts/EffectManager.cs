@@ -5,32 +5,6 @@ using UnityEngine;
 
 public class EffectManager : SingletonMonoBehaviour<EffectManager>
 {
-
-    #region Singleton
-
-    private static EffectManager instance_Effect;
-
-    public static EffectManager Instance_Effect
-    {
-        get
-        {
-            if (instance_Effect == null)
-            {
-                //Objectを検索
-                instance_Effect = (EffectManager)FindObjectOfType(typeof(EffectManager));
-
-                if (instance_Effect == null)
-                {
-                    //アタッチされているGameObjectが無いのでエラー
-                    Debug.LogError(typeof(EffectManager) + "is nothing");
-                }
-            }
-            return instance_Effect;
-        }
-    }
-
-    #endregion Singleton
-
     [SerializeField]
     private GameObject Effect_PickUp;
     [SerializeField]
@@ -65,7 +39,11 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
     private GameObject Effect_StarExplosive;
     public void Awake()
     {
-        //Destroyしない
+        if (this != Instance)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
         DontDestroyOnLoad(this.gameObject);
     }
 

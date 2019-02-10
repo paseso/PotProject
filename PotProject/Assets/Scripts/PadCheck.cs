@@ -20,7 +20,7 @@ public class PadCheck : MonoBehaviour {
         //  キーボード
         if (controllerName.Length == 0 || controllerName[0] == "")
         {
-
+            Debug.Log("キーボード");
             for (int i = 0; i < inputModule.Length; i++)
             {
                 inputModule[i].horizontalAxis = "Horizontal";
@@ -30,6 +30,7 @@ public class PadCheck : MonoBehaviour {
         //  コントローラー
         else if (controllerName[0] != "")
         {
+            Debug.Log("コントローラー");
             for (int i = 0; i < inputModule.Length; i++)
             {
                 inputModule[i].horizontalAxis = "Horizontal_ps4";
