@@ -13,6 +13,7 @@ public class PadCheck : MonoBehaviour {
 
     public void CheckInputModule()
     {
+        Debug.Log("Check");
         //  ステージセレクト画面の操作を判定
         StandaloneInputModule[] inputModule = GameObject.FindObjectsOfType<StandaloneInputModule>();
         string[] controllerName = Input.GetJoystickNames();
@@ -23,7 +24,7 @@ public class PadCheck : MonoBehaviour {
             for (int i = 0; i < inputModule.Length; i++)
             {
                 inputModule[i].horizontalAxis = "Horizontal";
-                inputModule[i].verticalAxis = "Vertical";               
+                inputModule[i].verticalAxis = "Vertical";            
             }            
         }
         //  コントローラー

@@ -122,6 +122,7 @@ GameObject:
   - component: {fileID: 114589631207223094}
   - component: {fileID: 114125067248018528}
   - component: {fileID: 114591663648904750}
+  - component: {fileID: 210407956207311074}
   m_Layer: 0
   m_Name: Fairy
   m_TagString: Untagged
@@ -559,6 +560,16 @@ SkinnedMeshRenderer:
     m_Center: {x: 1.0860541, y: 0.36412615, z: 0}
     m_Extent: {x: 1.1099999, y: 0.635, z: 0}
   m_DirtyAABB: 0
+--- !u!210 &210407956207311074
+SortingGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1788872560219068}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!212 &212741906208351352
 SpriteRenderer:
   m_ObjectHideFlags: 1

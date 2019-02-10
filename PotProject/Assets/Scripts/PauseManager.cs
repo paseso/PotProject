@@ -13,6 +13,7 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
     private GameObject pauseCanvasObj;
     private EventSystem eventSystem;
     PlayerManager pManager;
+    Button[] btns;
 
     private bool isPause;
     public void Awake()
@@ -28,11 +29,12 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
             pauseCanvasObj.SetActive(false);
         }
         isPause = false;
-        Button[] btns = pauseCanvasObj.GetComponentsInChildren<Button>();
+        btns = pauseCanvasObj.GetComponentsInChildren<Button>();
+        Debug.Log("ButtonLength:" + btns.Length);
         //  ポーズキャンバスのボタンにイベントを設定
-        btns[0].onClick.AddListener(ReturnTitle);
+        btns[0].onClick.AddListener(Respawn);
         btns[1].onClick.AddListener(ReturnStageSelect);
-        btns[2].onClick.AddListener(EscapeGame);
+        btns[2].onClick.AddListener(ReturnTitle);
         //  EventSystemの設定
         eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
         eventSystem.firstSelectedGameObject = btns[0].gameObject;
@@ -51,10 +53,20 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
             {
                 pauseCanvasObj.SetActive(true);
                 isPause = true;
+                if (GameObject.Find("Controller").gameObject != null)
+                    GameObject.Find("Controller").GetComponent<PlayerController>().AllCommandActive = false;
+                Time.timeScale = 0;
+                EventSystem.current.SetSelectedGameObject(btns[0].gameObject);
             }
             else
             {
                 pauseCanvasObj.SetActive(false);
+                Time.timeScale = 1;
+                Button btn = FindObjectOfType<Button>();
+                if (btn != null)
+                    EventSystem.current.SetSelectedGameObject(btn.gameObject);
+                if (GameObject.Find("Controller").gameObject != null)
+                    GameObject.Find("Controller").GetComponent<PlayerController>().AllCommandActive = true;
                 isPause = false;
             }
         }
@@ -67,8 +79,12 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
             FadeManager.Instance.LoadScene(0, 1f);
             isPause = false;
             pauseCanvasObj.SetActive(false);
-            pManager = GameObject.Find("PlayerStatus").GetComponent<PlayerManager>();
-            pManager.InitStatus();
+            GameObject pManagarObject = GameObject.Find("PlayerStatus");
+            if (pManagarObject != null)
+            {
+                pManager = pManagarObject.GetComponent<PlayerManager>();
+                pManager.InitStatus();
+            }            
         }
         else if (FadeManager.Instance == null)
         {
@@ -81,9 +97,15 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
         if (FadeManager.Instance != null)
         {
             FadeManager.Instance.LoadScene(1, 1f);
+            SoundManager.Instance.PlayBgm(0);
+            Time.timeScale = 1;
             isPause = false;
-            pManager = GameObject.Find("PlayerStatus").GetComponent<PlayerManager>();
-            pManager.InitStatus();
+            GameObject pManagarObject = GameObject.Find("PlayerStatus");
+            if (pManagarObject != null)
+            {
+                pManager = pManagarObject.GetComponent<PlayerManager>();
+                pManager.InitStatus();
+            }
             pauseCanvasObj.SetActive(false);
         }
         else if (FadeManager.Instance == null)
@@ -91,6 +113,20 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
             Debug.Log("ステージ選択画面に移動しようとしましたがFadeManagerが見つかりません。");
         }
     }
+
+    public void Respawn()
+    {
+        GameObject controller = GameObject.Find("Controller");
+        if (controller != null)
+        {
+            controller.GetComponent<PlayerController>().Resporn();
+        }
+        if (GameObject.Find("Controller").gameObject != null)
+            GameObject.Find("Controller").GetComponent<PlayerController>().AllCommandActive = true;
+        Time.timeScale = 1;
+        pauseCanvasObj.SetActive(false);
+    }
+
 
     public void EscapeGame()
     {
