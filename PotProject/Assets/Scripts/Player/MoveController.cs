@@ -592,7 +592,8 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void BtnCheck()
     {
-        if (!player_ctr.AllCommandActive) { return; }
+
+        if (!player_ctr.AllCommandActive || player_ctr.EventFlag) { return; }
 
         if (Input.GetButtonDown("L2") || Input.GetKeyDown(KeyCode.P))
         {// L2ボタン or キーボードの「P」

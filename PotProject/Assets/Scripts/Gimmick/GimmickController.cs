@@ -332,15 +332,10 @@ public class GimmickController :MonoBehaviour {
     /// </summary>
     public void Lightning()
     {
-        pController = GameObject.Find("Controller").GetComponent<PlayerController>();
-        Debug.Log("before = "+pController.AllCommandActive);
-        
-        pController.AllCommandActive = false;
-        Debug.Log("after = " + pController.AllCommandActive);
+        pController.EventFlag = true;
+
         var boss = FindObjectOfType<BossController>().gameObject;
-        Debug.Log("call");
         if(boss.transform.root.gameObject != transform.root.gameObject) { return; }
-        Debug.Log("callaaa");
         StartCoroutine(LightningCoroutine(boss));
 
     }
@@ -353,7 +348,9 @@ public class GimmickController :MonoBehaviour {
         yield return new WaitForSeconds(1f);
         SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_THUNDER);
         // 雷エフェクトをbossの座標の上に表示
+
         // bossがやられる演出
+        boss.GetComponent<SpriteRenderer>().color = Color.black;
         yield return new WaitForSeconds(3f);
         cameraCon.target = FindObjectOfType<MoveController>().gameObject;
         yield return new WaitForSeconds(1f);
