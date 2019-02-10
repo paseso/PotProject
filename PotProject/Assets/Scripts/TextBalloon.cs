@@ -11,7 +11,7 @@ public class TextBalloon : MonoBehaviour {
 
     [SerializeField]
     private string[] massages;
-    private string[] trueMassages = new string[5];
+    private string[] trueMassages = new string[7];
     [SerializeField]
     private GameObject balloonPrefab;
     [SerializeField,Range(0, 0.2f)]
@@ -46,7 +46,7 @@ public class TextBalloon : MonoBehaviour {
                 currentSentence = trueMassages[currentSentenceNum].Substring(0, (int)(timeBeginTalk / intervalForCharDisplay));
                 massageUI.transform.GetComponentInChildren<Text>().text = currentSentence;
             }
-            if (Input.GetKeyDown(KeyCode.Return) || Input.GetButton("Circle"))
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Circle"))
             {
                 NextWard();
             }
@@ -86,9 +86,10 @@ public class TextBalloon : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.1f);
         massageUI = Instantiate(balloonPrefab) as GameObject;
-        playerController.IsCommandActive = false;
+        playerController.AllCommandActive = false;
         massageUI.transform.SetParent(canvas.transform, false);
         massageUI.transform.localScale = new Vector3(0.75f, 0.75f, 1);
+        massageUI.transform.localPosition += new Vector3(400, 20, 0);
         massageUI.transform.DOScale(new Vector2(1, 1), 0.1f);
         yield return new WaitForSeconds(0.15f);
         isTalk = true;
@@ -102,7 +103,7 @@ public class TextBalloon : MonoBehaviour {
         massageUI.transform.DOScale(new Vector2(0.75f, 0.75f), 0.1f);
         massageUI.GetComponentInChildren<Text>().text = "";
         yield return new WaitForSeconds(0.1f);
-        playerController.IsCommandActive = true;
+        playerController.AllCommandActive = true;
         massageUI.SetActive(false);
         yield break;
     }
