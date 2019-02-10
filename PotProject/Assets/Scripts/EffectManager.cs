@@ -35,6 +35,21 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
     private GameObject Effect_Alchemy;
     [SerializeField]
     private GameObject Effect_Thunder;
+    [SerializeField]
+    private GameObject Effect_StarExplosive;
+    [SerializeField]
+    private GameObject Effect_Vajura;
+    [SerializeField]
+    private GameObject Effect_SwordAttack_0;
+    [SerializeField]
+    private GameObject Effect_SwordAttack_1;
+    [SerializeField]
+    private GameObject Effect_ThunderHit;
+    [SerializeField]
+    private GameObject Effect_RespornPlayer;
+    [SerializeField]
+    private GameObject Effect_RespornEnemy;
+
     public void Awake()
     {
         if (this != Instance)
@@ -62,6 +77,13 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
         Effect_CreateItemSuccece,
         Effect_Alchemy,
         Effect_Thunder,
+        Effect_StarExplosive,
+        Effect_Vajura,
+        Effect_SwordAttack_0,
+        Effect_SwordAttack_1,
+        Effect_ThunderHit,
+        Effect_RespornPlayer,
+        Effect_RespornEnemy,
     };
 
     /// <summary>
@@ -142,6 +164,27 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
                 break;
             case 14:
                 PlayEffect = Instantiate(Effect_Thunder) as GameObject;
+                break;
+            case 15:
+                PlayEffect = Instantiate(Effect_StarExplosive) as GameObject;
+                break;
+            case 16:
+                PlayEffect = Instantiate(Effect_Vajura) as GameObject;
+                break;
+            case 17:
+                PlayEffect = Instantiate(Effect_SwordAttack_0) as GameObject;
+                break;
+            case 18:
+                PlayEffect = Instantiate(Effect_SwordAttack_0) as GameObject;
+                break;
+            case 19:
+                PlayEffect = Instantiate(Effect_ThunderHit) as GameObject;
+                break;
+            case 20:
+                PlayEffect = Instantiate(Effect_RespornPlayer) as GameObject;
+                break;
+            case 21:
+                PlayEffect = Instantiate(Effect_RespornEnemy) as GameObject;
                 break;
             default:
                 Debug.Log("Effectmanagerのエラー");

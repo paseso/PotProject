@@ -771,13 +771,11 @@ public class AlchemyUIController : MonoBehaviour
     {
         player_ctr.AllCommandActive = false;
         SuccessPanel.transform.GetChild(0).GetComponent<Image>().sprite = alchemy_ctr.getCreateItem[(int)type];
-        GameObject EffectObj = EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_GetItem, SuccessPanel.transform.position, 30, SuccessPanel, false);
+        GameObject EffectObj = EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_StarExplosive, SuccessPanel.transform.position, 4, SuccessPanel, true);
         EffectObj.GetComponent<ParticleSystemRenderer>().sortingOrder = 107;
         SuccessPanel.SetActive(true);
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.8f);
         SuccessPanel.SetActive(false);
-        Destroy(EffectObj.gameObject);
-        EffectObj.GetComponent<ParticleSystemRenderer>().sortingOrder = 0;
         player_ctr.AllCommandActive = true;
         player_ctr.OpenAlchemy();
     }
