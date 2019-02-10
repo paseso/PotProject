@@ -61,6 +61,8 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
     private GameObject Effect_Alchemy;
     [SerializeField]
     private GameObject Effect_Thunder;
+    [SerializeField]
+    private GameObject Effect_StarExplosive;
     public void Awake()
     {
         //Destroyしない
@@ -84,6 +86,7 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
         Effect_CreateItemSuccece,
         Effect_Alchemy,
         Effect_Thunder,
+        Effect_StarExplosive,
     };
 
     /// <summary>
@@ -164,6 +167,9 @@ public class EffectManager : SingletonMonoBehaviour<EffectManager>
                 break;
             case 14:
                 PlayEffect = Instantiate(Effect_Thunder) as GameObject;
+                break;
+            case 15:
+                PlayEffect = Instantiate(Effect_StarExplosive) as GameObject;
                 break;
             default:
                 Debug.Log("Effectmanagerのエラー");
