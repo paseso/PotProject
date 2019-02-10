@@ -295,9 +295,8 @@ public class GimmickController :MonoBehaviour {
     /// <returns></returns>
     public IEnumerator IsSpring()
     {
-        GetComponent<BoxCollider2D>().enabled = false;   
-        GameObject obj = FindObjectOfType<PlayerController>().gameObject;
-        obj.GetComponent<PlayerController>().AllCommandActive = false;
+        GetComponent<BoxCollider2D>().enabled = false;
+        pController.AllCommandActive = false;
 
         transform.parent.transform.parent.DOLocalMoveY(transform.parent.transform.parent.localPosition.y - 0.25f, 1f);
         yield return new WaitForSeconds(1.5f);
@@ -333,6 +332,11 @@ public class GimmickController :MonoBehaviour {
     /// </summary>
     public void Lightning()
     {
+        pController = GameObject.Find("Controller").GetComponent<PlayerController>();
+        Debug.Log("before = "+pController.AllCommandActive);
+        
+        pController.AllCommandActive = false;
+        Debug.Log("after = " + pController.AllCommandActive);
         var boss = FindObjectOfType<BossController>().gameObject;
         Debug.Log("call");
         if(boss.transform.root.gameObject != transform.root.gameObject) { return; }
@@ -343,7 +347,6 @@ public class GimmickController :MonoBehaviour {
 
     public IEnumerator LightningCoroutine(GameObject boss)
     {
-        pController.AllCommandActive = false;
         yield return new WaitForSeconds(1f);
         CameraController cameraCon = FindObjectOfType<CameraController>();
         cameraCon.target = boss;

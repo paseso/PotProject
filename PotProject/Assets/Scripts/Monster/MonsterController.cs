@@ -138,7 +138,6 @@ public class MonsterController : MonoBehaviour
             StartCoroutine(Drop());
             return;
         }
-        EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_AttackIce, transform.position, 4, gameObject, true);
         KnockBack(mController.direc);
         status.HP -= damage;
         if(status.HP <= 0)

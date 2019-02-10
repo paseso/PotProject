@@ -393,6 +393,7 @@ public class PlayerController : MonoBehaviour
     public void HPUp(int point)
     {
         if (status.PlayerHP + point > status.GetMaxHP) { return; }
+        EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Heal, move_ctr.gameObject.transform.position, 2, move_ctr.gameObject, true);
         status.PlayerHP += point;
         for (int i = 0; i < status.PlayerHP; i++)
         {

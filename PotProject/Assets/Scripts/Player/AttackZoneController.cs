@@ -59,6 +59,17 @@ public class AttackZoneController : MonoBehaviour {
     {
         
         if (Attack_Target == null) { return; }
+        switch (pManager.Status.swordtype) {
+            case PlayerStatus.SWORDTYPE.NORMAL:
+                EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_AttackIce, Attack_Target.transform.position, 4, Attack_Target, true);
+                break;
+            case PlayerStatus.SWORDTYPE.VAJURA:
+                EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Thunder, Attack_Target.transform.position, 3, Attack_Target, true);
+                break;
+            default:
+                break;
+        }
+        
 
         if (Attack_Target.GetComponent<GimmickController>()) {
             var info = Attack_Target.GetComponent<GimmickInfo>();

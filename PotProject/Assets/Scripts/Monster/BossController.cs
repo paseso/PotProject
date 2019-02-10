@@ -61,6 +61,13 @@ public class BossController : MonoBehaviour {
         size = GetComponent<SpriteRenderer>().bounds.size;
     }
 
+    public void OnCollisionEnter2D(Collision2D col) {
+        if(col.gameObject.layer == LayerMask.NameToLayer("Player")){
+            PlayerController pcon = GameObject.Find("Controller").GetComponent<PlayerController>();
+            pcon.Resporn();
+        }
+    }
+
     // Update is called once per frame
     void Update () {
         // 魔法攻撃
