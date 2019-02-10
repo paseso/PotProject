@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 199600948077274898}
   - component: {fileID: 114826195859974090}
   m_Layer: 0
-  m_Name: SwordEffect2
+  m_Name: SwordEffect_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -141,8 +141,8 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 0
-  randomSeed: -55205700
+  scalingMode: 1
+  randomSeed: 669109624
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3123,7 +3123,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: 1367355346
+  randomSeed: -1801697458
   InitialModule:
     serializedVersion: 3
     enabled: 1
