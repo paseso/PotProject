@@ -53,8 +53,9 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
             {
                 pauseCanvasObj.SetActive(true);
                 isPause = true;
-                if (GameObject.Find("Controller").gameObject != null)
-                    GameObject.Find("Controller").GetComponent<PlayerController>().AllCommandActive = false;
+                GameObject controller = GameObject.Find("Controller");
+                if (controller != null)
+                    controller.GetComponent<PlayerController>().AllCommandActive = false;
                 Time.timeScale = 0;
                 EventSystem.current.SetSelectedGameObject(btns[0].gameObject);
             }
@@ -65,8 +66,9 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
                 Button btn = FindObjectOfType<Button>();
                 if (btn != null)
                     EventSystem.current.SetSelectedGameObject(btn.gameObject);
-                if (GameObject.Find("Controller").gameObject != null)
-                    GameObject.Find("Controller").GetComponent<PlayerController>().AllCommandActive = true;
+                GameObject controller = GameObject.Find("Controller");
+                if (controller != null)
+                    controller.GetComponent<PlayerController>().AllCommandActive = true;
                 isPause = false;
             }
         }

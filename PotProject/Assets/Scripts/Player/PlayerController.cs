@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -119,14 +120,14 @@ public class PlayerController : MonoBehaviour
         }
         catch (UnityException e)
         {
-            Debug.Log(e + "がないんご");
+            Debug.Log(e + " is NotFound");
         }
         StartHeart();
         setStartSwordList();
         //剣のデバッグ
-        swordList[1] = PlayerStatus.SWORDTYPE.AXE;
-        swordList[2] = PlayerStatus.SWORDTYPE.DARK;
-        swordList[3] = PlayerStatus.SWORDTYPE.VAJURA;
+        //swordList[1] = PlayerStatus.SWORDTYPE.AXE;
+        //swordList[2] = PlayerStatus.SWORDTYPE.DARK;
+        //swordList[3] = PlayerStatus.SWORDTYPE.VAJURA;
         _itemMax = false;
         alchemyUIFlag = false;
 
@@ -247,12 +248,14 @@ public class PlayerController : MonoBehaviour
             alchemyUI_ctr.ActiveThrowItemUI();
             return;
         }
-
         createItemBox.Add(type);
+        alchemyUI_ctr.ItemSuccesAnimCoroutine(type);
         if (getCreateItemList().Count > 1)
             return;
         alchemy_ctr.setGeneratedImg(type);
     }
+
+    
 
     /// <summary>
     /// 錬金したアイテムボックスのアイテムを一つ消す処理

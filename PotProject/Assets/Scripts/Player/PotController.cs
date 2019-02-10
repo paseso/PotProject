@@ -209,7 +209,7 @@ public class PotController : MonoBehaviour
     {
         _movePot = true;
         //エフェクトを出してツボを小さくしていく
-        GameObject effectObj = EffectManager.Instance_Effect.PlayEffect(11, gameObject.transform.position, 10, gameObject, false);
+        GameObject effectObj = EffectManager.Instance.PlayEffect(11, gameObject.transform.position, 10, gameObject, false);
         effectObj.transform.DOScale(new Vector3(1, 1, 1), 0.5f);
         yield return new WaitForSeconds(0.3f);
         effectObj.transform.DOScale(new Vector3(0, 0, 0), 0.5f);

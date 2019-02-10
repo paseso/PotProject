@@ -9,33 +9,41 @@ public class StageSelectManager : MonoBehaviour {
     [SerializeField]
     private GameObject[] buttons;
     [SerializeField]
-    private GameObject eventSystem;
+    private GameObject checkObject;
+
+    private bool isCheck = false;
     private int stageSelectNum = 0;
 
     private StandaloneInputModule[] inputModules;
 
 
 	void Start () {
-        eventSystem.GetComponent<EventSystem>().SetSelectedGameObject(buttons[0]);
-        eventSystem.GetComponent<StandaloneInputModule>().horizontalAxis = "Horizontal_ps4";
-        eventSystem.GetComponent<StandaloneInputModule>().verticalAxis = "Vertical_ps4";
+        EventSystem.current.firstSelectedGameObject = buttons[0];
+        EventSystem.current.gameObject.GetComponent<StandaloneInputModule>().horizontalAxis = "Horizontal_ps4";
+        EventSystem.current.gameObject.GetComponent<StandaloneInputModule>().horizontalAxis = "Horizontal_ps4";
+        EventSystem.current.gameObject.GetComponent<StandaloneInputModule>().submitButton = "Circle";
+        EventSystem.current.SetSelectedGameObject(buttons[0]);
     }
 	
 	void Update () {
-		
-	}
-
-    public void TapStageButton(GameObject obj)
-    {
-        SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SELECT);
-        for (int i = 0; i < buttons.Length; i++)
+		if (isCheck)
         {
-            if (buttons[i].Equals(obj))
+            if (Input.GetButtonDown("Circle") || Input.GetKeyDown(KeyCode.E))
+                FadeManager.Instance.LoadScene(stageSelectNum, 0.5f);
+            else if (Input.GetButton("Jump") || Input.GetKeyDown(KeyCode.Space))
             {
-                stageSelectNum = i;
-                gameObject.GetComponent<Button>().interactable = true;
+                isCheck = false;
+                checkObject.SetActive(false);
             }
         }
+	}
+
+    public void TapStageButton(int sceneNum)
+    {
+        stageSelectNum = sceneNum;
+        isCheck = true;
+        checkObject.SetActive(true);
+        SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SELECT);
     }
 
     public void TapNextButton()

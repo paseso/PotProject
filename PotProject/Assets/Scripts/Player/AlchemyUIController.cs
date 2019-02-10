@@ -43,6 +43,8 @@ public class AlchemyUIController : MonoBehaviour
     private PlayerController player_ctr;
     private PlayerStatus status;
 
+    private GameObject SuccessPanel;
+
     private GameObject ItemFrame;
     private GameObject PotFrame;
     private GameObject ChooseObj;
@@ -118,6 +120,7 @@ public class AlchemyUIController : MonoBehaviour
             mtr_0 = PotFrame.transform.Find("AlchemyPotin/Material/material_0").gameObject.transform.GetChild(0).gameObject;
             mtr_1 = PotFrame.transform.Find("AlchemyPotin/Material/material_1").gameObject.transform.GetChild(0).gameObject;
             AlphaSprite = Resources.Load<Sprite>("Textures/UI/AlphaImage");
+            SuccessPanel = gameObject.transform.Find("Alchemy_Succes").gameObject;
         }
         catch (Exception e)
         {
@@ -186,7 +189,7 @@ public class AlchemyUIController : MonoBehaviour
             Itembox[nowBox].transform.parent.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = alchemyText.MaterialTexts[(int)player_ctr.getItemList()[nowBox]].madeableItem;
             Itembox[nowBox].transform.parent.GetChild(1).transform.GetChild(2).GetComponent<Text>().text = alchemyText.MaterialTexts[(int)player_ctr.getItemList()[nowBox]].materialDesc;
         }
-        else if((frameLine & frame_left) > 0)
+        else if ((frameLine & frame_left) > 0)
         {
             createItembox[nowBox].transform.parent.GetChild(1).transform.GetChild(0).GetComponent<Text>().text = alchemyText.ItemTexts[(int)player_ctr.getCreateItemList()[nowBox]].itemName;
             createItembox[nowBox].transform.parent.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = alchemyText.ItemTexts[(int)player_ctr.getCreateItemList()[nowBox]].itemDesc;
@@ -473,6 +476,7 @@ public class AlchemyUIController : MonoBehaviour
         }
     }
 
+    #region アイテムフレームの動き
     /// <summary>
     /// アイテム選択フレームの移動処理
     /// </summary>
@@ -488,7 +492,7 @@ public class AlchemyUIController : MonoBehaviour
                 break;
             if ((frameLine & frame_right) > 0 || (frameLine & frame_left) > 0)
             {
-                if(Box_item[nowBox].gameObject.transform.parent.GetChild(1).gameObject.activeSelf)
+                if (Box_item[nowBox].gameObject.transform.parent.GetChild(1).gameObject.activeSelf)
                     Box_item[nowBox].gameObject.transform.parent.GetChild(1).gameObject.SetActive(false);
             }
             if (move_ctr.OnCrossUp)
@@ -515,7 +519,7 @@ public class AlchemyUIController : MonoBehaviour
         {
             if (!move_ctr.OnCrossRight && !move_ctr.OnCrossLeft)
                 break;
-            if((frameLine & frame_right) > 0 || (frameLine & frame_left) > 0)
+            if ((frameLine & frame_right) > 0 || (frameLine & frame_left) > 0)
             {
                 if (Box_item[nowBox].gameObject.transform.parent.GetChild(1).gameObject.activeSelf)
                     Box_item[nowBox].gameObject.transform.parent.GetChild(1).gameObject.SetActive(false);
@@ -537,7 +541,9 @@ public class AlchemyUIController : MonoBehaviour
             break;
         }
     }
+    #endregion
 
+    #region 右ジョイスィックの回転処理
     /// <summary>
     /// 右ジョイスティックを回転させる処理
     /// </summary>
@@ -602,7 +608,6 @@ public class AlchemyUIController : MonoBehaviour
                 //錬金に使いたいアイテム欄の画像とそのリストをリセット
                 ReSetMaterialsBox(Materials_item);
                 Materials_item.Clear();
-                player_ctr.OpenAlchemy();
             }
         }
     }
@@ -617,6 +622,7 @@ public class AlchemyUIController : MonoBehaviour
         _three = false;
         RotationCount = 0;
     }
+    #endregion
 
     /// <summary>
     /// 錬金UIにある錬金されたアイテムボックスに画像をセットする処理
@@ -756,4 +762,32 @@ public class AlchemyUIController : MonoBehaviour
         alchemy_ctr.setGeneratedImg(player_ctr.getCreateItemList()[nowAlchemyItem]);
     }
 
+    #region 錬金成功アニメーション
+    /// <summary>
+    /// 錬金でアイテムが完成したら出るアニメーション
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator AlchemyItemSuccessAnim(CreateItemStatus.Type type)
+    {
+        player_ctr.AllCommandActive = false;
+        SuccessPanel.transform.GetChild(0).GetComponent<Image>().sprite = alchemy_ctr.getCreateItem[(int)type];
+        GameObject EffectObj = EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_GetItem, SuccessPanel.transform.position, 30, SuccessPanel, false);
+        EffectObj.GetComponent<ParticleSystemRenderer>().sortingOrder = 107;
+        SuccessPanel.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
+        SuccessPanel.SetActive(false);
+        Destroy(EffectObj.gameObject);
+        EffectObj.GetComponent<ParticleSystemRenderer>().sortingOrder = 0;
+        player_ctr.AllCommandActive = true;
+        player_ctr.OpenAlchemy();
+    }
+
+    /// <summary>
+    /// AlchemySuccesAnimコルーチンの関数を呼ぶ処理
+    /// </summary>
+    public void ItemSuccesAnimCoroutine(CreateItemStatus.Type type)
+    {
+        StartCoroutine(AlchemyItemSuccessAnim(type));
+    }
+    #endregion
 }
