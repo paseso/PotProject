@@ -64,16 +64,16 @@ public class AttackZoneController : MonoBehaviour {
                 EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_AttackIce, Attack_Target.transform.position, 4, Attack_Target, true);
                 break;
             case PlayerStatus.SWORDTYPE.VAJURA:
-                EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Thunder, Attack_Target.transform.position, 3, Attack_Target, true);
+                EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Vajura, Attack_Target.transform.position, 3, Attack_Target, true);
+                SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_THUNDER);
                 break;
             default:
                 break;
         }
         
-
         if (Attack_Target.GetComponent<GimmickController>()) {
             var info = Attack_Target.GetComponent<GimmickInfo>();
-            if(info.type == GimmickInfo.GimmickType.RAINCLOUD && pManager.Status.swordtype == PlayerStatus.SWORDTYPE.NORMAL)
+            if(info.type == GimmickInfo.GimmickType.RAINCLOUD && pManager.Status.swordtype == PlayerStatus.SWORDTYPE.VAJURA)
             {
                 Attack_Target.GetComponent<GimmickController>().Lightning();
             }

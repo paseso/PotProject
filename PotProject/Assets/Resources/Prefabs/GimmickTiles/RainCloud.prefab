@@ -71,6 +71,7 @@ GameObject:
   - component: {fileID: 61523926671946028}
   - component: {fileID: 114823639805684502}
   - component: {fileID: 114217797692802528}
+  - component: {fileID: 114304864024276432}
   m_Layer: 0
   m_Name: RainCloud_collider
   m_TagString: Untagged
@@ -167,6 +168,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9696294e9f29da043846bc1bdfa5a0bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114304864024276432
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1971564074433516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b96e7cf65ab5895448a0d572ec503c93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114823639805684502
