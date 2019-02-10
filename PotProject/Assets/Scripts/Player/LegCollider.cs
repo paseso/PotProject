@@ -109,7 +109,6 @@ public class LegCollider : MonoBehaviour
             if (info.type == GimmickInfo.GimmickType.FIREFIELD) { return false; } // 敵攻撃範囲
             if (info.type == GimmickInfo.GimmickType.THUNDERFIELD) { return false; } // 敵攻撃範囲
         }
-        
         return true;
     }
 

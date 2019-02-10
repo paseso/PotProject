@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 19900000}
   - component: {fileID: 11400000}
   m_Layer: 0
-  m_Name: SwordAttack
+  m_Name: SwordAttack_0
   m_TagString: FxTemporaire
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,8 +99,8 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 0
-  randomSeed: 0
+  scalingMode: 1
+  randomSeed: 602987660
   InitialModule:
     serializedVersion: 3
     enabled: 1

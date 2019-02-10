@@ -259,6 +259,17 @@ public class MoveController : MonoBehaviour
 
         ClearBtnFlg();
         EventStateCheck();
+
+        if (_hitmonster)
+        {
+            float superTime = 0.5f;
+            superTime -= Time.deltaTime;
+            if(superTime <= 0f)
+            {
+                _hitmonster = false;
+                superTime = 0f;
+            }
+        }
     }
 
     /// <summary>
@@ -823,13 +834,14 @@ public class MoveController : MonoBehaviour
         PotObject.transform.position = new Vector2(PotObject.transform.position.x, PotObject.transform.position.y);
     }
 
-    private void OnCollisionEnter2D(Collision2D col)
+    private void OnCollisionStay2D(Collision2D col)
     {
         //モンスターにぶつかった時
         if (col.gameObject.tag == "Monster")
         {
             MonsterStatus mStatus = col.gameObject.GetComponent<MonsterController>().Status;
-            if(mStatus.type == MonsterStatus.MonsterType.HARB) { return; }
+            if (mStatus.type == MonsterStatus.MonsterType.HARB) { return; }
+            if (_hitmonster) { return; }
             int atk = mStatus.GetAttack;
             _hitmonster = true;
             player_ctr.HPDown(atk);
