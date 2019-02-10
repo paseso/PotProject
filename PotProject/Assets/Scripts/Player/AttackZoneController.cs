@@ -65,6 +65,7 @@ public class AttackZoneController : MonoBehaviour {
                 break;
             case PlayerStatus.SWORDTYPE.VAJURA:
                 EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Vajura, Attack_Target.transform.position, 3, Attack_Target, true);
+                SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_THUNDER);
                 break;
             default:
                 break;
