@@ -180,9 +180,7 @@ public class MonsterController : MonoBehaviour
 
         GameObject dropPos = new GameObject("DropPos");
         dropPos.transform.SetParent(transform.parent.transform);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 3f);
-        Debug.Log("HitName " + hit.collider.name);
-        dropPos.transform.position = transform.position + new Vector3(0, 1.25f, 0);
+        dropPos.transform.position = transform.position + new Vector3(0, 0.25f, 0);
         Transform trans = transform;
 
         resPoint.GetComponent<MonsterResporn>().CountFlag = true;

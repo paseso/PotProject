@@ -30,7 +30,6 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
         }
         isPause = false;
         btns = pauseCanvasObj.GetComponentsInChildren<Button>();
-        Debug.Log("ButtonLength:" + btns.Length);
         //  ポーズキャンバスのボタンにイベントを設定
         btns[0].onClick.AddListener(Respawn);
         btns[1].onClick.AddListener(ReturnStageSelect);

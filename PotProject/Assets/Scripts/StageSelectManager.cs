@@ -38,12 +38,9 @@ public class StageSelectManager : MonoBehaviour {
         }
 	}
 
-    public void TapStageButton(int sceneNum)
+    public void TapStageButton_1(int sceneNum)
     {
-        stageSelectNum = sceneNum;
-        isCheck = true;
-        checkObject.SetActive(true);
-        SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SELECT);
+        StartCoroutine(CheckWindow(sceneNum));
     }
 
     public void TapNextButton()
@@ -51,6 +48,17 @@ public class StageSelectManager : MonoBehaviour {
         Debug.Log("ステージ" + stageSelectNum + "にシーン遷移(いまは全部チュートリアルに移動)");
         FadeManager fade_m = GameObject.Find("FadeManager").GetComponent<FadeManager>();
         fade_m.LoadScene(2, 0.5f);
+    }
+
+    IEnumerator CheckWindow(int num)
+    {
+        yield return null;
+        stageSelectNum = num;
+        yield return null;
+        isCheck = true;
+        checkObject.SetActive(true);
+        SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SELECT);
+        yield break;
     }
 
 }
