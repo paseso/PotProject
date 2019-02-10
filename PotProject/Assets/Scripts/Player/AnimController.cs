@@ -847,4 +847,12 @@ public class AnimController : MonoBehaviour {
             SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SWORD);
         }
     }
+
+    /// <summary>
+    /// ツボの顔変える処理
+    /// </summary>
+    public void ChagePotFace(PotStatus.PotFace face)
+    {
+        pot_anim.gameObject.GetComponent<PotController>().ChangePotFace(face);
+    }
 }
