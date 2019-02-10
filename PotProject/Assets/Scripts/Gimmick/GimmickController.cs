@@ -124,6 +124,7 @@ public class GimmickController :MonoBehaviour {
             case GimmickInfo.GimmickType.DOWN:
             case GimmickInfo.GimmickType.LEFT:
             case GimmickInfo.GimmickType.RIGHT:
+            case GimmickInfo.GimmickType.GROWTREE:
                 if (col.gameObject.GetComponent<LegCollider>())
                 {
                     onPlayerFlag = true;
@@ -184,6 +185,7 @@ public class GimmickController :MonoBehaviour {
             case GimmickInfo.GimmickType.DOWN:
             case GimmickInfo.GimmickType.LEFT:
             case GimmickInfo.GimmickType.RIGHT:
+            case GimmickInfo.GimmickType.GROWTREE:
                 if (col.gameObject.GetComponent<LegCollider>())
                 {
                     onPlayerFlag = false;

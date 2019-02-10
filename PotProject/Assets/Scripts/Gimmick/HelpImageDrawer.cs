@@ -8,7 +8,10 @@ public class HelpImageDrawer : MonoBehaviour {
     [SerializeField]
     private Sprite[] helpSprites;
 
-    private const float  nextSpriteTime = 3;    //  画像が変わる時間
+    [SerializeField]
+    private Vector3 popPos;
+
+    private const float  nextSpriteTime = 1.5f;    //  画像が変わる時間
     private bool onReady = false;               //  Spriteが存在するか
     private float rideTime = 0f;                //  乗られている時間
 
@@ -34,9 +37,11 @@ public class HelpImageDrawer : MonoBehaviour {
         gimmick = gameObject.GetComponentInChildren<GimmickController>();
         GameObject helpObject = new GameObject("Helpimage");
         helpObject.transform.parent = gameObject.transform;
-        helpObject.transform.localPosition = new Vector3(0, 6, 0);
+        helpObject.transform.localPosition = popPos;
+        helpObject.transform.localScale = new Vector3(1.5f, 1.5f, 1);
         helpObject.AddComponent<SpriteRenderer>();
         spr = helpObject.GetComponent<SpriteRenderer>();
+        helpObject.GetComponent<SpriteRenderer>().sortingOrder = 102;
         spr.enabled = false;
         spr.sprite = helpSprites[0];
         onReady = true;

@@ -54,6 +54,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4745365176755410}
+  - component: {fileID: 114341628100119064}
   m_Layer: 0
   m_Name: Tree
   m_TagString: Untagged
@@ -112,7 +113,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1667552765188618}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.94, y: 0, z: 90}
+  m_LocalPosition: {x: 0, y: 0, z: 90}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4687925285914628}
@@ -193,6 +194,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb687312f75144d43922064d38038070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114341628100119064
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1667552765188618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c72875a174364145ab10efc665bced8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  helpSprites:
+  - {fileID: 21300000, guid: bd08ad536b6b54a479a7b33d57e8d877, type: 3}
+  popPos: {x: 3, y: 3, z: 0}
 --- !u!114 &114451266177875278
 MonoBehaviour:
   m_ObjectHideFlags: 1
