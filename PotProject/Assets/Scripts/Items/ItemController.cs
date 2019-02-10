@@ -88,9 +88,23 @@ public class ItemController : MonoBehaviour {
     /// 雲生成
     /// </summary>
     public void CreateCloud() {
-        GameObject cloud = Instantiate(Resources.Load<GameObject>("Prefabs/GimmickTiles/FeatherCloudTile"));
-        cloud.transform.SetParent(GameObject.Find(BrotherObj.transform.root.name + "/GimmickObject").transform);
+        int mask = LayerMask.GetMask(new string[] { "Block", "LadderBlock" });
+
+        RaycastHit2D hit = new RaycastHit2D();
+        var startPos = new Vector2(BrotherObj.transform.position.x, BrotherObj.transform.position.y);
         var dir = BrotherObj.GetComponent<MoveController>().direc;
+        var cloudObj = Resources.Load<GameObject>("Prefabs/GimmickTiles/FeatherCloudTile");
+        if (dir == MoveController.Direction.LEFT) {
+            hit = Physics2D.BoxCast(startPos,new Vector2(1,1),0, Vector2.left, Mathf.Infinity,mask);
+        } else {
+            hit = Physics2D.BoxCast(startPos, new Vector2(1, 1), 0, Vector2.right, Mathf.Infinity, mask);
+        }
+
+        if (hit.distance < cloudObj.GetComponent<SpriteRenderer>().bounds.size.x) { return; }
+
+        GameObject cloud = Instantiate(cloudObj);
+        cloud.transform.SetParent(GameObject.Find(BrotherObj.transform.root.name + "/GimmickObject").transform);
+        
         if(dir == MoveController.Direction.LEFT) {
             cloud.transform.position = new Vector2(BrotherObj.transform.position.x - cloud.GetComponent<SpriteRenderer>().bounds.size.x, BrotherObj.transform.position.y);
         } else {

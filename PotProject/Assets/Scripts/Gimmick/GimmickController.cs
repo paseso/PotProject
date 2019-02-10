@@ -296,7 +296,7 @@ public class GimmickController :MonoBehaviour {
     public IEnumerator IsSpring()
     {
         GetComponent<BoxCollider2D>().enabled = false;
-        pController.AllCommandActive = false;
+        pController.EventFlag = true;
 
         transform.parent.transform.parent.DOLocalMoveY(transform.parent.transform.parent.localPosition.y - 0.25f, 1f);
         yield return new WaitForSeconds(1.5f);
@@ -348,9 +348,10 @@ public class GimmickController :MonoBehaviour {
         yield return new WaitForSeconds(1f);
         SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_THUNDER);
         // 雷エフェクトをbossの座標の上に表示
-
+        EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_ThunderHit, boss.transform.position, 4, boss, true);
+        yield return new WaitForSeconds(0.5f);
         // bossがやられる演出
-        boss.GetComponent<SpriteRenderer>().color = new Color(70, 30, 0);
+        boss.GetComponent<SpriteRenderer>().color = new Color(0.3f, 0.2f, 0);
         yield return new WaitForSeconds(3f);
         cameraCon.target = FindObjectOfType<MoveController>().gameObject;
         yield return new WaitForSeconds(1f);
