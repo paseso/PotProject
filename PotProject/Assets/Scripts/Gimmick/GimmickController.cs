@@ -350,7 +350,7 @@ public class GimmickController :MonoBehaviour {
         // 雷エフェクトをbossの座標の上に表示
 
         // bossがやられる演出
-        boss.GetComponent<SpriteRenderer>().color = Color.black;
+        boss.GetComponent<SpriteRenderer>().color = new Color(70, 30, 0);
         yield return new WaitForSeconds(3f);
         cameraCon.target = FindObjectOfType<MoveController>().gameObject;
         yield return new WaitForSeconds(1f);

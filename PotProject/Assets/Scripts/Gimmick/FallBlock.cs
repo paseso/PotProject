@@ -101,7 +101,7 @@ public class FallBlock : MonoBehaviour {
 
     public IEnumerator Floating()
     {
-        while (!fallFlag)
+        while (state == fallState.normal)
         {
             transform.DOMoveY(transform.position.y + 0.1f, 0.5f).SetEase(Ease.Linear);
             yield return new WaitForSeconds(0.5f);
