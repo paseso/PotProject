@@ -334,10 +334,9 @@ public class GimmickController :MonoBehaviour {
     /// </summary>
     public void Lightning()
     {
-        pController.EventFlag = true;
-
         var boss = FindObjectOfType<BossController>().gameObject;
         if(boss.transform.root.gameObject != transform.root.gameObject) { return; }
+        pController.EventFlag = true;
         StartCoroutine(LightningCoroutine(boss));
 
     }

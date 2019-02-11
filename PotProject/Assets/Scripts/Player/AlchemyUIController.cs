@@ -777,7 +777,7 @@ public class AlchemyUIController : MonoBehaviour
         SuccessPanel.transform.GetChild(0).GetComponent<Image>().sprite = alchemy_ctr.getCreateItem[(int)type];
         SuccessPanel.GetComponent<Image>().SetNativeSize();
         GameObject EffectObj = EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_StarExplosive, SuccessPanel.transform.position, 4, SuccessPanel, true);
-        EffectObj.GetComponent<ParticleSystemRenderer>().sortingOrder = 107;
+        EffectObj.GetComponent<ParticleSystemRenderer>().sortingOrder = 108;
         SuccessPanel.SetActive(true);
         yield return new WaitForSeconds(0.8f);
         SuccessPanel.SetActive(false);
