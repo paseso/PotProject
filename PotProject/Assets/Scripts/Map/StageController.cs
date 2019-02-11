@@ -362,4 +362,9 @@ public class StageController : MonoBehaviour
         isMove = false;
         obj.layer = LayerMask.NameToLayer("Default");
     }
+
+    public void StageSelect()
+    {
+        FadeManager.Instance.LoadScene(1, 0.5f);
+    }
 }

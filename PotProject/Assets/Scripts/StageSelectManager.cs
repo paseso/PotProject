@@ -11,6 +11,9 @@ public class StageSelectManager : MonoBehaviour {
     [SerializeField]
     private GameObject checkObject;
 
+	[SerializeField]
+	private GameObject[] checkObjs;
+
     private bool isCheck = false;
     private int stageSelectNum = 0;
 
@@ -34,14 +37,32 @@ public class StageSelectManager : MonoBehaviour {
             {
                 isCheck = false;
                 checkObject.SetActive(false);
+				for (int i = 0; i < checkObjs.Length; i++)
+				{
+					checkObjs [i].SetActive (false);
+				}					
             }
         }
 	}
 
     public void TapStageButton_1(int sceneNum)
     {
+		checkObjs[0].SetActive (true);
         StartCoroutine(CheckWindow(sceneNum));
     }
+
+	public void TapStageButton_2(int sceneNum)
+	{
+		checkObjs[1].SetActive (true);
+		StartCoroutine(CheckWindow(sceneNum));
+	}
+
+	public void TapStageButton_3(int sceneNum)
+	{
+		checkObjs[2].SetActive (true);
+		StartCoroutine(CheckWindow(sceneNum));
+	}
+
 
     public void TapNextButton()
     {

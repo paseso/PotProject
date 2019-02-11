@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4479056805744380}
   - component: {fileID: 114607647924204908}
   - component: {fileID: 137247364098585790}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 011-P_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4229475911208864}
   - component: {fileID: 114222945294920426}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: leftwingbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 4960936655814348}
   - component: {fileID: 114185218692754252}
   - component: {fileID: 137450588645138560}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 011-P_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4579294456096658}
   - component: {fileID: 212556729305539888}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 011-P_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4850650868161704}
   - component: {fileID: 114020851009248082}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: rightwingbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 4659825704468164}
   - component: {fileID: 114383824048055178}
   - component: {fileID: 137135093108564964}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 011-P_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,9 +122,12 @@ GameObject:
   - component: {fileID: 114033472859690940}
   - component: {fileID: 114903628084888616}
   - component: {fileID: 114750560436272428}
-  m_Layer: 0
+  - component: {fileID: 61793160708516220}
+  - component: {fileID: 50119164096207654}
+  - component: {fileID: 114186869107513316}
+  m_Layer: 13
   m_Name: Cloud
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,7 +141,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4279733773033912}
   - component: {fileID: 212275593259894606}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 011-P_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +157,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4391702128141146}
   - component: {fileID: 114994916699829868}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: headbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,7 +251,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1484838235392374}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -27.124, y: -0.33202, z: 0}
+  m_LocalPosition: {x: 25.677515, y: 66.53852, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 4960936655814348}
@@ -286,6 +289,51 @@ Transform:
   m_Father: {fileID: 4764111203577490}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50119164096207654
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1484838235392374}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 10
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &61793160708516220
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1484838235392374}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.026832819, y: 2.021295}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.8798852, y: 4.2197638}
+  m_EdgeRadius: 0
 --- !u!95 &95023365326212770
 Animator:
   serializedVersion: 3
@@ -358,6 +406,23 @@ MonoBehaviour:
   m_Bones: []
   m_BoneTransforms:
   - {fileID: 4391702128141146}
+--- !u!114 &114186869107513316
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1484838235392374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd229fd54d0c8d241846c6b53edd4566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status:
+    hp: 2
+    atk: 2
+    barrier: 0
+    type: 11
+    attribute: 0
 --- !u!114 &114222945294920426
 MonoBehaviour:
   m_ObjectHideFlags: 1

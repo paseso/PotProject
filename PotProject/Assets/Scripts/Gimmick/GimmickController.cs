@@ -348,7 +348,6 @@ public class GimmickController :MonoBehaviour {
         CameraController cameraCon = FindObjectOfType<CameraController>();
         cameraCon.target = boss;
         yield return new WaitForSeconds(1f);
-        SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_THUNDER);
         // 雷エフェクトをbossの座標の上に表示
         EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_ThunderHit, boss.transform.position, 4, boss, true);
         yield return new WaitForSeconds(0.5f);
@@ -361,6 +360,5 @@ public class GimmickController :MonoBehaviour {
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(sController.GetClearPanel.transform.GetChild(0).gameObject);
         yield return null;
     }
-
 
 }
