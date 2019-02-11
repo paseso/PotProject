@@ -17,7 +17,7 @@ public class StageSelectManager : MonoBehaviour {
     private bool isCheck = false;
     private int stageSelectNum = 0;
 
-    private StandaloneInputModule[] inputModules;
+    private StandaloneInputModule inputModule;
 
 
 	void Start () {
@@ -40,7 +40,9 @@ public class StageSelectManager : MonoBehaviour {
 				for (int i = 0; i < checkObjs.Length; i++)
 				{
 					checkObjs [i].SetActive (false);
-				}					
+				}
+                AbleButton();
+                EventSystem.current.SetSelectedGameObject(buttons[0]);
             }
         }
 	}
@@ -48,28 +50,23 @@ public class StageSelectManager : MonoBehaviour {
     public void TapStageButton_1(int sceneNum)
     {
 		checkObjs[0].SetActive (true);
+        DisableButton();
         StartCoroutine(CheckWindow(sceneNum));
     }
 
 	public void TapStageButton_2(int sceneNum)
 	{
 		checkObjs[1].SetActive (true);
-		StartCoroutine(CheckWindow(sceneNum));
+        DisableButton();
+        StartCoroutine(CheckWindow(sceneNum));
 	}
 
 	public void TapStageButton_3(int sceneNum)
 	{
 		checkObjs[2].SetActive (true);
-		StartCoroutine(CheckWindow(sceneNum));
+        DisableButton();
+        StartCoroutine(CheckWindow(sceneNum));
 	}
-
-
-    public void TapNextButton()
-    {
-        Debug.Log("ステージ" + stageSelectNum + "にシーン遷移(いまは全部チュートリアルに移動)");
-        FadeManager fade_m = GameObject.Find("FadeManager").GetComponent<FadeManager>();
-        fade_m.LoadScene(2, 0.5f);
-    }
 
     IEnumerator CheckWindow(int num)
     {
@@ -80,6 +77,22 @@ public class StageSelectManager : MonoBehaviour {
         checkObject.SetActive(true);
         SoundManager.Instance.PlaySe((int)SoundManager.SENAME.SE_SELECT);
         yield break;
+    }
+
+    private void DisableButton()
+    {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].GetComponent<Button>().interactable = false;
+        }
+    }
+
+    private void AbleButton()
+    {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].GetComponent<Button>().interactable = true;
+        }
     }
 
 }
