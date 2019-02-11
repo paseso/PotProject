@@ -351,6 +351,7 @@ public class AlchemyUIController : MonoBehaviour
             setItemboxImage();
             setCreateItemUI();
             ReSetMaterialsBox(status.ItemList);
+            SelectItemText();
         }
         ChooseObj.SetActive(false);
         _chooseWindow = false;
@@ -380,6 +381,7 @@ public class AlchemyUIController : MonoBehaviour
         if (Materials_item.Count > 0)
             Materials_item.Remove(status.ItemList[num]);
         player_ctr.deleteItemList(status.ItemList[num]);
+        SelectItemText();
     }
 
     /// <summary>
@@ -608,6 +610,7 @@ public class AlchemyUIController : MonoBehaviour
                 //錬金に使いたいアイテム欄の画像とそのリストをリセット
                 ReSetMaterialsBox(Materials_item);
                 Materials_item.Clear();
+                SelectItemText();
             }
         }
     }
@@ -655,6 +658,7 @@ public class AlchemyUIController : MonoBehaviour
     {
         player_ctr.deleteCreateItemList(type);
         setCreateItemUI();
+        SelectItemText();
     }
 
 
@@ -766,11 +770,12 @@ public class AlchemyUIController : MonoBehaviour
     /// <summary>
     /// 錬金でアイテムが完成したら出るアニメーション
     /// </summary>
-    /// <returns></returns>
+    /// <returns>錬金できたアイテム</returns>
     private IEnumerator AlchemyItemSuccessAnim(CreateItemStatus.Type type)
     {
         player_ctr.AllCommandActive = false;
         SuccessPanel.transform.GetChild(0).GetComponent<Image>().sprite = alchemy_ctr.getCreateItem[(int)type];
+        SuccessPanel.GetComponent<Image>().SetNativeSize();
         GameObject EffectObj = EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_StarExplosive, SuccessPanel.transform.position, 4, SuccessPanel, true);
         EffectObj.GetComponent<ParticleSystemRenderer>().sortingOrder = 107;
         SuccessPanel.SetActive(true);
@@ -784,6 +789,32 @@ public class AlchemyUIController : MonoBehaviour
     /// AlchemySuccesAnimコルーチンの関数を呼ぶ処理
     /// </summary>
     public void ItemSuccesAnimCoroutine(CreateItemStatus.Type type)
+    {
+        StartCoroutine(AlchemyItemSuccessAnim(type));
+    }
+
+    /// <summary>
+    /// 錬金でアイテムが完成したら出るアニメーション
+    /// </summary>
+    /// <returns>剣の属性</returns>
+    private IEnumerator AlchemyItemSuccessAnim(PlayerStatus.SWORDTYPE type)
+    {
+        player_ctr.AllCommandActive = false;
+        SuccessPanel.transform.GetChild(0).GetComponent<Image>().sprite = player_ctr.getSwordSpriteList((int)type);
+        SuccessPanel.GetComponent<Image>().SetNativeSize();
+        GameObject EffectObj = EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_StarExplosive, SuccessPanel.transform.position, 4, SuccessPanel, true);
+        EffectObj.GetComponent<ParticleSystemRenderer>().sortingOrder = 107;
+        SuccessPanel.SetActive(true);
+        yield return new WaitForSeconds(0.8f);
+        SuccessPanel.SetActive(false);
+        player_ctr.AllCommandActive = true;
+        player_ctr.OpenAlchemy();
+    }
+
+    /// <summary>
+    /// AlchemySuccesAnimコルーチンの関数を呼ぶ処理
+    /// </summary>
+    public void ItemSuccesAnimCoroutine(PlayerStatus.SWORDTYPE type)
     {
         StartCoroutine(AlchemyItemSuccessAnim(type));
     }
