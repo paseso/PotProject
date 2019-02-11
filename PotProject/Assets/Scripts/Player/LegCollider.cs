@@ -134,12 +134,24 @@ public class LegCollider : MonoBehaviour
         //動く雲と背景、敵の攻撃コライダー以外のブロックに当たった時
         if (!col.gameObject.GetComponent<CloudCol>() || col.gameObject.layer != 2 || col.gameObject.layer != LayerMask.NameToLayer("AttackField"))
         {
+            //Debug.Log("col.gameObject.name = " + col.gameObject.name);
             if (_onLandding || _onMoveCloud)
             {
                 _onMoveCloud = false;
                 _onLandding = false;
             }
         }
+
+        if (col.gameObject.GetComponent<CloudCol>())
+        {
+            Debug.Log("getLandingCloud = " + col.gameObject.GetComponent<CloudCol>().getLandingCloud);
+            if (col.gameObject.GetComponent<CloudCol>().getLandingCloud)
+            {
+                _onMoveCloud = true;
+                _onLandding = true;
+            }
+        }
+
         //ちくわブロックに乗っかった時
         if (col.gameObject.name == "FallCol")
         {
@@ -201,7 +213,6 @@ public class LegCollider : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D col)
     {
-        //Debug.Log("JumpCheck = " + JumpCheck(col.gameObject));
         //雲のスクリプトに当たったらツボをプレイヤーの場所に移動させる
         if (col.gameObject.GetComponent<CloudCol>())
         {
@@ -209,13 +220,13 @@ public class LegCollider : MonoBehaviour
             {
                 _onMoveCloud = true;
                 _onLandding = true;
-                //if (move_ctr.direc != nowDirec)
-                //{
-                //    if (move_ctr.direc == MoveController.Direction.LEFT)
-                //        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTBRINGPOT);
-                //    else
-                //        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTBRINGPOT);
-                //}
+                if (move_ctr.direc != nowDirec)
+                {
+                    if (move_ctr.direc == MoveController.Direction.LEFT)
+                        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTBRINGPOT);
+                    else
+                        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTBRINGPOT);
+                }
             }
         }
         //ちくわブロックに乗っかってる時
