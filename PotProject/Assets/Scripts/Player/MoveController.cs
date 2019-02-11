@@ -841,6 +841,8 @@ public class MoveController : MonoBehaviour
         //モンスターにぶつかった時
         if (col.gameObject.tag == "Monster")
         {
+            if (!col.gameObject.GetComponent<MonsterController>())
+                return;
             MonsterStatus mStatus = col.gameObject.GetComponent<MonsterController>().Status;
             if (mStatus.type == MonsterStatus.MonsterType.HARB) { return; }
             if (_hitmonster) { return; }
