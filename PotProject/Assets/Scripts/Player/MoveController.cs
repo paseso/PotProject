@@ -270,7 +270,7 @@ public class MoveController : MonoBehaviour
     {
         _hitmonster = true;
         player_ctr.PlayerAlphaDown();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         player_ctr.PlayerAlphaMax();
         _hitmonster = false;
     }

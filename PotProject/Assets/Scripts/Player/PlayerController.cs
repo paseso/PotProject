@@ -184,6 +184,7 @@ public class PlayerController : MonoBehaviour
                 continue;
             }
             swordList[i] = type;
+            alchemyUI_ctr.ItemSuccesAnimCoroutine(type);
             break;
         }
     }
@@ -316,6 +317,14 @@ public class PlayerController : MonoBehaviour
             Sprite img = Resources.Load<Sprite>("Textures/SwordImage_" + i);
             swordSpriteList.Add(img);
         }
+    }
+
+    /// <summary>
+    /// swordSpriteListを取得する処理
+    /// </summary>
+    public Sprite getSwordSpriteList(int num)
+    {
+        return swordSpriteList[num];
     }
 
     /// <summary>
