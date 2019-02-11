@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4503992638251210}
   - component: {fileID: 114174346102364106}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 4332262105772310}
   - component: {fileID: 114134737399062822}
   - component: {fileID: 137481401357702950}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 005-p_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 4502160509326344}
   - component: {fileID: 114124650171712014}
   - component: {fileID: 137716155759891442}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 005-p (1)_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 4387139869363598}
   - component: {fileID: 114627023074413876}
   - component: {fileID: 137300960645793376}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 005-p (1)_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 4220662968665806}
   - component: {fileID: 114312603941057268}
   - component: {fileID: 137026113001318030}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 005-p_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 4376044145031828}
   - component: {fileID: 114175674255191644}
   - component: {fileID: 137648352537862512}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 005-p (1)_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4454452028944034}
   - component: {fileID: 114186396876396844}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: bodybone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4502717991155416}
   - component: {fileID: 114907277979718806}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: rightarmdownbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4255146849694626}
   - component: {fileID: 114145743406092470}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: lefthandbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4236126159386360}
   - component: {fileID: 114544826037416370}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: headbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 4033364223353534}
   - component: {fileID: 114013038389560264}
   - component: {fileID: 137703872514773512}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 005-p_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4058688198539148}
   - component: {fileID: 114495585917444266}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: leftarmupbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 4419191138196076}
   - component: {fileID: 114803790188738218}
   - component: {fileID: 137824385880931176}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 005-p_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,7 +235,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4867219095738192}
   - component: {fileID: 114843382158813812}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: leftarmdownbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 4884055058584380}
   - component: {fileID: 114543275676362510}
   - component: {fileID: 137286609668297702}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 005-p (1)_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,7 +268,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4961673314961142}
   - component: {fileID: 114207028980878598}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: righthandbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -286,9 +286,10 @@ GameObject:
   - component: {fileID: 95031896666297912}
   - component: {fileID: 114479435343648556}
   - component: {fileID: 114600305868133448}
-  m_Layer: 0
+  - component: {fileID: 50466524137046600}
+  m_Layer: 13
   m_Name: Light
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -302,7 +303,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4586112376037174}
   - component: {fileID: 114954588258499558}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: rightarmupbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -560,6 +561,26 @@ Transform:
   m_Father: {fileID: 4332262105772310}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 63.435}
+--- !u!50 &50466524137046600
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1919722848837210}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!95 &95031896666297912
 Animator:
   serializedVersion: 3

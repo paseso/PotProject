@@ -184,7 +184,7 @@ public class MonsterController : MonoBehaviour
 
         GameObject dropPos = new GameObject("DropPos");
         dropPos.transform.SetParent(transform.parent.transform);
-        dropPos.transform.position = transform.position + new Vector3(0, 0.25f, 0);
+        dropPos.transform.position = transform.position + new Vector3(0, 1f, 0);
         Transform trans = transform;
 
         resPoint.GetComponent<MonsterResporn>().CountFlag = true;

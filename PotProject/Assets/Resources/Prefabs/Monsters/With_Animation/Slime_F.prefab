@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4497289904629250}
   - component: {fileID: 114462579483623172}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: leftbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,9 +39,10 @@ GameObject:
   - component: {fileID: 114856181922461898}
   - component: {fileID: 95970090902253398}
   - component: {fileID: 114131382279735800}
-  m_Layer: 0
+  - component: {fileID: 50433550417142052}
+  m_Layer: 13
   m_Name: Slime_F
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,7 +57,7 @@ GameObject:
   - component: {fileID: 4368660736546066}
   - component: {fileID: 114377640639656398}
   - component: {fileID: 137656624206040592}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 006-P_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +74,7 @@ GameObject:
   - component: {fileID: 4786527528062048}
   - component: {fileID: 114607684948075986}
   - component: {fileID: 137776502625093690}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 006-P_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +90,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4979512219694628}
   - component: {fileID: 114575659807369434}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: rightbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4300430203316528}
   - component: {fileID: 114105143957664412}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: fireheadbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4840782134515684}
   - component: {fileID: 212289001434296514}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 006-P_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,7 +139,7 @@ GameObject:
   - component: {fileID: 4691094127051246}
   - component: {fileID: 114261660419294568}
   - component: {fileID: 137127853772111420}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 006fire-P_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,6 +257,26 @@ Transform:
   m_Father: {fileID: 4368660736546066}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 177.61401}
+--- !u!50 &50433550417142052
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1198292413453070}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!95 &95970090902253398
 Animator:
   serializedVersion: 3
