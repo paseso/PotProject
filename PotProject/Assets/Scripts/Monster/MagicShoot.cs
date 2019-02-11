@@ -18,7 +18,7 @@ public class MagicShoot : MonoBehaviour {
     }
 
     void Update() {
-        if (pCon.EventFlag) { return; }
+        if (pCon.EventFlag || pCon.GetAlchemyUIFlag) { return; }
         if (shootFlag) {
             shootTime += Time.deltaTime;
             if(shootTime > 3) {
@@ -37,7 +37,6 @@ public class MagicShoot : MonoBehaviour {
             magic_F.transform.SetParent(transform.root.transform);
             magic_F.GetComponent<MagicBalletController>().Pos = pos;
             EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Fire, magic_F.transform.position, 2, magic_F, false);
-            magic_F.GetComponent<MagicBalletController>().IsMove = true;
         }
         else if (transform.parent.GetComponent<MonsterController>()) {
             GameObject magic_T = Instantiate(Resources.Load<GameObject>("Prefabs/ThunderMagic"));
@@ -46,7 +45,6 @@ public class MagicShoot : MonoBehaviour {
             magic_T.transform.SetParent(transform.root.transform);
             magic_T.GetComponent<MagicBalletController>().Pos = pos;
             EffectManager.Instance.PlayEffect((int)EffectManager.EffectName.Effect_Thunder, magic_T.transform.position, 2, magic_T, false);
-            magic_T.GetComponent<MagicBalletController>().IsMove = true;
         }
     }
 }

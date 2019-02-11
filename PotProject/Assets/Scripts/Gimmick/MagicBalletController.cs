@@ -7,6 +7,7 @@ public class MagicBalletController : MonoBehaviour {
     private Vector2 pos;
     private BossStatus bStatus;
     private MonsterStatus mStatus;
+    private PlayerController pCon;
     private float dirRadius = 1;
     private float shootSpeed = 5;
 
@@ -51,16 +52,22 @@ public class MagicBalletController : MonoBehaviour {
         }else if(GetComponent<MonsterController>()) {
             mStatus = GetComponent<MonsterController>().Status;
         }
-        Debug.Log("AfterPos = " + pos);
+
+        pCon = GameObject.Find("Controller").GetComponent<PlayerController>();
 
     }
     // Update is called once per frame
     void Update()
     {
-        if (!IsMove) { return; }
+        if (pCon.EventFlag || pCon.GetAlchemyUIFlag) {
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            GetComponent<Rigidbody2D>().isKinematic = true;
+            return;
+        }
+        GetComponent<Rigidbody2D>().isKinematic = false;
         GetComponent<Rigidbody2D>().velocity = pos;
         time += Time.deltaTime;
-        if (time > 5)
+        if (time > 4)
         {
             Destroy(gameObject);
         }

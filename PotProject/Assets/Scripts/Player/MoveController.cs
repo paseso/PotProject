@@ -548,6 +548,7 @@ public class MoveController : MonoBehaviour
 
             case ButtonType.R2:
                 //錬金UIを開いたり閉じたりする処理
+                if (_jumping) { return; }
                 player_ctr.OpenAlchemy();
                 break;
 
@@ -605,7 +606,6 @@ public class MoveController : MonoBehaviour
     /// </summary>
     private void BtnCheck()
     {
-
         if (!player_ctr.AllCommandActive || player_ctr.EventFlag) { return; }
 
         if (Input.GetButtonDown("L2") || Input.GetKeyDown(KeyCode.P))

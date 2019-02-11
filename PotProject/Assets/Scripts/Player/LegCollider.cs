@@ -78,6 +78,7 @@ public class LegCollider : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("isLanding = " + isLanding);
         //ギミック(雲、木)に乗ってる時は弟の場所をお兄ちゃんの場所と同じにする
         if (_onLandding)
         {
@@ -147,6 +148,7 @@ public class LegCollider : MonoBehaviour
 
         if (col.gameObject.layer != 2 && JumpCheck(col.gameObject) && !col.GetComponent<MagicBalletController>())
         {
+            move_ctr.setJumping = false;
             onGroundCount++;
         }
 
@@ -155,10 +157,6 @@ public class LegCollider : MonoBehaviour
             isLanding = true;
         }
 
-        if (move_ctr.Jumping)
-        {
-            move_ctr.setJumping = false;
-        }
         if (col.gameObject.layer == LayerMask.NameToLayer("Block"))
         {
             Rigidbody2D rb = transform.parent.GetComponent<Rigidbody2D>();

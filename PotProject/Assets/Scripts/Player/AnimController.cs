@@ -749,7 +749,7 @@ public class AnimController : MonoBehaviour {
         yield return new WaitForSeconds(1.2f);
         //エフェクトとアイテムのオブジェクトはもう使わないので削除、フラグをfalseにする
         GetItemEndAnim(EffectObj);
-        player_ctr.AllCommandActive = true;
+        player_ctr.EventFlag = false;
         pot_anim.SetBool("isPotDown", false);
     }
 
