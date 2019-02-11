@@ -79,6 +79,7 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager> {
         {
             FadeManager.Instance.LoadScene(0, 1f);
             isPause = false;
+            Time.timeScale = 1;
             pauseCanvasObj.SetActive(false);
             GameObject pManagarObject = GameObject.Find("PlayerStatus");
             if (pManagarObject != null)
