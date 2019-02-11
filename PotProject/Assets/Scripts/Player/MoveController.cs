@@ -270,7 +270,7 @@ public class MoveController : MonoBehaviour
     {
         _hitmonster = true;
         player_ctr.PlayerAlphaDown();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         player_ctr.PlayerAlphaMax();
         _hitmonster = false;
     }
@@ -841,6 +841,8 @@ public class MoveController : MonoBehaviour
         //モンスターにぶつかった時
         if (col.gameObject.tag == "Monster")
         {
+            if (!col.gameObject.GetComponent<MonsterController>())
+                return;
             MonsterStatus mStatus = col.gameObject.GetComponent<MonsterController>().Status;
             if (mStatus.type == MonsterStatus.MonsterType.HARB) { return; }
             if (_hitmonster) { return; }

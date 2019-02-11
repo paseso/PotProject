@@ -21,8 +21,10 @@ public class CloudCol : MonoBehaviour {
         player.transform.SetParent(transform);
     }
 
-    private void OnTriggerStay2D(Collider2D col) {
-        if (col.gameObject.name == "Leg") {
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.name == "Leg")
+        {
             player = col.transform.parent.transform.parent.gameObject;
             player.transform.SetParent(transform);
             _landingCloud = true;

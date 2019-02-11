@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4238084931127980}
   - component: {fileID: 114949409829096552}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: headbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4441151380587934}
   - component: {fileID: 114217124088011746}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: leftwingbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 4797045240988458}
   - component: {fileID: 114178468815280036}
   - component: {fileID: 137075105761508108}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 012-P_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ GameObject:
   - component: {fileID: 4104027284081592}
   - component: {fileID: 114223319951136948}
   - component: {fileID: 137117476548061520}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 012-P_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 4154200155378554}
   - component: {fileID: 114461854055542444}
   - component: {fileID: 137091335111003616}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 012-P_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4083535384507560}
   - component: {fileID: 114567729734338170}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: rightwingbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,9 +123,12 @@ GameObject:
   - component: {fileID: 114125067248018528}
   - component: {fileID: 114591663648904750}
   - component: {fileID: 210407956207311074}
-  m_Layer: 0
+  - component: {fileID: 50971480519135684}
+  - component: {fileID: 114548410777363156}
+  - component: {fileID: 61798245631431870}
+  m_Layer: 13
   m_Name: Fairy
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -139,7 +142,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4644896433576232}
   - component: {fileID: 212741906208351352}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 012-P_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,6 +260,51 @@ Transform:
   m_Father: {fileID: 4538039547198654}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50971480519135684
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1788872560219068}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 10
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &61798245631431870
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1788872560219068}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 1.5}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3}
+  m_EdgeRadius: 0
 --- !u!95 &95776618170891840
 Animator:
   serializedVersion: 3
@@ -363,6 +411,23 @@ MonoBehaviour:
   m_Bones: []
   m_BoneTransforms:
   - {fileID: 4083535384507560}
+--- !u!114 &114548410777363156
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1788872560219068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd229fd54d0c8d241846c6b53edd4566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status:
+    hp: 2
+    atk: 2
+    barrier: 0
+    type: 13
+    attribute: 0
 --- !u!114 &114567729734338170
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -84,7 +84,7 @@ public class LegCollider : MonoBehaviour
         {
             PotObj.transform.position = gameObject.transform.parent.transform.position;
             PotObj.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-            
+
             nowDirec = move_ctr.direc;
         }
         if (gameObject.layer == LayerMask.NameToLayer("LadderPlayer") && move_ctr.InLadderCount <= 0)
@@ -104,7 +104,8 @@ public class LegCollider : MonoBehaviour
         if (col.gameObject.layer == 2) { return false; }// 背景
         if (col.gameObject.layer == LayerMask.NameToLayer("BackGround")) { return true; }
         if (col.GetComponent<KeyBlockCol>()) { return false; } // 鍵ActiveCollider
-        if (col.GetComponent<GimmickInfo>()) {
+        if (col.GetComponent<GimmickInfo>())
+        {
             GimmickInfo info = col.GetComponent<GimmickInfo>();
             if (info.type == GimmickInfo.GimmickType.LADDER) { return false; } // はしご
             if (info.type == GimmickInfo.GimmickType.FIREFIELD) { return false; } // 敵攻撃範囲
@@ -131,15 +132,27 @@ public class LegCollider : MonoBehaviour
             move_ctr.switchGimmick = col.gameObject;
             col.GetComponent<GimmickController>().OnPlayerFlag = true;
         }
-        //動く雲に乗った後に普通のブロックに乗ったら弟位置解除
-        if(col.gameObject.layer == LayerMask.NameToLayer("Block"))
+        //動く雲と背景、敵の攻撃コライダー以外のブロックに当たった時
+        if (!col.gameObject.GetComponent<CloudCol>() || col.gameObject.layer != 2 || col.gameObject.layer != LayerMask.NameToLayer("AttackField"))
         {
-            if(_onLandding || _onMoveCloud)
+            //Debug.Log("col.gameObject.name = " + col.gameObject.name);
+            if (_onLandding || _onMoveCloud)
             {
                 _onMoveCloud = false;
                 _onLandding = false;
             }
         }
+
+        if (col.gameObject.GetComponent<CloudCol>())
+        {
+            Debug.Log("getLandingCloud = " + col.gameObject.GetComponent<CloudCol>().getLandingCloud);
+            if (col.gameObject.GetComponent<CloudCol>().getLandingCloud)
+            {
+                _onMoveCloud = true;
+                _onLandding = true;
+            }
+        }
+
         //ちくわブロックに乗っかった時
         if (col.gameObject.name == "FallCol")
         {
@@ -198,7 +211,6 @@ public class LegCollider : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D col)
     {
-        //Debug.Log("JumpCheck = " + JumpCheck(col.gameObject));
         //雲のスクリプトに当たったらツボをプレイヤーの場所に移動させる
         if (col.gameObject.GetComponent<CloudCol>())
         {
@@ -206,13 +218,13 @@ public class LegCollider : MonoBehaviour
             {
                 _onMoveCloud = true;
                 _onLandding = true;
-                //if (move_ctr.direc != nowDirec)
-                //{
-                //    if (move_ctr.direc == MoveController.Direction.LEFT)
-                //        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTBRINGPOT);
-                //    else
-                //        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTBRINGPOT);
-                //}
+                if (move_ctr.direc != nowDirec)
+                {
+                    if (move_ctr.direc == MoveController.Direction.LEFT)
+                        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.LEFTBRINGPOT);
+                    else
+                        anim_ctr.ChangeAnimatorState(AnimController.AnimState.AnimType.RIGHTBRINGPOT);
+                }
             }
         }
         //ちくわブロックに乗っかってる時
@@ -242,13 +254,16 @@ public class LegCollider : MonoBehaviour
 
         if (col.GetComponent<GimmickInfo>())
         {
-            if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.FIREFIELD && onGroundCount <= 0){
+            if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.FIREFIELD && onGroundCount <= 0)
+            {
                 return;
             }
-            if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.THUNDERFIELD && onGroundCount <= 0) {
+            if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.THUNDERFIELD && onGroundCount <= 0)
+            {
                 return;
             }
-            if (col.GetComponent<MagicBalletController>() && onGroundCount <= 0) {
+            if (col.GetComponent<MagicBalletController>() && onGroundCount <= 0)
+            {
                 return;
             }
         }
