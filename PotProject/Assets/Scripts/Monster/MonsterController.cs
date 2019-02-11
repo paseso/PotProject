@@ -164,6 +164,10 @@ public class MonsterController : MonoBehaviour
 
     public IEnumerator Drop()
     {
+        if (transform.GetComponentInChildren<MagicShoot>()) {
+            Destroy(transform.GetComponentInChildren<MagicShoot>());
+        }
+
         if (ItemList[status.type] == "")
         {
             Destroy(gameObject);

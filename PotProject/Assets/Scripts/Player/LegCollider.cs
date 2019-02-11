@@ -145,7 +145,7 @@ public class LegCollider : MonoBehaviour
             _onFallBlock = false;
         }
 
-        if (col.gameObject.layer != 2 && JumpCheck(col.gameObject))
+        if (col.gameObject.layer != 2 && JumpCheck(col.gameObject) && !col.GetComponent<MagicBalletController>())
         {
             onGroundCount++;
         }
@@ -200,6 +200,7 @@ public class LegCollider : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D col)
     {
+        //Debug.Log("JumpCheck = " + JumpCheck(col.gameObject));
         //雲のスクリプトに当たったらツボをプレイヤーの場所に移動させる
         if (col.gameObject.GetComponent<CloudCol>())
         {
@@ -247,6 +248,9 @@ public class LegCollider : MonoBehaviour
                 return;
             }
             if (col.GetComponent<GimmickInfo>().type == GimmickInfo.GimmickType.THUNDERFIELD && onGroundCount <= 0) {
+                return;
+            }
+            if (col.GetComponent<MagicBalletController>() && onGroundCount <= 0) {
                 return;
             }
         }

@@ -100,7 +100,7 @@ public struct PlayerStatus
     public List<ItemStatus.Type> ItemList;
 }
 
-public class PlayerManager : SingletonMonoBehaviour<PlayerManager>{
+public class PlayerManager : MonoBehaviour{
     [SerializeField]
     private PlayerStatus status;
     private PlayerController player_ctr;
@@ -125,19 +125,8 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>{
         }
     }
 
-    void Awake()
-    {
-        if (this != Instance)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-        DontDestroyOnLoad(this.gameObject);
-    }
-
     public void InitStatus()
     {
-        player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         status.PlayerHP = status.GetMaxHP;
         status.PlayerAttack = 1;
         SetSwordType = PlayerStatus.SWORDTYPE.NORMAL;
@@ -148,6 +137,7 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>{
 
     private void Start()
     {
+        player_ctr = GameObject.Find("Controller").GetComponent<PlayerController>();
         InitStatus();
     }
 }
